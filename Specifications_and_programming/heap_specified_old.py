@@ -1,0 +1,164 @@
+class Heap(object):
+    
+    def __init__(self,size = 350):
+        self.h = [] # "null" initial element, in "slot" 0.
+        i=0
+        while (i <= size):
+            self.h.append(None)
+            i = i+1
+        #
+        self.heapend = 1
+
+    def heap_add(self, item):
+        """
+        Add the new item to the heap.
+        This assumes that the item's key is not already present
+        in the heap!
+        """
+        self.h[self.heapend] = item  # store it into the new heap location
+        # Now, "percolate" the new item to its proper place in the
+        # heap array, h.
+        j = self.heapend
+        # Loop invariant:
+        # heapordered(1, (j//2)) && heapordered(j, self.heapend) && 1 <= j <= self.heapend
+        # 
+        while (1 < j and self.h[ j // 2 ].key >= self.h[j].key):
+            temp = self.h[ j // 2 ]
+            self.h[ j // 2 ] = self.h[j]
+            self.h[j] = temp
+            j = ( j // 2 )
+        # Upon loop termination: heapordered(1, self.heapend)
+        # Now, adjust the "end of the heap"
+        self.heapend = self.heapend + 1
+    
+    def heap_del(self):
+        """
+        Remove the minimum element from the heap.
+        """
+        # PROBLEM WITH THIS CODE: we're not swapping the newly promoted
+        # item with the smaller of its children?
+        # STILL HAVE A PROBLEM?
+        # I think I have that problem fixed now, but we may still be
+        # "stopping too soon" in the loop.
+        #
+        # If the heap is: [9, 14, 8, 21, 33, 11, 12]
+        # then this operation results in this heap: [8, 14, 12, 21, 33, 11]
+        # which is incorrect...
+        # I think changing the loop guard, to ( j*2 <= (self.heapend-1) ),
+        # dealt with that problem.
+        #
+        # Now we have another problem:
+        #   the code does not swap the element being percolated downwards
+        #   with the smaller of the two children!
+        #
+        #
+        # Now we move "down" the heap array, promoting one of the children?
+        # self.h[1],heapend = self.h[heapend-1],heapend-1
+        self.h[1] = self.h[self.heapend-1]
+        self.heapend = self.heapend-1
+        j = 1
+        # while ( j < (self.heapend // 2) ):
+        while ( j*2 <= (self.heapend-1) ):
+            # if (self.h[j].key >= self.h[ j*2 ].key):
+            #     temp = self.h[ j*2 ]
+            #     self.h[ j*2 ] = self.h[j]
+            #     self.h[j] = temp
+            #     j = j*2
+            # elif (    self.h[j].key <= self.h[ j*2 ].key
+            #       and ( (j*2+1) <= (self.heapend-1) )
+            #       and self.h[ j*2 ].key > self.h[ j*2 + 1 ].key
+            #       and self.h[j].key >= self.h[ j*2 + 1 ].key
+            #      ):
+            #     temp = self.h[ j*2 + 1 ]
+            #     self.h[ j*2 + 1 ] = self.h[j]
+            #     self.h[j] = temp
+            #     j = j*2 + 1
+            # else:
+            #     break
+            #
+            if (    (j*2+1) <= (self.heapend-1)
+                and self.h[j*2].key <= self.h[j*2+1].key
+                and self.h[j].key > self.h[j*2].key     ):
+                temp = self.h[ j*2 ]
+                self.h[ j*2 ] = self.h[j]
+                self.h[j] = temp
+                j = j*2
+            elif (    (j*2+1) <= (self.heapend-1)
+                  and self.h[j*2+1].key < self.h[j*2].key
+                  and self.h[j].key > self.h[j*2+1].key  ):
+                temp = self.h[ j*2 + 1 ]
+                self.h[ j*2 + 1 ] = self.h[j]
+                self.h[j] = temp
+                j = j*2 + 1
+            elif (    (self.heapend-1) < (j*2+1)
+                  and self.h[j].key > self.h[j*2].key):
+                temp = self.h[ j*2 ]
+                self.h[ j*2 ] = self.h[j]
+                self.h[j] = temp
+                j = j*2
+            else:
+                break
+            # elif ( (self.heapend // 2) <= j ):
+            #     break
+
+        # version of the above loop that is incorrect:
+#         while ( j < (self.heapend // 2) ):
+#             if (self.h[j].key >= self.h[ j*2 ].key):
+#                 temp = self.h[ j*2 ]
+#                 self.h[ j*2 ] = self.h[j]
+#                 self.h[j] = temp
+#                 j = j*2
+#             elif (self.h[j].key >= self.h[ j*2 + 1 ].key):
+#                 temp = self.h[ j*2 + 1 ]
+#                 self.h[ j*2 + 1 ] = self.h[j]
+#                 self.h[j] = temp
+#                 j = j*2 + 1
+#         #
+
+# older, incorrect version
+#     def heap_del(self):
+#         """
+#         Remove the minimum element from the heap.
+#         """
+#         # Now we move "down" the heap array, promoting one of the children?
+#         # self.h[1],heapend = self.h[heapend-1],heapend-1
+#         self.h[1] = self.h[self.heapend-1]
+#         self.heapend = self.heapend-1
+#         j = 1
+#         while ( j < (self.heapend // 2) ):
+#             if (self.h[j].key >= self.h[ j*2 ].key):
+#                 temp = self.h[ j*2 ]
+#                 self.h[ j*2 ] = self.h[j]
+#                 self.h[j] = temp
+#             j = ( j*2 )
+#         #
+
+class heap_item(object):
+    def __init__(self, key = -99):
+        self.key = key
+
+
+# So, there would be a pretty nice implementation of what was
+# mentioned in the book on software-specifications regarding
+# the tallying of distinct values in an array:
+
+def heap_test(arr):
+    myHeap = Heap()
+    for i in arr:
+        myHeap.heap_add(heap_item(i))
+    print "Before tallying the distinct values, the heap contains:"
+    print [ myHeap.h[x].key for x in range(1,myHeap.heapend)]
+    #
+    last_value = None
+    while (myHeap.heapend != 1):
+        # print [ myHeap.h[x].key for x in range(1,myHeap.heapend)]
+        x = myHeap.h[1].key
+        if (last_value != x):
+            print x
+            last_value = x
+        myHeap.heap_del()
+
+def heap_test_driver():
+    heap_test([3,6,21,6,3,14,7,8,9])
+    print 
+    heap_test([18,47,18,16,3,3,6,7,3,9,8,51,105])
