@@ -1,0 +1,1816 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<!--
+This document was converted from RTF source: 
+By rtftohtml 4.19
+See http://www.sunpack.com/RTF
+Filename:TIJ2.rtf
+Application Directory:C:\TOOLS\RTF2HTML\
+Subject:
+Author:Bruce Eckel
+Operator:Bruce Eckel
+Document Comments:
+Version Comments:
+Comments:
+Keywords:
+Translation Date:05/21/2001
+Translation Time:10:39:08
+Translation Platform:Win32
+Number of Output files:23
+This File:Chap05.htm
+SplitDepth=1
+SkipNavPanel=1
+SkipLeadingToc=1
+SkipTrailingToc=1
+GenContents=1
+GenFrames=1
+GenIndex=1
+-->
+<HEAD lang="en"><META http-equiv="Content-Type" content="text/html">
+<TITLE>5: Hiding the Implementation</TITLE>
+</HEAD>
+
+<BODY  BGCOLOR="#FFFFFF"><DIV ALIGN="CENTER">
+  <a href="http://www.MindView.net">
+  <img src="mindview.gif" alt="MindView Inc." BORDER = "0"></a>
+  <CENTER>
+    <FONT FACE="Verdana" size = "-1">
+    [ <a href="README.txt">Viewing Hints</a> ]
+    [ <a href="RevHist.htm">Revision History</a> ]
+    [ <a href="http://www.mindview.net/Books/TIJ/">Book Home Page</a> ]
+    [ <a href="http://www.mindview.net/Etc/MailingList.html">Free Newsletter</a> ] <br>
+    [ <a href="http://www.mindview.net/Seminars">Seminars</a> ]
+    [ <a href="http://www.mindview.net/CDs">Seminars on CD ROM</a> ]
+    [ <a href="http://www.mindview.net/Services">Consulting</a> ]
+    </FONT>
+  <H2><FONT FACE="Verdana">
+  Thinking in Java, 2nd edition, Revision 12</FONT></H2>
+  <H3><FONT FACE="Verdana">&copy;2000 by Bruce Eckel</FONT></H3>
+  
+    <FONT FACE="Verdana" size = "-1">
+     [ <a href="Chap04.htm">Previous Chapter</a> ] 
+    [ <a href="SimpCont.htm">Short TOC</a> ] 
+    [ <a href="Contents.htm">Table of Contents</a> ] 
+    [ <a href="DocIdx.htm">Index</a> ]
+     [ <a href="Chap06.htm">Next Chapter</a> ] 
+    </FONT>
+    
+  </CENTER>
+  </P></DIV><A NAME="Chapter_5"></A><A NAME="_Toc375545290"></A><A NAME="_Toc477690725"></A><A NAME="_Toc481064588"></A><A NAME="Heading189"></A><FONT FACE = "Verdana"><H1 ALIGN="LEFT">
+5: Hiding the Implementation</H1></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=4><backtalk:display ID=TIJ3_CHAPTER5_I0>
+A primary
+consideration in object-oriented design is &#8220;separating the things that
+change from the things that stay the same.&#8221;</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This is particularly important for
+libraries. The user (<I>client programmer<A NAME="Index464"></A></I>) of that
+library must be able to rely on the part they use, and know that they
+won&#8217;t need to rewrite code if a new version of the library comes out. On
+the flip side, the library creator<A NAME="Index465"></A> must have the freedom
+to make modifications and improvements with the certainty that the client
+programmer&#8217;s code won&#8217;t be affected by those changes.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I0' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I1>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This can be achieved through convention.
+For example, the library programmer must agree to not remove existing methods
+when modifying a class in the library, since that would break the client
+programmer&#8217;s code. The reverse situation is thornier, however. In the case
+of a data member, how can the library creator know which data members have been
+accessed by client programmers? This is also true with methods that are only
+part of the implementation of a class, and not meant to be used directly by the
+client programmer. But what if the library creator wants to rip out an old
+implementation and put in a new one? Changing any of those members might break a
+client programmer&#8217;s code. Thus the library creator is in a strait jacket
+and can&#8217;t change anything.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I1' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I2>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To solve this problem, Java provides
+<A NAME="Index466"></A><A NAME="Index467"></A><I>access specifiers</I> to allow
+the library creator to say what is available to the client programmer and what
+is not. The levels of <A NAME="Index468"></A>access control from &#8220;most
+access&#8221; to &#8220;least access&#8221; are
+<A NAME="Index469"></A><B>public</B>, <B>protected</B>,
+&#8220;<A NAME="Index470"></A>friendly&#8221; (which has no keyword),
+<A NAME="Index471"></A>and<B> <A NAME="Index472"></A>private</B>. From the
+previous paragraph you might think that, as a
+<A NAME="Index473"></A><A NAME="Index474"></A>library designer, you&#8217;ll
+want to keep everything as &#8220;private&#8221; as possible, and expose only
+the methods that you want the client programmer to use. This is exactly right,
+even though it&#8217;s often counterintuitive for people who program in other
+languages (especially C) and are used to accessing everything without
+restriction. By the end of this chapter you should be convinced of the value of
+access control in Java. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I2' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I3>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The concept of a library of components
+and the control over who can access the components of that library is not
+complete, however. There&#8217;s still the question of how the components are
+bundled together into a cohesive library unit. This is controlled with the
+<B>package</B> keyword in Java, and the access specifiers are affected by
+whether a class is in the same package or in a separate package. So to begin
+this chapter, you&#8217;ll learn how library components are placed into
+packages. Then you&#8217;ll be able to understand the complete meaning of the
+access specifiers.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I3' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I4>
+</FONT><A NAME="_Toc375545291"></A><A NAME="_Toc481064589"></A><BR></P></DIV>
+<A NAME="Heading190"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+package: the library unit</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A <A NAME="Index475"></A>package is what
+you get when you use the <A NAME="Index476"></A><B>import</B> keyword to bring
+in an entire library, such as</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>import</font> java.util.*;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This brings in the entire utility
+<A NAME="Index477"></A>library that&#8217;s part of the standard Java
+distribution. Since, for example, the class <B>ArrayList</B> is in
+<B>java.util</B>, you can now either specify the full name
+<B>java.util.ArrayList</B> (which you can do without the <B>import</B>
+statement), or you can simply say <B>ArrayList</B> (because of the
+<B>import</B>). 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I4' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I5>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you want to bring in a single class,
+you can name that class in the <B>import</B> statement</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>import</font> java.util.ArrayList;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Now you can use <B>ArrayList</B> with no
+qualification. However, none of the other classes in <B>java.util</B> are
+available. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I5' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I6>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The reason for all this importing is to
+provide a mechanism to manage &#8220;<A NAME="Index478"></A>name spaces.&#8221;
+The names of all your class members are insulated from each other. A method
+<B>f(&#160;)</B> inside a class <B>A</B> will not <A NAME="Index479"></A>clash
+with an <B>f(&#160;)</B> that has the same signature (argument list) in class
+<B>B</B>. But what about the class names? Suppose you create a <B>stack</B>
+class that is installed on a machine that already has a <B>stack</B> class
+that&#8217;s written by someone else? With Java on the Internet, this can happen
+without the user knowing it, since classes can get downloaded automatically in
+the process of running a Java program.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I6' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I7>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This potential clashing of names is why
+it&#8217;s important to have complete control over the name spaces in Java, and
+to be able to create a completely unique name regardless of the constraints of
+the Internet. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I7' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I8>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">So far, most of the examples in this book
+have existed in a single file and have been designed for local use, and
+haven&#8217;t bothered with package names. (In this case the class name is
+placed in the &#8220;default package.&#8221;) This is certainly an option, and
+for simplicity&#8217;s sake this approach will be used whenever possible
+throughout the rest of this book. However, if you&#8217;re planning to create
+libraries or programs that are friendly to other Java programs on the same
+machine, you must think about preventing class name clashes.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I8' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I9>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When you create a source-code file for
+Java, it&#8217;s commonly called a <A NAME="Index480"></A><I>compilation
+unit</I> (sometimes a <A NAME="Index481"></A><I>translation unit</I>). Each
+compilation unit must have a name ending in <B>.java</B>, and inside the
+compilation unit there can be a <B>public</B> class that must have the same name
+as the file (including capitalization, but excluding the <B>.java</B> filename
+extension). There can be only<I> one</I>
+<A NAME="Index482"></A><A NAME="Index483"></A><B>public</B> class in each
+compilation unit, otherwise the compiler will complain. The rest of the classes
+in that compilation unit, if there are any, are hidden from the world outside
+that package because they&#8217;re <I>not</I> <B>public</B>, and they comprise
+&#8220;support&#8221; classes for the main <B>public</B> class.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I9' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I10>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When you compile a <B>.java</B> file you
+get an output file with exactly the same name but an extension of <B>.class</B>
+<I>for each class in the </I><B>.java</B> file. Thus you can end up with quite a
+few <B>.class</B> files from a small number of <B>.java</B> files. If
+you&#8217;ve programmed with a compiled language, you might be used to the
+compiler spitting out an intermediate form (usually an &#8220;obj&#8221; file)
+that is then packaged together with others of its kind using a linker (to create
+an executable file) or a librarian (to create a library). That&#8217;s not how
+Java works. A working program is a bunch of <B>.class</B> files, which can be
+packaged and compressed into a <A NAME="Index484"></A><A NAME="Index485"></A>JAR
+file (using Java&#8217;s <B>jar </B>archiver). The Java interpreter is
+responsible for finding, loading, and interpreting these
+files</FONT><A NAME="fnB32" HREF="#fn32">[32]</A><FONT FACE="Georgia">.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I10' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I11>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A library is also a bunch of these class
+files. Each file has one class that is <B>public</B> (you&#8217;re not forced to
+have a <B>public</B> class, but it&#8217;s typical), so there&#8217;s one
+component for each file. If you want to say that all these components (that are
+in their own separate <B>.java </B>and <B>.class </B>files) belong together,
+that&#8217;s where the <B>package</B> keyword comes in.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I11' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I12>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When you say:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>package</font> mypackage;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">at the beginning of a file (if you use a
+<B>package </B>statement, it <I>must </I>appear as the first noncomment in the
+file), you&#8217;re stating that this compilation unit is part of a library
+named <B>mypackage</B>. Or, put another way, you&#8217;re saying that the
+<B>public</B> class name within this compilation unit is under the umbrella of
+the name <B>mypackage</B>, and if anyone wants to use the name they must either
+fully specify the name or use the <B>import</B> keyword in combination with
+<B>mypackage</B> (using the choices given previously). Note that the convention
+for Java package names is to use all lowercase letters, even for intermediate
+words. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I12' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I13>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">For example, suppose the name of the file
+is <B>MyClass.java</B>. This means there can be one and only one <B>public</B>
+class in that file, and the name of that class must be <B>MyClass</B> (including
+the capitalization):</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>package</font> mypackage;
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> MyClass {
+  <font color=#009900>// . . .</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Now, if someone wants to use
+<B>MyClass</B> or, for that matter, any of the other <B>public</B> classes in
+<B>mypackage</B>, they must use the <B>import</B> keyword to make the name or
+names in <B>mypackage</B> available. The alternative is to give the fully
+qualified name:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>mypackage.MyClass m = <font color=#0000ff>new</font> mypackage.MyClass();</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>import</B> keyword can make this
+much cleaner:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>import</font> mypackage.*;
+<font color=#009900>// . . . </font>
+MyClass m = <font color=#0000ff>new</font> MyClass();</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It&#8217;s worth keeping in mind that
+what the <B>package</B> and <B>import</B> keywords allow you to do, as a library
+designer, is to divide up the single global name space so you won&#8217;t have
+clashing names, no matter how many people get on the Internet and start writing
+classes in Java.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I13' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I14>
+</FONT><A NAME="_Toc375545292"></A><A NAME="_Toc481064590"></A><BR></P></DIV>
+<A NAME="Heading191"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Creating unique package names</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You might observe that, since a package
+never really gets &#8220;packaged&#8221; into a single file, a package could be
+made up of many <B>.class</B> files, and things could get a bit cluttered. To
+prevent this, a logical thing to do is to place all the <B>.class</B> files for
+a particular package into a single directory; that is, use the hierarchical file
+structure of the operating system to your advantage. This is one way that Java
+references the problem of clutter; you&#8217;ll see the other way later when the
+<B>jar</B> utility is introduced. <A NAME="Index486"></A><A NAME="Index487"></A>
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I14' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I15>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Collecting the package files into a
+single subdirectory solves two other problems: creating unique package names,
+and finding those classes that might be buried in a directory structure
+someplace. This is accomplished, as was introduced in Chapter 2, by encoding the
+path of the location of the <B>.class</B> file into the name of the
+<B>package</B>. The compiler enforces this, but by convention, the first part of
+the <B>package</B> name is the Internet domain name of the creator of the class,
+reversed. Since Internet domain names are guaranteed to be unique, <I>if</I> you
+follow this convention it&#8217;s guaranteed that your <B>package</B> name will
+be unique and thus you&#8217;ll never have a name clash. (That is, until you
+lose the domain name to someone else who starts writing Java code with the same
+path names as you did.) Of course, if you don&#8217;t have your own domain name
+then you must fabricate an unlikely combination (such as your first and last
+name) to create unique package names. If you&#8217;ve decided to start
+publishing Java code it&#8217;s worth the relatively small effort to get a
+domain name. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I15' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I16>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The second part of this trick is
+resolving the <B>package</B> name into a directory on your machine, so when the
+Java program runs and it needs to
+<A NAME="Index488"></A><A NAME="Index489"></A>load the <B>.class </B>file (which
+it does dynamically, at the point in the program where it needs to create an
+object of that particular class, or the first time you access a <B>static
+</B>member of the class), it can locate the directory where the <B>.class
+</B>file resides. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I16' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I17>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The Java interpreter proceeds as follows.
+First, it finds the environment variable <A NAME="Index490"></A>CLASSPATH (set
+via the operating system, sometimes by the installation program that installs
+Java or a Java-based tool on your machine). CLASSPATH contains one or more
+directories that are used as roots for a search for <B>.class</B> files.
+Starting at that root, the interpreter will take the package name and replace
+each dot with a slash to generate a path name from the CLASSPATH root (so
+<B>package foo.bar.baz</B> becomes <B>foo\bar\baz </B>or <B>foo/bar/baz </B>or
+possibly something else, depending on your operating system). This is then
+concatenated to the various entries in the CLASSPATH. That&#8217;s where it
+looks for the <B>.class</B> file with the name corresponding to the class
+you&#8217;re trying to create. (It also searches some standard directories
+relative to where the Java interpreter resides).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I17' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I18>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To understand this, consider my domain
+name, which is <B>bruceeckel.com</B>. By reversing this, <B>com.bruceeckel</B>
+establishes my unique global name for my classes. (The com, edu, org, etc.,
+extension was formerly capitalized in Java packages, but this was changed in
+Java 2 so the entire package name is lowercase.) I can further subdivide this by
+deciding that I want to create a library named <B>simple</B>, so I&#8217;ll end
+up with a package name:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>package</font> com.bruceeckel.simple;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Now this package name can be used as an
+umbrella name space for the following two files:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I18' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I19>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: com:bruceeckel:simple:Vector.java</font>
+<font color=#009900>// Creating a package.</font>
+<font color=#0000ff>package</font> com.bruceeckel.simple;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Vector {
+  <font color=#0000ff>public</font> Vector() {
+    System.out.println(
+      <font color=#004488>"com.bruceeckel.util.Vector"</font>);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When you create your own packages,
+you&#8217;ll discover that the <B>package</B> statement must be the first
+noncomment code in the file. The second file looks much the same:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I19' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I20>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: com:bruceeckel:simple:List.java</font>
+<font color=#009900>// Creating a package.</font>
+<font color=#0000ff>package</font> com.bruceeckel.simple;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> List {
+  <font color=#0000ff>public</font> List() {
+    System.out.println(
+      <font color=#004488>"com.bruceeckel.util.List"</font>);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Both of these files are placed in the
+subdirectory on my system: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I20' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I21>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>C:\DOC\JavaT\com\bruceeckel\simple</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you walk back through this, you can
+see the package name <B>com.bruceeckel.simple</B>, but what about the first
+portion of the path? That&#8217;s taken care of in the CLASSPATH environment
+variable, which is, on my machine:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I21' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I22>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>CLASSPATH=.;D:\JAVA\LIB;C:\DOC\JavaT</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can see that the CLASSPATH can
+contain a number of alternative search paths. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I22' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I23>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There&#8217;s a variation when using JAR
+files, however. You must put the name of the JAR file in the classpath, not just
+the path where it&#8217;s located. So for a <A NAME="Index491"></A>JAR named
+<B>grape.jar</B> your classpath would include:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>CLASSPATH=.;D:\JAVA\LIB;C:\flavors\grape.jar</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Once the classpath is set up properly,
+the following file can be placed in any directory:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c05:LibTest.java</font>
+<font color=#009900>// Uses the library.</font>
+<font color=#0000ff>import</font> com.bruceeckel.simple.*;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> LibTest {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Vector v = <font color=#0000ff>new</font> Vector();
+    List l = <font color=#0000ff>new</font> List();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When the compiler encounters the
+<B>import</B> statement, it begins searching at the directories specified by
+CLASSPATH, looking for subdirectory com\bruceeckel\simple, then seeking the
+compiled files of the appropriate names (<B>Vector.class</B> for <B>Vector</B>
+and <B>List.class</B> for <B>List</B>). Note that both the classes and the
+desired methods in <B>Vector</B> and <B>List</B> must be <B>public</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I23' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I24>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Setting the CLASSPATH has been such a
+trial for beginning Java users (it was for me, when I started) that Sun made the
+JDK in Java 2 a bit smarter. You&#8217;ll find that, when you install it, even
+if you don&#8217;t set a CLASSPATH you&#8217;ll be able to compile and run basic
+Java programs. To compile and run the source-code package for this book
+(available on the CD ROM packaged with this book, or at
+<I>www.BruceEckel.com</I>), however, you will need to make some modifications to
+your CLASSPATH (these are explained in the source-code package).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I24' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I25>
+</FONT><BR></P></DIV>
+<A NAME="Heading192"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Collisions</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">What happens if two libraries are
+imported via * and they include the same
+<A NAME="Index492"></A><A NAME="Index493"></A>names? For example, suppose a
+program does this:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>import</font> com.bruceeckel.simple.*;
+<font color=#0000ff>import</font> java.util.*;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Since <B>java.util.*</B> also contains a
+<B>Vector</B> class, this causes a potential collision. However, as long as you
+don&#8217;t write the code that actually causes the collision, everything is
+OK&#8212;this is good because otherwise you might end up doing a lot of typing
+to prevent collisions that would never happen.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I25' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I26>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The collision <I>does</I> occur if you
+now try to make a <B>Vector</B>:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Vector v = <font color=#0000ff>new</font> Vector();</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Which <B>Vector</B> class does this refer
+to? The compiler can&#8217;t know, and the reader can&#8217;t know either. So
+the compiler complains and forces you to be explicit. If I want the standard
+Java <B>Vector</B>, for example, I must say:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>java.util.Vector v = <font color=#0000ff>new</font> java.util.Vector();</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Since this (along with the CLASSPATH)
+completely specifies the location of that <B>Vector</B>, there&#8217;s no need
+for the <B>import java.util.*</B> statement unless I&#8217;m using something
+else from <B>java.util</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I26' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I27>
+</FONT><A NAME="_Toc375545293"></A><A NAME="_Toc481064591"></A><BR></P></DIV>
+<A NAME="Heading193"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+A custom tool library<A NAME="COM_EckelObjects_tools"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">With this knowledge, you can now create
+your own libraries of tools to reduce or eliminate duplicate code. Consider, for
+example, creating an alias for <B>System.out.println(&#160;)</B> to reduce
+typing. This can be part of a package called <B>tools</B>:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: com:bruceeckel:tools:P.java</font>
+<font color=#009900>// The P.rint &amp; P.rintln shorthand.</font>
+<font color=#0000ff>package</font> com.bruceeckel.tools;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> P {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> rint(String s) {
+    System.out.print(s);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> rintln(String s) {
+    System.out.println(s);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can use this shorthand to print a
+<B>String</B> either with a newline (<B>P.rintln(&#160;)</B>) or without a
+newline (<B>P.rint(&#160;)</B>).<A NAME="AAASpellcheck"></A>
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I27' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I28>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can guess that the location of this
+file must be in a directory that starts at one of the CLASSPATH locations, then
+continues <B>com/bruceeckel/tools</B>. After compiling, the <B>P.class</B> file
+can be used anywhere on your system with an <B>import</B>
+statement:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c05:ToolTest.java</font>
+<font color=#009900>// Uses the tools library.</font>
+<font color=#0000ff>import</font> com.bruceeckel.tools.*;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> ToolTest {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    P.rintln(<font color=#004488>"Available from now on!"</font>);
+    P.rintln(<font color=#004488>""</font> + 100); <font color=#009900>// Force it to be a String</font>
+    P.rintln(<font color=#004488>""</font> + 100L);
+    P.rintln(<font color=#004488>""</font> + 3.14159);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Notice that all objects can easily be
+forced into <B>String</B> representations by putting them in a <B>String
+</B>expression; in the above case, starting the expression with an empty
+<B>String </B>does the trick. But this brings up an interesting observation. If
+you call <B>System.out.println(100)</B>, it works without casting it to a
+<B>String</B>. With some extra overloading, you can get the <B>P</B> class to do
+this as well (this is an exercise at the end of this chapter).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I28' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I29>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">So from now on, whenever you come up with
+a useful new utility, you can add it to the <B>tools</B> directory. (Or to your
+own personal <B>util</B> or <B>tools</B> directory.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I29' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I30>
+</FONT><A NAME="_Toc375545294"></A><A NAME="_Toc481064592"></A><BR></P></DIV>
+<A NAME="Heading194"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Using imports to change behavior</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A feature that is missing from Java is
+C&#8217;s <I>conditional compilation</I>, which allows you to change a switch
+and get different behavior without changing any other code. The reason such a
+feature was left out of Java is probably because it is most often used in C to
+solve cross-platform issues: different portions of the code are compiled
+depending on the platform that the code is being compiled for. Since Java is
+intended to be automatically cross-platform, such a feature should not be
+necessary. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I30' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I31>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">However, there are other valuable uses
+for conditional compilation. A very common use is for debugging code. The
+debugging features are enabled during development, and disabled in the shipping
+product. Allen Holub (<I>www.holub.com</I>) came up with the idea of using
+packages to mimic conditional compilation. He used this to create a Java version
+of C&#8217;s very useful <I>assertion mechanism</I>, whereby you can say
+&#8220;this should be true&#8221; or &#8220;this should be false&#8221; and if
+the statement doesn&#8217;t agree with your assertion you&#8217;ll find out
+about it. Such a tool is quite helpful during debugging.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I31' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I32>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here is the class that you&#8217;ll use
+for debugging:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: com:bruceeckel:tools:debug:Assert.java</font>
+<font color=#009900>// Assertion tool for debugging.</font>
+<font color=#0000ff>package</font> com.bruceeckel.tools.debug;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Assert {
+  <font color=#0000ff>private</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> perr(String msg) {
+    System.err.println(msg);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>final</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> is_true(<font color=#0000ff>boolean</font> exp) {
+    <font color=#0000ff>if</font>(!exp) perr(<font color=#004488>"Assertion failed"</font>);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>final</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> is_false(<font color=#0000ff>boolean</font> exp){
+    <font color=#0000ff>if</font>(exp) perr(<font color=#004488>"Assertion failed"</font>);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>final</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> 
+  is_true(<font color=#0000ff>boolean</font> exp, String msg) {
+    <font color=#0000ff>if</font>(!exp) perr(<font color=#004488>"Assertion failed: "</font> + msg);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>final</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> 
+  is_false(<font color=#0000ff>boolean</font> exp, String msg) {
+    <font color=#0000ff>if</font>(exp) perr(<font color=#004488>"Assertion failed: "</font> + msg);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This class simply encapsulates Boolean
+tests, which print error messages if they fail. In Chapter 10, you&#8217;ll
+learn about a more sophisticated tool for dealing with errors called
+<I>exception handling</I>, but the <B>perr(&#160;)</B> method will work fine in
+the meantime. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I32' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I33>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The output is printed to the console
+<I>standard error</I> stream by writing to <B>System.err</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I33' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I34>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When you want to use this class, you add
+a line in your program:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>import</font> com.bruceeckel.tools.debug.*;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To remove the assertions so you can ship
+the code, a second <B>Assert</B> class is created, but in a different package:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I34' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I35>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: com:bruceeckel:tools:Assert.java</font>
+<font color=#009900>// Turning off the assertion output </font>
+<font color=#009900>// so you can ship the program.</font>
+<font color=#0000ff>package</font> com.bruceeckel.tools;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Assert {
+  <font color=#0000ff>public</font> <font color=#0000ff>final</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> is_true(<font color=#0000ff>boolean</font> exp){}
+  <font color=#0000ff>public</font> <font color=#0000ff>final</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> is_false(<font color=#0000ff>boolean</font> exp){}
+  <font color=#0000ff>public</font> <font color=#0000ff>final</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> 
+  is_true(<font color=#0000ff>boolean</font> exp, String msg) {}
+  <font color=#0000ff>public</font> <font color=#0000ff>final</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> 
+  is_false(<font color=#0000ff>boolean</font> exp, String msg) {}
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Now if you change the previous
+<B>import</B> statement to:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>import</font> com.bruceeckel.tools.*;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The program will no longer print
+assertions. Here&#8217;s an example:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I35' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I36>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c05:TestAssert.java</font>
+<font color=#009900>// Demonstrating the assertion tool.</font>
+<font color=#009900>// Comment the following, and uncomment the</font>
+<font color=#009900>// subsequent line to change assertion behavior:</font>
+<font color=#0000ff>import</font> com.bruceeckel.tools.debug.*;
+<font color=#009900>// import com.bruceeckel.tools.*;</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> TestAssert {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Assert.is_true((2 + 2) == 5);
+    Assert.is_false((1 + 1) == 2);
+    Assert.is_true((2 + 2) == 5, <font color=#004488>"2 + 2 == 5"</font>);
+    Assert.is_false((1 + 1) == 2, <font color=#004488>"1 +1 != 2"</font>);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">By changing the <B>package</B>
+that&#8217;s imported, you change your code from the debug version to the
+production version. This technique can be used for any kind of conditional code.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I36' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I37>
+</FONT><A NAME="_Toc481064593"></A><BR></P></DIV>
+<A NAME="Heading195"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Package caveat</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It&#8217;s worth remembering that anytime
+you create a package, you implicitly specify a
+<A NAME="Index494"></A><A NAME="Index495"></A>directory structure when you give
+the package a name. The package <I>must</I> live in the directory indicated by
+its name, which must be a directory that is searchable starting from the
+CLASSPATH. Experimenting with the <B>package</B> keyword can be a bit
+frustrating at first, because unless you adhere to the package-name to
+directory-path rule, you&#8217;ll get a lot of mysterious run-time messages
+about not being able to find a particular class, even if that class is sitting
+there in the same directory. If you get a message like this, try commenting out
+the <B>package</B> statement, and if it runs you&#8217;ll know where the problem
+lies.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I37' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I38>
+</FONT><A NAME="_Toc375545295"></A><A NAME="_Toc481064594"></A><BR></P></DIV>
+<A NAME="Heading196"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Java access specifiers</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When used, the Java
+<A NAME="Index496"></A><A NAME="Index497"></A>access specifiers
+<A NAME="Index498"></A><B>public</B>, <A NAME="Index499"></A><B>protected,</B>
+and <A NAME="Index500"></A><B>private</B> are placed in front of each definition
+for each member in your class, whether it&#8217;s a field or a method. Each
+access specifier controls the access for only that particular definition. This
+is a distinct contrast to C++, in which the access specifier controls all the
+definitions following it until another access specifier comes along.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I38' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I39>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">One way or another, everything has some
+kind of access specified for it. In the following sections, you&#8217;ll learn
+all about the various types of access, starting with the default access.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I39' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I40>
+</FONT><A NAME="_Toc312373840"></A><A NAME="_Toc375545296"></A><A NAME="_Toc481064595"></A><BR></P></DIV>
+<A NAME="Heading197"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+&#8220;Friendly&#8221;</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">What if you give no access specifier at
+all, as in all the examples before this chapter? The default access has no
+keyword, but it is commonly referred to as &#8220;friendly.&#8221; It means that
+all the other classes in the current package have access to the friendly member,
+but to all the classes outside of this package the member appears to be
+<B>private</B>. Since a compilation unit&#8212;a file&#8212;can belong only to a
+single package, all the classes within a single compilation unit are
+automatically friendly with each other. Thus, friendly elements are also said to
+have <A NAME="Index501"></A><A NAME="Index502"></A><I>package access</I>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I40' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I41>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Friendly access allows you to group
+related classes together in a package so that they can easily interact with each
+other. When you put classes together in a package (thus granting mutual access
+to their friendly members; e.g., making them &#8220;friends&#8221;) you
+&#8220;own&#8221; the code in that package. It makes sense that only code you
+own should have friendly access to other code you own. You could say that
+friendly access gives a meaning or a reason for grouping classes together in a
+package. In many languages the way you organize your definitions in files can be
+willy-nilly, but in Java you&#8217;re compelled to
+<A NAME="Index503"></A><A NAME="Index504"></A>organize them in a sensible
+fashion. In addition, you&#8217;ll probably want to exclude classes that
+shouldn&#8217;t have access to the classes being defined in the current package.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I41' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I42>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The class controls which code has access
+to its members. There&#8217;s no magic way to &#8220;break in.&#8221; Code from
+another package can&#8217;t show up and say, &#8220;Hi, I&#8217;m a friend of
+<B>Bob</B>&#8217;s!&#8221; and expect to see the <B>protected</B>, friendly, and
+<B>private</B> members of <B>Bob</B>. The only way to grant access to a member
+is to: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I42' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I43>
+</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Make the member
+<B>public</B>. Then everybody, everywhere, can access it.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I43' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I44>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Make
+the member friendly by leaving off any access specifier, and put the other
+classes in the same package. Then the other classes can access the member.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I44' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I45>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">As
+you&#8217;ll see in Chapter 6, when inheritance is introduced, an inherited
+class can access a <B>protected</B> member as well as a <B>public</B> member
+(but not <B>private</B> members). It can access friendly members only if the two
+classes are in the same package. But don&#8217;t worry about that now.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I45' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I46>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Provide
+&#8220;accessor/mutator&#8221; methods (also known as &#8220;get/set&#8221;
+methods) that read and change the value. This is the most civilized approach in
+terms of OOP, and it is fundamental to JavaBeans, as you&#8217;ll see in Chapter
+13.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I46' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I47>
+</FONT><A NAME="_Ref351419800"></A><A NAME="_Toc375545297"></A><A NAME="_Toc481064596"></A></OL><A NAME="Heading198"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+public: interface access</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When you use the <B>public</B> keyword,
+it <A NAME="Index505"></A>means that the member declaration that immediately
+follows <B>public</B> is available to everyone, in particular to the client
+programmer who uses the library. Suppose you define a package <B>dessert</B>
+containing the following compilation unit:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I47' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I48>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c05:dessert:Cookie.java</font>
+<font color=#009900>// Creates a library.</font>
+<font color=#0000ff>package</font> c05.dessert;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Cookie {
+  <font color=#0000ff>public</font> Cookie() { 
+   System.out.println(<font color=#004488>"Cookie constructor"</font>); 
+  }
+  <font color=#0000ff>void</font> bite() { System.out.println(<font color=#004488>"bite"</font>); }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Remember, <B>Cookie.java</B> must reside
+in a subdirectory called <B>dessert</B>, in a directory under <B>c05
+</B>(indicating Chapter 5 of this book) that must be under one of the CLASSPATH
+directories. Don&#8217;t make the mistake of thinking that Java will always look
+at the current directory as one of the starting points for searching. If you
+don&#8217;t have a &#8216;<B>.</B>&#8217; as one of the paths in your CLASSPATH,
+Java won&#8217;t look there.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I48' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I49>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Now if you create a program that uses
+<B>Cookie</B>:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c05:Dinner.java</font>
+<font color=#009900>// Uses the library.</font>
+<font color=#0000ff>import</font> c05.dessert.*;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Dinner {
+  <font color=#0000ff>public</font> Dinner() {
+   System.out.println(<font color=#004488>"Dinner constructor"</font>);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Cookie x = <font color=#0000ff>new</font> Cookie();
+    <font color=#009900>//! x.bite(); // Can't access</font>
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">you can create a <B>Cookie</B> object,
+since its constructor is <B>public</B> and the class is <B>public</B>.
+(We&#8217;ll look more at the concept of a <B>public</B> class later.) However,
+the <B>bite(&#160;)</B> member is inaccessible inside <B>Dinner.java</B> since
+<B>bite(&#160;)</B> is friendly only within package <B>dessert</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I49' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I50>
+</FONT><BR></P></DIV>
+<A NAME="Heading199"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+The default
+package<BR><A NAME="Index506"></A><A NAME="Index507"></A><A NAME="Index508"></A></H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You might be surprised to discover that
+the following code compiles, even though it would appear that it breaks the
+rules:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c05:Cake.java</font>
+<font color=#009900>// Accesses a class in a </font>
+<font color=#009900>// separate compilation unit.</font>
+
+<font color=#0000ff>class</font> Cake {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Pie x = <font color=#0000ff>new</font> Pie();
+    x.f();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In a second file, in the same
+directory:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c05:Pie.java</font>
+<font color=#009900>// The other class.</font>
+
+<font color=#0000ff>class</font> Pie {
+  <font color=#0000ff>void</font> f() { System.out.println(<font color=#004488>"Pie.f()"</font>); }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You might initially view these as
+completely foreign files, and yet <B>Cake</B> is able to create a <B>Pie</B>
+object and call its <B>f(&#160;)</B> method! (Note that you must have
+&#8216;.&#8217; in your CLASSPATH in order for the files to compile.)
+You&#8217;d typically think that <B>Pie</B> and <B>f(&#160;)</B> are friendly
+and therefore not available to <B>Cake</B>. They <I>are</I> friendly&#8212;that
+part is correct. The reason that they are available in <B>Cake.java</B> is
+because they are in the same directory and have no explicit package name. Java
+treats files like this as implicitly part of the &#8220;default package&#8221;
+for that directory, and therefore friendly to all the other files in that
+directory.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I50' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I51>
+</FONT><A NAME="_Toc375545298"></A><A NAME="_Toc481064597"></A><BR></P></DIV>
+<A NAME="Heading200"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+private: you can&#8217;t touch that!</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>private</B>
+<A NAME="Index509"></A>keyword means that no one can access that member except
+that particular class, inside methods of that class. Other classes in the same
+package cannot access <B>private </B>members, so it&#8217;s as if you&#8217;re
+even insulating the class against yourself. On the other hand, it&#8217;s not
+unlikely that a package might be created by several people collaborating
+together, so <B>private</B> allows you to freely change that member without
+concern that it will affect another class in the same package. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I51' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I52>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The default &#8220;friendly&#8221;
+package access often provides an adequate amount of hiding; remember, a
+&#8220;friendly&#8221; member is inaccessible to the user of the package. This
+is nice, since the default access is the one that you normally use (and the one
+that you&#8217;ll get if you forget to add any access control). Thus,
+you&#8217;ll typically think about access for the members that you explicitly
+want to make <B>public</B> for the client programmer, and as a result, you might
+not<I> </I>initially think you&#8217;ll use the <B>private </B>keyword often
+since it&#8217;s tolerable to get away without it. (This is a distinct contrast
+with C++.) However, it turns out that the consistent use of <B>private</B> is
+very important, especially where multithreading is concerned. (As you&#8217;ll
+see in Chapter 14.) 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I52' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I53>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here&#8217;s an example of the use of
+<B>private</B>:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c05:IceCream.java</font>
+<font color=#009900>// Demonstrates "private" keyword.</font>
+
+<font color=#0000ff>class</font> Sundae {
+  <font color=#0000ff>private</font> Sundae() {}
+  <font color=#0000ff>static</font> Sundae makeASundae() { 
+    <font color=#0000ff>return</font> <font color=#0000ff>new</font> Sundae(); 
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> IceCream {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#009900>//! Sundae x = new Sundae();</font>
+    Sundae x = Sundae.makeASundae();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This shows an example in which
+<B>private</B> comes in handy: you might want to control how an object is
+created and prevent someone from directly accessing a particular constructor (or
+all of them). In the example above, you cannot create a <B>Sundae</B> object via
+its constructor; instead you must call the <B>makeASundae(&#160;)</B> method to
+do it for you</FONT><A NAME="fnB33" HREF="#fn33">[33]</A><FONT FACE="Georgia">.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I53' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I54>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Any method that you&#8217;re certain is
+only a &#8220;helper&#8221; method for that class can be made <B>private,</B> to
+ensure that you don&#8217;t accidentally use it elsewhere in the package and
+thus prohibit yourself from changing or removing the method. Making a method
+<B>private</B> guarantees that you retain this option.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I54' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I55>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The same is true for a <B>private
+</B>field inside a class. Unless you must expose the underlying implementation
+(which is a much rarer situation than you might think), you should make all
+fields <B>private</B>. However, just because a reference to an object is
+<B>private</B> inside a class doesn't mean that some other object can't have a
+<B>public</B> reference to the same object. (See Appendix A for issues about
+aliasing.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I55' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I56>
+</FONT><A NAME="_Toc312373839"></A><A NAME="_Toc375545299"></A><A NAME="_Toc481064598"></A><BR></P></DIV>
+<A NAME="Heading201"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+protected: &#8220;sort of friendly&#8221;</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>protected</B> access specifier
+requires a jump ahead to understand<A NAME="Index510"></A>. First, you should be
+aware that you don&#8217;t need to understand this section to continue through
+this book up through inheritance (Chapter 6). But for completeness, here is a
+brief description and example using <B>protected</B>. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I56' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I57>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>protected</B> keyword deals with a
+concept called <A NAME="Index511"></A><I>inheritance</I>, which takes an
+existing class and adds new members to that class without touching the existing
+class, which we refer to as the
+<A NAME="Index512"></A><A NAME="Index513"></A><I>base</I> <I>class</I>. You can
+also change the behavior of existing members of the class. To inherit from an
+existing class, you say that your new class <A NAME="Index514"></A><B>extends
+</B>an existing class, like this:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>class</font> Foo <font color=#0000ff>extends</font> Bar {</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The rest of the class definition looks
+the same. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I57' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I58>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you create a new package and you
+inherit from a class in another package, the only members you have access to are
+the <B>public</B> members of the original package. (Of course, if you perform
+the inheritance in the <I>same</I> package, you have the normal package access
+to all the &#8220;friendly&#8221; members.) Sometimes the creator of the base
+class would like to take a particular member and grant access to derived classes
+but not the world in general. That&#8217;s what <B>protected</B> does. If you
+refer back to the file <B>Cookie.java</B>, the following class <I>cannot</I>
+access the &#8220;friendly&#8221; member:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c05:ChocolateChip.java</font>
+<font color=#009900>// Can't access friendly member</font>
+<font color=#009900>// in another class.</font>
+<font color=#0000ff>import</font> c05.dessert.*;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> ChocolateChip <font color=#0000ff>extends</font> Cookie {
+  <font color=#0000ff>public</font> ChocolateChip() {
+   System.out.println(
+     <font color=#004488>"ChocolateChip constructor"</font>);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    ChocolateChip x = <font color=#0000ff>new</font> ChocolateChip();
+    <font color=#009900>//! x.bite(); // Can't access bite</font>
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">One of the interesting things about
+inheritance is that if a method <B>bite(&#160;)</B> exists in class
+<B>Cookie</B>, then it also exists in any class inherited from <B>Cookie</B>.
+But since <B>bite(&#160;)</B> is &#8220;friendly&#8221; in a foreign package,
+it&#8217;s unavailable to us in this one. Of course, you could make it
+<B>public</B>, but then everyone would have access and maybe that&#8217;s not
+what you want. If we change the class <B>Cookie</B> as follows:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>public</font> <font color=#0000ff>class</font> Cookie {
+  <font color=#0000ff>public</font> Cookie() { 
+    System.out.println(<font color=#004488>"Cookie constructor"</font>);
+  }
+  <font color=#0000ff>protected</font> <font color=#0000ff>void</font> bite() {
+    System.out.println(<font color=#004488>"bite"</font>); 
+  }
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">then <B>bite(&#160;)</B> still has
+&#8220;friendly&#8221; access within package <B>dessert</B>, but it is also
+accessible to anyone inheriting from <B>Cookie</B>. However, it is <I>not</I>
+<A NAME="Index515"></A><B>public</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I58' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I59>
+</FONT><A NAME="_Toc375545301"></A><A NAME="_Toc481064599"></A><BR></P></DIV>
+<A NAME="Heading202"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Interface and implementation</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Access control is often referred to as
+<I>implementation hiding<A NAME="Index516"></A><A NAME="Index517"></A></I>.
+Wrapping data and methods within classes in combination with implementation
+hiding is often called
+<I>encapsulation</I></FONT><A NAME="fnB34" HREF="#fn34">[34]</A><A NAME="Index518"></A><FONT FACE="Georgia">.
+The result is a data type with characteristics and behaviors. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I59' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I60>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Access control puts boundaries within a
+data type for two important reasons. The first is to establish what the client
+programmers can and can&#8217;t use. You can build your internal mechanisms into
+the structure without worrying that the client programmers will accidentally
+treat the internals as part of the interface that they should be using.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I60' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I61>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This feeds directly into the second
+reason, which is to separate the interface from the implementation.
+<A NAME="Index519"></A><A NAME="Index520"></A><A NAME="Index521"></A> If the
+structure is used in a set of programs, but client programmers can&#8217;t do
+anything but send messages to the <B>public</B> interface, then you can change
+anything that&#8217;s <I>not</I> <B>public</B> (e.g., &#8220;friendly,&#8221;
+<B>protected</B>, or <B>private</B>) without requiring modifications to client
+code. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I61' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I62>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">We&#8217;re now in the world of
+object-oriented programming, where a <B>class</B> is actually describing
+&#8220;a class of objects,&#8221; as you would describe a class of fishes or a
+class of birds. Any object belonging to this class will share these
+characteristics and behaviors. The class is a description of the way all objects
+of this type will look and act.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I62' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I63>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In the original OOP
+<A NAME="Index522"></A>language, Simula-67<A NAME="Index523"></A>, the keyword
+<B>class</B> <A NAME="Index524"></A>was used to describe a new data type. The
+same keyword has been used for most object-oriented languages. This is the focal
+point of the whole language: the creation of new data types that are more than
+just boxes containing data and methods.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I63' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I64>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The class is the fundamental OOP concept
+in Java. It is one of the keywords that will <I>not </I>be set in bold in this
+book&#8212;it becomes annoying with a word repeated as often as
+&#8220;class.&#8221; 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I64' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I65>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">For clarity, you might prefer a
+<A NAME="Index525"></A><A NAME="Index526"></A>style of creating classes that
+puts the <B>public</B> members at the beginning, followed by the
+<B>protected</B>, friendly, and <B>private</B> members. The advantage is that
+the user of the class can then read down from the top and see first what&#8217;s
+important to them (the <B>public</B> members, because they can be accessed
+outside the file), and stop reading when they encounter the non-<B>public</B>
+members, which are part of the internal implementation:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>public</font> <font color=#0000ff>class</font> X {
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> pub1(&#160;) { <font color=#009900>/* . . . */</font> }
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> pub2(&#160;) { <font color=#009900>/* . . . */</font> }
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> pub3(&#160;) { <font color=#009900>/* . . . */</font> }
+  <font color=#0000ff>private</font> <font color=#0000ff>void</font> priv1(&#160;) { <font color=#009900>/* . . . */</font> }
+  <font color=#0000ff>private</font> <font color=#0000ff>void</font> priv2(&#160;) { <font color=#009900>/* . . . */</font> }
+  <font color=#0000ff>private</font> <font color=#0000ff>void</font> priv3(&#160;) { <font color=#009900>/* . . . */</font> }
+  <font color=#0000ff>private</font> <font color=#0000ff>int</font> i;
+  <font color=#009900>// . . .</font>
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This will make it only partially easier
+to read because the interface and implementation are still mixed together. That
+is, you still see the source code&#8212;the implementation&#8212;because
+it&#8217;s right there in the class. In addition, the comment documentation
+supported by javadoc (described in Chapter 2) lessens the importance of code
+readability by the client programmer. Displaying the interface to the consumer
+of a class is really the job of the
+<A NAME="Index527"></A><A NAME="Index528"></A><I>class browser</I>, a tool whose
+job is to look at all the available classes and show you what you can do with
+them (i.e., what members are available) in a useful fashion. By the time you
+read this, browsers should be an expected part of any good Java development
+tool.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I65' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I66>
+</FONT><A NAME="_Toc312373850"></A><A NAME="_Toc375545302"></A><A NAME="_Toc481064600"></A><BR></P></DIV>
+<A NAME="Heading203"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Class access<BR><A NAME="Index529"></A><A NAME="Index530"></A></H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In Java, the access specifiers can also
+be used to determine which classes <I>within</I> a library will be available to
+the users of that library. If you want a class to be available to a client
+programmer, you place the <B>public</B> keyword somewhere before the opening
+brace of the class body. This controls whether the client programmer can even
+create an object of the class. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I66' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I67>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To control the access of a class, the
+specifier must appear before the keyword <B>class</B>.<B> </B>Thus you can
+say:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>public</font> <font color=#0000ff>class</font> Widget {</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Now if the name of your library is
+<B>mylib</B> any client programmer can access <B>Widget</B> by
+saying</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>import</font> mylib.Widget;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">or</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>import</font> mylib.*;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">However, there&#8217;s an extra set of
+constraints: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I67' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I68>
+</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">There can be only one
+<B>public</B> class per compilation unit (file). The idea is that each
+compilation unit has a single public interface represented by that <B>public</B>
+class. It can have as many supporting &#8220;friendly&#8221; classes as you
+want. If you have more than one <B>public</B> class inside a compilation unit,
+the compiler will give you an error message.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I68' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I69>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">The
+name of the <B>public</B> class must exactly match the name of the file
+containing the compilation unit, including capitalization. So for <B>Widget</B>,
+the name of the file must be <B>Widget.java</B>, not <B>widget.java</B> or
+<B>WIDGET.java</B>. Again, you&#8217;ll get a compile-time error if they
+don&#8217;t agree.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I69' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I70>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">It
+is possible, though not typical, to have a compilation unit with no
+<B>public</B> class at all. In this case, you can name the file whatever you
+like.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I70' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I71>
+</FONT></OL><DIV ALIGN="LEFT"><P><FONT FACE="Georgia">What
+if you&#8217;ve got a class inside <B>mylib</B> that you&#8217;re just using to
+accomplish the tasks performed by <B>Widget</B> or some other <B>public</B>
+class in <B>mylib</B>? You don&#8217;t want to go to the bother of creating
+documentation for the client programmer, and you think that sometime later you
+might want to completely change things and rip out your class altogether,
+substituting a different one. To give you this flexibility, you need to ensure
+that no client programmers become dependent on your particular implementation
+details hidden inside <B>mylib</B>. To accomplish this, you just leave the
+<B>public</B> keyword off the class, in which case it becomes friendly. (That
+class can be used only within that package.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I71' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I72>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Note that a class cannot be <B>private
+</B>(that would make it accessible to no one but the class), or
+<B>protected</B></FONT><A NAME="fnB35" HREF="#fn35">[35]</A><FONT FACE="Georgia">.
+So you have only two choices for class access: &#8220;friendly&#8221; or
+<B>public</B>. If you don&#8217;t want anyone else to have access to that class,
+you can make all the constructors <B>private</B>, thereby preventing anyone but
+you, inside a <B>static</B> member of the class, from creating an object of that
+class</FONT><A NAME="fnB36" HREF="#fn36">[36]</A><FONT FACE="Georgia">.
+Here&#8217;s an example:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c05:Lunch.java</font>
+<font color=#009900>// Demonstrates class access specifiers.</font>
+<font color=#009900>// Make a class effectively private</font>
+<font color=#009900>// with private constructors:</font>
+
+<font color=#0000ff>class</font> Soup {
+  <font color=#0000ff>private</font> Soup() {}
+  <font color=#009900>// (1) Allow creation via static method:</font>
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> Soup makeSoup() {
+    <font color=#0000ff>return</font> <font color=#0000ff>new</font> Soup();
+  }
+  <font color=#009900>// (2) Create a static object and</font>
+  <font color=#009900>// return a reference upon request.</font>
+  <font color=#009900>// (The "Singleton" pattern):</font>
+  <font color=#0000ff>private</font> <font color=#0000ff>static</font> Soup ps1 = <font color=#0000ff>new</font> Soup();
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> Soup access() {
+    <font color=#0000ff>return</font> ps1;
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> f() {}
+}
+
+<font color=#0000ff>class</font> Sandwich { <font color=#009900>// Uses Lunch</font>
+  <font color=#0000ff>void</font> f() { <font color=#0000ff>new</font> Lunch(); }
+}
+
+<font color=#009900>// Only one public class allowed per file:</font>
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Lunch {
+  <font color=#0000ff>void</font> test() {
+    <font color=#009900>// Can't do this! Private constructor:</font>
+    <font color=#009900>//! Soup priv1 = new Soup();</font>
+    Soup priv2 = Soup.makeSoup();
+    Sandwich f1 = <font color=#0000ff>new</font> Sandwich();
+    Soup.access().f();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Up to now, most of the methods have been
+returning either <B>void</B> or a primitive type, so the
+definition:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>  <font color=#0000ff>public</font> <font color=#0000ff>static</font> Soup access() {
+    <font color=#0000ff>return</font> ps1;
+  }</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">might look a little confusing at first.
+The word before the method name (<B>access</B>) tells what the method returns.
+So far this has most often been <B>void,</B> which means it returns nothing. But
+you can also return a reference to an object, which is what happens here. This
+method returns a reference to an object of class <B>Soup</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I72' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I73>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>class Soup</B> shows how to
+prevent direct creation of a class by making all the constructors
+<B>private</B>. Remember that if you don&#8217;t explicitly create at least one
+constructor, the default constructor (a constructor with no arguments) will be
+created for you. By writing the default constructor, it won&#8217;t be created
+automatically. By making it <B>private</B>, no one can create an object of that
+class. But now how does anyone use this class? The above example shows two
+options. First, a <B>static</B> method is created that creates a new <B>Soup</B>
+and returns a reference to it. This could be useful if you want to do some extra
+operations on the <B>Soup</B> before returning it, or if you want to keep count
+of how many <B>Soup</B> objects to create (perhaps to restrict their
+population). 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I73' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I74>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The second option uses what&#8217;s
+called a
+<A NAME="Index531"></A><A NAME="Index532"></A><A NAME="Index533"></A><I>design
+pattern</I>, which is covered in <I>Thinking in Patterns with Java</I>,
+downloadable at <I>www.BruceEckel.com</I>. This particular pattern is called a
+&#8220;<A NAME="Index534"></A>singleton&#8221; because it allows only a single
+object to ever be created. The object of class <B>Soup</B> is created as a
+<B>static</B> <B>private </B>member of <B>Soup</B>, so there&#8217;s one and
+only one, and you can&#8217;t get at it except through the <B>public</B> method
+<B>access(&#160;)</B>. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I74' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I75>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">As previously mentioned, if you
+don&#8217;t put an access specifier for class access it defaults to
+&#8220;friendly.&#8221; This means that an object of that class can be created
+by any other class in the package, but not outside the package. (Remember, all
+the files within the same directory that don&#8217;t have explicit <B>package
+</B>declarations are implicitly part of the default package for that directory.)
+However, if a <B>static</B> member of that class is <B>public</B>, the client
+programmer can still access that <B>static</B> member even though they cannot
+create an object of that class.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I75' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I76>
+</FONT><A NAME="_Toc375545303"></A><A NAME="_Toc481064601"></A><BR></P></DIV>
+<A NAME="Heading204"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Summary</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In any relationship it&#8217;s important
+to have boundaries that are respected by all parties involved. When you create a
+library, you establish a relationship with the user of that library&#8212;the
+client programmer&#8212;who is another programmer, but one putting together an
+application or using your library to build a bigger library.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I76' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I77>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Without rules, client programmers can do
+anything they want with all the members of a class, even if you might prefer
+they don&#8217;t directly manipulate some of the members. Everything&#8217;s
+naked to the world. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I77' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I78>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This chapter looked at how classes are
+built to form libraries; first, the way a group of classes is packaged within a
+library, and second, the way the class controls access to its members.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I78' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I79>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It is estimated that a C programming
+project begins to break down somewhere between 50K and 100K lines of code
+because C has a single &#8220;name space&#8221; so names begin to collide,
+causing an extra management overhead. In Java, the <B>package</B> keyword, the
+package naming scheme, and the <B>import</B> keyword give you complete control
+over names, so the issue of name collision is easily avoided.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I79' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I80>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There are two reasons for controlling
+access <A NAME="Index535"></A><A NAME="Index536"></A>to members. The first is to
+keep users&#8217; hands off tools that they shouldn&#8217;t touch; tools that
+are necessary for the internal machinations of the data type, but not part of
+the interface that users need to solve their particular problems. So making
+methods and fields <B>private</B> is a service to users because they can easily
+see what&#8217;s important to them and what they can ignore. It simplifies their
+understanding of the class.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I80' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I81>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The second and most important reason for
+access control is to allow the library designer to change the internal workings
+of the class without worrying about how it will affect the client programmer.
+You might build a class one way at first, and then discover that restructuring
+your code will provide much greater speed. If the interface and implementation
+are clearly separated and protected, you can accomplish this without forcing the
+user to rewrite their code.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I81' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I82>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Access specifiers in Java give valuable
+control to the creator of a class. The users of the class can clearly see
+exactly what they can use and what to ignore. More important, though, is the
+ability to ensure that no user becomes dependent on any part of the underlying
+implementation of a class. If you know this as the creator of the class, you can
+change the underlying implementation with the knowledge that no client
+programmer will be affected by the changes because they can&#8217;t access that
+part of the class. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I82' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I83>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When you have the ability to change the
+underlying implementation, you can not only improve your design
+<A NAME="Index537"></A>later, but you also have the freedom to make
+mistakes<A NAME="Index538"></A>. No matter how carefully you plan and design
+you&#8217;ll make mistakes. Knowing that it&#8217;s relatively safe to make
+these mistakes means you&#8217;ll be more experimental, you&#8217;ll learn
+faster, and you&#8217;ll finish your project sooner.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I83' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I84>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The public interface to a class is what
+the user <I>does</I> see, so that is the most important part of the class to get
+&#8220;right&#8221; during analysis and design. Even that allows you some leeway
+for change. If you don&#8217;t get the interface right the first time, you can
+<I>add</I> more methods<A NAME="Index539"></A><A NAME="Index540"></A>, as long
+as you don&#8217;t remove any that client programmers have already used in their
+code.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I84' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I85>
+</FONT><A NAME="_Toc375545304"></A><A NAME="_Toc481064602"></A><BR></P></DIV>
+<A NAME="Heading205"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Exercises</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=2>Solutions to selected exercises
+can be found in the electronic document <I>The Thinking in Java Annotated
+Solution Guide</I>, available for a small fee from
+<I>www.BruceEckel.com</I>.</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Write a program that
+creates an <B>ArrayList</B> object without explicitly importing
+<B>java.util.*</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I85' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I86>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">In
+the section labeled &#8220;package: the library unit,&#8221; turn the code
+fragments concerning <B>mypackage</B> into a compiling and running set of Java
+files.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I86' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I87>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">In
+the section labeled &#8220;Collisions,&#8221; take the code fragments and turn
+them into a program, and verify that collisions do in fact occur.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I87' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I88>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Generalize
+the class <B>P</B> defined in this chapter by adding all the overloaded versions
+of <B>rint(&#160;)</B> and <B>rintln(&#160;)</B> necessary to handle all the
+different basic Java types.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I88' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I89>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Change
+the import statement in <B>TestAssert.java</B> to enable and disable the
+assertion mechanism.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I89' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I90>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class with <B>public</B>, <B>private</B>, <B>protected,</B> and
+&#8220;friendly&#8221; data members and method members. Create an object of this
+class and see what kind of compiler messages you get when you try to access all
+the class members. Be aware that classes in the same directory are part of the
+&#8220;default&#8221; package.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I90' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I91>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class with <B>protected</B> data. Create a second class in the same file with
+a method that manipulates the <B>protected</B> data in the first class.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I91' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I92>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Change
+the class <B>Cookie </B>as specified in the section labeled
+&#8220;<B>protected</B>: &#8216;sort of friendly.&#8217;&#8221; Verify that
+<B>bite(&#160;) </B>is not <B>public</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I92' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I93>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">In
+the section titled &#8220;Class access&#8221; you&#8217;ll find code fragments
+describing <B>mylib</B> and <B>Widget</B>. Create this library, then create a
+<B>Widget</B> in a class that is not part of the <B>mylib</B> package.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I93' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I94>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a new directory and edit your CLASSPATH to include that new directory. Copy the
+<B>P.class</B> file (produced by compiling
+<B>com.bruceeckel.tools.P.java</B>)<B> </B>to your new directory and then change
+the names of the file, the <B>P</B> class inside and the method names. (You
+might also want to add additional output to watch how it works.) Create another
+program in a different directory that uses your new class.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I94' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I95>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Following
+the form of the example <B>Lunch.java</B>, create a class called
+<B>ConnectionManager</B> that manages a fixed array of <B>Connection</B>
+objects. The client programmer must not be able to explicitly create
+<B>Connection</B> objects, but can only get them via a <B>static</B> method in
+<B>ConnectionManager</B>. When the <B>ConnectionManager</B> runs out of objects,
+it returns a <B>null</B> reference. Test the classes in <B>main(&#160;)</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I95' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER5_I96>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+the following file in the c05/local directory (presumably in your
+CLASSPATH):</FONT></OL>
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>///: c05:local:PackagedClass.java</font>
+<font color=#0000ff>package</font> c05.local;
+<font color=#0000ff>class</font> PackagedClass {
+  <font color=#0000ff>public</font> PackagedClass() {
+    System.out.println(
+      <font color=#004488>"Creating a packaged class"</font>);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Then create the following file in a
+directory other than c05:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>///: c05:foreign:Foreign.java</font>
+<font color=#0000ff>package</font> c05.foreign;
+<font color=#0000ff>import</font> c05.local.*;
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Foreign {
+   <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main (String[] args) {
+      PackagedClass pc = <font color=#0000ff>new</font> PackagedClass();
+   }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Explain why the compiler generates an
+error. Would making the <B>Foreign</B> class part of the <B>c05.local</B>
+package change anything? 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER5_I96' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+</FONT><BR></P></DIV>
+
+<HR><DIV ALIGN="LEFT"><P><A NAME="fn32" HREF="#fnB32">[32]</A><FONT FACE="Georgia" SIZE=2>
+There&#8217;s nothing in Java that forces the use of an interpreter. There exist
+native-code Java compilers that generate a single executable
+file.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn33" HREF="#fnB33">[33]</A><FONT FACE="Georgia" SIZE=2>
+There&#8217;s another effect in this case: Since the default constructor is the
+only one defined, and it&#8217;s <B>private</B>, it will prevent inheritance of
+this class. (A subject that will be introduced in Chapter 6.)</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn34" HREF="#fnB34">[34]</A><FONT FACE="Georgia" SIZE=2>
+However, people often refer to implementation hiding alone as
+encapsulation.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn35" HREF="#fnB35">[35]</A><FONT FACE="Georgia" SIZE=2>
+Actually, an <I>inner class</I> can be private or protected, but that&#8217;s a
+special case. These will be introduced in Chapter 7.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn36" HREF="#fnB36">[36]</A><FONT FACE="Georgia" SIZE=2>
+You can also do it by inheriting (Chapter 6) from that class.</FONT><BR></P></DIV>
+
+<DIV ALIGN="CENTER">
+    <FONT FACE="Verdana" size = "-1">
+     [ <a href="Chap04.htm">Previous Chapter</a> ] 
+    [ <a href="SimpCont.htm">Short TOC</a> ] 
+    [ <a href="Contents.htm">Table of Contents</a> ] 
+    [ <a href="DocIdx.htm">Index</a> ]
+     [ <a href="Chap06.htm">Next Chapter</a> ] 
+    </FONT>
+    <BR>
+ Last Update:05/21/2001</P></DIV>
+
+</BODY>
+
+</HTML>

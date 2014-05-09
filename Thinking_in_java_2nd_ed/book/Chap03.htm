@@ -1,0 +1,3453 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<!--
+This document was converted from RTF source: 
+By rtftohtml 4.19
+See http://www.sunpack.com/RTF
+Filename:TIJ2.rtf
+Application Directory:C:\TOOLS\RTF2HTML\
+Subject:
+Author:Bruce Eckel
+Operator:Bruce Eckel
+Document Comments:
+Version Comments:
+Comments:
+Keywords:
+Translation Date:05/21/2001
+Translation Time:10:39:05
+Translation Platform:Win32
+Number of Output files:23
+This File:Chap03.htm
+SplitDepth=1
+SkipNavPanel=1
+SkipLeadingToc=1
+SkipTrailingToc=1
+GenContents=1
+GenFrames=1
+GenIndex=1
+-->
+<HEAD lang="en"><META http-equiv="Content-Type" content="text/html">
+<TITLE>3: Controlling Program Flow</TITLE>
+</HEAD>
+
+<BODY  BGCOLOR="#FFFFFF"><DIV ALIGN="CENTER">
+  <a href="http://www.MindView.net">
+  <img src="mindview.gif" alt="MindView Inc." BORDER = "0"></a>
+  <CENTER>
+    <FONT FACE="Verdana" size = "-1">
+    [ <a href="README.txt">Viewing Hints</a> ]
+    [ <a href="RevHist.htm">Revision History</a> ]
+    [ <a href="http://www.mindview.net/Books/TIJ/">Book Home Page</a> ]
+    [ <a href="http://www.mindview.net/Etc/MailingList.html">Free Newsletter</a> ] <br>
+    [ <a href="http://www.mindview.net/Seminars">Seminars</a> ]
+    [ <a href="http://www.mindview.net/CDs">Seminars on CD ROM</a> ]
+    [ <a href="http://www.mindview.net/Services">Consulting</a> ]
+    </FONT>
+  <H2><FONT FACE="Verdana">
+  Thinking in Java, 2nd edition, Revision 12</FONT></H2>
+  <H3><FONT FACE="Verdana">&copy;2000 by Bruce Eckel</FONT></H3>
+  
+    <FONT FACE="Verdana" size = "-1">
+     [ <a href="Chap02.htm">Previous Chapter</a> ] 
+    [ <a href="SimpCont.htm">Short TOC</a> ] 
+    [ <a href="Contents.htm">Table of Contents</a> ] 
+    [ <a href="DocIdx.htm">Index</a> ]
+     [ <a href="Chap04.htm">Next Chapter</a> ] 
+    </FONT>
+    
+  </CENTER>
+  </P></DIV><A NAME="_Toc477690723"></A><A NAME="_Toc481064540"></A><A NAME="Heading125"></A><FONT FACE = "Verdana"><H1 ALIGN="LEFT">
+3: Controlling Program Flow</H1></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=4><backtalk:display ID=TIJ3_CHAPTER3_I0>
+Like a
+sentient creature, a program must manipulate its world and make choices during
+execution. </FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In Java you manipulate objects and data
+using operators, and you make choices with execution control statements. Java
+was inherited from C++, so most of these statements and operators will be
+familiar to C and C++ programmers. Java has also added some improvements and
+simplifications. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I0' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I1>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you find yourself floundering a bit in
+this chapter, make sure you go through the multimedia CD ROM bound into this
+book: <I>Thinking in C: Foundations for Java and C++</I>. It contains audio
+lectures, slides, exercises, and solutions specifically designed to bring you up
+to speed with the C syntax necessary to learn Java.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I1' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I2>
+</FONT><A NAME="_Toc375545247"></A><A NAME="_Toc481064541"></A><BR></P></DIV>
+<A NAME="Heading126"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Using Java operators<BR><A NAME="Index198"></A><A NAME="Index199"></A></H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">An operator takes one or more arguments
+and produces a new value. The arguments are in a different form than ordinary
+method calls, but the effect is the same. You should be reasonably comfortable
+with the general concept of operators from your previous programming experience.
+Addition (<B>+</B>), subtraction and unary minus (<B>-</B>), multiplication
+(<B>*</B>), division (<B>/</B>), and assignment (<B>=</B>) all work much the
+same in any programming language.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I2' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I3>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">All operators produce a value from their
+operands. In addition, an operator can change the value of an operand. This is
+called a <I>side effect<A NAME="Index200"></A></I>. The most common use for
+operators that modify their operands is to generate the side effect, but you
+should keep in mind that the value produced is available for your use just as in
+operators without side effects.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I3' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I4>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Almost all operators work only with
+primitives. The exceptions are <B>&#8216;=</B>&#8217;, &#8216;<B>==</B>&#8217;
+and &#8216;<B>!=</B>&#8217;, which work with all objects (and are a point of
+confusion for objects). In addition, the <B>String </B>class supports
+&#8216;<B>+</B>&#8217; and &#8216;<B>+=</B>&#8217;.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I4' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I5>
+</FONT><A NAME="_Toc375545248"></A><A NAME="_Toc481064542"></A><BR></P></DIV>
+<A NAME="Heading127"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Precedence<BR><A NAME="Index201"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Operator precedence defines how an
+expression evaluates when several operators are present. Java has specific rules
+that determine the order of evaluation. The easiest one to remember is that
+multiplication and division happen before addition and subtraction. Programmers
+often forget the other precedence rules, so you should use parentheses to make
+the order of evaluation explicit. For example:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I5' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I6>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>A a = X x + Y y - 2/2 + Zz;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">has a very different meaning from the
+same statement with a particular grouping of parentheses:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I6' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I7>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>A a = X x + (Y y - 2)/(2 + Zz);</PRE></FONT></BLOCKQUOTE><DIV ALIGN="LEFT"><P><A NAME="_Toc375545249"></A><A NAME="_Toc481064543"></A><BR></P></DIV>
+<A NAME="Heading128"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Assignment<A NAME="Index202"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Assignment is performed with the operator
+=. It means &#8220;take the value of the right-hand side (often called the
+<I>rvalue<A NAME="Index203"></A></I>) and copy it into the left-hand side (often
+called the <I>lvalue<A NAME="Index204"></A></I>). An rvalue is any constant,
+variable or expression that can produce a value, but an lvalue must be a
+distinct, named variable. (That is, there must be a physical space to store a
+value.) For instance, you can assign a constant value to a variable (<B>A =
+4;</B>), but you cannot assign anything to constant value&#8212;it cannot be an
+lvalue. (You can&#8217;t say <B>4 = A;</B>.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I7' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I8>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Assignment of primitives is quite
+straightforward. Since the primitive holds the actual value and not a reference
+to an object, when you assign primitives you copy the contents from one place to
+another. For example, if you say <B>A = B</B> for primitives, then the contents
+of <B>B</B> are copied into <B>A</B>. If you then go on to modify <B>A</B>,
+<B>B</B> is naturally unaffected by this modification. As a programmer, this is
+what you&#8217;ve come to expect for most situations.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I8' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I9>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When you
+<A NAME="Index205"></A><A NAME="Index206"></A><A NAME="Index207"></A><A NAME="Index208"></A>assign
+objects, however, things change. Whenever you manipulate an object, what
+you&#8217;re manipulating is the reference, so when you assign &#8220;from one
+object to another&#8221; you&#8217;re actually copying a reference from one
+place to another. This means that if you say <B>C = D</B> for objects, you end
+up with both <B>C</B> and <B>D</B> pointing to the object that, originally, only
+<B>D</B> pointed to. The following example will demonstrate this. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I9' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I10>
+</FONT><A NAME="Running_programs"></A><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here&#8217;s the
+example:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:Assignment.java</font>
+<font color=#009900>// Assignment with objects is a bit tricky.</font>
+
+<font color=#0000ff>class</font> Number {
+  <font color=#0000ff>int</font> i;
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Assignment {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Number n1 = <font color=#0000ff>new</font> Number();
+    Number n2 = <font color=#0000ff>new</font> Number();
+    n1.i = 9;
+    n2.i = 47;
+    System.out.println(<font color=#004488>"1: n1.i: "</font> + n1.i +
+      <font color=#004488>", n2.i: "</font> + n2.i);
+    n1 = n2;
+    System.out.println(<font color=#004488>"2: n1.i: "</font> + n1.i +
+      <font color=#004488>", n2.i: "</font> + n2.i);
+    n1.i = 27;
+    System.out.println(<font color=#004488>"3: n1.i: "</font> + n1.i +
+      <font color=#004488>", n2.i: "</font> + n2.i);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>Number</B> class is simple, and
+two instances of it (<B>n1</B> and <B>n2</B>) are created within
+<B>main(&#160;)</B>. The <B>i</B> value within each <B>Number</B> is given a
+different value, and then <B>n2</B> is assigned to <B>n1</B>, and <B>n1</B> is
+changed. In many programming languages you would expect <B>n1</B> and <B>n2</B>
+to be independent at all times, but because you&#8217;ve assigned a reference
+here&#8217;s the output you&#8217;ll see:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I10' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I11>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>1: n1.i: 9, n2.i: 47
+2: n1.i: 47, n2.i: 47
+3: n1.i: 27, n2.i: 27</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Changing the <B>n1</B> object appears to
+change the <B>n2</B> object as well! This is because both <B>n1</B> and
+<B>n2</B> contain the same reference, which is pointing to the same object. (The
+original reference that was in <B>n1</B> that pointed to the object holding a
+value of 9 was overwritten during the assignment and effectively lost; its
+object will be cleaned up by the garbage collector.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I11' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I12>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This phenomenon is often called
+<A NAME="Index209"></A><A NAME="Index210"></A><I>aliasing</I> and it&#8217;s a
+fundamental way that Java works with objects. But what if you don&#8217;t want
+aliasing to occur in this case? You could forego the assignment and say:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I12' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I13>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>n1.i = n2.i;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This retains the two separate objects
+instead of tossing one and tying <B>n1 </B>and <B>n2</B> to the same object, but
+you&#8217;ll soon realize that manipulating the fields within objects is messy
+and goes against good object-oriented design principles. This is a nontrivial
+topic, so it is left for Appendix A, which is devoted to aliasing. In the
+meantime, you should keep in mind that assignment for objects can add surprises.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I13' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I14>
+</FONT><BR></P></DIV>
+<A NAME="Heading129"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Aliasing during method calls<BR><A NAME="Index211"></A></H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Aliasing will also occur when you pass an
+object into a method:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:PassObject.java</font>
+<font color=#009900>// Passing objects to methods may not be what</font>
+<font color=#009900>// you're used to.</font>
+
+<font color=#0000ff>class</font> Letter {
+  <font color=#0000ff>char</font> c;
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> PassObject {
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> f(Letter y) {
+    y.c = 'z';
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Letter x = <font color=#0000ff>new</font> Letter();
+    x.c = 'a';
+    System.out.println(<font color=#004488>"1: x.c: "</font> + x.c);
+    f(x);
+    System.out.println(<font color=#004488>"2: x.c: "</font> + x.c);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In many programming languages, the method
+<B>f(&#160;)</B> would appear to be making a copy of its argument <B>Letter
+y</B> inside the scope of the method. But once again a reference is being passed
+so the line 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I14' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I15>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>y.c = 'z';</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">is actually changing the object outside
+of <B>f(&#160;)</B>. The output shows this:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I15' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I16>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>1: x.c: a
+2: x.c: z</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Aliasing and its solution is a complex
+issue and, although you must wait until Appendix A for all the answers, you
+should be aware of it at this point so you can watch for pitfalls.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I16' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I17>
+</FONT><A NAME="_Toc375545250"></A><A NAME="_Toc481064544"></A><BR></P></DIV>
+<A NAME="Heading130"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Mathematical operators<A NAME="Index212"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The basic mathematical operators are the
+same as the ones available in most programming languages: addition
+<A NAME="Index213"></A>(<B>+</B>), subtraction<A NAME="Index214"></A>
+(<B>-</B>), division<A NAME="Index215"></A> (<B>/</B>),
+multiplication<A NAME="Index216"></A> (<B>*</B>) and
+modulus<A NAME="Index217"></A> (<B>%</B>, which produces the remainder from
+integer division). Integer division truncates, rather than rounds, the result.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I17' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I18>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java also uses a shorthand notation to
+perform an operation and an assignment at the same time. This is denoted by an
+operator followed by an equal sign, and is consistent with all the operators in
+the language (whenever it makes sense). For example, to add 4 to the variable
+<B>x</B> and assign the result<B> </B>to <B>x</B>, use: <B>x += 4</B>. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I18' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I19>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This example shows the use of the
+mathematical operators:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:MathOps.java</font>
+<font color=#009900>// Demonstrates the mathematical operators.</font>
+<font color=#0000ff>import</font> java.util.*;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> MathOps {
+  <font color=#009900>// Create a shorthand to save typing:</font>
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> prt(String s) {
+    System.out.println(s);
+  }
+  <font color=#009900>// shorthand to print a string and an int:</font>
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> pInt(String s, <font color=#0000ff>int</font> i) {
+    prt(s + <font color=#004488>" = "</font> + i);
+  }
+  <font color=#009900>// shorthand to print a string and a float:</font>
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> pFlt(String s, <font color=#0000ff>float</font> f) {
+    prt(s + <font color=#004488>" = "</font> + f);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#009900>// Create a random number generator,</font>
+    <font color=#009900>// seeds with current time by default:</font>
+    Random rand = <font color=#0000ff>new</font> Random();
+    <font color=#0000ff>int</font> i, j, k;
+    <font color=#009900>// '%' limits maximum value to 99:</font>
+    j = rand.nextInt() % 100;
+    k = rand.nextInt() % 100;
+    pInt(<font color=#004488>"j"</font>,j);  pInt(<font color=#004488>"k"</font>,k);
+    i = j + k; pInt(<font color=#004488>"j + k"</font>, i);
+    i = j - k; pInt(<font color=#004488>"j - k"</font>, i);
+    i = k / j; pInt(<font color=#004488>"k </font><font color=#004488>/ j"</font>, i);
+    i = k * j; pInt(<font color=#004488>"k * j"</font>, i);
+    i = k % j; pInt(<font color=#004488>"k % j"</font>, i);
+    j %= k; pInt(<font color=#004488>"j %= k"</font>, j);
+    <font color=#009900>// Floating-point number tests:</font>
+    <font color=#0000ff>float</font> u,v,w;  <font color=#009900>// applies to doubles, too</font>
+    v = rand.nextFloat();
+    w = rand.nextFloat();
+    pFlt(<font color=#004488>"v"</font>, v); pFlt(<font color=#004488>"w"</font>, w);
+    u = v + w; pFlt(<font color=#004488>"v + w"</font>, u);
+    u = v - w; pFlt(<font color=#004488>"v - w"</font>, u);
+    u = v * w; pFlt(<font color=#004488>"v * w"</font>, u);
+    u = v / w; pFlt(<font color=#004488>"v </font><font color=#004488>/ w"</font>, u);
+    <font color=#009900>// the following also works for</font>
+    <font color=#009900>// char, byte, short, int, long,</font>
+    <font color=#009900>// and double:</font>
+    u += v; pFlt(<font color=#004488>"u += v"</font>, u);
+    u -= v; pFlt(<font color=#004488>"u -= v"</font>, u);
+    u *= v; pFlt(<font color=#004488>"u *= v"</font>, u);
+    u /= v; pFlt(<font color=#004488>"u </font><font color=#004488>/= v"</font>, u);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The first thing you will see are some
+shorthand methods for printing: the <B>prt(&#160;)</B> method prints a
+<B>String</B>, the <B>pInt(&#160;)</B> prints a <B>String</B> followed by an
+<B>int</B> and the <B>pFlt(&#160;)</B> prints a <B>String</B> followed by a
+<B>float</B>. Of course, they all ultimately end up using
+<B>System.out.println(&#160;)</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I19' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I20>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To generate numbers, the program first
+creates a <B>Random</B> object. Because no arguments are passed during creation,
+Java uses the current time as a seed for the random number generator. The
+program generates a number of different types of random numbers with the
+<B>Random</B> object simply by calling different methods:
+<B>nextInt(&#160;)</B>, <B>nextLong(&#160;)</B>,<B> nextFloat(&#160;)</B> or<B>
+nextDouble(&#160;)</B>.  
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I20' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I21>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The modulus operator, when used with the
+result of the random number generator, limits the result to an upper bound of
+the operand minus one (99 in this case).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I21' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I22>
+</FONT><BR></P></DIV>
+<A NAME="Heading131"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Unary minus and plus
+operators<BR><A NAME="Index218"></A><A NAME="Index219"></A></H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The unary minus
+(-)<A NAME="Index220"></A><A NAME="Index221"></A> and unary plus
+(+)<A NAME="Index222"></A><A NAME="Index223"></A> are the same operators as
+binary minus and plus. The compiler figures out which use is intended by the way
+you write the expression. For instance, the statement
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I22' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I23>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>x = -a;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">has an obvious meaning. The compiler is
+able to figure out: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I23' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I24>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>x = a * -b;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">but the reader might get confused, so it
+is clearer to say: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I24' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I25>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>x = a * (-b);</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The unary minus produces the negative of
+the value. Unary plus provides symmetry with unary minus, although it
+doesn&#8217;t have any effect.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I25' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I26>
+</FONT><A NAME="_Toc375545251"></A><A NAME="_Toc481064545"></A><BR></P></DIV>
+<A NAME="Heading132"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Auto increment and decrement</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java, like C, is full of shortcuts.
+Shortcuts can make code much easier to type, and either easier or harder to
+read.  
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I26' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I27>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Two of the nicer shortcuts are the
+increment<A NAME="Index224"></A> and decrement<A NAME="Index225"></A> operators
+(often referred to as the auto-increment<A NAME="Index226"></A> and
+auto-decrement<A NAME="Index227"></A> operators). The decrement operator is
+<B>--</B> and means &#8220;decrease by one unit.&#8221; The increment operator
+is <B>++</B> and means &#8220;increase by one unit.&#8221; If <B>a</B> is an
+<B>int</B>, for example, the expression <B>++a</B> is equivalent to (<B>a = a +
+1</B>). Increment and decrement operators produce the value of the variable as a
+result.  
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I27' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I28>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There are two versions of each type of
+operator, often called the prefix and postfix versions. Pre-increment means the
+<B>++ </B>operator appears before the variable or expression, and post-increment
+means the <B>++</B> operator appears after the variable or expression.
+Similarly, pre-decrement means the <B>-- </B>operator appears before the
+variable or expression, and post-decrement means the <B>--</B> operator appears
+after the variable or expression. For pre-increment and pre-decrement, (i.e.,
+<B>++a</B> or <B>--a</B>), the operation is performed and the value is produced.
+For post-increment and post-decrement (i.e. <B>a++ </B>or <B>a--</B>), the value
+is produced, then the operation is performed. As an example:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I28' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I29>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:AutoInc.java</font>
+<font color=#009900>// Demonstrates the ++ and -- operators.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> AutoInc {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>int</font> i = 1;
+    prt(<font color=#004488>"i : "</font> + i);
+    prt(<font color=#004488>"++i : "</font> + ++i); <font color=#009900>// Pre-increment</font>
+    prt(<font color=#004488>"i++ : "</font> + i++); <font color=#009900>// Post-increment</font>
+    prt(<font color=#004488>"i : "</font> + i);
+    prt(<font color=#004488>"--i : "</font> + --i); <font color=#009900>// Pre-decrement</font>
+    prt(<font color=#004488>"i-- : "</font> + i--); <font color=#009900>// Post-decrement</font>
+    prt(<font color=#004488>"i : "</font> + i);
+  }
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> prt(String s) {
+    System.out.println(s);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The output for this program is:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I29' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I30>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>i : 1
+++i : 2
+i++ : 2
+i : 3
+--i : 2
+i-- : 2
+i : 1</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can see that for the prefix form you
+get the value after the operation has been performed, but with the postfix form
+you get the value before the operation is performed. These are the only
+operators (other than those involving assignment) that have side effects. (That
+is, they change the operand rather than using just its
+value.)<A NAME="Index228"></A>
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I30' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I31>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The increment operator is one explanation
+for the name C++, implying &#8220;one step beyond C.&#8221; In an early Java
+speech, <A NAME="Index229"></A>Bill Joy (one of the creators), said that
+&#8220;Java=C++--&#8221; (C plus plus minus minus), suggesting that Java is C++
+with the unnecessary hard parts removed and therefore a much simpler language.
+As you progress in this book you&#8217;ll see that many parts are simpler, and
+yet Java isn&#8217;t <I>that </I>much easier than <A NAME="Index230"></A>C++. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I31' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I32>
+</FONT><A NAME="_Toc375545252"></A><A NAME="_Toc481064546"></A><BR></P></DIV>
+<A NAME="Heading133"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Relational operators<BR><A NAME="Index231"></A><A NAME="Index232"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Relational operators generate a
+<B>boolean</B> result. They evaluate the relationship between the values of the
+operands. A relational expression produces <B>true</B> if the relationship is
+true, and <B>false</B> if the relationship is untrue. The relational operators
+are less than (&lt;)<A NAME="Index233"></A>, greater than
+(&gt;)<A NAME="Index234"></A>, less than or equal to
+(&lt;=)<A NAME="Index235"></A>, greater than or equal to
+(&gt;=)<A NAME="Index236"></A>, equivalent (==)<A NAME="Index237"></A> and not
+equivalent
+(!=)<A NAME="Index238"></A>.<A NAME="Index239"></A><A NAME="Index240"></A><A NAME="Index241"></A><A NAME="Index242"></A><A NAME="Index243"></A><A NAME="Index244"></A>
+Equivalence and nonequivalence works with all built-in data types, but the other
+comparisons won&#8217;t work with type <B>boolean<A NAME="Index245"></A></B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I32' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I33>
+</FONT><BR></P></DIV>
+<A NAME="Heading134"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Testing object
+equivalence<BR><A NAME="Index246"></A><A NAME="Index247"></A></H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The relational operators <B>==</B> and
+<B>!=</B> also work with all objects, but their meaning often confuses the
+first-time Java programmer. Here&#8217;s an example:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I33' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I34>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:Equivalence.java</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Equivalence {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Integer n1 = <font color=#0000ff>new</font> Integer(47);
+    Integer n2 = <font color=#0000ff>new</font> Integer(47);
+    System.out.println(n1 == n2);
+    System.out.println(n1 != n2);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The expression <B>System.out.println(n1
+== n2)</B> will print the result of the <B>boolean</B> comparison within it.
+Surely the output should be <B>true</B> and then <B>false</B>,<B> </B>since both
+<B>Integer</B> objects are the same. But while the <I>contents</I> of the
+objects are the same, the
+<A NAME="Index248"></A><A NAME="Index249"></A>references are not the same and
+the operators <B>==</B> and <B>!= </B>compare object references. So the output
+is actually <B>false</B> and then <B>true</B>. Naturally, this surprises people
+at first. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I34' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I35>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">What if you want to compare the actual
+contents of an object for equivalence? You must use the special method
+<A NAME="Index250"></A><A NAME="Index251"></A><B>equals(&#160;)</B> that exists
+for all objects (not <A NAME="Index252"></A>primitives, which work fine with
+<B>==</B> and <B>!=</B>). Here&#8217;s how it&#8217;s used:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I35' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I36>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:EqualsMethod.java</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> EqualsMethod {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Integer n1 = <font color=#0000ff>new</font> Integer(47);
+    Integer n2 = <font color=#0000ff>new</font> Integer(47);
+    System.out.println(n1.equals(n2));
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The result will be <B>true</B>, as you
+would expect. Ah, but it&#8217;s not as simple as that. If you create your own
+class, like this: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I36' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I37>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:EqualsMethod2.java</font>
+
+<font color=#0000ff>class</font> Value {
+  <font color=#0000ff>int</font> i;
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> EqualsMethod2 {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Value v1 = <font color=#0000ff>new</font> Value();
+    Value v2 = <font color=#0000ff>new</font> Value();
+    v1.i = v2.i = 100;
+    System.out.println(v1.equals(v2));
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">you&#8217;re back to square one: the
+result is <B>false</B>. This is because the default behavior of
+<B>equals(&#160;)</B> is to compare references. So unless you <I>override</I>
+<B>equals(&#160;)</B> in your new class you won&#8217;t get the desired
+behavior. Unfortunately, you won&#8217;t learn about overriding until Chapter 7,
+but being aware of the way <B>equals(&#160;)</B> behaves might save you some
+grief in the meantime. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I37' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I38>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Most of the Java library classes
+implement <B>equals(&#160;)</B> so that it compares the contents of objects
+instead of their references.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I38' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I39>
+</FONT><A NAME="_Toc375545253"></A><A NAME="_Toc481064547"></A><BR></P></DIV>
+<A NAME="Heading135"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Logical operators<A NAME="Index253"></A><A NAME="Index254"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The logical operators AND
+(&amp;&amp;)<A NAME="Index255"></A><A NAME="Index256"></A>, OR
+(||)<A NAME="Index257"></A><A NAME="Index258"></A> and
+<A NAME="Index259"></A><A NAME="Index260"></A>NOT (!) produce a <B>boolean</B>
+value of <B>true</B> or <B>false</B>
+<A NAME="Index261"></A><A NAME="Index262"></A>based on the logical relationship
+of its arguments. This example uses the relational and logical operators:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I39' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I40>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:Bool.java</font>
+<font color=#009900>// Relational and logical operators.</font>
+<font color=#0000ff>import</font> java.util.*;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Bool {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Random rand = <font color=#0000ff>new</font> Random();
+    <font color=#0000ff>int</font> i = rand.nextInt() % 100;
+    <font color=#0000ff>int</font> j = rand.nextInt() % 100;
+    prt(<font color=#004488>"i = "</font> + i);
+    prt(<font color=#004488>"j = "</font> + j);
+    prt(<font color=#004488>"i &gt; j is "</font> + (i &gt; j));
+    prt(<font color=#004488>"i &lt; j is "</font> + (i &lt; j));
+    prt(<font color=#004488>"i &gt;= j is "</font> + (i &gt;= j));
+    prt(<font color=#004488>"i &lt;= j is "</font> + (i &lt;= j));
+    prt(<font color=#004488>"i == j is "</font> + (i == j));
+    prt(<font color=#004488>"i != j is "</font> + (i != j));
+
+    <font color=#009900>// Treating an int as a boolean is </font>
+    <font color=#009900>// not legal Java</font>
+<font color=#009900>//! prt("i &amp;&amp; j is " + (i &amp;&amp; j));</font>
+<font color=#009900>//! prt("i || j is " + (i || j));</font>
+<font color=#009900>//! prt("!i is " + !i);</font>
+
+    prt(<font color=#004488>"(i &lt; 10) &amp;&amp; (j &lt; 10) is "</font>
+       + ((i &lt; 10) &amp;&amp; (j &lt; 10)) );
+    prt(<font color=#004488>"(i &lt; 10) || (j &lt; 10) is "</font>
+       + ((i &lt; 10) || (j &lt; 10)) );
+  }
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> prt(String s) {
+    System.out.println(s);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can apply AND, OR, or NOT to
+<B>boolean</B> values only. You can&#8217;t use a non-<B>boolean</B> as if it
+were a <A NAME="Index263"></A><B>boolean</B> in a logical expression as you can
+in C and C++. You can see the failed attempts at doing this commented out with a
+<B>//!</B> comment marker. The subsequent expressions, however, produce
+<B>boolean</B> values using relational comparisons, then use logical operations
+on the results. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I40' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I41>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">One output listing looked like
+this:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>i = 85
+j = 4
+i &gt; j is <font color=#0000ff>true</font>
+i &lt; j is <font color=#0000ff>false</font>
+i &gt;= j is <font color=#0000ff>true</font>
+i &lt;= j is <font color=#0000ff>false</font>
+i == j is <font color=#0000ff>false</font>
+i != j is <font color=#0000ff>true</font>
+(i &lt; 10) &amp;&amp; (j &lt; 10) is <font color=#0000ff>false</font>
+(i &lt; 10) || (j &lt; 10) is <font color=#0000ff>true</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Note that a <B>boolean</B> value is
+automatically converted to an appropriate text form if it&#8217;s used where a
+<B>String</B> is expected. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I41' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I42>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can replace the definition for
+<B>int</B> in the above program with any other primitive data type except
+<B>boolean</B>. Be aware, however, that the comparison of floating-point numbers
+is very strict. A number that is the tiniest fraction different from another
+number is still &#8220;not equal.&#8221; A number that is the tiniest bit above
+zero is still nonzero.<A NAME="Index264"></A>
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I42' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I43>
+</FONT><BR></P></DIV>
+<A NAME="Heading136"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Short-circuiting</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When dealing with
+<A NAME="Index265"></A><A NAME="Index266"></A><A NAME="Index267"></A>logical
+operators you run into a phenomenon called &#8220;short circuiting.&#8221; This
+means that the expression will be evaluated only <I>until</I> the truth or
+falsehood of the entire expression can be unambiguously determined. As a result,
+all the parts of a logical expression might not be evaluated. Here&#8217;s an
+example that demonstrates short-circuiting:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:ShortCircuit.java</font>
+<font color=#009900>// Demonstrates short-circuiting behavior.</font>
+<font color=#009900>// with logical operators.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> ShortCircuit {
+  <font color=#0000ff>static</font> <font color=#0000ff>boolean</font> test1(<font color=#0000ff>int</font> val) {
+    System.out.println(<font color=#004488>"test1("</font> + val + <font color=#004488>")"</font>);
+    System.out.println(<font color=#004488>"result: "</font> + (val &lt; 1));
+    <font color=#0000ff>return</font> val &lt; 1;
+  }
+  <font color=#0000ff>static</font> <font color=#0000ff>boolean</font> test2(<font color=#0000ff>int</font> val) {
+    System.out.println(<font color=#004488>"test2("</font> + val + <font color=#004488>")"</font>);
+    System.out.println(<font color=#004488>"result: "</font> + (val &lt; 2));
+    <font color=#0000ff>return</font> val &lt; 2;
+  }
+  <font color=#0000ff>static</font> <font color=#0000ff>boolean</font> test3(<font color=#0000ff>int</font> val) {
+    System.out.println(<font color=#004488>"test3("</font> + val + <font color=#004488>")"</font>);
+    System.out.println(<font color=#004488>"result: "</font> + (val &lt; 3));
+    <font color=#0000ff>return</font> val &lt; 3;
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>if</font>(test1(0) &amp;&amp; test2(2) &amp;&amp; test3(2))
+      System.out.println(<font color=#004488>"expression is true"</font>);
+    <font color=#0000ff>else</font>
+      System.out.println(<font color=#004488>"expression is false"</font>);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Each test performs a comparison against
+the argument and returns true or false. It also prints information to show you
+that it&#8217;s being called. The tests are used in the expression:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I43' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I44>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>if</font>(test1(0) &amp;&amp; test2(2) &amp;&amp; test3(2))</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You might naturally think that all three
+tests would be executed, but the output shows otherwise:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I44' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I45>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>test1(0)
+result: <font color=#0000ff>true</font>
+test2(2)
+result: <font color=#0000ff>false</font>
+expression is <font color=#0000ff>false</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The first test produced a <B>true</B>
+result, so the expression evaluation continues. However, the second test
+produced a <B>false</B> result. Since this means that the whole expression must
+be <B>false</B>, why continue evaluating the rest of the expression? It could be
+expensive. The reason for short-circuiting, in fact, is precisely that; you can
+get a potential performance increase if all the parts of a logical expression do
+not need to be evaluated.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I45' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I46>
+</FONT><A NAME="_Toc375545254"></A><A NAME="_Toc481064548"></A><BR></P></DIV>
+<A NAME="Heading137"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Bitwise operators<A NAME="Index268"></A><A NAME="Index269"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The bitwise operators allow you to
+manipulate individual bits in an integral primitive data type. Bitwise operators
+perform boolean algebra<A NAME="Index270"></A> on the corresponding bits in the
+two arguments to produce the result.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I46' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I47>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The bitwise operators come from C&#8217;s
+low-level orientation; you were often manipulating hardware directly and had to
+set the bits in hardware registers. Java was originally designed to be embedded
+in TV <A NAME="Index271"></A>set-top boxes, so this low-level orientation still
+made sense. However, you probably won&#8217;t use the bitwise operators much.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I47' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I48>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The bitwise AND operator
+(<B>&amp;</B>)<A NAME="Index272"></A><A NAME="Index273"></A> produces a one in
+the output bit if both input bits are one; otherwise it produces a zero. The
+bitwise OR operator (<B>|</B>)<A NAME="Index274"></A><A NAME="Index275"></A>
+produces a one in the output bit if either input bit is a one and produces a
+zero only if both input bits are zero. The bitwise EXCLUSIVE OR, or XOR
+(<B>^</B>),<A NAME="Index276"></A><A NAME="Index277"></A><A NAME="Index278"></A>
+produces a one in the output bit if one or the other input bit is a one, but not
+both. The bitwise NOT<A NAME="Index279"></A> (<B>~</B>, also called the <I>ones
+complement </I>operator<A NAME="Index280"></A><A NAME="Index281"></A>) is a
+unary operator;<A NAME="Index282"></A><A NAME="Index283"></A> it takes only one
+argument. (All other bitwise operators are binary
+operators.<A NAME="Index284"></A><A NAME="Index285"></A>) Bitwise NOT produces
+the opposite of the input bit&#8212;a one if the input bit is zero, a zero if
+the input bit is one. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I48' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I49>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The bitwise operators and logical
+operators use the same characters, so it is helpful to have a mnemonic device to
+help you remember the meanings: since bits are &#8220;small,&#8221; there is
+only one character in the bitwise operators.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I49' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I50>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Bitwise operators can be combined with
+the <B>=</B> sign to unite the operation and assignment:
+<B>&amp;=<A NAME="Index286"></A></B>, <B>|=<A NAME="Index287"></A></B> and
+<B>^=<A NAME="Index288"></A></B> are all legitimate. (Since <B>~</B> is a unary
+operator it cannot be combined with the <B>=</B> sign.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I50' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I51>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>boolean</B> type is treated as a
+one-bit value so it is somewhat different. You can perform a bitwise AND, OR and
+XOR, but you can&#8217;t perform a bitwise NOT (presumably to prevent confusion
+with the logical NOT). For <B>boolean</B>s the bitwise operators have the same
+effect as the logical operators except that they do not short circuit. Also,
+bitwise operations on <B>boolean</B>s include an XOR logical operator that is
+not included under the list of &#8220;logical&#8221; operators. You&#8217;re
+prevented from using <B>boolean</B>s in shift expressions, which is described
+next.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I51' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I52>
+</FONT><A NAME="_Toc375545255"></A><A NAME="_Toc481064549"></A><BR></P></DIV>
+<A NAME="Heading138"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Shift operators<A NAME="Index289"></A><A NAME="Index290"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The shift operators also manipulate bits.
+They can be used solely with primitive, integral types. The left-shift operator
+(<B>&lt;&lt;</B>)<A NAME="Index291"></A><A NAME="Index292"></A> produces the
+operand to the left of the operator shifted to the left by the number of bits
+specified after the operator (inserting zeroes at the lower-order bits). The
+signed right-shift operator
+(<B>&gt;&gt;</B>)<A NAME="Index293"></A><A NAME="Index294"></A> produces the
+operand to the left of the operator shifted to the right by the number of bits
+specified after the operator. The signed right shift <B>&gt;&gt; </B>uses
+<I>sign extension<A NAME="Index295"></A><A NAME="Index296"></A></I>: if the
+value is positive, zeroes are inserted at the higher-order bits; if the value is
+negative, ones are inserted at the higher-order bits. Java has also added the
+unsigned right shift <B>&gt;&gt;&gt;, </B>which<B> </B>uses <I>zero
+extension<A NAME="Index297"></A><A NAME="Index298"></A></I>: regardless of the
+sign, zeroes are inserted at the higher-order bits.<I> </I>This operator does
+not exist in C or C++.<I>
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I52' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I53>
+</I></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you shift a <B>char</B>, <B>byte,</B>
+or <B>short</B>, it will be promoted to <B>int</B> before the shift takes place,
+and the result will be an <B>int</B>. Only the five low-order bits of the
+right-hand side will be used. This prevents you from shifting more than the
+number of bits in an <B>int</B>. If you&#8217;re operating on a <B>long</B>,
+you&#8217;ll get a <B>long</B> result. Only the six low-order bits of the
+right-hand side will be used so you can&#8217;t shift more than the number of
+bits in a <B>long</B>.  
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I53' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I54>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Shifts can be combined with the equal
+sign (<B>&lt;&lt;=</B> or <B>&gt;&gt;=</B> or
+<B>&gt;&gt;&gt;=</B>)<A NAME="Index299"></A><A NAME="Index300"></A>. The lvalue
+is replaced by the lvalue shifted by the rvalue. There is a problem, however,
+with the unsigned right shift combined with assignment. If you use it with
+<B>byte</B> or <B>short</B> you don&#8217;t get the correct results. Instead,
+these are promoted to <B>int</B> and right shifted, but then truncated as they
+are assigned back into their variables, so you get <B>-1</B> in those cases. The
+following example demonstrates this:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I54' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I55>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:URShift.java</font>
+<font color=#009900>// Test of unsigned right shift.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> URShift {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>int</font> i = -1;
+    i &gt;&gt;&gt;= 10;
+    System.out.println(i);
+    <font color=#0000ff>long</font> l = -1;
+    l &gt;&gt;&gt;= 10;
+    System.out.println(l);
+    <font color=#0000ff>short</font> s = -1;
+    s &gt;&gt;&gt;= 10;
+    System.out.println(s);
+    <font color=#0000ff>byte</font> b = -1;
+    b &gt;&gt;&gt;= 10;
+    System.out.println(b);
+    b = -1;
+    System.out.println(b&gt;&gt;&gt;10);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In the last line, the resulting value is
+not assigned back into <B>b</B>, but is printed directly and so the correct
+behavior occurs. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I55' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I56>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here&#8217;s an example that demonstrates
+the use of all the operators involving bits:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:BitManipulation.java</font>
+<font color=#009900>// Using the bitwise operators.</font>
+<font color=#0000ff>import</font> java.util.*;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> BitManipulation {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Random rand = <font color=#0000ff>new</font> Random();
+    <font color=#0000ff>int</font> i = rand.nextInt();
+    <font color=#0000ff>int</font> j = rand.nextInt();
+    pBinInt(<font color=#004488>"-1"</font>, -1);
+    pBinInt(<font color=#004488>"+1"</font>, +1);
+    <font color=#0000ff>int</font> maxpos = 2147483647;
+    pBinInt(<font color=#004488>"maxpos"</font>, maxpos);
+    <font color=#0000ff>int</font> maxneg = -2147483648;
+    pBinInt(<font color=#004488>"maxneg"</font>, maxneg);
+    pBinInt(<font color=#004488>"i"</font>, i);
+    pBinInt(<font color=#004488>"~i"</font>, ~i);
+    pBinInt(<font color=#004488>"-i"</font>, -i);
+    pBinInt(<font color=#004488>"j"</font>, j);
+    pBinInt(<font color=#004488>"i &amp; j"</font>, i &amp; j);
+    pBinInt(<font color=#004488>"i | j"</font>, i | j);
+    pBinInt(<font color=#004488>"i ^ j"</font>, i ^ j);
+    pBinInt(<font color=#004488>"i &lt;&lt; 5"</font>, i &lt;&lt; 5);
+    pBinInt(<font color=#004488>"i &gt;&gt; 5"</font>, i &gt;&gt; 5);
+    pBinInt(<font color=#004488>"(~i) &gt;&gt; 5"</font>, (~i) &gt;&gt; 5);
+    pBinInt(<font color=#004488>"i &gt;&gt;&gt; 5"</font>, i &gt;&gt;&gt; 5);
+    pBinInt(<font color=#004488>"(~i) &gt;&gt;&gt; 5"</font>, (~i) &gt;&gt;&gt; 5);
+
+    <font color=#0000ff>long</font> l = rand.nextLong();
+    <font color=#0000ff>long</font> m = rand.nextLong();
+    pBinLong(<font color=#004488>"-1L"</font>, -1L);
+    pBinLong(<font color=#004488>"+1L"</font>, +1L);
+    <font color=#0000ff>long</font> ll = 9223372036854775807L;
+    pBinLong(<font color=#004488>"maxpos"</font>, ll);
+    <font color=#0000ff>long</font> lln = -9223372036854775808L;
+    pBinLong(<font color=#004488>"maxneg"</font>, lln);
+    pBinLong(<font color=#004488>"l"</font>, l);
+    pBinLong(<font color=#004488>"~l"</font>, ~l);
+    pBinLong(<font color=#004488>"-l"</font>, -l);
+    pBinLong(<font color=#004488>"m"</font>, m);
+    pBinLong(<font color=#004488>"l &amp; m"</font>, l &amp; m);
+    pBinLong(<font color=#004488>"l | m"</font>, l | m);
+    pBinLong(<font color=#004488>"l ^ m"</font>, l ^ m);
+    pBinLong(<font color=#004488>"l &lt;&lt; 5"</font>, l &lt;&lt; 5);
+    pBinLong(<font color=#004488>"l &gt;&gt; 5"</font>, l &gt;&gt; 5);
+    pBinLong(<font color=#004488>"(~l) &gt;&gt; 5"</font>, (~l) &gt;&gt; 5);
+    pBinLong(<font color=#004488>"l &gt;&gt;&gt; 5"</font>, l &gt;&gt;&gt; 5);
+    pBinLong(<font color=#004488>"(~l) &gt;&gt;&gt; 5"</font>, (~l) &gt;&gt;&gt; 5);
+  }
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> pBinInt(String s, <font color=#0000ff>int</font> i) {
+    System.out.println(
+      s + <font color=#004488>", int: "</font> + i + <font color=#004488>", binary: "</font>);
+    System.out.print(<font color=#004488>"   "</font>);
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> j = 31; j &gt;=0; j--)
+      <font color=#0000ff>if</font>(((1 &lt;&lt; j) &amp;  i) != 0)
+        System.out.print(<font color=#004488>"1"</font>);
+      <font color=#0000ff>else</font>
+        System.out.print(<font color=#004488>"0"</font>);
+    System.out.println();
+  }
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> pBinLong(String s, <font color=#0000ff>long</font> l) {
+    System.out.println(
+      s + <font color=#004488>", long: "</font> + l + <font color=#004488>", binary: "</font>);
+    System.out.print(<font color=#004488>"   "</font>);
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 63; i &gt;=0; i--)
+      <font color=#0000ff>if</font>(((1L &lt;&lt; i) &amp; l) != 0)
+        System.out.print(<font color=#004488>"1"</font>);
+      <font color=#0000ff>else</font>
+        System.out.print(<font color=#004488>"0"</font>);
+    System.out.println();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><A NAME="Index301"></A><FONT FACE="Georgia">The two methods at
+the end, <B>pBinInt(&#160;)</B> and <B>pBinLong(&#160;)</B> take an <B>int</B>
+or a <B>long</B>, respectively, and print it out in binary format along with a
+descriptive string. You can ignore the implementation of these for now.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I56' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I57>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You&#8217;ll note the use of
+<B>System.out.print(&#160;)</B> instead of <B>System.out.println(&#160;)</B>.
+The <B>print(&#160;)</B> method does not emit a new line, so it allows you to
+output a line in pieces. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I57' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I58>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">As well as demonstrating the effect of
+all the bitwise operators for <B>int</B> and <B>long</B>, this example also
+shows the minimum, maximum, +1 and -1 values for <B>int</B> and <B>long</B> so
+you can see what they look like. Note that the high bit represents the sign: 0
+means positive and 1 means negative. The output for the <B>int</B> portion looks
+like this:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>-1, <font color=#0000ff>int</font>: -1, binary: 
+   11111111111111111111111111111111
++1, <font color=#0000ff>int</font>: 1, binary: 
+   00000000000000000000000000000001
+maxpos, <font color=#0000ff>int</font>: 2147483647, binary: 
+   01111111111111111111111111111111
+maxneg, <font color=#0000ff>int</font>: -2147483648, binary: 
+   10000000000000000000000000000000
+i, <font color=#0000ff>int</font>: 59081716, binary: 
+   00000011100001011000001111110100
+~i, <font color=#0000ff>int</font>: -59081717, binary: 
+   11111100011110100111110000001011
+-i, <font color=#0000ff>int</font>: -59081716, binary: 
+   11111100011110100111110000001100
+j, <font color=#0000ff>int</font>: 198850956, binary: 
+   00001011110110100011100110001100
+i &amp; j, <font color=#0000ff>int</font>: 58720644, binary: 
+   00000011100000000000000110000100
+i | j, <font color=#0000ff>int</font>: 199212028, binary: 
+   00001011110111111011101111111100
+i ^ j, <font color=#0000ff>int</font>: 140491384, binary: 
+   00001000010111111011101001111000
+i &lt;&lt; 5, <font color=#0000ff>int</font>: 1890614912, binary: 
+   01110000101100000111111010000000
+i &gt;&gt; 5, <font color=#0000ff>int</font>: 1846303, binary: 
+   00000000000111000010110000011111
+(~i) &gt;&gt; 5, <font color=#0000ff>int</font>: -1846304, binary: 
+   11111111111000111101001111100000
+i &gt;&gt;&gt; 5, <font color=#0000ff>int</font>: 1846303, binary: 
+   00000000000111000010110000011111
+(~i) &gt;&gt;&gt; 5, <font color=#0000ff>int</font>: 132371424, binary: 
+   00000111111000111101001111100000</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The binary representation of the numbers
+is referred to as <A NAME="Index302"></A><A NAME="Index303"></A><I>signed
+two&#8217;s complement</I>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I58' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I59>
+</FONT><A NAME="_Toc375545256"></A><A NAME="_Toc481064550"></A><BR></P></DIV>
+<A NAME="Heading139"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Ternary if-else
+operator<A NAME="Index304"></A><A NAME="Index305"></A><A NAME="Index306"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This operator is unusual because it has
+three operands. It is truly an operator because it produces a value, unlike the
+ordinary if-else statement that you&#8217;ll see in the next section of this
+chapter<A NAME="Index307"></A>. The expression is of the form:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I59' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I60>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>boolean</font>-exp ? value0 : value1</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If <I>boolean-exp</I> evaluates to
+<B>true</B>, <I>value0</I> is evaluated and its result becomes the value
+produced by the operator. If <I>boolean-exp</I> is <B>false</B>, <I>value1</I>
+is evaluated and its result becomes the value produced by the operator.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I60' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I61>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Of course, you could use an ordinary
+<B>if-else </B>statement (described later), but the ternary operator is much
+terser. Although C (where this operator originated) prides itself on being a
+terse language, and the ternary operator might have been introduced partly for
+efficiency, you should be somewhat wary of using it on an everyday
+basis&#8212;it&#8217;s easy to produce unreadable code.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I61' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I62>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The conditional operator can be used for
+its side effects or for the value it produces, but in general you want the value
+since that&#8217;s what makes the operator distinct from the <B>if-else</B>.
+Here&#8217;s an example: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I62' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I63>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>static</font> <font color=#0000ff>int</font> ternary(<font color=#0000ff>int</font> i) {
+  <font color=#0000ff>return</font> i &lt; 10 ? i * 100 : i * 10;
+} </PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can see that this code is more
+compact than what you&#8217;d need to write without the ternary operator:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I63' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I64>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>static</font> <font color=#0000ff>int</font> alternative(<font color=#0000ff>int</font> i) {
+  <font color=#0000ff>if</font> (i &lt; 10)
+    <font color=#0000ff>return</font> i * 100;
+  <font color=#0000ff>else</font>
+    <font color=#0000ff>return</font> i * 10;
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The second form is easier to understand,
+and doesn&#8217;t require a lot more typing. So be sure to ponder your reasons
+when choosing the ternary operator.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I64' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I65>
+</FONT><A NAME="_Toc375545257"></A><A NAME="_Toc481064551"></A><BR></P></DIV>
+<A NAME="Heading140"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+The comma operator<BR><A NAME="Index308"></A><A NAME="Index309"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The comma is used in C and C++ not only
+as a separator in function argument lists, but also as an operator for
+sequential evaluation. The sole place that the comma <I>operator</I> is used in
+Java is in <B>for</B> loops, which will be described later in this chapter.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I65' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I66>
+</FONT><A NAME="_Toc375545258"></A><A NAME="_Toc481064552"></A><BR></P></DIV>
+<A NAME="Heading141"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+String operator +<BR><A NAME="Index310"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There&#8217;s one special usage of an
+operator in Java: the <B>+</B> operator can be used to
+<A NAME="Index311"></A>concatenate strings, as you&#8217;ve already seen. It
+seems a natural use of the <B>+</B> even though it doesn&#8217;t fit with the
+traditional way that <B>+</B> is used. This capability seemed like a good idea
+in C++, so <A NAME="Index312"></A><A NAME="Index313"></A><I>operator
+overloading</I> was added to C++ to allow the C++ programmer to add meanings to
+almost any operator. Unfortunately, operator overloading combined with some of
+the other restrictions in C++ turns out to be a fairly complicated feature for
+programmers to design into their classes. Although operator overloading would
+have been much simpler to implement in Java than it was in C++, this feature was
+still considered too complex, so Java programmers cannot implement their own
+overloaded operators as C++ programmers can.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I66' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I67>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The use of the <B>String +</B> has some
+interesting behavior. If an expression begins with a <B>String</B>, then all
+operands that follow must be <B>String</B>s (remember that the compiler will
+turn a quoted sequence of characters into a <B>String</B>):
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I67' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I68>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>int</font> x = 0, y = 1, z = 2;
+String sString = <font color=#004488>"x, y, z "</font>;
+System.out.println(sString + x + y + z);</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here, the Java compiler will convert
+<B>x</B>, <B>y</B>, and <B>z</B> into their <B>String</B> representations
+instead of adding them together first. And if you say:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>System.out.println(x + sString);</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java will turn <B>x </B>into a
+<B>String</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I68' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I69>
+</FONT><A NAME="_Toc375545259"></A><A NAME="_Toc481064553"></A><BR></P></DIV>
+<A NAME="Heading142"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Common pitfalls when using
+operators<A NAME="Index314"></A><A NAME="Index315"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">One of the pitfalls when using operators
+is trying to get away without parentheses when you are even the least bit
+uncertain about how an expression will evaluate. This is still true in Java.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I69' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I70>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">An extremely common error in C and C++
+looks like this:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>while</font>(x = y) {
+    <font color=#009900>// ....</font>
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The programmer was trying to test for
+equivalence (<B>==</B>) rather than do an assignment. In C and C++ the result of
+this assignment will always be <B>true</B> if <B>y </B>is nonzero, and
+you&#8217;ll probably get an infinite loop. In Java, the result of this
+expression is not a <B>boolean,</B> and the compiler expects a <B>boolean</B>
+and won&#8217;t convert from an <B>int</B>, so it will conveniently give you a
+compile-time error and catch the problem before you ever try to run the program.
+So the pitfall never happens in <A NAME="Index316"></A>Java. (The only time you
+won&#8217;t get a compile-time error is when <B>x</B> and <B>y</B> are
+<B>boolean</B>, in which case <B>x = y</B> is a legal expression, and in the
+above case, probably an error.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I70' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I71>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A similar problem in C and C++ is using
+bitwise AND and OR instead of the logical versions. Bitwise AND and OR use one
+of the characters (<B>&amp;</B> or <B>|</B>) while logical AND and OR use two
+(<B>&amp;&amp;</B> and <B>||</B>). Just as with <B>=</B> and <B>==</B>,
+it&#8217;s easy to type just one character instead of
+two.<A NAME="Index317"></A><A NAME="Index318"></A><A NAME="Index319"></A><A NAME="Index320"></A><A NAME="Index321"></A><A NAME="Index322"></A>
+In Java, the compiler again prevents this because it won&#8217;t let you
+cavalierly use one type where it doesn&#8217;t belong.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I71' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I72>
+</FONT><A NAME="_Toc375545260"></A><A NAME="_Toc481064554"></A><BR></P></DIV>
+<A NAME="Heading143"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Casting operators<A NAME="Index323"></A><A NAME="Index324"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The word <I>cast</I> is used in the sense
+of &#8220;casting into a mold.&#8221; Java will automatically change one type of
+data into another when appropriate. For instance, if you assign an integral
+value to a floating-point variable, the compiler will automatically convert the
+<B>int</B> to a <B>float</B>. Casting allows you to make this type conversion
+explicit, or to force it when it wouldn&#8217;t normally happen.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I72' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I73>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To perform a cast, put the desired data
+type (including all modifiers) inside parentheses to the left of any value.
+Here&#8217;s an example:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>void</font> casts() {
+  <font color=#0000ff>int</font> i = 200;
+  <font color=#0000ff>long</font> l = (<font color=#0000ff>long</font>)i;
+  <font color=#0000ff>long</font> l2 = (<font color=#0000ff>long</font>)200;
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">As you can see, it&#8217;s possible to
+perform a cast on a numeric value as well as on a variable. In both casts shown
+here, however, the cast is superfluous, since the compiler will automatically
+promote an <B>int</B> value to a <B>long</B> when necessary. However, you are
+allowed to use superfluous casts in to make a point or to make your code more
+clear. In other situations, a cast may be essential just to get the code to
+compile. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I73' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I74>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In C and C++, casting can cause some
+headaches. In Java, casting is safe, with the exception that when you perform a
+so-called <A NAME="Index325"></A><A NAME="Index326"></A><I>narrowing
+conversion</I> (that is, when you go from a data type that can hold more
+information to one that doesn&#8217;t hold as much) you run the risk of losing
+information.<I> </I>Here the compiler forces you to do a cast, in effect saying
+&#8220;this can be a dangerous thing to do&#8212;if you want me to do it anyway
+you must make the cast explicit.&#8221; With a
+<A NAME="Index327"></A><A NAME="Index328"></A><I>widening conversion</I> an
+explicit cast is not needed because the new type will more than hold the
+information from the old type so that no information is ever lost.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I74' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I75>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java allows you to cast any primitive
+type to any other primitive type, except for
+<A NAME="Index329"></A><B>boolean,</B> which doesn&#8217;t allow any casting at
+all. Class types do not allow casting. To convert one to the other there must be
+special methods. (<B>String</B> is a special case, and you&#8217;ll find out
+later in this book that objects can be cast within a <I>family</I> of types; an
+<B>Oak</B> can be cast to a <B>Tree</B> and vice-versa, but not to a foreign
+type such as a <B>Rock</B>.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I75' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I76>
+</FONT><BR></P></DIV>
+<A NAME="Heading144"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Literals<BR><A NAME="Index330"></A></H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Ordinarily when you insert a literal
+value into a program the compiler knows exactly what type to make it. Sometimes,
+however, the type is ambiguous. When this happens you must guide the compiler by
+adding some extra information in the form of characters associated with the
+literal value. The following code shows these characters:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I76' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I77>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:Literals.java</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Literals {
+  <font color=#0000ff>char</font> c = 0xffff; <font color=#009900>// max char hex value</font>
+  <font color=#0000ff>byte</font> b = 0x7f; <font color=#009900>// max byte hex value</font>
+  <font color=#0000ff>short</font> s = 0x7fff; <font color=#009900>// max short hex value</font>
+  <font color=#0000ff>int</font> i1 = 0x2f; <font color=#009900>// Hexadecimal (lowercase)</font>
+  <font color=#0000ff>int</font> i2 = 0X2F; <font color=#009900>// Hexadecimal (uppercase)</font>
+  <font color=#0000ff>int</font> i3 = 0177; <font color=#009900>// Octal (leading zero)</font>
+  <font color=#009900>// Hex and Oct also work with long.</font>
+  <font color=#0000ff>long</font> n1 = 200L; <font color=#009900>// long suffix</font>
+  <font color=#0000ff>long</font> n2 = 200l; <font color=#009900>// long suffix</font>
+  <font color=#0000ff>long</font> n3 = 200;
+  <font color=#009900>//! long l6(200); // not allowed</font>
+  <font color=#0000ff>float</font> f1 = 1;
+  <font color=#0000ff>float</font> f2 = 1F; <font color=#009900>// float suffix</font>
+  <font color=#0000ff>float</font> f3 = 1f; <font color=#009900>// float suffix</font>
+  <font color=#0000ff>float</font> f4 = 1e-45f; <font color=#009900>// 10 to the power</font>
+  <font color=#0000ff>float</font> f5 = 1e+9f; <font color=#009900>// float suffix</font>
+  <font color=#0000ff>double</font> d1 = 1d; <font color=#009900>// double suffix</font>
+  <font color=#0000ff>double</font> d2 = 1D; <font color=#009900>// double suffix</font>
+  <font color=#0000ff>double</font> d3 = 47e47d; <font color=#009900>// 10 to the power</font>
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><A NAME="Index331"></A><FONT FACE="Georgia">Hexadecimal
+(<A NAME="Index332"></A>base 16), which works with all the integral data types,
+is denoted by a leading <B>0x</B> or <B>0X</B> followed by 0&#8212;9 and
+a&#8212;f either in upper or lowercase. If you try to initialize a variable with
+a value bigger than it can hold (regardless of the numerical form of the value),
+the compiler will give you an error message. Notice in the above code the
+maximum possible hexadecimal values for <B>char</B>, <B>byte,</B> and
+<B>short</B>. If you exceed these, the compiler will automatically make the
+value an <B>int</B> and tell you that you need a narrowing cast for the
+assignment. You&#8217;ll know you&#8217;ve stepped over the line.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I77' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I78>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="Index333"></A><FONT FACE="Georgia">Octal
+(<A NAME="Index334"></A>base 8) is denoted by a leading zero in the number and
+digits from 0-7. There is no literal representation for
+<A NAME="Index335"></A><A NAME="Index336"></A>binary numbers in C, C++ or Java.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I78' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I79>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A trailing character after a literal
+value establishes its type. Upper or lowercase <B>L </B>means
+<A NAME="Index337"></A><A NAME="Index338"></A><B>long</B>, upper or lowercase
+<B>F</B> means <A NAME="Index339"></A><A NAME="Index340"></A><B>float</B> and
+upper or lowercase <B>D</B> means
+<A NAME="Index341"></A><A NAME="Index342"></A><B>double</B>.<B>
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I79' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I80>
+</B></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="Index343"></A><FONT FACE="Georgia">Exponents use a
+notation that I&#8217;ve always found rather dismaying: <B>1.39 e-47f</B>. In
+science and engineering, &#8216;e&#8217; refers to the base of
+<A NAME="Index344"></A><A NAME="Index345"></A>natural logarithms, approximately
+2.718. (A more precise <B>double </B>value is available in Java as
+<B>Math.E</B>.) This is used in exponentiation expressions such as 1.39 x
+e<SUP>-47</SUP>, which means 1.39 x 2.718<SUP>-47</SUP>. However, when
+<A NAME="Index346"></A>FORTRAN was invented they decided that <B>e</B> would
+naturally mean &#8220;ten to the power,&#8221; which is an odd decision because
+FORTRAN was designed for science and engineering and one would think its
+designers would be sensitive about introducing such an
+ambiguity.</FONT><A NAME="fnB25" HREF="#fn25">[25]</A><FONT FACE="Georgia"> At
+any rate, this custom was followed in C, C++ and now Java. So if you&#8217;re
+used to thinking in terms of <B>e</B> as the base of natural logarithms, you
+must do a mental translation when you see an expression such as <B>1.39
+e-47f</B> in Java; it means 1.39 x 10<SUP>-47</SUP>. <B>
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I80' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I81>
+</B></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Note that you don&#8217;t need to use the
+trailing character when the compiler can figure out the appropriate type. With
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I81' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I82>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>long</font> n3 = 200;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">there&#8217;s no ambiguity, so an
+<B>L</B> after the 200 would be superfluous. However, with
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I82' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I83>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>float</font> f4 = 1e-47f; <font color=#009900>// 10 to the power</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">the compiler normally takes exponential
+numbers as doubles, so without the trailing <B>f</B> it will give you an error
+telling you that you must use a cast to convert <B>double</B> to <B>float</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I83' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I84>
+</FONT><BR></P></DIV>
+<A NAME="Heading145"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Promotion</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You&#8217;ll discover that if you perform
+any mathematical or bitwise operations on primitive data types that are smaller
+than an <B>int</B> (that is, <B>char</B>, <B>byte,</B> or <B>short</B>), those
+values will be <A NAME="Index347"></A>promoted to <B>int</B> before performing
+the operations, and the resulting value will be of type <B>int</B>. So if you
+want to assign back into the smaller type, you must use a cast. (And, since
+you&#8217;re assigning back into a smaller type, you might be losing
+information.) In general, the largest data type in an expression is the one that
+determines the size of the result of that expression; if you multiply a
+<B>float</B> and a <B>double</B>, the result will be <B>double</B>; if you add
+an <B>int</B> and a <B>long</B>, the result will be <B>long</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I84' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I85>
+</FONT><A NAME="_Toc375545261"></A><A NAME="_Toc481064555"></A><BR></P></DIV>
+<A NAME="Heading146"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Java has no &#8220;sizeof&#8221; </H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In C and C++, the
+<A NAME="Index348"></A><B>sizeof(&#160;)</B> operator satisfies a specific need:
+it tells you the number of bytes allocated for data items. The most compelling
+need for <B>sizeof(&#160;)</B> in C and C++ is
+<A NAME="Index349"></A>portability. Different data types might be different
+sizes on different machines, so the programmer must find out how big those types
+are when performing operations that are sensitive to size. For example, one
+computer might store integers in 32 bits, whereas another might store integers
+as 16 bits. Programs could store larger values in integers on the first machine.
+As you might imagine, portability is a huge headache for C and C++ programmers.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I85' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I86>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java does not need a
+<B>sizeof(&#160;)</B> operator for this purpose because all the data types are
+the same size on all machines. You do not need to think about portability on
+this level&#8212;it is designed into the language.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I86' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I87>
+</FONT><A NAME="_Toc375545262"></A><A NAME="_Toc481064556"></A><BR></P></DIV>
+<A NAME="Heading147"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Precedence revisited</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Upon hearing me complain about the
+complexity of remembering <A NAME="Index350"></A><A NAME="Index351"></A>operator
+precedence during one of my seminars, a student suggested a mnemonic that is
+simultaneously a commentary: &#8220;Ulcer Addicts Really Like C A
+lot.&#8221;</FONT><BR></P></DIV>
+<DIV ALIGN="CENTER"><TABLE BORDER>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Mnemonic</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Operator type</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Operators</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Ulcer</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Unary</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>+ - ++--</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Addicts</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Arithmetic (and shift)</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>* / % + -  &lt;&lt;
+&gt;&gt;</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Really</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Relational</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>&gt; &lt; &gt;= &lt;= ==
+!=</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Like</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Logical (and bitwise)</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>&amp;&amp; ||  &amp;  |  ^
+</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">C</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Conditional (ternary)</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>A &gt; B ? X : Y</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A Lot</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Assignment</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>= </B>(and compound assignment like<B>
+*=</B>)</FONT><BR></P></DIV>
+</TD>
+</TR>
+</TABLE></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Of course, with the shift and bitwise
+operators distributed around the table it is not a perfect mnemonic, but for
+non-bit operations it
+works.</FONT><A NAME="_Toc375545263"></A><A NAME="_Toc481064557"></A><BR></P></DIV>
+<A NAME="Heading148"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+A compendium of operators</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The following example shows which
+<A NAME="Index352"></A><A NAME="Index353"></A><A NAME="Index354"></A>primitive
+data types can be used with particular operators. Basically, it is the same
+example repeated over and over, but using different primitive data types. The
+file will compile without error because the lines that would cause errors are
+commented out with a <B>//!</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I87' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I88>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:AllOps.java</font>
+<font color=#009900>// Tests all the operators on all the</font>
+<font color=#009900>// primitive data types to show which</font>
+<font color=#009900>// ones are accepted by the Java compiler.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> AllOps {
+  <font color=#009900>// To accept the results of a boolean test:</font>
+  <font color=#0000ff>void</font> f(<font color=#0000ff>boolean</font> b) {}
+  <font color=#0000ff>void</font> boolTest(<font color=#0000ff>boolean</font> x, <font color=#0000ff>boolean</font> y) {
+    <font color=#009900>// Arithmetic operators:</font>
+    <font color=#009900>//! x = x * y;</font>
+    <font color=#009900>//! x = x / y;</font>
+    <font color=#009900>//! x = x % y;</font>
+    <font color=#009900>//! x = x + y;</font>
+    <font color=#009900>//! x = x - y;</font>
+    <font color=#009900>//! x++;</font>
+    <font color=#009900>//! x--;</font>
+    <font color=#009900>//! x = +y;</font>
+    <font color=#009900>//! x = -y;</font>
+    <font color=#009900>// Relational and logical:</font>
+    <font color=#009900>//! f(x &gt; y);</font>
+    <font color=#009900>//! f(x &gt;= y);</font>
+    <font color=#009900>//! f(x &lt; y);</font>
+    <font color=#009900>//! f(x &lt;= y);</font>
+    f(x == y);
+    f(x != y);
+    f(!y);
+    x = x &amp;&amp; y;
+    x = x || y;
+    <font color=#009900>// Bitwise operators:</font>
+    <font color=#009900>//! x = ~y;</font>
+    x = x &amp; y;
+    x = x | y;
+    x = x ^ y;
+    <font color=#009900>//! x = x &lt;&lt; 1;</font>
+    <font color=#009900>//! x = x &gt;&gt; 1;</font>
+    <font color=#009900>//! x = x &gt;&gt;&gt; 1;</font>
+    <font color=#009900>// Compound assignment:</font>
+    <font color=#009900>//! x += y;</font>
+    <font color=#009900>//! x -= y;</font>
+    <font color=#009900>//! x *= y;</font>
+    <font color=#009900>//! x /= y;</font>
+    <font color=#009900>//! x %= y;</font>
+    <font color=#009900>//! x &lt;&lt;= 1;</font>
+    <font color=#009900>//! x &gt;&gt;= 1;</font>
+    <font color=#009900>//! x &gt;&gt;&gt;= 1;</font>
+    x &amp;= y;
+    x ^= y;
+    x |= y;
+    <font color=#009900>// Casting:</font>
+    <font color=#009900>//! char c = (char)x;</font>
+    <font color=#009900>//! byte B = (byte)x;</font>
+    <font color=#009900>//! short s = (short)x;</font>
+    <font color=#009900>//! int i = (int)x;</font>
+    <font color=#009900>//! long l = (long)x;</font>
+    <font color=#009900>//! float f = (float)x;</font>
+    <font color=#009900>//! double d = (double)x;</font>
+  }
+  <font color=#0000ff>void</font> charTest(<font color=#0000ff>char</font> x, <font color=#0000ff>char</font> y) {
+    <font color=#009900>// Arithmetic operators:</font>
+    x = (<font color=#0000ff>char</font>)(x * y);
+    x = (<font color=#0000ff>char</font>)(x / y);
+    x = (<font color=#0000ff>char</font>)(x % y);
+    x = (<font color=#0000ff>char</font>)(x + y);
+    x = (<font color=#0000ff>char</font>)(x - y);
+    x++;
+    x--;
+    x = (<font color=#0000ff>char</font>)+y;
+    x = (<font color=#0000ff>char</font>)-y;
+    <font color=#009900>// Relational and logical:</font>
+    f(x &gt; y);
+    f(x &gt;= y);
+    f(x &lt; y);
+    f(x &lt;= y);
+    f(x == y);
+    f(x != y);
+    <font color=#009900>//! f(!x);</font>
+    <font color=#009900>//! f(x &amp;&amp; y);</font>
+    <font color=#009900>//! f(x || y);</font>
+    <font color=#009900>// Bitwise operators:</font>
+    x= (<font color=#0000ff>char</font>)~y;
+    x = (<font color=#0000ff>char</font>)(x &amp; y);
+    x  = (<font color=#0000ff>char</font>)(x | y);
+    x = (<font color=#0000ff>char</font>)(x ^ y);
+    x = (<font color=#0000ff>char</font>)(x &lt;&lt; 1);
+    x = (<font color=#0000ff>char</font>)(x &gt;&gt; 1);
+    x = (<font color=#0000ff>char</font>)(x &gt;&gt;&gt; 1);
+    <font color=#009900>// Compound assignment:</font>
+    x += y;
+    x -= y;
+    x *= y;
+    x /= y;
+    x %= y;
+    x &lt;&lt;= 1;
+    x &gt;&gt;= 1;
+    x &gt;&gt;&gt;= 1;
+    x &amp;= y;
+    x ^= y;
+    x |= y;
+    <font color=#009900>// Casting:</font>
+    <font color=#009900>//! boolean b = (boolean)x;</font>
+    <font color=#0000ff>byte</font> B = (<font color=#0000ff>byte</font>)x;
+    <font color=#0000ff>short</font> s = (<font color=#0000ff>short</font>)x;
+    <font color=#0000ff>int</font> i = (<font color=#0000ff>int</font>)x;
+    <font color=#0000ff>long</font> l = (<font color=#0000ff>long</font>)x;
+    <font color=#0000ff>float</font> f = (<font color=#0000ff>float</font>)x;
+    <font color=#0000ff>double</font> d = (<font color=#0000ff>double</font>)x;
+  }
+  <font color=#0000ff>void</font> byteTest(<font color=#0000ff>byte</font> x, <font color=#0000ff>byte</font> y) {
+    <font color=#009900>// Arithmetic operators:</font>
+    x = (<font color=#0000ff>byte</font>)(x* y);
+    x = (<font color=#0000ff>byte</font>)(x / y);
+    x = (<font color=#0000ff>byte</font>)(x % y);
+    x = (<font color=#0000ff>byte</font>)(x + y);
+    x = (<font color=#0000ff>byte</font>)(x - y);
+    x++;
+    x--;
+    x = (<font color=#0000ff>byte</font>)+ y;
+    x = (<font color=#0000ff>byte</font>)- y;
+    <font color=#009900>// Relational and logical:</font>
+    f(x &gt; y);
+    f(x &gt;= y);
+    f(x &lt; y);
+    f(x &lt;= y);
+    f(x == y);
+    f(x != y);
+    <font color=#009900>//! f(!x);</font>
+    <font color=#009900>//! f(x &amp;&amp; y);</font>
+    <font color=#009900>//! f(x || y);</font>
+    <font color=#009900>// Bitwise operators:</font>
+    x = (<font color=#0000ff>byte</font>)~y;
+    x = (<font color=#0000ff>byte</font>)(x &amp; y);
+    x = (<font color=#0000ff>byte</font>)(x | y);
+    x = (<font color=#0000ff>byte</font>)(x ^ y);
+    x = (<font color=#0000ff>byte</font>)(x &lt;&lt; 1);
+    x = (<font color=#0000ff>byte</font>)(x &gt;&gt; 1);
+    x = (<font color=#0000ff>byte</font>)(x &gt;&gt;&gt; 1);
+    <font color=#009900>// Compound assignment:</font>
+    x += y;
+    x -= y;
+    x *= y;
+    x /= y;
+    x %= y;
+    x &lt;&lt;= 1;
+    x &gt;&gt;= 1;
+    x &gt;&gt;&gt;= 1;
+    x &amp;= y;
+    x ^= y;
+    x |= y;
+    <font color=#009900>// Casting:</font>
+    <font color=#009900>//! boolean b = (boolean)x;</font>
+    <font color=#0000ff>char</font> c = (<font color=#0000ff>char</font>)x;
+    <font color=#0000ff>short</font> s = (<font color=#0000ff>short</font>)x;
+    <font color=#0000ff>int</font> i = (<font color=#0000ff>int</font>)x;
+    <font color=#0000ff>long</font> l = (<font color=#0000ff>long</font>)x;
+    <font color=#0000ff>float</font> f = (<font color=#0000ff>float</font>)x;
+    <font color=#0000ff>double</font> d = (<font color=#0000ff>double</font>)x;
+  }
+  <font color=#0000ff>void</font> shortTest(<font color=#0000ff>short</font> x, <font color=#0000ff>short</font> y) {
+    <font color=#009900>// Arithmetic operators:</font>
+    x = (<font color=#0000ff>short</font>)(x * y);
+    x = (<font color=#0000ff>short</font>)(x / y);
+    x = (<font color=#0000ff>short</font>)(x % y);
+    x = (<font color=#0000ff>short</font>)(x + y);
+    x = (<font color=#0000ff>short</font>)(x - y);
+    x++;
+    x--;
+    x = (<font color=#0000ff>short</font>)+y;
+    x = (<font color=#0000ff>short</font>)-y;
+    <font color=#009900>// Relational and logical:</font>
+    f(x &gt; y);
+    f(x &gt;= y);
+    f(x &lt; y);
+    f(x &lt;= y);
+    f(x == y);
+    f(x != y);
+    <font color=#009900>//! f(!x);</font>
+    <font color=#009900>//! f(x &amp;&amp; y);</font>
+    <font color=#009900>//! f(x || y);</font>
+    <font color=#009900>// Bitwise operators:</font>
+    x = (<font color=#0000ff>short</font>)~y;
+    x = (<font color=#0000ff>short</font>)(x &amp; y);
+    x = (<font color=#0000ff>short</font>)(x | y);
+    x = (<font color=#0000ff>short</font>)(x ^ y);
+    x = (<font color=#0000ff>short</font>)(x &lt;&lt; 1);
+    x = (<font color=#0000ff>short</font>)(x &gt;&gt; 1);
+    x = (<font color=#0000ff>short</font>)(x &gt;&gt;&gt; 1);
+    <font color=#009900>// Compound assignment:</font>
+    x += y;
+    x -= y;
+    x *= y;
+    x /= y;
+    x %= y;
+    x &lt;&lt;= 1;
+    x &gt;&gt;= 1;
+    x &gt;&gt;&gt;= 1;
+    x &amp;= y;
+    x ^= y;
+    x |= y;
+    <font color=#009900>// Casting:</font>
+    <font color=#009900>//! boolean b = (boolean)x;</font>
+    <font color=#0000ff>char</font> c = (<font color=#0000ff>char</font>)x;
+    <font color=#0000ff>byte</font> B = (<font color=#0000ff>byte</font>)x;
+    <font color=#0000ff>int</font> i = (<font color=#0000ff>int</font>)x;
+    <font color=#0000ff>long</font> l = (<font color=#0000ff>long</font>)x;
+    <font color=#0000ff>float</font> f = (<font color=#0000ff>float</font>)x;
+    <font color=#0000ff>double</font> d = (<font color=#0000ff>double</font>)x;
+  }
+  <font color=#0000ff>void</font> intTest(<font color=#0000ff>int</font> x, <font color=#0000ff>int</font> y) {
+    <font color=#009900>// Arithmetic operators:</font>
+    x = x * y;
+    x = x / y;
+    x = x % y;
+    x = x + y;
+    x = x - y;
+    x++;
+    x--;
+    x = +y;
+    x = -y;
+    <font color=#009900>// Relational and logical:</font>
+    f(x &gt; y);
+    f(x &gt;= y);
+    f(x &lt; y);
+    f(x &lt;= y);
+    f(x == y);
+    f(x != y);
+    <font color=#009900>//! f(!x);</font>
+    <font color=#009900>//! f(x &amp;&amp; y);</font>
+    <font color=#009900>//! f(x || y);</font>
+    <font color=#009900>// Bitwise operators:</font>
+    x = ~y;
+    x = x &amp; y;
+    x = x | y;
+    x = x ^ y;
+    x = x &lt;&lt; 1;
+    x = x &gt;&gt; 1;
+    x = x &gt;&gt;&gt; 1;
+    <font color=#009900>// Compound assignment:</font>
+    x += y;
+    x -= y;
+    x *= y;
+    x /= y;
+    x %= y;
+    x &lt;&lt;= 1;
+    x &gt;&gt;= 1;
+    x &gt;&gt;&gt;= 1;
+    x &amp;= y;
+    x ^= y;
+    x |= y;
+    <font color=#009900>// Casting:</font>
+    <font color=#009900>//! boolean b = (boolean)x;</font>
+    <font color=#0000ff>char</font> c = (<font color=#0000ff>char</font>)x;
+    <font color=#0000ff>byte</font> B = (<font color=#0000ff>byte</font>)x;
+    <font color=#0000ff>short</font> s = (<font color=#0000ff>short</font>)x;
+    <font color=#0000ff>long</font> l = (<font color=#0000ff>long</font>)x;
+    <font color=#0000ff>float</font> f = (<font color=#0000ff>float</font>)x;
+    <font color=#0000ff>double</font> d = (<font color=#0000ff>double</font>)x;
+  }
+  <font color=#0000ff>void</font> longTest(<font color=#0000ff>long</font> x, <font color=#0000ff>long</font> y) {
+    <font color=#009900>// Arithmetic operators:</font>
+    x = x * y;
+    x = x / y;
+    x = x % y;
+    x = x + y;
+    x = x - y;
+    x++;
+    x--;
+    x = +y;
+    x = -y;
+    <font color=#009900>// Relational and logical:</font>
+    f(x &gt; y);
+    f(x &gt;= y);
+    f(x &lt; y);
+    f(x &lt;= y);
+    f(x == y);
+    f(x != y);
+    <font color=#009900>//! f(!x);</font>
+    <font color=#009900>//! f(x &amp;&amp; y);</font>
+    <font color=#009900>//! f(x || y);</font>
+    <font color=#009900>// Bitwise operators:</font>
+    x = ~y;
+    x = x &amp; y;
+    x = x | y;
+    x = x ^ y;
+    x = x &lt;&lt; 1;
+    x = x &gt;&gt; 1;
+    x = x &gt;&gt;&gt; 1;
+    <font color=#009900>// Compound assignment:</font>
+    x += y;
+    x -= y;
+    x *= y;
+    x /= y;
+    x %= y;
+    x &lt;&lt;= 1;
+    x &gt;&gt;= 1;
+    x &gt;&gt;&gt;= 1;
+    x &amp;= y;
+    x ^= y;
+    x |= y;
+    <font color=#009900>// Casting:</font>
+    <font color=#009900>//! boolean b = (boolean)x;</font>
+    <font color=#0000ff>char</font> c = (<font color=#0000ff>char</font>)x;
+    <font color=#0000ff>byte</font> B = (<font color=#0000ff>byte</font>)x;
+    <font color=#0000ff>short</font> s = (<font color=#0000ff>short</font>)x;
+    <font color=#0000ff>int</font> i = (<font color=#0000ff>int</font>)x;
+    <font color=#0000ff>float</font> f = (<font color=#0000ff>float</font>)x;
+    <font color=#0000ff>double</font> d = (<font color=#0000ff>double</font>)x;
+  }
+  <font color=#0000ff>void</font> floatTest(<font color=#0000ff>float</font> x, <font color=#0000ff>float</font> y) {
+    <font color=#009900>// Arithmetic operators:</font>
+    x = x * y;
+    x = x / y;
+    x = x % y;
+    x = x + y;
+    x = x - y;
+    x++;
+    x--;
+    x = +y;
+    x = -y;
+    <font color=#009900>// Relational and logical:</font>
+    f(x &gt; y);
+    f(x &gt;= y);
+    f(x &lt; y);
+    f(x &lt;= y);
+    f(x == y);
+    f(x != y);
+    <font color=#009900>//! f(!x);</font>
+    <font color=#009900>//! f(x &amp;&amp; y);</font>
+    <font color=#009900>//! f(x || y);</font>
+    <font color=#009900>// Bitwise operators:</font>
+    <font color=#009900>//! x = ~y;</font>
+    <font color=#009900>//! x = x &amp; y;</font>
+    <font color=#009900>//! x = x | y;</font>
+    <font color=#009900>//! x = x ^ y;</font>
+    <font color=#009900>//! x = x &lt;&lt; 1;</font>
+    <font color=#009900>//! x = x &gt;&gt; 1;</font>
+    <font color=#009900>//! x = x &gt;&gt;&gt; 1;</font>
+    <font color=#009900>// Compound assignment:</font>
+    x += y;
+    x -= y;
+    x *= y;
+    x /= y;
+    x %= y;
+    <font color=#009900>//! x &lt;&lt;= 1;</font>
+    <font color=#009900>//! x &gt;&gt;= 1;</font>
+    <font color=#009900>//! x &gt;&gt;&gt;= 1;</font>
+    <font color=#009900>//! x &amp;= y;</font>
+    <font color=#009900>//! x ^= y;</font>
+    <font color=#009900>//! x |= y;</font>
+    <font color=#009900>// Casting:</font>
+    <font color=#009900>//! boolean b = (boolean)x;</font>
+    <font color=#0000ff>char</font> c = (<font color=#0000ff>char</font>)x;
+    <font color=#0000ff>byte</font> B = (<font color=#0000ff>byte</font>)x;
+    <font color=#0000ff>short</font> s = (<font color=#0000ff>short</font>)x;
+    <font color=#0000ff>int</font> i = (<font color=#0000ff>int</font>)x;
+    <font color=#0000ff>long</font> l = (<font color=#0000ff>long</font>)x;
+    <font color=#0000ff>double</font> d = (<font color=#0000ff>double</font>)x;
+  }
+  <font color=#0000ff>void</font> doubleTest(<font color=#0000ff>double</font> x, <font color=#0000ff>double</font> y) {
+    <font color=#009900>// Arithmetic operators:</font>
+    x = x * y;
+    x = x / y;
+    x = x % y;
+    x = x + y;
+    x = x - y;
+    x++;
+    x--;
+    x = +y;
+    x = -y;
+    <font color=#009900>// Relational and logical:</font>
+    f(x &gt; y);
+    f(x &gt;= y);
+    f(x &lt; y);
+    f(x &lt;= y);
+    f(x == y);
+    f(x != y);
+    <font color=#009900>//! f(!x);</font>
+    <font color=#009900>//! f(x &amp;&amp; y);</font>
+    <font color=#009900>//! f(x || y);</font>
+    <font color=#009900>// Bitwise operators:</font>
+    <font color=#009900>//! x = ~y;</font>
+    <font color=#009900>//! x = x &amp; y;</font>
+    <font color=#009900>//! x = x | y;</font>
+    <font color=#009900>//! x = x ^ y;</font>
+    <font color=#009900>//! x = x &lt;&lt; 1;</font>
+    <font color=#009900>//! x = x &gt;&gt; 1;</font>
+    <font color=#009900>//! x = x &gt;&gt;&gt; 1;</font>
+    <font color=#009900>// Compound assignment:</font>
+    x += y;
+    x -= y;
+    x *= y;
+    x /= y;
+    x %= y;
+    <font color=#009900>//! x &lt;&lt;= 1;</font>
+    <font color=#009900>//! x &gt;&gt;= 1;</font>
+    <font color=#009900>//! x &gt;&gt;&gt;= 1;</font>
+    <font color=#009900>//! x &amp;= y;</font>
+    <font color=#009900>//! x ^= y;</font>
+    <font color=#009900>//! x |= y;</font>
+    <font color=#009900>// Casting:</font>
+    <font color=#009900>//! boolean b = (boolean)x;</font>
+    <font color=#0000ff>char</font> c = (<font color=#0000ff>char</font>)x;
+    <font color=#0000ff>byte</font> B = (<font color=#0000ff>byte</font>)x;
+    <font color=#0000ff>short</font> s = (<font color=#0000ff>short</font>)x;
+    <font color=#0000ff>int</font> i = (<font color=#0000ff>int</font>)x;
+    <font color=#0000ff>long</font> l = (<font color=#0000ff>long</font>)x;
+    <font color=#0000ff>float</font> f = (<font color=#0000ff>float</font>)x;
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Note that
+<A NAME="Index355"></A><B>boolean</B> is quite limited. You can assign to it the
+values <B>true</B> and <B>false</B>, and you can test it for truth or falsehood,
+but you cannot add booleans or perform any other type of operation on them.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I88' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I89>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In <B>char</B>, <B>byte</B>, and
+<B>short</B> you can see the effect of <A NAME="Index356"></A>promotion with the
+arithmetic operators. Each arithmetic operation on any of those types results in
+an <B>int</B> result, which must be explicitly cast back to the original type (a
+narrowing conversion that might lose information) to assign back to that type.
+With <B>int</B> values, however, you do not need to cast, because everything is
+already an <B>int</B>. Don&#8217;t be lulled into thinking everything is safe,
+though. If you multiply two <B>int</B>s that are big enough, you&#8217;ll
+<A NAME="Index357"></A>overflow the result. The following example demonstrates
+this: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I89' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I90>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:Overflow.java</font>
+<font color=#009900>// Surprise! Java lets you overflow.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Overflow {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>int</font> big = 0x7fffffff; <font color=#009900>// max int value</font>
+    prt(<font color=#004488>"big = "</font> + big);
+    <font color=#0000ff>int</font> bigger = big * 4;
+    prt(<font color=#004488>"bigger = "</font> + bigger);
+  }
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> prt(String s) {
+    System.out.println(s);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The output of this is:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>big = 2147483647
+bigger = -4</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">and you get no errors or warnings from
+the compiler, and no exceptions at run-time. Java is good, but it&#8217;s not
+<I>that</I> good. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I90' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I91>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Compound assignments do <I>not</I>
+require casts for <B>char</B>, <B>byte,</B> or <B>short</B>, even though they
+are performing promotions that have the same results as the direct arithmetic
+operations. On the other hand, the lack of the cast certainly simplifies the
+code. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I91' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I92>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can see that, with the exception of
+<B>boolean</B>, any <A NAME="Index358"></A>primitive type can be cast to any
+other primitive type. Again, you must be aware of the effect of a narrowing
+conversion <A NAME="Index359"></A> when casting to a smaller type, otherwise you
+might unknowingly lose information during the cast.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I92' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I93>
+</FONT><A NAME="_Toc375545264"></A><A NAME="_Toc481064558"></A><BR></P></DIV>
+<A NAME="Heading149"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Execution control</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java uses all of C&#8217;s execution
+control statements, so if you&#8217;ve programmed with C or C++ then most of
+what you see will be familiar. Most procedural programming languages have some
+kind of control statements, and there is often overlap among languages. In Java,
+the keywords include <B>if-else</B>, <B>while</B>, <B>do-while</B>, <B>for</B>,
+and a selection statement called <B>switch</B>. Java does not, however, support
+the much-maligned <B>goto</B> (which can still be the most expedient way to
+solve certain types of problems). You can still do a goto-like jump, but it is
+much more constrained than a typical <B>goto</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I93' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I94>
+</FONT><A NAME="_Toc375545265"></A><A NAME="_Toc481064559"></A><BR></P></DIV>
+<A NAME="Heading150"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+true and false</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">All conditional statements use the truth
+or falsehood of a conditional expression to determine the execution path. An
+example of a conditional expression is <B>A == B</B>. This uses the conditional
+operator <B>==</B> to see if the value of <B>A</B> is equivalent to the value of
+<B>B</B>. The expression returns <B>true</B> or <B>false</B>. Any of the
+relational operators you&#8217;ve seen earlier in this chapter can be used to
+produce a conditional statement. Note that Java doesn&#8217;t allow you to use a
+number as a <B>boolean</B>, even though it&#8217;s allowed in C and C++ (where
+truth is nonzero and falsehood is zero). If you want to use a non-<B>boolean</B>
+in a <B>boolean</B> test, such as <B>if(a)</B>, you must first convert it to a
+<B>boolean</B> value using a conditional expression, such as <B>if(a != 0)</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I94' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I95>
+</FONT><A NAME="_Toc375545266"></A><A NAME="_Toc481064560"></A><BR></P></DIV>
+<A NAME="Heading151"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+if-else<BR><A NAME="Index360"></A><A NAME="Index361"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>if-else</B> statement is probably
+the most basic way to control program flow. The <B>else</B> is optional, so you
+can use <B>if</B> in two forms:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>if</font>(Boolean-expression)
+  statement</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">or</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>if</font>(Boolean-expression)
+  statement
+<font color=#0000ff>else</font>
+  statement</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The conditional must produce a
+<B>boolean</B> result. The <I>statement</I> means either a simple statement
+terminated by a semicolon or a compound statement, which is a group of simple
+statements enclosed in braces. Any time the word &#8220;<I>statement</I>&#8221;
+is used, it always implies that the statement can be simple or compound. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I95' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I96>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">As an example of <B>if-else</B>, here is
+a<B> test(&#160;) </B>method that will tell you whether a guess is above, below,
+or equivalent to a target number:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:IfElse.java</font>
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> IfElse {
+  <font color=#0000ff>static</font> <font color=#0000ff>int</font> test(<font color=#0000ff>int</font> testval, <font color=#0000ff>int</font> target) {
+    <font color=#0000ff>int</font> result = 0;
+    <font color=#0000ff>if</font>(testval &gt; target)
+      result = +1;
+    <font color=#0000ff>else</font> <font color=#0000ff>if</font>(testval &lt; target)
+      result = -1;
+    <font color=#0000ff>else</font>
+      result = 0; <font color=#009900>// Match</font>
+    <font color=#0000ff>return</font> result;
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    System.out.println(test(10, 5));
+    System.out.println(test(5, 10));
+    System.out.println(test(5, 5));
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>It is conventional to indent the body of a control flow statement so the reader might easily determine where it begins and ends.</PRE></FONT></BLOCKQUOTE><A NAME="Heading152"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+return</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>return</B> keyword has two
+purposes: it specifies what value a method will return (if it doesn&#8217;t have
+a <B>void</B> return value) and it causes that value to be returned immediately.
+The <B>test(&#160;)</B> method above can be rewritten to take advantage of this:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I96' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I97>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:IfElse2.java</font>
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> IfElse2 {
+  <font color=#0000ff>static</font> <font color=#0000ff>int</font> test(<font color=#0000ff>int</font> testval, <font color=#0000ff>int</font> target) {
+    <font color=#0000ff>int</font> result = 0;
+    <font color=#0000ff>if</font>(testval &gt; target)
+      <font color=#0000ff>return</font> +1;
+    <font color=#0000ff>else</font> <font color=#0000ff>if</font>(testval &lt; target)
+      <font color=#0000ff>return</font> -1;
+    <font color=#0000ff>else</font>
+      <font color=#0000ff>return</font> 0; <font color=#009900>// Match</font>
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    System.out.println(test(10, 5));
+    System.out.println(test(5, 10));
+    System.out.println(test(5, 5));
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"> There&#8217;s no need for <B>else</B>
+because the method will not continue after executing a <B>return</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I97' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I98>
+</FONT><A NAME="_Toc375545267"></A><A NAME="_Toc481064561"></A><BR></P></DIV>
+<A NAME="Heading153"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Iteration <A NAME="Index362"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>while</B>, <B>do-while</B> and
+<B>for</B> control looping and are sometimes classified as <I>iteration
+statements</I>. A <I>statement</I> repeats until the controlling
+<I>Boolean</I>-<I>expression</I> evaluates to false. The form for a <B>while</B>
+loop is</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>while</font>(Boolean-expression)
+  statement</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <I>Boolean-expression</I> is
+evaluated once at the beginning of the loop and again before each further
+iteration of the <I>statement</I>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I98' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I99>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here&#8217;s a simple example that
+generates random numbers until a particular condition is met:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:WhileTest.java</font>
+<font color=#009900>// Demonstrates the while loop.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> WhileTest {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>double</font> r = 0;
+    <font color=#0000ff>while</font>(r &lt; 0.99d) {
+      r = Math.random();
+      System.out.println(r);
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This uses the <B>static</B> method
+<B>random(&#160;)</B> in the <B>Math</B> library, which generates a <B>double
+</B>value between 0 and 1. (It includes 0, but not 1.) The conditional
+expression for the <B>while</B> says &#8220;keep doing this loop until the
+number is 0.99 or greater.&#8221; Each time you run this program you&#8217;ll
+get a different-sized list of numbers.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I99' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I100>
+</FONT><A NAME="_Toc375545268"></A><A NAME="_Toc481064562"></A><BR></P></DIV>
+<A NAME="Heading154"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+do-while<A NAME="Index363"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The form for <B>do-while</B>
+is</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>do</font>
+  statement
+<font color=#0000ff>while</font>(Boolean-expression);</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The sole difference between <B>while</B>
+and <B>do-while</B> is that the statement of the <B>do-while</B> always executes
+at least once, even if the expression evaluates to false the first time. In a
+<B>while</B>, if the conditional is false the first time the statement never
+executes. In practice, <B>do-while</B> is less common than <B>while</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I100' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I101>
+</FONT><A NAME="_Toc375545269"></A><A NAME="_Toc481064563"></A><BR></P></DIV>
+<A NAME="Heading155"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+for<BR><A NAME="Index364"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A <B>for</B> loop performs initialization
+before the first iteration. Then it performs conditional testing and, at the end
+of each iteration, some form of &#8220;stepping.&#8221; The form of the
+<B>for</B> loop is:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>for</font>(initialization;&#160;Boolean-expression;&#160;step)
+  statement</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Any of the expressions
+<I>initialization</I>, <I>Boolean-expression</I> or <I>step</I> can be empty.
+The expression is tested before each iteration, and as soon as it evaluates to
+<B>false</B> execution will continue at the line following the <B>for</B>
+statement. At the end of each loop, the <I>step</I> executes.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I101' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I102>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>for</B> loops are usually used for
+&#8220;counting&#8221; tasks:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:ListCharacters.java</font>
+<font color=#009900>// Demonstrates "for" loop by listing</font>
+<font color=#009900>// all the ASCII characters.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> ListCharacters {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+  <font color=#0000ff>for</font>( <font color=#0000ff>char</font> c = 0; c &lt; 128; c++)
+    <font color=#0000ff>if</font> (c != 26 )  <font color=#009900>// ANSI Clear screen</font>
+      System.out.println(
+        <font color=#004488>"value: "</font> + (<font color=#0000ff>int</font>)c +
+        <font color=#004488>" character: "</font> + c);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Note that the variable <B>c</B> is
+defined at the point where it is used, inside the control expression of the
+<B>for</B> loop, rather than at the beginning of the block denoted by the open
+curly brace. The scope of <B>c </B>is the expression controlled by the
+<B>for</B>. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I102' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I103>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Traditional procedural languages like C
+require that all <A NAME="Index365"></A>variables be defined at the beginning of
+a block so when the compiler creates a block it can allocate space for those
+variables. In Java and C++ you can spread your variable declarations throughout
+the block, defining them at the point that you need them. This allows a more
+natural coding style and makes code easier to understand.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I103' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I104>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can define multiple variables within
+a <B>for</B> statement, but they must be of the same type:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0, j = 1;
+    i &lt; 10 &amp;&amp; j != 11;
+    i++, j++)
+  <font color=#009900>/* body of for loop */</font>;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>int </B>definition in the <B>for
+</B>statement covers both <B>i </B>and <B>j</B>.<B> </B>The ability to define
+variables in the control expression is limited to the <B>for</B> loop. You
+cannot use this approach with any of the other selection or iteration
+statements.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I104' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I105>
+</FONT><A NAME="_Toc375545270"></A><BR></P></DIV>
+<A NAME="Heading156"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+The comma operator</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Earlier in this chapter I stated that the
+<A NAME="Index366"></A><A NAME="Index367"></A>comma <I>operator</I> (not the
+comma <I>separator</I>, which is used to separate definitions and function
+arguments) has only one use in Java: in the control expression of a <B>for</B>
+loop. In both the initialization and step portions of the control expression you
+can have a number of statements separated by commas, and those statements will
+be evaluated sequentially. The previous bit of code uses this ability.
+Here&#8217;s another example:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:CommaOperator.java</font>
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> CommaOperator {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 1, j = i + 10; i &lt; 5;
+        i++, j = i * 2) {
+      System.out.println(<font color=#004488>"i= "</font> + i + <font color=#004488>" j= "</font> + j);
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here&#8217;s the output:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I105' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I106>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>i= 1 j= 11
+i= 2 j= 4
+i= 3 j= 6
+i= 4 j= 8</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can see that in both the
+initialization and step portions the statements are evaluated in sequential
+order. Also, the initialization portion can have any number of definitions <I>of
+one type</I>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I106' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I107>
+</FONT><A NAME="_Toc481064564"></A><BR></P></DIV>
+<A NAME="Heading157"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+break and continue<BR><A NAME="Index368"></A><A NAME="Index369"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Inside the body of any of the iteration
+statements you can also control the flow of the loop by using <B>break</B> and
+<B>continue</B>. <B>break</B> quits the loop without executing the rest of the
+statements in the loop. <B>continue</B> stops the execution of the current
+iteration and goes back to the beginning of the loop to begin the next
+iteration. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I107' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I108>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This program shows examples of
+<B>break</B> and <B>continue</B> within <B>for </B>and <B>while</B>
+loops:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:BreakAndContinue.java</font>
+<font color=#009900>// Demonstrates break and continue keywords.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> BreakAndContinue {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; 100; i++) {
+      <font color=#0000ff>if</font>(i == 74) <font color=#0000ff>break</font>; <font color=#009900>// Out of for loop</font>
+      <font color=#0000ff>if</font>(i % 9 != 0) <font color=#0000ff>continue</font>; <font color=#009900>// Next iteration</font>
+      System.out.println(i);
+    }
+    <font color=#0000ff>int</font> i = 0;
+    <font color=#009900>// An "infinite loop":</font>
+    <font color=#0000ff>while</font>(<font color=#0000ff>true</font>) {
+      i++;
+      <font color=#0000ff>int</font> j = i * 27;
+      <font color=#0000ff>if</font>(j == 1269) <font color=#0000ff>break</font>; <font color=#009900>// Out of loop</font>
+      <font color=#0000ff>if</font>(i % 10 != 0) <font color=#0000ff>continue</font>; <font color=#009900>// Top of loop</font>
+      System.out.println(i);
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In the <B>for</B> loop the value of
+<B>i</B> never gets to 100 because the <B>break</B> statement breaks out of the
+loop when <B>i</B> is 74. Normally, you&#8217;d use a <B>break</B> like this
+only if you didn&#8217;t know when the terminating condition was going to occur.
+The <B>continue</B> statement causes execution to go back to the top of the
+iteration loop (thus incrementing <B>i</B>) whenever <B>i</B> is not evenly
+divisible by 9. When it is, the value is printed.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I108' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I109>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The second portion shows an
+&#8220;infinite loop&#8221; that would, in theory, continue forever. However,
+inside the loop there is a <B>break</B> statement that will break out of the
+loop. In addition, you&#8217;ll see that the <B>continue</B> moves back to the
+top of the loop without completing the remainder. (Thus printing happens in the
+second loop only when the value of <B>i</B> is divisible by 10.) The output
+is:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>0
+9
+18
+27
+36
+45
+54
+63
+72
+10
+20
+30
+40</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The value 0 is printed because 0 % 9
+produces 0. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I109' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I110>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A second form of the infinite loop is
+<B>for(;;)</B>. The compiler treats both <B>while(true)</B> and <B>for(;;)</B>
+in the same way so whichever one you use is a matter of programming taste.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I110' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I111>
+</FONT><BR></P></DIV>
+<A NAME="Heading158"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+The infamous &#8220;goto&#8221;</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <A NAME="Index370"></A><B>goto
+</B>keyword has been present in programming languages from the beginning.
+Indeed, <B>goto</B> was the genesis of program control in assembly language:
+&#8220;if condition A, then jump here, otherwise jump there.&#8221; If you read
+the assembly code that is ultimately generated by virtually any compiler,
+you&#8217;ll see that program control contains many jumps. However, a <B>goto
+</B>is a jump at the source-code level, and that&#8217;s what brought it into
+disrepute. If a program will always jump from one point to another, isn&#8217;t
+there some way to reorganize the code so the flow of control is not so jumpy?
+<B>goto </B>fell into true disfavor with the publication of the famous
+&#8220;Goto considered harmful&#8221; paper by Edsger Dijkstra, and since then
+goto-bashing has been a popular sport, with advocates of the cast-out keyword
+scurrying for cover. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I111' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I112>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">As is typical in situations like this,
+the middle ground is the most fruitful. The problem is not the use of
+<B>goto</B>, but the overuse of <B>goto</B>&#8212;in rare situations <B>goto</B>
+is actually the best way to structure control flow.<B>
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I112' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I113>
+</B></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Although <B>goto </B>is a reserved word
+in Java, it is not used in the language; Java has no <B>goto</B>. However, it
+does have something that looks a bit like a jump tied in with the <B>break</B>
+and <B>continue</B> keywords. It&#8217;s not a jump but rather a way to break
+out of an iteration statement. </FONT><FONT FACE="Georgia">The reason it&#8217;s
+often thrown in with discussions of <B>goto</B> is because it uses the same
+mechanism: a label. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I113' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I114>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A <A NAME="Index371"></A>label is an
+identifier followed by a colon, like this:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>label1:</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <I>only</I> place a label is useful
+in Java is right before an iteration statement. And that means <I>right</I>
+before&#8212;it does no good to put any other statement between the label and
+the iteration. And the sole reason to put a label before an iteration is if
+you&#8217;re going to nest another iteration or a switch inside it. That&#8217;s
+because the <A NAME="Index372"></A><B>break</B> and
+<A NAME="Index373"></A><B>continue</B> keywords will normally interrupt only the
+current loop, but when used with a label they&#8217;ll interrupt the loops up to
+where the label exists: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I114' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I115>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>label1: 
+outer-iteration {
+  inner-iteration {
+    <font color=#009900>//...</font>
+    <font color=#0000ff>break</font>; <font color=#009900>// 1</font>
+    <font color=#009900>//...</font>
+    <font color=#0000ff>continue</font>;  <font color=#009900>// 2</font>
+    <font color=#009900>//...</font>
+    <font color=#0000ff>continue</font> label1; <font color=#009900>// 3</font>
+    <font color=#009900>//...</font>
+    <font color=#0000ff>break</font> label1;  <font color=#009900>// 4</font>
+  }
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In case 1, the <B>break</B> breaks out of
+the inner iteration and you end up in the outer iteration. In case 2, the
+<B>continue</B> moves back to the beginning of the inner iteration. But in case
+3, the <B>continue label1</B> breaks out of the inner iteration <I>and</I> the
+outer iteration, all the way back to <B>label1</B>. Then it does in fact
+continue the iteration, but starting at the outer iteration. In case 4, the
+<B>break label1</B> also breaks all the way out to <B>label1</B>, but it does
+not re-enter the iteration. It actually does break out of both iterations.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I115' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I116>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here is an example using <B>for</B>
+loops:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:LabeledFor.java</font>
+<font color=#009900>// Java&#8217;s "labeled for" loop.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> LabeledFor {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>int</font> i = 0;
+    outer: <font color=#009900>// Can't have statements here</font>
+    <font color=#0000ff>for</font>(; <font color=#0000ff>true</font> ;) { <font color=#009900>// infinite loop</font>
+      inner: <font color=#009900>// Can't have statements here</font>
+      <font color=#0000ff>for</font>(; i &lt; 10; i++) {
+        prt(<font color=#004488>"i = "</font> + i);
+        <font color=#0000ff>if</font>(i == 2) {
+          prt(<font color=#004488>"continue"</font>);
+          <font color=#0000ff>continue</font>;
+        }
+        <font color=#0000ff>if</font>(i == 3) {
+          prt(<font color=#004488>"break"</font>);
+          i++; <font color=#009900>// Otherwise i never</font>
+               <font color=#009900>// gets incremented.</font>
+          <font color=#0000ff>break</font>;
+        }
+        <font color=#0000ff>if</font>(i == 7) {
+          prt(<font color=#004488>"continue outer"</font>);
+          i++; <font color=#009900>// Otherwise i never</font>
+               <font color=#009900>// gets incremented.</font>
+          <font color=#0000ff>continue</font> outer;
+        }
+        <font color=#0000ff>if</font>(i == 8) {
+          prt(<font color=#004488>"break outer"</font>);
+          <font color=#0000ff>break</font> outer;
+        }
+        <font color=#0000ff>for</font>(<font color=#0000ff>int</font> k = 0; k &lt; 5; k++) {
+          <font color=#0000ff>if</font>(k == 3) {
+            prt(<font color=#004488>"continue inner"</font>);
+            <font color=#0000ff>continue</font> inner;
+          }
+        }
+      }
+    }
+    <font color=#009900>// Can't break or continue</font>
+    <font color=#009900>// to labels here</font>
+  }
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> prt(String s) {
+    System.out.println(s);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This uses the <B>prt(&#160;)</B> method
+that has been defined in the other examples.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I116' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I117>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Note that <B>break</B> breaks out of the
+<B>for</B> loop, and that the increment-expression doesn&#8217;t occur until the
+end of the pass through the <B>for</B> loop. Since <B>break</B> skips the
+increment expression, the increment is performed directly in the case of <B>i ==
+3</B>. The <B>continue outer</B> statement in the case of <B>i == 7 </B>also
+goes to the top of the loop and also skips the increment, so it too is
+incremented directly. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I117' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I118>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here is the output:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>i = 0
+<font color=#0000ff>continue</font> inner
+i = 1
+<font color=#0000ff>continue</font> inner
+i = 2
+<font color=#0000ff>continue</font>
+i = 3
+<font color=#0000ff>break</font>
+i = 4
+<font color=#0000ff>continue</font> inner
+i = 5
+<font color=#0000ff>continue</font> inner
+i = 6
+<font color=#0000ff>continue</font> inner
+i = 7
+<font color=#0000ff>continue</font> outer
+i = 8
+<font color=#0000ff>break</font> outer</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If not for the <B>break outer</B>
+statement, there would be no way to get out of the outer loop from within an
+inner loop, since <B>break</B> by itself can break out of only the innermost
+loop. (The same is true for <B>continue</B>.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I118' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I119>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Of course, in the cases where breaking
+out of a loop will also exit the method, you can simply use a <B>return</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I119' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I120>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here is a demonstration of labeled
+<B>break</B> and <B>continue</B> statements with <B>while</B>
+loops:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:LabeledWhile.java</font>
+<font color=#009900>// Java's "labeled while" loop.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> LabeledWhile {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>int</font> i = 0;
+    outer:
+    <font color=#0000ff>while</font>(<font color=#0000ff>true</font>) {
+      prt(<font color=#004488>"Outer while loop"</font>);
+      <font color=#0000ff>while</font>(<font color=#0000ff>true</font>) {
+        i++;
+        prt(<font color=#004488>"i = "</font> + i);
+        <font color=#0000ff>if</font>(i == 1) {
+          prt(<font color=#004488>"continue"</font>);
+          <font color=#0000ff>continue</font>;
+        }
+        <font color=#0000ff>if</font>(i == 3) {
+          prt(<font color=#004488>"continue outer"</font>);
+          <font color=#0000ff>continue</font> outer;
+        }
+        <font color=#0000ff>if</font>(i == 5) {
+          prt(<font color=#004488>"break"</font>);
+          <font color=#0000ff>break</font>;
+        }
+        <font color=#0000ff>if</font>(i == 7) {
+          prt(<font color=#004488>"break outer"</font>);
+          <font color=#0000ff>break</font> outer;
+        }
+      }
+    }
+  }
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> prt(String s) {
+    System.out.println(s);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The same rules hold true for
+<B>while</B>: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I120' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I121>
+</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">A plain <B>continue</B>
+goes to the top of the innermost loop and
+continues.</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">A labeled
+<B>continue</B> goes to the label and re-enters the loop right after that
+label.</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">A
+<B>break</B> &#8220;drops out of the bottom&#8221; of the
+loop.</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">A labeled
+<B>break</B> drops out of the bottom of the end of the loop denoted by the
+label. </FONT></OL><DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The output of this
+method makes it clear: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I121' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I122>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Outer <font color=#0000ff>while</font> loop
+i = 1
+<font color=#0000ff>continue</font>
+i = 2
+i = 3
+<font color=#0000ff>continue</font> outer
+Outer <font color=#0000ff>while</font> loop
+i = 4
+i = 5
+<font color=#0000ff>break</font>
+Outer <font color=#0000ff>while</font> loop
+i = 6
+i = 7
+<font color=#0000ff>break</font> outer</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It&#8217;s important to remember that the
+<I>only</I> reason to use labels in Java is when you have nested loops and you
+want to <B>break</B> or <B>continue</B> through more than one nested level.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I122' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I123>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In Dijkstra&#8217;s &#8220;goto
+considered harmful&#8221; paper, what he specifically objected to was the
+labels, not the goto. He observed that the number of bugs seems to increase with
+the number of labels in a program. Labels and gotos make programs difficult to
+analyze statically, since it introduces cycles in the program execution graph.
+Note that Java labels don&#8217;t suffer from this problem, since they are
+constrained in their placement and can&#8217;t be used to transfer control in an
+ad hoc manner. It&#8217;s also interesting to note that this is a case where a
+language feature is made more useful by restricting the power of the statement.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I123' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I124>
+</FONT><A NAME="_Toc375545271"></A><A NAME="_Toc481064565"></A><BR></P></DIV>
+<A NAME="Heading159"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+switch<BR><A NAME="Index374"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>switch</B> is sometimes classified
+as a <I>selection statement</I>. The <B>switch </B>statement selects from among
+pieces of code based on the value of an integral expression. Its form is:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I124' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I125>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>switch</font>(integral-selector) {
+  <font color=#0000ff>case</font> integral-value1 : statement; <font color=#0000ff>break</font>; 
+  <font color=#0000ff>case</font> integral-value2 : statement; <font color=#0000ff>break</font>;
+  <font color=#0000ff>case</font> integral-value3 : statement; <font color=#0000ff>break</font>;
+  <font color=#0000ff>case</font> integral-value4 : statement; <font color=#0000ff>break</font>;
+  <font color=#0000ff>case</font> integral-value5 : statement; <font color=#0000ff>break</font>;
+          <font color=#009900>// ...</font>
+  <font color=#0000ff>default</font>: statement;
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><I>Integral-selector</I> is an expression
+that produces an integral value. The <B>switch</B> compares the result of
+<I>integral-selector</I> to each<I> integral-value</I>. If it finds a match, the
+corresponding <I>statement</I> (simple or compound) executes. If no match
+occurs, the <B>default</B> <A NAME="Index375"></A><I>statement</I> executes.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I125' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I126>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You will notice in the above definition
+that each <B>case<A NAME="Index376"></A></B> ends with a <B>break</B>, which
+causes execution to jump to the end of the <B>switch</B> body. This is the
+conventional way to build a <B>switch</B> statement, but the <B>break</B> is
+optional. If it is missing, the code for the following case statements execute
+until a <B>break</B> is encountered. Although you don&#8217;t usually want this
+kind of behavior, it can be useful to an experienced programmer. Note the last
+statement, following the <B>default</B>, doesn&#8217;t have a <B>break</B>
+because the execution just falls through to where the <B>break</B> would have
+taken it anyway. You could put a <B>break</B> at the end of the <B>default</B>
+statement with no harm if you considered it important for style&#8217;s sake.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I126' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I127>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>switch</B> statement is a clean
+way to implement multi-way selection (i.e., selecting from among a number of
+different execution paths), but it requires a selector that evaluates to an
+integral value such as <B>int</B> or <B>char</B>. If you want to use, for
+example, a string or a floating-point number as a selector, it won&#8217;t work
+in a <B>switch</B> statement. For non-integral types, you must use a series of
+<B>if</B> statements. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I127' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I128>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here&#8217;s an example that creates
+letters randomly and determines whether they&#8217;re vowels or consonants:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I128' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I129>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:VowelsAndConsonants.java</font>
+<font color=#009900>// Demonstrates the switch statement.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> VowelsAndConsonants {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; 100; i++) {
+      <font color=#0000ff>char</font> c = (<font color=#0000ff>char</font>)(Math.random() * 26 + 'a');
+      System.out.print(c + <font color=#004488>": "</font>);
+      <font color=#0000ff>switch</font>(c) {
+      <font color=#0000ff>case</font> 'a':
+      <font color=#0000ff>case</font> 'e':
+      <font color=#0000ff>case</font> 'i':
+      <font color=#0000ff>case</font> 'o':
+      <font color=#0000ff>case</font> 'u':
+                System.out.println(<font color=#004488>"vowel"</font>);
+                <font color=#0000ff>break</font>;
+      <font color=#0000ff>case</font> 'y':
+      <font color=#0000ff>case</font> 'w':
+                System.out.println(
+                  <font color=#004488>"Sometimes a vowel"</font>);
+                <font color=#0000ff>break</font>;
+      <font color=#0000ff>default</font>:
+                System.out.println(<font color=#004488>"consonant"</font>);
+      }
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Since <B>Math.random(&#160;)</B>
+generates a value between 0 and 1, you need only multiply it by the upper bound
+of the range of numbers you want to produce (26 for the letters in the alphabet)
+and add an offset to establish the lower bound. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I129' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I130>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Although it appears you&#8217;re
+switching on a character here, the <B>switch</B> statement is actually using the
+integral value of the character. The singly-quoted characters in the <B>case</B>
+statements also produce integral values that are used for comparison.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I130' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I131>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Notice how the <B>case</B>s can be
+&#8220;stacked&#8221; on top of each other to provide multiple matches for a
+particular piece of code. You should also be aware that it&#8217;s essential to
+put the <B>break</B> statement at the end of a particular case, otherwise
+control will simply drop through and continue processing on the next case.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I131' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I132>
+</FONT><BR></P></DIV>
+<A NAME="Heading160"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Calculation details</H4></FONT>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>The statement:
+<font color=#0000ff>char</font> c = (<font color=#0000ff>char</font>)(Math.random() * 26 + 'a');</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">deserves a closer look.
+<B>Math.random(&#160;)</B> produces a <B>double</B>, so the value 26 is
+converted to a <B>double</B> to perform the multiplication, which also produces
+a <B>double</B>. This means that <B>&#8216;a&#8217;</B> must be converted to a
+<B>double</B> to perform the addition. The <B>double</B> result is turned back
+into a <B>char</B> with a cast.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I132' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I133>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">What does the cast to <B>char</B> do?
+That is, if you have the value 29.7 and you cast it to a <B>char</B>, is the
+resulting value 30 or 29? The answer to this can be seen in this example:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I133' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I134>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:CastingNumbers.java</font>
+<font color=#009900>// What happens when you cast a float </font>
+<font color=#009900>// or double to an integral value?</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> CastingNumbers {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>double</font>
+      above = 0.7,
+      below = 0.4;
+    System.out.println(<font color=#004488>"above: "</font> + above);
+    System.out.println(<font color=#004488>"below: "</font> + below);
+    System.out.println(
+      <font color=#004488>"(int)above: "</font> + (<font color=#0000ff>int</font>)above);
+    System.out.println(
+      <font color=#004488>"(int)below: "</font> + (<font color=#0000ff>int</font>)below);
+    System.out.println(
+      <font color=#004488>"(char)('a' + above): "</font> +
+      (<font color=#0000ff>char</font>)('a' + above));
+    System.out.println(
+      <font color=#004488>"(char)('a' + below): "</font> +
+      (<font color=#0000ff>char</font>)('a' + below));
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The output is:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I134' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I135>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>above: 0.7
+below: 0.4
+(<font color=#0000ff>int</font>)above: 0
+(<font color=#0000ff>int</font>)below: 0
+(<font color=#0000ff>char</font>)('a' + above): a
+(<font color=#0000ff>char</font>)('a' + below): a</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">So the answer is that
+<A NAME="Index377"></A>casting from a <B>float</B> or <B>double</B> to an
+integral value always truncates.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I135' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I136>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A second question concerns
+<A NAME="Index378"></A><A NAME="Index379"></A><B>Math.random(&#160;)</B>. Does
+it produce a value from zero to one, inclusive or exclusive of the value
+&#8216;1&#8217;? In math lingo, is it (0,1), or [0,1], or (0,1] or [0,1)? (The
+square bracket means &#8220;includes&#8221; whereas the parenthesis means
+&#8220;doesn&#8217;t include.&#8221;) Again, a test program might provide the
+answer: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I136' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I137>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c03:RandomBounds.java</font>
+<font color=#009900>// Does Math.random() produce 0.0 and 1.0?</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> RandomBounds {
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> usage() {
+    System.out.println(<font color=#004488>"Usage: \n\t"</font> +
+      <font color=#004488>"RandomBounds lower\n\t"</font> +
+      <font color=#004488>"RandomBounds upper"</font>);
+    System.exit(1);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>if</font>(args.length != 1) usage();
+    <font color=#0000ff>if</font>(args[0].equals(<font color=#004488>"lower"</font>)) {
+      <font color=#0000ff>while</font>(Math.random() != 0.0)
+        ; <font color=#009900>// Keep trying</font>
+      System.out.println(<font color=#004488>"Produced 0.0!"</font>);
+    } 
+    <font color=#0000ff>else</font> <font color=#0000ff>if</font>(args[0].equals(<font color=#004488>"upper"</font>)) {
+      <font color=#0000ff>while</font>(Math.random() != 1.0)
+        ; <font color=#009900>// Keep trying</font>
+      System.out.println(<font color=#004488>"Produced 1.0!"</font>);
+    } 
+    <font color=#0000ff>else</font> 
+      usage();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To run the program, you type a command
+line of either: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I137' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I138>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>java RandomBounds lower</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">or</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>java RandomBounds upper</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In both cases you are forced to break out
+of the program manually, so it would <I>appear</I> that
+<B>Math.random(&#160;)</B> never produces either 0.0 or 1.0. But this is where
+such an experiment can be deceiving. If you
+consider</FONT><A NAME="fnB26" HREF="#fn26">[26]</A><FONT FACE="Georgia"> that
+there are about 2<SUP>62</SUP> different double fractions between 0 and 1, the
+likelihood of reaching any one value experimentally might exceed the lifetime of
+one computer, or even one experimenter. It turns out that 0.0 <I>is</I> included
+in the output of <B>Math.random(&#160;)</B>. Or, in math lingo, it is [0,1).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I138' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I139>
+</FONT><A NAME="_Toc375545272"></A><A NAME="_Toc481064566"></A><BR></P></DIV>
+<A NAME="Heading161"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Summary</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This chapter concludes the study of
+fundamental features that appear in most programming languages: calculation,
+operator precedence, type casting, and selection and iteration. Now you&#8217;re
+ready to begin taking steps that move you closer to the world of object-oriented
+programming. The next chapter will cover the important issues of initialization
+and cleanup of objects, followed in the subsequent chapter by the essential
+concept of implementation hiding.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I139' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I140>
+</FONT><A NAME="_Toc375545273"></A><A NAME="_Toc481064567"></A><BR></P></DIV>
+<A NAME="Heading162"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Exercises</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=2>Solutions to selected exercises
+can be found in the electronic document <I>The Thinking in Java Annotated
+Solution Guide</I>, available for a small fee from
+<I>www.BruceEckel.com</I>.</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">There are two expressions
+in the section labeled &#8220;precedence&#8221; early in this chapter. Put these
+expressions into a program and demonstrate that they produce different results.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I140' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I141>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Put
+the methods <B>ternary(&#160;)</B> and <B>alternative(&#160;)</B> into a working
+program.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I141' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I142>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">From
+the sections labeled &#8220;if-else&#8221; and &#8220;return&#8221;, <STRIKE>put
+the methods <B>test(&#160;)</B> and <B>test2(&#160;)</B> into a working
+program.</STRIKE><U> modify the two <B>test(&#160;)</B> methods so that
+<B>testval</B> is tested to see if it is within the range between (and
+including) the arguments <B>begin</B> and <B>end</B>.</U>
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I142' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I143>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Write
+a program that prints values from one to 100.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I143' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I144>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Modify
+Exercise 4 so that the program exits by using the <B>break</B> keyword at value
+47. Try using <B>return</B> instead.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I144' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I145>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Write
+a function that takes two <B>String</B> arguments, and uses all the
+<B>boolean</B> comparisons to compare the two <B>String</B>s and print the
+results. For the <B>==</B> and <B>!=</B>, also perform the <B>equals(&#160;)</B>
+test. In <B>main(&#160;)</B>, call your function with some different
+<B>String</B> objects.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I145' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I146>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Write
+a program that generates 25 random <B>int</B> values. For each value, use an
+<B>if</B>-<B>else</B> statement to classify it as greater than, less than or
+equal to a second randomly-generated value.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I146' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I147>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Modify
+Exercise 7 so that your code is surrounded by an &#8220;infinite&#8221;
+<B>while</B> loop. It will then run until you interrupt it from the keyboard
+(typically by pressing Control-C).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I147' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I148>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Write
+a program that uses two nested <B>for</B> loops and the modulus operator
+(<B>%</B>) to detect and print prime numbers (integral numbers that are not
+evenly divisible by any other numbers except for themselves and 1).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I148' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER3_I149>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a <B>switch</B> statement that prints a message for each <B>case</B>, and put
+the <B>switch</B> inside a <B>for</B> loop that tries each <B>case</B>. Put a
+<B>break</B> after each <B>case</B> and test it, then remove the <B>break</B>s
+and see what happens. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER3_I149' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+</FONT></OL>
+<HR><DIV ALIGN="LEFT"><P><A NAME="fn25" HREF="#fnB25">[25]</A><FONT FACE="Georgia" SIZE=2>
+John Kirkham writes, &#8220;I started computing in 1962 using FORTRAN II on an
+IBM 1620. At that time, and throughout the 1960s and into the 1970s, FORTRAN was
+an all uppercase language. This probably started because many of the early input
+devices were old teletype units that used 5 bit Baudot code, which had no
+lowercase capability. The &#8216;E&#8217; in the exponential notation was also
+always upper case and was never confused with the natural logarithm base
+&#8216;e&#8217;, which is always lowercase. The &#8216;E&#8217; simply stood for
+exponential, which was for the base of the number system used&#8212;usually 10.
+At the time octal was also widely used by programmers. Although I never saw it
+used, if I had seen an octal number in exponential notation I would have
+considered it to be base 8. The first time I remember seeing an exponential
+using a lowercase &#8216;e&#8217; was in the late 1970s and I also found it
+confusing. The problem arose as lowercase crept into FORTRAN, not at its
+beginning. We actually had functions to use if you really wanted to use the
+natural logarithm base, but they were all uppercase.&#8221;</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn26" HREF="#fnB26">[26]</A><FONT FACE="Georgia" SIZE=2>
+Chuck Allison writes: The total number of numbers in a floating-point number
+system is</FONT><BR><FONT FACE="Georgia" SIZE=2><B>2(M-m+1)b^(p-1) +
+1</B></FONT><BR><FONT FACE="Georgia" SIZE=2>where <B>b</B> is the base (usually
+2), <B>p</B> is the precision (digits in the mantissa), <B>M</B> is the largest
+exponent, and <B>m</B> is the smallest exponent. IEEE 754
+uses:</FONT><BR><FONT FACE="Georgia" SIZE=2><B>M = 1023, m = -1022, p = 53, b =
+2</B></FONT><BR><FONT FACE="Georgia" SIZE=2>so the total number of numbers
+is</FONT><BR><FONT FACE="Georgia" SIZE=2><B>2(1023+1022+1)2^52</B></FONT><BR><FONT FACE="Georgia" SIZE=2><B>=
+2((2^10-1) + (2^10-1))2^52</B></FONT><BR><FONT FACE="Georgia" SIZE=2><B>=
+(2^10-1)2^54</B></FONT><BR><FONT FACE="Georgia" SIZE=2><B>= 2^64 -
+2^54</B></FONT><BR><FONT FACE="Georgia" SIZE=2>Half of these numbers
+(corresponding to exponents in the range [-1022, 0]) are less than 1 in
+magnitude (both positive and negative), so 1/4 of that expression, or 2^62 -
+2^52  + 1 (approximately 2^62)  is in the range [0,1). See my paper at
+http://www.freshsources.com/1995006a.htm (last of text).</FONT><BR></P></DIV>
+
+<DIV ALIGN="CENTER">
+    <FONT FACE="Verdana" size = "-1">
+     [ <a href="Chap02.htm">Previous Chapter</a> ] 
+    [ <a href="SimpCont.htm">Short TOC</a> ] 
+    [ <a href="Contents.htm">Table of Contents</a> ] 
+    [ <a href="DocIdx.htm">Index</a> ]
+     [ <a href="Chap04.htm">Next Chapter</a> ] 
+    </FONT>
+    <BR>
+ Last Update:05/21/2001</P></DIV>
+
+</BODY>
+
+</HTML>

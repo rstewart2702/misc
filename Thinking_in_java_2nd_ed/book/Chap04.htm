@@ -1,0 +1,3233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<!--
+This document was converted from RTF source: 
+By rtftohtml 4.19
+See http://www.sunpack.com/RTF
+Filename:TIJ2.rtf
+Application Directory:C:\TOOLS\RTF2HTML\
+Subject:
+Author:Bruce Eckel
+Operator:Bruce Eckel
+Document Comments:
+Version Comments:
+Comments:
+Keywords:
+Translation Date:05/21/2001
+Translation Time:10:39:07
+Translation Platform:Win32
+Number of Output files:23
+This File:Chap04.htm
+SplitDepth=1
+SkipNavPanel=1
+SkipLeadingToc=1
+SkipTrailingToc=1
+GenContents=1
+GenFrames=1
+GenIndex=1
+-->
+<HEAD lang="en"><META http-equiv="Content-Type" content="text/html">
+<TITLE>4: Initialization  &amp; Cleanup</TITLE>
+</HEAD>
+
+<BODY  BGCOLOR="#FFFFFF"><DIV ALIGN="CENTER">
+  <a href="http://www.MindView.net">
+  <img src="mindview.gif" alt="MindView Inc." BORDER = "0"></a>
+  <CENTER>
+    <FONT FACE="Verdana" size = "-1">
+    [ <a href="README.txt">Viewing Hints</a> ]
+    [ <a href="RevHist.htm">Revision History</a> ]
+    [ <a href="http://www.mindview.net/Books/TIJ/">Book Home Page</a> ]
+    [ <a href="http://www.mindview.net/Etc/MailingList.html">Free Newsletter</a> ] <br>
+    [ <a href="http://www.mindview.net/Seminars">Seminars</a> ]
+    [ <a href="http://www.mindview.net/CDs">Seminars on CD ROM</a> ]
+    [ <a href="http://www.mindview.net/Services">Consulting</a> ]
+    </FONT>
+  <H2><FONT FACE="Verdana">
+  Thinking in Java, 2nd edition, Revision 12</FONT></H2>
+  <H3><FONT FACE="Verdana">&copy;2000 by Bruce Eckel</FONT></H3>
+  
+    <FONT FACE="Verdana" size = "-1">
+     [ <a href="Chap03.htm">Previous Chapter</a> ] 
+    [ <a href="SimpCont.htm">Short TOC</a> ] 
+    [ <a href="Contents.htm">Table of Contents</a> ] 
+    [ <a href="DocIdx.htm">Index</a> ]
+     [ <a href="Chap05.htm">Next Chapter</a> ] 
+    </FONT>
+    
+  </CENTER>
+  </P></DIV><A NAME="Chapter_4"></A><A NAME="_Toc375545274"></A><A NAME="_Toc477690724"></A><A NAME="_Toc481064568"></A><A NAME="Heading163"></A><FONT FACE = "Verdana"><H1 ALIGN="LEFT">
+4: Initialization <BR>&amp; Cleanup</H1></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=4><backtalk:display ID=TIJ3_CHAPTER4_I0>
+As the
+computer revolution progresses, &#8220;unsafe&#8221; programming has become one
+of the major culprits that makes programming expensive.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Two of these safety issues are
+<I>initialization</I> and <I>cleanup</I>. Many C bugs occur when the programmer
+forgets to initialize a variable. This is especially true with libraries when
+users don&#8217;t know how to initialize a library component, or even that they
+must. Cleanup is a special problem because it&#8217;s easy to forget about an
+element when you&#8217;re done with it, since it no longer concerns you. Thus,
+the resources used by that element are retained and you can easily end up
+running out of resources (most notably, memory). 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I0' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I1>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">C++ introduced the concept of a
+<I>constructor</I>, a special method automatically called when an object is
+created. Java also adopted the constructor, and in addition has a garbage
+collector that automatically releases memory resources when they&#8217;re no
+longer being used. This chapter examines the issues of initialization and
+cleanup, and their support in Java.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I1' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I2>
+</FONT><A NAME="_Toc312373853"></A><A NAME="_Toc375545275"></A><A NAME="_Toc481064569"></A><BR></P></DIV>
+<A NAME="Heading164"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Guaranteed initialization <BR>with the constructor</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can imagine creating a method called
+<B>initialize(&#160;)</B> for every class you write. The name is a hint that it
+should be called before using the object. Unfortunately, this means the user
+must remember to call the method. In Java, the class designer can guarantee
+initialization of every object by providing a special method called a
+<I>constructor<A NAME="Index380"></A><A NAME="Index381"></A></I>. If a class has
+a constructor, Java automatically calls that constructor when an object is
+created, before users can even get their hands on it. So initialization is
+guaranteed. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I2' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I3>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The next challenge is what to name this
+method. There are two issues. The first is that any name you use could clash
+with a name you might like to use as a member in the class. The second is that
+because the compiler is responsible for calling the constructor, it must always
+know which method to call. The C++ solution seems the easiest and most logical,
+so it&#8217;s also used in Java: the name of the constructor
+<A NAME="Index382"></A>is the same as the name of the class. It makes sense that
+such a method will be called automatically on initialization.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I3' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I4>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here&#8217;s a simple class with a
+constructor:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c04:SimpleConstructor.java</font>
+<font color=#009900>// Demonstration of a simple constructor.</font>
+
+<font color=#0000ff>class</font> Rock {
+  Rock() { <font color=#009900>// This is the constructor</font>
+    System.out.println(<font color=#004488>"Creating Rock"</font>);
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> SimpleConstructor {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; 10; i++)
+      <font color=#0000ff>new</font> Rock();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Now, when an
+<A NAME="Index383"></A>object is created:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I4' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I5>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>new</font> Rock();</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">storage is allocated and the constructor
+is called. It is guaranteed that the object will be properly initialized before
+you can get your hands on it.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I5' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I6>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Note that the coding style of making the
+first letter of all methods lowercase does not apply to constructors, since the
+name of the constructor must match the name of the class <I>exactly</I>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I6' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I7>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Like any method, the constructor can have
+arguments<A NAME="Index384"></A><A NAME="Index385"></A> to allow you to specify
+<I>how</I> an object is created. The above example can easily be changed so the
+constructor takes an argument:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c04:SimpleConstructor2.java</font>
+<font color=#009900>// Constructors can have arguments.</font>
+
+<font color=#0000ff>class</font> Rock2 {
+  Rock2(<font color=#0000ff>int</font> i) {
+    System.out.println(
+      <font color=#004488>"Creating Rock number "</font> + i);
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> SimpleConstructor2 {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; 10; i++)
+      <font color=#0000ff>new</font> Rock2(i);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Constructor arguments provide you with a
+way to provide parameters for the initialization of an object. For example, if
+the class <B>Tree</B> has a constructor that takes a single integer argument
+denoting the height of the tree, you would create a <B>Tree</B> object like
+this: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I7' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I8>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Tree t = <font color=#0000ff>new</font> Tree(12);  <font color=#009900>// 12-foot tree</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If <B>Tree(int)</B> is your only
+constructor, then the compiler won&#8217;t let you create a <B>Tree</B> object
+any other way.  
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I8' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I9>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Constructors eliminate a large class of
+problems and make the code easier to read. In the preceding code fragment, for
+example, you don&#8217;t see an explicit call to some <B>initialize(&#160;)</B>
+method that is conceptually separate from definition. In Java, definition and
+initialization are unified concepts&#8212;you can&#8217;t have one without the
+other. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I9' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I10>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The constructor is an unusual type of
+method because it has no return
+value<A NAME="Index386"></A><A NAME="Index387"></A>. This is distinctly
+different from a <B>void</B> return value, in which the method returns nothing
+but you still have the option to make it return something else. Constructors
+return nothing and you don&#8217;t have an option. If there was a return value,
+and if you could select your own, the compiler would somehow need to know what
+to do with that return value.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I10' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I11>
+</FONT><A NAME="_Toc375545276"></A><A NAME="_Toc481064570"></A><BR></P></DIV>
+<A NAME="Heading165"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Method overloading<BR><A NAME="Index388"></A><A NAME="Index389"></A></H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">One of the important features in any
+programming language is the use of names. When you create an object, you give a
+name to a region of storage. A method is a name for an action. By using names to
+describe your system, you create a program that is easier for people to
+understand and change. It&#8217;s a lot like writing prose&#8212;the goal is to
+communicate with your readers.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I11' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I12>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You refer to all objects and methods by
+using names. Well-chosen names make it easier for you and others to understand
+your code.  
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I12' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I13>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A problem arises when mapping the concept
+of nuance in human language onto a programming language. Often, the same word
+expresses a number of different meanings&#8212;it&#8217;s <I>overloaded</I>.
+This is useful, especially when it comes to trivial differences. You say
+&#8220;wash the shirt,&#8221; &#8220;wash the car,&#8221; and &#8220;wash the
+dog.&#8221; It would be silly to be forced to say, &#8220;shirtWash the
+shirt,&#8221; &#8220;carWash the car,&#8221; and &#8220;dogWash the dog&#8221;
+just so the listener doesn&#8217;t need to make any distinction about the action
+performed. Most human languages are redundant, so even if you miss a few words,
+you can still determine the meaning. We don&#8217;t need unique
+identifiers&#8212;we can deduce meaning from context.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I13' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I14>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Most programming languages (C in
+particular) require you to have a unique identifier for each function. So you
+could not have one function called <B>print(&#160;)</B> for printing integers
+and another called <B>print(&#160;)</B> for printing floats&#8212;each function
+requires a unique name. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I14' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I15>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In Java (and C++), another factor forces
+the overloading of method names: the
+constructor<A NAME="Index390"></A><A NAME="Index391"></A>. Because the
+constructor&#8217;s name is predetermined by the name of the class, there can be
+only one constructor name. But what if you want to create an object in more than
+one way? For example, suppose you build a class that can initialize itself in a
+standard way or by reading information from a file. You need two constructors,
+one that takes no arguments (the <I>default</I> constructor, also called the
+<I>no-arg</I> constructor), and one that takes a <B>String</B> as an argument,
+which is the name of the file from which to initialize the object. Both are
+constructors, so they must have the same name&#8212;the name of the class. Thus,
+<I>method overloading</I> is essential to allow the same method name to be used
+with different argument types. And although method overloading is a must for
+constructors, it&#8217;s a general convenience and can be used with any method. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I15' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I16>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here&#8217;s an example that shows both
+overloaded constructors and overloaded ordinary methods:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c04:Overloading.java</font>
+<font color=#009900>// Demonstration of both constructor</font>
+<font color=#009900>// and ordinary method overloading.</font>
+<font color=#0000ff>import</font> java.util.*;
+
+<font color=#0000ff>class</font> Tree {
+  <font color=#0000ff>int</font> height;
+  Tree() {
+    prt(<font color=#004488>"Planting a seedling"</font>);
+    height = 0;
+  }
+  Tree(<font color=#0000ff>int</font> i) {
+    prt(<font color=#004488>"Creating new Tree that is "</font>
+        + i + <font color=#004488>" feet tall"</font>);
+    height = i;
+  }
+  <font color=#0000ff>void</font> info() {
+    prt(<font color=#004488>"Tree is "</font> + height
+        + <font color=#004488>" feet tall"</font>);
+  }
+  <font color=#0000ff>void</font> info(String s) {
+    prt(s + <font color=#004488>": Tree is "</font>
+        + height + <font color=#004488>" feet tall"</font>);
+  }
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> prt(String s) {
+    System.out.println(s);
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Overloading {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; 5; i++) {
+      Tree t = <font color=#0000ff>new</font> Tree(i);
+      t.info();
+      t.info(<font color=#004488>"overloaded method"</font>);
+    }
+    <font color=#009900>// Overloaded constructor:</font>
+    <font color=#0000ff>new</font> Tree();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A <B>Tree</B> object can be created
+either as a seedling, with no argument, or as a plant grown in a nursery, with
+an existing height. To support this, there are two constructors, one that takes
+no arguments (we call constructors that take no arguments
+<A NAME="Index392"></A><A NAME="Index393"></A><I>default
+constructors</I></FONT><A NAME="fnB27" HREF="#fn27">[27]</A><A NAME="Index394"></A><A NAME="Index395"></A><FONT FACE="Georgia">)
+and one that takes the existing height.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I16' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I17>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You might also want to call the
+<B>info(&#160;)</B> method in more than one way. For example, with a
+<B>String</B> argument if you have an extra message you want printed, and
+without if you have nothing more to say. It would seem strange to give two
+separate names to what is obviously the same concept. Fortunately, method
+overloading allows you to use the same name for both.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I17' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I18>
+</FONT><A NAME="_Toc375545277"></A><A NAME="_Toc481064571"></A><BR></P></DIV>
+<A NAME="Heading166"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Distinguishing overloaded
+methods<BR><A NAME="Index396"></A><A NAME="Index397"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If the methods have the same name, how
+can Java know which method you mean? There&#8217;s a simple rule: each
+overloaded method must take a unique list of argument types.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I18' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I19>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you think about this for a second, it
+makes sense: how else could a programmer tell the difference between two methods
+that have the same name, other than by the types of their arguments?
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I19' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I20>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Even differences in the ordering of
+arguments are sufficient to distinguish two methods: (Although you don&#8217;t
+normally want to take this approach, as it produces difficult-to-maintain code.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I20' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I21>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c04:OverloadingOrder.java</font>
+<font color=#009900>// Overloading based on the order of</font>
+<font color=#009900>// the arguments.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> OverloadingOrder {
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> print(String s, <font color=#0000ff>int</font> i) {
+    System.out.println(
+      <font color=#004488>"String: "</font> + s +
+      <font color=#004488>", int: "</font> + i);
+  }
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> print(<font color=#0000ff>int</font> i, String s) {
+    System.out.println(
+      <font color=#004488>"int: "</font> + i +
+      <font color=#004488>", String: "</font> + s);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    print(<font color=#004488>"String first"</font>, 11);
+    print(99, <font color=#004488>"Int first"</font>);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The two <B>print(&#160;)</B> methods have
+identical arguments, but the order is different, and that&#8217;s what makes
+them distinct.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I21' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I22>
+</FONT><A NAME="_Toc312373866"></A><A NAME="_Toc375545278"></A><A NAME="_Toc481064572"></A><BR></P></DIV>
+<A NAME="Heading167"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Overloading with primitives</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A primitive can be automatically promoted
+from a smaller type to a larger one and this can be slightly confusing in
+combination with overloading. The following example demonstrates what happens
+when a primitive is handed to an overloaded method:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c04:PrimitiveOverloading.java</font>
+<font color=#009900>// Promotion of primitives and overloading.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> PrimitiveOverloading {
+  <font color=#009900>// boolean can't be automatically converted</font>
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> prt(String s) { 
+    System.out.println(s); 
+  }
+
+  <font color=#0000ff>void</font> f1(<font color=#0000ff>char</font> x) { prt(<font color=#004488>"f1(char)"</font>); }
+  <font color=#0000ff>void</font> f1(<font color=#0000ff>byte</font> x) { prt(<font color=#004488>"f1(byte)"</font>); }
+  <font color=#0000ff>void</font> f1(<font color=#0000ff>short</font> x) { prt(<font color=#004488>"f1(short)"</font>); }
+  <font color=#0000ff>void</font> f1(<font color=#0000ff>int</font> x) { prt(<font color=#004488>"f1(int)"</font>); }
+  <font color=#0000ff>void</font> f1(<font color=#0000ff>long</font> x) { prt(<font color=#004488>"f1(long)"</font>); }
+  <font color=#0000ff>void</font> f1(<font color=#0000ff>float</font> x) { prt(<font color=#004488>"f1(float)"</font>); }
+  <font color=#0000ff>void</font> f1(<font color=#0000ff>double</font> x) { prt(<font color=#004488>"f1(double)"</font>); }
+
+  <font color=#0000ff>void</font> f2(<font color=#0000ff>byte</font> x) { prt(<font color=#004488>"f2(byte)"</font>); }
+  <font color=#0000ff>void</font> f2(<font color=#0000ff>short</font> x) { prt(<font color=#004488>"f2(short)"</font>); }
+  <font color=#0000ff>void</font> f2(<font color=#0000ff>int</font> x) { prt(<font color=#004488>"f2(int)"</font>); }
+  <font color=#0000ff>void</font> f2(<font color=#0000ff>long</font> x) { prt(<font color=#004488>"f2(long)"</font>); }
+  <font color=#0000ff>void</font> f2(<font color=#0000ff>float</font> x) { prt(<font color=#004488>"f2(float)"</font>); }
+  <font color=#0000ff>void</font> f2(<font color=#0000ff>double</font> x) { prt(<font color=#004488>"f2(double)"</font>); }
+
+  <font color=#0000ff>void</font> f3(<font color=#0000ff>short</font> x) { prt(<font color=#004488>"f3(short)"</font>); }
+  <font color=#0000ff>void</font> f3(<font color=#0000ff>int</font> x) { prt(<font color=#004488>"f3(int)"</font>); }
+  <font color=#0000ff>void</font> f3(<font color=#0000ff>long</font> x) { prt(<font color=#004488>"f3(long)"</font>); }
+  <font color=#0000ff>void</font> f3(<font color=#0000ff>float</font> x) { prt(<font color=#004488>"f3(float)"</font>); }
+  <font color=#0000ff>void</font> f3(<font color=#0000ff>double</font> x) { prt(<font color=#004488>"f3(double)"</font>); }
+
+  <font color=#0000ff>void</font> f4(<font color=#0000ff>int</font> x) { prt(<font color=#004488>"f4(int)"</font>); }
+  <font color=#0000ff>void</font> f4(<font color=#0000ff>long</font> x) { prt(<font color=#004488>"f4(long)"</font>); }
+  <font color=#0000ff>void</font> f4(<font color=#0000ff>float</font> x) { prt(<font color=#004488>"f4(float)"</font>); }
+  <font color=#0000ff>void</font> f4(<font color=#0000ff>double</font> x) { prt(<font color=#004488>"f4(double)"</font>); }
+
+  <font color=#0000ff>void</font> f5(<font color=#0000ff>long</font> x) { prt(<font color=#004488>"f5(long)"</font>); }
+  <font color=#0000ff>void</font> f5(<font color=#0000ff>float</font> x) { prt(<font color=#004488>"f5(float)"</font>); }
+  <font color=#0000ff>void</font> f5(<font color=#0000ff>double</font> x) { prt(<font color=#004488>"f5(double)"</font>); }
+
+  <font color=#0000ff>void</font> f6(<font color=#0000ff>float</font> x) { prt(<font color=#004488>"f6(float)"</font>); }
+  <font color=#0000ff>void</font> f6(<font color=#0000ff>double</font> x) { prt(<font color=#004488>"f6(double)"</font>); }
+
+  <font color=#0000ff>void</font> f7(<font color=#0000ff>double</font> x) { prt(<font color=#004488>"f7(double)"</font>); }
+
+  <font color=#0000ff>void</font> testConstVal() {
+    prt(<font color=#004488>"Testing with 5"</font>);
+    f1(5);f2(5);f3(5);f4(5);f5(5);f6(5);f7(5);
+  }
+  <font color=#0000ff>void</font> testChar() {
+    <font color=#0000ff>char</font> x = 'x';
+    prt(<font color=#004488>"char argument:"</font>);
+    f1(x);f2(x);f3(x);f4(x);f5(x);f6(x);f7(x);
+  }
+  <font color=#0000ff>void</font> testByte() {
+    <font color=#0000ff>byte</font> x = 0;
+    prt(<font color=#004488>"byte argument:"</font>);
+    f1(x);f2(x);f3(x);f4(x);f5(x);f6(x);f7(x);
+  }
+  <font color=#0000ff>void</font> testShort() {
+    <font color=#0000ff>short</font> x = 0;
+    prt(<font color=#004488>"short argument:"</font>);
+    f1(x);f2(x);f3(x);f4(x);f5(x);f6(x);f7(x);
+  }
+  <font color=#0000ff>void</font> testInt() {
+    <font color=#0000ff>int</font> x = 0;
+    prt(<font color=#004488>"int argument:"</font>);
+    f1(x);f2(x);f3(x);f4(x);f5(x);f6(x);f7(x);
+  }
+  <font color=#0000ff>void</font> testLong() {
+    <font color=#0000ff>long</font> x = 0;
+    prt(<font color=#004488>"long argument:"</font>);
+    f1(x);f2(x);f3(x);f4(x);f5(x);f6(x);f7(x);
+  }
+  <font color=#0000ff>void</font> testFloat() {
+    <font color=#0000ff>float</font> x = 0;
+    prt(<font color=#004488>"float argument:"</font>);
+    f1(x);f2(x);f3(x);f4(x);f5(x);f6(x);f7(x);
+  }
+  <font color=#0000ff>void</font> testDouble() {
+    <font color=#0000ff>double</font> x = 0;
+    prt(<font color=#004488>"double argument:"</font>);
+    f1(x);f2(x);f3(x);f4(x);f5(x);f6(x);f7(x);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    PrimitiveOverloading p = 
+      <font color=#0000ff>new</font> PrimitiveOverloading();
+    p.testConstVal();
+    p.testChar();
+    p.testByte();
+    p.testShort();
+    p.testInt();
+    p.testLong();
+    p.testFloat();
+    p.testDouble();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you view the output of this program,
+you&#8217;ll see that the constant value 5 is treated as an <B>int</B>, so if an
+overloaded method is available that takes an <B>int</B> it is used. In all other
+cases, if you have a data type that is smaller than the argument in the method,
+that data type is promoted. <B>char</B> produces a slightly different effect,
+since if it doesn&#8217;t find an exact <B>char</B> match, it is promoted to
+<B>int</B>. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I22' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I23>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">What happens if your argument is
+<I>bigger</I> than the argument expected by the overloaded method? A
+modification of the above program gives the answer:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c04:Demotion.java</font>
+<font color=#009900>// Demotion of primitives and overloading.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Demotion {
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> prt(String s) { 
+    System.out.println(s); 
+  }
+
+  <font color=#0000ff>void</font> f1(<font color=#0000ff>char</font> x) { prt(<font color=#004488>"f1(char)"</font>); }
+  <font color=#0000ff>void</font> f1(<font color=#0000ff>byte</font> x) { prt(<font color=#004488>"f1(byte)"</font>); }
+  <font color=#0000ff>void</font> f1(<font color=#0000ff>short</font> x) { prt(<font color=#004488>"f1(short)"</font>); }
+  <font color=#0000ff>void</font> f1(<font color=#0000ff>int</font> x) { prt(<font color=#004488>"f1(int)"</font>); }
+  <font color=#0000ff>void</font> f1(<font color=#0000ff>long</font> x) { prt(<font color=#004488>"f1(long)"</font>); }
+  <font color=#0000ff>void</font> f1(<font color=#0000ff>float</font> x) { prt(<font color=#004488>"f1(float)"</font>); }
+  <font color=#0000ff>void</font> f1(<font color=#0000ff>double</font> x) { prt(<font color=#004488>"f1(double)"</font>); }
+
+  <font color=#0000ff>void</font> f2(<font color=#0000ff>char</font> x) { prt(<font color=#004488>"f2(char)"</font>); }
+  <font color=#0000ff>void</font> f2(<font color=#0000ff>byte</font> x) { prt(<font color=#004488>"f2(byte)"</font>); }
+  <font color=#0000ff>void</font> f2(<font color=#0000ff>short</font> x) { prt(<font color=#004488>"f2(short)"</font>); }
+  <font color=#0000ff>void</font> f2(<font color=#0000ff>int</font> x) { prt(<font color=#004488>"f2(int)"</font>); }
+  <font color=#0000ff>void</font> f2(<font color=#0000ff>long</font> x) { prt(<font color=#004488>"f2(long)"</font>); }
+  <font color=#0000ff>void</font> f2(<font color=#0000ff>float</font> x) { prt(<font color=#004488>"f2(float)"</font>); }
+
+  <font color=#0000ff>void</font> f3(<font color=#0000ff>char</font> x) { prt(<font color=#004488>"f3(char)"</font>); }
+  <font color=#0000ff>void</font> f3(<font color=#0000ff>byte</font> x) { prt(<font color=#004488>"f3(byte)"</font>); }
+  <font color=#0000ff>void</font> f3(<font color=#0000ff>short</font> x) { prt(<font color=#004488>"f3(short)"</font>); }
+  <font color=#0000ff>void</font> f3(<font color=#0000ff>int</font> x) { prt(<font color=#004488>"f3(int)"</font>); }
+  <font color=#0000ff>void</font> f3(<font color=#0000ff>long</font> x) { prt(<font color=#004488>"f3(long)"</font>); }
+
+  <font color=#0000ff>void</font> f4(<font color=#0000ff>char</font> x) { prt(<font color=#004488>"f4(char)"</font>); }
+  <font color=#0000ff>void</font> f4(<font color=#0000ff>byte</font> x) { prt(<font color=#004488>"f4(byte)"</font>); }
+  <font color=#0000ff>void</font> f4(<font color=#0000ff>short</font> x) { prt(<font color=#004488>"f4(short)"</font>); }
+  <font color=#0000ff>void</font> f4(<font color=#0000ff>int</font> x) { prt(<font color=#004488>"f4(int)"</font>); }
+
+  <font color=#0000ff>void</font> f5(<font color=#0000ff>char</font> x) { prt(<font color=#004488>"f5(char)"</font>); }
+  <font color=#0000ff>void</font> f5(<font color=#0000ff>byte</font> x) { prt(<font color=#004488>"f5(byte)"</font>); }
+  <font color=#0000ff>void</font> f5(<font color=#0000ff>short</font> x) { prt(<font color=#004488>"f5(short)"</font>); }
+
+  <font color=#0000ff>void</font> f6(<font color=#0000ff>char</font> x) { prt(<font color=#004488>"f6(char)"</font>); }
+  <font color=#0000ff>void</font> f6(<font color=#0000ff>byte</font> x) { prt(<font color=#004488>"f6(byte)"</font>); }
+
+  <font color=#0000ff>void</font> f7(<font color=#0000ff>char</font> x) { prt(<font color=#004488>"f7(char)"</font>); }
+
+  <font color=#0000ff>void</font> testDouble() {
+    <font color=#0000ff>double</font> x = 0;
+    prt(<font color=#004488>"double argument:"</font>);
+    f1(x);f2((<font color=#0000ff>float</font>)x);f3((<font color=#0000ff>long</font>)x);f4((<font color=#0000ff>int</font>)x);
+    f5((<font color=#0000ff>short</font>)x);f6((<font color=#0000ff>byte</font>)x);f7((<font color=#0000ff>char</font>)x);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Demotion p = <font color=#0000ff>new</font> Demotion();
+    p.testDouble();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here, the methods take narrower primitive
+values. If your argument is wider then you must
+<A NAME="Index398"></A><I>cast</I> to the necessary type using the type name in
+parentheses. If you don&#8217;t do this, the compiler will issue an error
+message. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I23' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I24>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You should be aware that this is a
+<A NAME="Index399"></A><A NAME="Index400"></A><I>narrowing conversion,</I> which
+means you might lose information during the cast. This is why the compiler
+forces you to do it&#8212;to flag the narrowing conversion. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I24' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I25>
+</FONT><A NAME="_Toc481064573"></A><BR></P></DIV>
+<A NAME="Heading168"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Overloading on return
+values<BR><A NAME="Index401"></A><A NAME="Index402"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It is common to wonder &#8220;Why only
+class names and method argument lists? Why not distinguish between methods based
+on their return values?&#8221; For example, these two methods, which have the
+same name and arguments, are easily distinguished from each other:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I25' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I26>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>void</font> f() {}
+<font color=#0000ff>int</font> f() {}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This works fine when the compiler can
+unequivocally determine the meaning from the context, as in <B>int x =
+f(&#160;)</B>. However, you can call a method and ignore the return value; this
+is often referred to as <I>calling a method for its <A NAME="Index403"></A>side
+effect</I> since you don&#8217;t care about the return value but instead want
+the other effects of the method call. So if you call the method this way:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I26' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I27>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>f();</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">how can Java determine which
+<B>f(&#160;)</B> should be called? And how could someone reading the code see
+it? Because of this sort of problem, you cannot use return value types to
+distinguish overloaded methods.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I27' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I28>
+</FONT><A NAME="_Toc375545279"></A><A NAME="_Toc481064574"></A><BR></P></DIV>
+<A NAME="Heading169"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Default constructors</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">As mentioned previously, a default
+constructor (a.k.a. a &#8220;no-arg&#8221; constructor)
+<A NAME="Index404"></A><A NAME="Index405"></A>is one without arguments, used to
+create a &#8220;vanilla object.&#8221; If you create a class that has no
+constructors, the compiler will automatically create a default constructor for
+you. For example: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I28' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I29>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c04:DefaultConstructor.java</font>
+
+<font color=#0000ff>class</font> Bird {
+  <font color=#0000ff>int</font> i;
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> DefaultConstructor {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Bird nc = <font color=#0000ff>new</font> Bird(); <font color=#009900>// default!</font>
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The line
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I29' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I30>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>new</font> Bird();</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">creates a new object and calls the
+default constructor, even though one was not explicitly defined. Without it we
+would have no method to call to build our object. However, if you define any
+constructors (with or without arguments), the compiler will <I>not</I>
+synthesize one for you: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I30' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I31>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>class</font> Bush {
+  Bush(<font color=#0000ff>int</font> i) {}
+  Bush(<font color=#0000ff>double</font> d) {}
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Now if you say:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I31' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I32>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>new</font> Bush();</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">the compiler will complain that it cannot
+find a constructor that matches. It&#8217;s as if when you don&#8217;t put in
+any constructors, the compiler says &#8220;You are bound to need <I>some</I>
+constructor, so let me make one for you.&#8221; But if you write a constructor,
+the compiler says &#8220;You&#8217;ve written a constructor so you know what
+you&#8217;re doing; if you didn&#8217;t put in a default it&#8217;s because you
+meant to leave it out.&#8221;
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I32' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I33>
+</FONT><A NAME="_Toc375545280"></A><A NAME="_Toc481064575"></A><BR></P></DIV>
+<A NAME="Heading170"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+The <A NAME="Index406"></A>this keyword</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you have two objects of the same type
+called <B>a</B> and <B>b</B>, you might wonder how it is that you can call a
+method <B>f(&#160;)</B> for both those objects:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I33' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I34>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>class</font> Banana { <font color=#0000ff>void</font> f(<font color=#0000ff>int</font> i) { <font color=#009900>/* ... */</font> } }
+Banana a = <font color=#0000ff>new</font> Banana(), b = <font color=#0000ff>new</font> Banana();
+a.f(1);
+b.f(2);</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If there&#8217;s only one method called
+<B>f(&#160;)</B>, how can that method know whether it&#8217;s being called for
+the object <B>a</B> or <B>b</B>? 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I34' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I35>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To allow you to write the code in a
+convenient object-oriented syntax in which you &#8220;send a message to an
+object,&#8221; the compiler does some undercover work for you. There&#8217;s a
+secret first argument passed to the method <B>f(&#160;)</B>, and that argument
+is the reference to the object that&#8217;s being manipulated. So the two method
+calls above become something like:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I35' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I36>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Banana.f(a,1);
+Banana.f(b,2);</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This is internal and you can&#8217;t
+write these expressions and get the compiler to accept them, but it gives you an
+idea of what&#8217;s happening.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I36' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I37>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Suppose you&#8217;re inside a method and
+you&#8217;d like to get the reference to the current object. Since that
+reference is passed <I>secretly</I> by the compiler, there&#8217;s no identifier
+for it. However, for this purpose there&#8217;s a keyword: <B>this</B>. The
+<B>this</B> keyword&#8212;which can be used only inside a method&#8212;produces
+the reference to the object the method has been called for. You can treat this
+reference just like any other object reference. Keep in mind that if
+you&#8217;re calling a method of your class from within another method of your
+class, you don&#8217;t need to use <B>this</B>; you simply call the method. The
+current <B>this</B> reference is automatically used for the other method. Thus
+you can say: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I37' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I38>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>class</font> Apricot {
+  <font color=#0000ff>void</font> pick() { <font color=#009900>/* ... */</font> }
+  <font color=#0000ff>void</font> pit() { pick(); <font color=#009900>/* ... */</font> }
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Inside <B>pit(&#160;)</B>, you
+<I>could</I> say <B>this.pick(&#160;)</B> but there&#8217;s no need to. The
+compiler does it for you automatically. The <B>this</B> keyword is used only for
+those special cases in which you need to explicitly use the reference to the
+current object. For example, it&#8217;s often used in <B>return</B> statements
+when you want to return the reference to the current object:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I38' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I39>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c04:Leaf.java</font>
+<font color=#009900>// Simple use of the "this" keyword.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Leaf {
+  <font color=#0000ff>int</font> i = 0;
+  Leaf increment() {
+    i++;
+    <font color=#0000ff>return</font> <font color=#0000ff>this</font>;
+  }
+  <font color=#0000ff>void</font> print() {
+    System.out.println(<font color=#004488>"i = "</font> + i);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Leaf x = <font color=#0000ff>new</font> Leaf();
+    x.increment().increment().increment().print();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Because <B>increment(&#160;)</B> returns
+the reference to the current object via the <B>this</B> keyword, multiple
+operations can easily be performed on the same object.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I39' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I40>
+</FONT><BR></P></DIV>
+<A NAME="Heading171"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Calling constructors from constructors<BR><A NAME="Index407"></A></H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When you write several constructors for a
+class, there are times when you&#8217;d like to call one constructor from
+another to avoid duplicating code. You can do this using the <B>this</B>
+keyword.  
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I40' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I41>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Normally, when you say <B>this</B>, it is
+in the sense of &#8220;this object&#8221; or &#8220;the current object,&#8221;
+and by itself it produces the reference to the current object. In a constructor,
+the <B>this</B> keyword takes on a different meaning when you give it an
+argument list: it makes an explicit call to the constructor that matches that
+argument list. Thus you have a straightforward way to call other constructors:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I41' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I42>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c04:Flower.java</font>
+<font color=#009900>// Calling constructors with "this."</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Flower {
+  <font color=#0000ff>int</font> petalCount = 0;
+  String s = <font color=#0000ff>new</font> String(<font color=#004488>"null"</font>);
+  Flower(<font color=#0000ff>int</font> petals) {
+    petalCount = petals;
+    System.out.println(
+      <font color=#004488>"Constructor w</font><font color=#004488>/ int arg only, petalCount= "</font>
+      + petalCount);
+  }
+  Flower(String ss) {
+    System.out.println(
+      <font color=#004488>"Constructor w</font><font color=#004488>/ String arg only, s="</font> + ss);
+    s = ss;
+  }
+  Flower(String s, <font color=#0000ff>int</font> petals) {
+    <font color=#0000ff>this</font>(petals);
+<font color=#009900>//!    this(s); // Can't call two!</font>
+    <font color=#0000ff>this</font>.s = s; <font color=#009900>// Another use of "this"</font>
+    System.out.println(<font color=#004488>"String &amp; int args"</font>);
+  }
+  Flower() {
+    <font color=#0000ff>this</font>(<font color=#004488>"hi"</font>, 47);
+    System.out.println(
+      <font color=#004488>"default constructor (no args)"</font>);
+  }
+  <font color=#0000ff>void</font> print() {
+<font color=#009900>//!    this(11); // Not inside non-constructor!</font>
+    System.out.println(
+      <font color=#004488>"petalCount = "</font> + petalCount + <font color=#004488>" s = "</font>+ s);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Flower x = <font color=#0000ff>new</font> Flower();
+    x.print();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The constructor <B>Flower(String s, int
+petals)</B> shows that, while you can call one constructor using <B>this</B>,
+you cannot call two. In addition, the constructor call must be the first thing
+you do or you&#8217;ll get a compiler error message.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I42' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I43>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This example also shows another way
+you&#8217;ll see <B>this</B> used. Since the name of the argument <B>s </B>and
+the name of the member data <B>s</B> are the same, there&#8217;s an ambiguity.
+You can resolve it by saying <B>this.s</B> to refer to the member data.
+You&#8217;ll often see this form used in Java code, and it&#8217;s used in
+numerous places in this book.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I43' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I44>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In <B>print(&#160;)</B> you can see that
+the compiler won&#8217;t let you call a constructor from inside any method other
+than a constructor. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I44' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I45>
+</FONT><BR></P></DIV>
+<A NAME="Heading172"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+The meaning of static<BR><A NAME="Index408"></A></H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">With the <B>this </B>keyword in mind, you
+can more fully understand what it means to make a
+<A NAME="Index409"></A><A NAME="Index410"></A>method <B>static</B>. It means
+that there is no <B>this</B> for that particular method. You cannot call
+non-<B>static</B> methods from inside <B>static</B>
+methods</FONT><A NAME="fnB28" HREF="#fn28">[28]</A><FONT FACE="Georgia">
+(although the reverse is possible), and you can call a <B>static</B> method for
+the class itself, without any object. In fact, that&#8217;s primarily what a
+<B>static</B> method is for. It&#8217;s as if you&#8217;re creating the
+equivalent of a global function (from C). Except global functions are not
+permitted in Java, and putting the <B>static</B> method inside a class allows it
+access to other <B>static </B>methods and to <B>static</B> fields.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I45' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I46>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Some people argue that <B>static</B>
+methods are not object-oriented since they do have the semantics of a global
+function; with a <B>static</B> method you don&#8217;t send a message to an
+object, since there&#8217;s no <B>this</B>. This is probably a fair argument,
+and if you find yourself using a <I>lot</I> of static methods you should
+probably rethink your strategy. However, <B>static</B>s are pragmatic and there
+are times when you genuinely need them, so whether or not they are &#8220;proper
+OOP&#8221; should be left to the theoreticians. Indeed, even
+<A NAME="Index411"></A>Smalltalk has the equivalent in its &#8220;class
+methods.&#8221;<I>
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I46' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I47>
+</I></FONT><A NAME="_Toc375545281"></A><A NAME="_Toc481064576"></A><BR></P></DIV>
+<A NAME="Heading173"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Cleanup: finalization and <BR>garbage collection</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Programmers know about the importance of
+initialization, but often forget the importance of cleanup. After all, who needs
+to clean up an <B>int</B>? But with libraries, simply &#8220;letting go&#8221;
+of an object once you&#8217;re done with it is not always safe. Of course, Java
+has the <A NAME="Index412"></A>garbage collector to reclaim the memory of
+objects that are no longer used. Now consider a very unusual case. Suppose your
+object allocates &#8220;special&#8221; memory without using
+<A NAME="Index413"></A><B>new</B>. The garbage collector knows only how to
+release memory allocated <I>with</I> <B>new</B>, so it won&#8217;t know how to
+release the object&#8217;s &#8220;special&#8221; memory. To handle this case,
+Java provides a method called <A NAME="Index414"></A><B>finalize(&#160;)</B>
+that you can define for your class. Here&#8217;s how it&#8217;s <I>supposed</I>
+to work. When the garbage collector is ready to release the storage used for
+your object, it will first call <B>finalize(&#160;)</B>, and only on the next
+garbage-collection pass will it reclaim the object&#8217;s memory. So if you
+choose to use <B>finalize(&#160;)</B>, it gives you the ability to perform some
+important cleanup <I>at the time of garbage collection</I>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I47' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I48>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This is a potential programming pitfall
+because some programmers, especially C++ programmers, might initially mistake
+<B>finalize(&#160;)</B> for the <A NAME="Index415"></A><I>destructor</I> in C++,
+which is a function that is always called when an object is destroyed. But it is
+important to distinguish between C++ and Java here, because in C++ <I>objects
+always get destroyed</I> (in a bug-free program), whereas in Java objects do not
+always get garbage-collected. Or, put another way:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I48' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I49>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=4>Garbage collection is not
+destruction.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you remember this, you will stay out
+of trouble. What it means is that if there is some activity that must be
+performed before you no longer need an object, you must perform that activity
+yourself. Java has no destructor or similar concept, so you must create an
+ordinary method to perform this cleanup. For example, suppose in the process of
+creating your object it draws itself on the screen. If you don&#8217;t
+explicitly erase its image from the screen, it might never get cleaned up. If
+you put some kind of erasing functionality inside <B>finalize(&#160;)</B>, then
+if an object is garbage-collected, the image will first be removed from the
+screen, but if it isn&#8217;t, the image will remain. So a second point to
+remember is: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I49' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I50>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=4>Your objects might not get
+garbage-collected.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You might find that the storage for an
+object never gets released because your program never nears the point of running
+out of storage. If your program completes and the garbage collector never gets
+around to releasing the storage for any of your objects, that storage will be
+returned to the operating system <I>en masse</I> as the program exits. This is a
+good thing, because garbage collection has some overhead, and if you never do it
+you never incur that expense.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I50' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I51>
+</FONT><A NAME="_Toc375545282"></A><A NAME="_Toc481064577"></A><BR></P></DIV>
+<A NAME="Heading174"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+What is finalize(&#160;) for?</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You might believe at this point that you
+should not use <B>finalize(&#160;)</B> as a general-purpose cleanup method. What
+good is it? 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I51' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I52>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A third point to remember
+is:</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=4>Garbage collection is only about
+memory.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">That is, the sole reason for the
+existence of the garbage collector is to recover memory that your program is no
+longer using. So any activity that is associated with garbage collection, most
+notably your <B>finalize(&#160;)</B> method, must also be only about memory and
+its deallocation.  
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I52' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I53>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Does this mean that if your object
+contains other objects <B>finalize(&#160;)</B> should explicitly release those
+objects? Well, no&#8212;the garbage collector takes care of the release of all
+object memory regardless of how the object is created. It turns out that the
+need for <B>finalize(&#160;)</B> is limited to special cases, in which your
+object can allocate some storage in some way other than creating an object. But,
+you might observe, everything in Java is an object so how can this be?
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I53' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I54>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It would seem that
+<B>finalize(&#160;)</B> is in place because of the possibility that you&#8217;ll
+do something C-like by allocating memory using a mechanism other than the normal
+one in Java. This can happen primarily through <I>native methods</I>, which are
+a way to call non-Java code from Java. (Native methods are discussed in Appendix
+B.) C and C++ are the only languages currently supported by native methods, but
+since they can call subprograms in other languages, you can effectively call
+anything. Inside the non-Java code, C&#8217;s <B>malloc(&#160;)</B> family of
+functions might be called to allocate storage, and unless you call
+<B>free(&#160;)</B> that storage will not be released, causing a memory leak. Of
+course, <B>free(&#160;)</B> is a C and C++ function, so you&#8217;d need to call
+it in a native method inside your <B>finalize(&#160;)</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I54' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I55>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">After reading this, you probably get the
+idea that you won&#8217;t use <B>finalize(&#160;)</B> much. You&#8217;re
+correct; it is not the appropriate place for normal cleanup to occur. So where
+should normal cleanup be performed?
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I55' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I56>
+</FONT><A NAME="_Toc312373857"></A><A NAME="_Toc375545283"></A><A NAME="_Toc481064578"></A><BR></P></DIV>
+<A NAME="Heading175"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+You must perform cleanup</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To clean up an object, the user of that
+object must call a <A NAME="Index416"></A>cleanup method at the point the
+cleanup is desired. This sounds pretty straightforward, but it collides a bit
+with the C++ concept of the <A NAME="Index417"></A>destructor. In C++, all
+objects are destroyed. Or rather, all objects <I>should be</I> destroyed. If the
+C++ object is created as a local (i.e., on the stack&#8212;not possible in
+Java), then the destruction happens at the closing curly brace of the scope in
+which the object was created. If the object was created using <B>new</B> (like
+in Java) the destructor is called when the programmer calls the C++ operator
+<B>delete</B> (which doesn&#8217;t exist in Java). If the C++ programmer forgets
+to call <B>delete</B>, the destructor is never called and you have a memory
+leak, plus the other parts of the object never get cleaned up. This kind of bug
+can be very difficult to track down.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I56' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I57>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In contrast, Java doesn&#8217;t allow you
+to create local objects&#8212;you must always use <B>new</B>. But in Java,
+there&#8217;s no &#8220;delete&#8221; to call to release the object since the
+garbage collector releases the storage for you. So from a simplistic standpoint
+you could say that because of garbage collection, Java has no destructor.
+You&#8217;ll see as this book progresses, however, that the presence of a
+<A NAME="Index418"></A>garbage collector does not remove the need for or utility
+of destructors. (And you should never call
+<A NAME="Index419"></A><B>finalize(&#160;)</B> directly, so that&#8217;s not an
+appropriate avenue for a solution.) If you want some kind of cleanup performed
+other than storage release you must <I>still</I> explicitly call an appropriate
+method in Java, which is the equivalent of a C++ destructor without the
+convenience. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I57' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I58>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">One of the things <B>finalize(&#160;)</B>
+can be useful for is observing the process of garbage collection. The following
+example shows you what&#8217;s going on and summarizes the previous descriptions
+of garbage collection:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c04:Garbage.java</font>
+<font color=#009900>// Demonstration of the garbage</font>
+<font color=#009900>// collector and finalization</font>
+
+<font color=#0000ff>class</font> Chair {
+  <font color=#0000ff>static</font> <font color=#0000ff>boolean</font> gcrun = <font color=#0000ff>false</font>;
+  <font color=#0000ff>static</font> <font color=#0000ff>boolean</font> f = <font color=#0000ff>false</font>;
+  <font color=#0000ff>static</font> <font color=#0000ff>int</font> created = 0;
+  <font color=#0000ff>static</font> <font color=#0000ff>int</font> finalized = 0;
+  <font color=#0000ff>int</font> i;
+  Chair() {
+    i = ++created;
+    <font color=#0000ff>if</font>(created == 47) 
+      System.out.println(<font color=#004488>"Created 47"</font>);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> finalize() {
+    <font color=#0000ff>if</font>(!gcrun) {
+      <font color=#009900>// The first time finalize() is called:</font>
+      gcrun = <font color=#0000ff>true</font>;
+      System.out.println(
+        <font color=#004488>"Beginning to finalize after "</font> +
+        created + <font color=#004488>" Chairs have been created"</font>);
+    }
+    <font color=#0000ff>if</font>(i == 47) {
+      System.out.println(
+        <font color=#004488>"Finalizing Chair #47, "</font> +
+        <font color=#004488>"Setting flag to stop Chair creation"</font>);
+      f = <font color=#0000ff>true</font>;
+    }
+    finalized++;
+    <font color=#0000ff>if</font>(finalized &gt;= created)
+      System.out.println(
+        <font color=#004488>"All "</font> + finalized + <font color=#004488>" finalized"</font>);
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Garbage {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#009900>// As long as the flag hasn't been set,</font>
+    <font color=#009900>// make Chairs and Strings:</font>
+    <font color=#0000ff>while</font>(!Chair.f) {
+      <font color=#0000ff>new</font> Chair();
+      <font color=#0000ff>new</font> String(<font color=#004488>"To take up space"</font>);
+    }
+    System.out.println(
+      <font color=#004488>"After all Chairs have been created:\n"</font> +
+      <font color=#004488>"total created = "</font> + Chair.created +
+      <font color=#004488>", total finalized = "</font> + Chair.finalized);
+    <font color=#009900>// Optional arguments force garbage</font>
+    <font color=#009900>// collection &amp; finalization:</font>
+    <font color=#0000ff>if</font>(args.length &gt; 0) {
+      <font color=#0000ff>if</font>(args[0].equals(<font color=#004488>"gc"</font>) || 
+         args[0].equals(<font color=#004488>"all"</font>)) {
+        System.out.println(<font color=#004488>"gc():"</font>);
+        System.gc();
+      }
+      <font color=#0000ff>if</font>(args[0].equals(<font color=#004488>"finalize"</font>) || 
+         args[0].equals(<font color=#004488>"all"</font>)) {
+        System.out.println(<font color=#004488>"runFinalization():"</font>);
+        System.runFinalization();
+      }
+    }
+    System.out.println(<font color=#004488>"bye!"</font>);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The above program creates many
+<B>Chair</B> objects, and at some point after the garbage collector begins
+running, the program stops creating <B>Chair</B>s. Since the garbage collector
+can run at any time, you don&#8217;t know exactly when it will start up, so
+there&#8217;s a flag called <B>gcrun</B> to indicate whether the garbage
+collector has started running yet. A second flag <B>f</B> is a way for
+<B>Chair</B> to tell the <B>main(&#160;)</B> loop that it should stop making
+objects. Both of these flags are set within <B>finalize(&#160;)</B>, which is
+called during garbage collection.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I58' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I59>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Two other <B>static</B> variables,
+<B>created</B> and <B>finalized</B>, keep track of the number of <B>Chair</B>s
+created versus the number that get finalized by the garbage collector. Finally,
+each <B>Chair</B> has its own (non-<B>static</B>) <B>int</B> <B>i</B> so it can
+keep track of what number it is. When <B>Chair</B> number 47 is finalized, the
+flag is set to <B>true</B> to bring the process of <B>Chair </B>creation to a
+stop. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I59' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I60>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">All this happens in <B>main(&#160;)</B>,
+in the loop</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>    <font color=#0000ff>while</font>(!Chair.f) {
+      <font color=#0000ff>new</font> Chair();
+      <font color=#0000ff>new</font> String(<font color=#004488>"To take up space"</font>);
+    }</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You might wonder how this loop could ever
+finish, since there&#8217;s nothing inside the loop that changes the value of
+<B>Chair.f</B>. However, the <B>finalize(&#160;)</B> process will, eventually,
+when it finalizes number 47.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I60' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I61>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The creation of a <B>String</B> object
+during each iteration is simply extra storage being allocated to encourage the
+garbage collector to kick in, which it will do when it starts to get nervous
+about the amount of memory available.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I61' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I62>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When you run the program, you provide a
+command-line argument of &#8220;gc,&#8221; &#8220;finalize,&#8221; or
+&#8220;all.&#8221; The &#8220;gc&#8221; argument will call the
+<B>System.gc(&#160;)<A NAME="Index420"></A></B> method (to force execution of
+the garbage collector). Using the &#8220;finalize&#8221; argument calls
+<B>System.runFinalization(&#160;)<A NAME="Index421"></A></B> which&#8212;in
+theory&#8212;will cause any unfinalized objects to be finalized. And
+&#8220;all&#8221; causes both methods to be called.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I62' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I63>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The behavior of this program and the
+version in the first edition of this book shows that the whole issue of garbage
+collection and finalization has been evolving, with much of the evolution
+happening behind closed doors. In fact, by the time you read this, the behavior
+of the program may have changed once again.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I63' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I64>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If <B>System.gc(&#160;)</B> is called,
+then finalization happens to all the objects. This was not necessarily the case
+with previous implementations of the JDK, although the documentation claimed
+otherwise. In addition, you&#8217;ll see that it doesn&#8217;t seem to make any
+difference whether <B>System.runFinalization(&#160;)</B> is called.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I64' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I65>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">However, you will see that only if
+<B>System.gc(&#160;)</B> is called after all the objects are created and
+discarded will all the finalizers be called. If you do not call
+<B>System.gc(&#160;)</B>, then only some of the objects will be finalized. In
+Java 1.1, a method <B>System.runFinalizersOnExit(&#160;)</B> was introduced that
+caused programs to run all the finalizers as they exited, but the design turned
+out to be buggy and the method was deprecated. This is yet another clue that the
+Java designers were thrashing about trying to solve the garbage collection and
+finalization problem. We can only hope that things have been worked out in Java
+2. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I65' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I66>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The preceding program shows that the
+promise that finalizers will always be run holds true, but only if you
+explicitly force it to happen yourself. If you don&#8217;t cause
+<B>System.gc(&#160;) </B>to be called, you&#8217;ll get an output like
+this:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Created 47
+Beginning to finalize after 3486 Chairs have been created
+Finalizing Chair #47, Setting flag to stop Chair creation
+After all Chairs have been created:
+total created = 3881, total finalized = 2684
+bye!</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Thus, not all finalizers get called by
+the time the program completes. If <B>System.gc(&#160;)</B> is called, it will
+finalize and destroy all the objects that are no longer in use up to that point.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I66' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I67>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Remember that neither garbage collection
+nor finalization is guaranteed. If the Java Virtual Machine (JVM) isn&#8217;t
+close to running out of memory, then it will (wisely) not waste time recovering
+memory through garbage collection.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I67' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I68>
+</FONT><A NAME="_Toc481064579"></A><BR></P></DIV>
+<A NAME="Heading176"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+The death condition<BR><A NAME="Index422"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"> <A NAME="Index423"></A>In general, you
+can&#8217;t rely on <B>finalize(&#160;) </B>being called, and you must create
+separate &#8220;cleanup&#8221; functions and call them explicitly. So it appears
+that <B>finalize(&#160;)</B> is only useful for obscure memory cleanup that most
+programmers will never use. However, there is a very interesting use of
+<B>finalize(&#160;)</B> which does not rely on it being called every time. This
+is the verification of the <I>death
+condition</I></FONT><A NAME="fnB29" HREF="#fn29">[29]</A><FONT FACE="Georgia">
+of an object. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I68' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I69>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">At the point that you&#8217;re no longer
+interested in an object&#8212;when it&#8217;s ready to be cleaned up&#8212;that
+object should be in a state whereby its memory can be safely released. For
+example, if the object represents an open file, that file should be closed by
+the programmer before the object is garbage-collected. If any portions of the
+object are not properly cleaned up, then you have a bug in your program that
+could be very difficult to find. The value of <B>finalize(&#160;)</B> is that it
+can be used to discover this condition, even if it isn&#8217;t always called. If
+one of the finalizations happens to reveal the bug, then you discover the
+problem, which is all you really care about.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I69' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I70>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here&#8217;s a simple example of how you
+might use it:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c04:DeathCondition.java</font>
+<font color=#009900>// Using finalize() to detect an object that </font>
+<font color=#009900>// hasn't been properly cleaned up.</font>
+
+<font color=#0000ff>class</font> Book {
+  <font color=#0000ff>boolean</font> checkedOut = <font color=#0000ff>false</font>;
+  Book(<font color=#0000ff>boolean</font> checkOut) { 
+    checkedOut = checkOut; 
+  }
+  <font color=#0000ff>void</font> checkIn() {
+    checkedOut = <font color=#0000ff>false</font>;
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> finalize() {
+    <font color=#0000ff>if</font>(checkedOut)
+      System.out.println(<font color=#004488>"Error: checked out"</font>);
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> DeathCondition {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Book novel = <font color=#0000ff>new</font> Book(<font color=#0000ff>true</font>);
+    <font color=#009900>// Proper cleanup:</font>
+    novel.checkIn();
+    <font color=#009900>// Drop the reference, forget to clean up:</font>
+    <font color=#0000ff>new</font> Book(<font color=#0000ff>true</font>);
+    <font color=#009900>// Force garbage collection &amp; finalization:</font>
+    System.gc();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The death condition is that all
+<B>Book</B> objects are supposed to be checked in before they are
+garbage-collected, but in <B>main(&#160;)</B> a programmer error doesn&#8217;t
+check in one of the books. Without <B>finalize(&#160;)</B> to verify the death
+condition, this could be a difficult bug to find.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I70' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I71>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Note that <B>System.gc(&#160;)</B> is
+used to force finalization (and you should do this during program development to
+speed debugging). But even if it isn&#8217;t, it&#8217;s highly probable that
+the errant <B>Book</B> will eventually be discovered through repeated executions
+of the program (assuming the program allocates enough storage to cause the
+garbage collector to execute).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I71' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I72>
+</FONT><A NAME="_Toc481064580"></A><BR></P></DIV>
+<A NAME="Heading177"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+How a garbage collector works<BR><A NAME="Index424"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you come from a programming language
+where allocating objects on the heap is expensive, you may naturally assume that
+Java&#8217;s scheme of allocating everything (except primitives) on the heap is
+expensive. However, it turns out that the garbage collector can have a
+significant impact on <I>increasing</I> the speed of object creation. This might
+sound a bit odd at first&#8212;that storage release affects storage
+allocation&#8212;but it&#8217;s the way some JVMs work and it means that
+allocating storage for heap objects in Java can be nearly as fast as creating
+storage on the stack in other languages.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I72' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I73>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">For example, you can think of the C++
+heap as a yard where each object stakes out its own piece of turf. This real
+estate can become abandoned sometime later and must be reused. In some JVMs, the
+Java heap is quite different; it&#8217;s more like a conveyor belt that moves
+forward every time you allocate a new object. This means that object storage
+allocation is remarkably rapid. The &#8220;heap pointer&#8221; is simply moved
+forward into virgin territory, so it&#8217;s effectively the same as C++&#8217;s
+stack allocation. (Of course, there&#8217;s a little extra overhead for
+bookkeeping but it&#8217;s nothing like searching for storage.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I73' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I74>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Now you might observe that the heap
+isn&#8217;t in fact a conveyor belt, and if you treat it that way you&#8217;ll
+eventually start paging memory a lot (which is a big performance hit) and later
+run out. The trick is that the garbage collector steps in and while it collects
+the garbage it compacts all the objects in the heap so that you&#8217;ve
+effectively moved the &#8220;heap pointer&#8221; closer to the beginning of the
+conveyor belt and further away from a page fault. The garbage collector
+rearranges things and makes it possible for the high-speed, infinite-free-heap
+model to be used while allocating storage.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I74' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I75>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To understand how this works, you need to
+get a little better idea of the way the different garbage collector (GC) schemes
+work. A simple but slow GC technique is reference counting. This means that each
+object contains a reference counter, and every time a reference is attached to
+an object the reference count is increased. Every time a reference goes out of
+scope or is set to <B>null</B>, the reference count is decreased. Thus, managing
+reference counts is a small but constant overhead that happens throughout the
+lifetime of your program. The garbage collector moves through the entire list of
+objects and when it finds one with a reference count of zero it releases that
+storage. The one drawback is that if objects circularly refer to each other they
+can have nonzero reference counts while still being garbage. Locating such
+self-referential groups requires significant extra work for the garbage
+collector. Reference counting is commonly used to explain one kind of garbage
+collection but it doesn&#8217;t seem to be used in any JVM implementations.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I75' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I76>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In faster schemes, garbage collection is
+not based on reference counting. Instead, it is based on the idea that any
+nondead object must ultimately be traceable back to a reference that lives
+either on the stack or in static storage. The chain might go through several
+layers of objects. Thus, if you start in the stack and the static storage area
+and walk through all the references you&#8217;ll find all the live objects. For
+each reference that you find, you must trace into the object that it points to
+and then follow all the references in <I>that</I> object, tracing into the
+objects they point to, etc., until you&#8217;ve moved through the entire web
+that originated with the reference on the stack or in static storage. Each
+object that you move through must still be alive. Note that there is no problem
+with detached self-referential groups&#8212;these are simply not found, and are
+therefore automatically garbage.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I76' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I77>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In the approach described here, the JVM
+uses an <I>adaptive </I>garbage-collection scheme, and what it does with the
+live objects that it locates depends on the variant currently being used. One of
+these variants is <I>stop-and-copy</I>. This means that&#8212;for reasons that
+will become apparent&#8212;the program is first stopped (this is not a
+background collection scheme). Then, each live object that is found is copied
+from one heap to another, leaving behind all the garbage. In addition, as the
+objects are copied into the new heap they are packed end-to-end, thus compacting
+the new heap (and allowing new storage to simply be reeled off the end as
+previously described). 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I77' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I78>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Of course, when an object is moved from
+one place to another, all references that point at (i.e., that <I>reference</I>)
+the object must be changed. The reference that goes from the heap or the static
+storage area to the object can be changed right away, but there can be other
+references pointing to this object that will be encountered later during the
+&#8220;walk.&#8221; These are fixed up as they are found (you could imagine a
+table that maps old addresses to new ones).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I78' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I79>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There are two issues that make these
+so-called &#8220;copy collectors&#8221; inefficient. The first is the idea that
+you have two heaps and you slosh all the memory back and forth between these two
+separate heaps, maintaining twice as much memory as you actually need. Some JVMs
+deal with this by allocating the heap in chunks as needed and simply copying
+from one chunk to another. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I79' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I80>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The second issue is the copying. Once
+your program becomes stable it might be generating little or no garbage. Despite
+that, a copy collector will still copy all the memory from one place to another,
+which is wasteful. To prevent this, some JVMs detect that no new garbage is
+being generated and switch to a different scheme (this is the
+&#8220;adaptive&#8221; part). This other scheme is called <I>mark and sweep</I>,
+and it&#8217;s what earlier versions of Sun&#8217;s JVM used all the time. For
+general use, mark and sweep is fairly slow, but when you know you&#8217;re
+generating little or no garbage it&#8217;s fast.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I80' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I81>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Mark and sweep follows the same logic of
+starting from the stack and static storage and tracing through all the
+references to find live objects. However, each time it finds a live object that
+object is marked by setting a flag in it, but the object isn&#8217;t collected
+yet. Only when the marking process is finished does the sweep occur. During the
+sweep, the dead objects are released. However, no copying happens, so if the
+collector chooses to compact a fragmented heap it does so by shuffling objects
+around. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I81' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I82>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The &#8220;stop-and-copy&#8221; refers to
+the idea that this type of garbage collection is <I>not</I> done in the
+background; instead, the program is stopped while the GC occurs. In the Sun
+literature you&#8217;ll find many references to garbage collection as a
+low-priority background process, but it turns out that the GC was not
+implemented that way, at least in earlier versions of the Sun JVM. Instead, the
+Sun garbage collector ran when memory got low. In addition, mark-and-sweep
+requires that the program be stopped.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I82' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I83>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">As previously mentioned, in the JVM
+described here memory is allocated in big blocks. If you allocate a large
+object, it gets its own block. Strict stop-and-copy requires copying every live
+object from the source heap to a new heap before you could free the old one,
+which translates to lots of memory. With blocks, the GC can typically use dead
+blocks to copy objects to as it collects. Each block has a <I>generation
+count</I> to keep track of whether it&#8217;s alive. In the normal case, only
+the blocks created since the last GC are compacted; all other blocks get their
+generation count bumped if they have been referenced from somewhere. This
+handles the normal case of lots of short-lived temporary objects. Periodically,
+a full sweep is made&#8212;large objects are still not copied (just get their
+generation count bumped) and blocks containing small objects are copied and
+compacted. The JVM monitors the efficiency of GC and if it becomes a waste of
+time because all objects are long-lived then it switches to mark-and-sweep.
+Similarly, the JVM keeps track of how successful mark-and-sweep is, and if the
+heap starts to become fragmented it switches back to stop-and-copy. This is
+where the &#8220;adaptive&#8221; part comes in, so you end up with a mouthful:
+&#8220;adaptive generational stop-and-copy mark-and-sweep.&#8221;
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I83' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I84>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There are a number of additional speedups
+possible in a JVM. An especially important one involves the operation of the
+loader and Just-In-Time (JIT) compiler. When a class must be loaded (typically,
+the first time you want to create an object of that class), the <B>.class</B>
+file is located and the byte codes for that class are brought into memory. At
+this point, one approach is to simply JIT all the code, but this has two
+drawbacks: it takes a little more time, which, compounded throughout the life of
+the program, can add up; and it increases the size of the executable (byte codes
+are significantly more compact than expanded JIT code) and this might cause
+paging, which definitely slows down a program. An alternative approach is
+<I>lazy evaluation,</I> which means that the code is not JIT compiled until
+necessary. Thus, code that never gets executed might never get JIT compiled.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I84' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I85>
+</FONT><A NAME="_Toc375545284"></A><A NAME="_Toc481064581"></A><BR></P></DIV>
+<A NAME="Heading178"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Member initialization</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java goes out of its way to guarantee
+that variables are properly initialized before they are used. In the case of
+variables that are defined locally to a method, this guarantee comes in the form
+of a compile-time error. So if you say:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I85' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I86>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>  <font color=#0000ff>void</font> f() {
+    <font color=#0000ff>int</font> i;
+    i++;
+  }</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">you&#8217;ll get an error message that
+says that <B>i</B> might not have been initialized. Of course, the compiler
+could have given <B>i</B> a default value, but it&#8217;s more likely that this
+is a programmer error and a default value would have covered that up. Forcing
+the programmer to provide an initialization value is more likely to catch a
+bug<A NAME="Index425"></A><A NAME="Index426"></A><A NAME="Index427"></A>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I86' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I87>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If a
+<A NAME="Index428"></A><A NAME="Index429"></A><A NAME="Index430"></A>primitive
+is a data member of a class, however, things are a bit different. Since any
+method can initialize or use that data, it might not be practical to force the
+user to initialize it to its appropriate value before the data is used. However,
+it&#8217;s unsafe to leave it with a garbage value, so each primitive data
+member of a class is guaranteed to get an initial value. Those values can be
+seen here: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I87' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I88>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c04:InitialValues.java</font>
+<font color=#009900>// Shows default initial values.</font>
+
+<font color=#0000ff>class</font> Measurement {
+  <font color=#0000ff>boolean</font> t;
+  <font color=#0000ff>char</font> c;
+  <font color=#0000ff>byte</font> b;
+  <font color=#0000ff>short</font> s;
+  <font color=#0000ff>int</font> i;
+  <font color=#0000ff>long</font> l;
+  <font color=#0000ff>float</font> f;
+  <font color=#0000ff>double</font> d;
+  <font color=#0000ff>void</font> print() {
+    System.out.println(
+      <font color=#004488>"Data type      Initial value\n"</font> +
+      <font color=#004488>"boolean        "</font> + t + <font color=#004488>"\n"</font> +
+      <font color=#004488>"char           ["</font> + c + <font color=#004488>"] "</font>+ (<font color=#0000ff>int</font>)c +<font color=#004488>"\n"</font>+
+      <font color=#004488>"byte           "</font> + b + <font color=#004488>"\n"</font> +
+      <font color=#004488>"short          "</font> + s + <font color=#004488>"\n"</font> +
+      <font color=#004488>"int            "</font> + i + <font color=#004488>"\n"</font> +
+      <font color=#004488>"long           "</font> + l + <font color=#004488>"\n"</font> +
+      <font color=#004488>"float          "</font> + f + <font color=#004488>"\n"</font> +
+      <font color=#004488>"double         "</font> + d);
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> InitialValues {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Measurement d = <font color=#0000ff>new</font> Measurement();
+    d.print();
+    <font color=#009900>/* In this case you could also say:
+    new Measurement().print();
+    */</font>
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The output of this program
+is:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Data type      Initial value
+<font color=#0000ff>boolean</font>        <font color=#0000ff>false</font>
+<font color=#0000ff>char</font>           [ ] 0
+<font color=#0000ff>byte</font>           0
+<font color=#0000ff>short</font>          0
+<font color=#0000ff>int</font>            0
+<font color=#0000ff>long</font>           0
+<font color=#0000ff>float</font>          0.0
+<font color=#0000ff>double</font>         0.0</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>char</B> value is a zero, which
+prints as a space. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I88' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I89>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You&#8217;ll see later that when you
+define an object reference inside a class without initializing it to a new
+object, that reference is given a special value of <B>null</B> (which is a Java
+keyword). 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I89' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I90>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can see that even though the values
+are not specified, they automatically get initialized. So at least there&#8217;s
+no threat of working with uninitialized variables.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I90' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I91>
+</FONT><A NAME="_Toc375545285"></A><A NAME="_Toc481064582"></A><BR></P></DIV>
+<A NAME="Heading179"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Specifying initialization</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">What happens if you want to give a
+variable an initial value? One direct way to do this is simply to assign the
+value at the point you define the variable in the class. (Notice you cannot do
+this in C++, although C++ novices always try.) Here the field definitions in
+class <B>Measurement</B> are changed to provide initial values:
+<A NAME="Index431"></A><A NAME="Index432"></A></FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>class</font> Measurement {
+  <font color=#0000ff>boolean</font> b = <font color=#0000ff>true</font>;
+  <font color=#0000ff>char</font> c = 'x';
+  <font color=#0000ff>byte</font> B = 47;
+  <font color=#0000ff>short</font> s = 0xff;
+  <font color=#0000ff>int</font> i = 999;
+  <font color=#0000ff>long</font> l = 1;
+  <font color=#0000ff>float</font> f = 3.14f;
+  <font color=#0000ff>double</font> d = 3.14159;
+  <font color=#009900>//. . .</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can also initialize nonprimitive
+objects in this same way. If <B>Depth</B> is a class, you can insert a variable
+and initialize it like so: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I91' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I92>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>class</font> Measurement {
+  Depth o = <font color=#0000ff>new</font> Depth();
+  <font color=#0000ff>boolean</font> b = <font color=#0000ff>true</font>;
+  <font color=#009900>// . . .</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you haven&#8217;t given <B>o</B> an
+initial value and you try to use it anyway, you&#8217;ll get a run-time error
+called an <I>exception</I> (covered in Chapter 10).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I92' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I93>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can even call a method to provide an
+initialization value:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>class</font> CInit {
+  <font color=#0000ff>int</font> i = f();
+  <font color=#009900>//...</font>
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This method can have arguments, of
+course, but those arguments cannot be other class members that haven&#8217;t
+been initialized yet. Thus, you can do this:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I93' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I94>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>class</font> CInit {
+  <font color=#0000ff>int</font> i = f();
+  <font color=#0000ff>int</font> j = g(i);
+  <font color=#009900>//...</font>
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">But you cannot do this:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I94' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I95>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>class</font> CInit {
+  <font color=#0000ff>int</font> j = g(i);
+  <font color=#0000ff>int</font> i = f();
+  <font color=#009900>//...</font>
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This is one place in which the compiler,
+appropriately, <I>does</I> complain about
+<A NAME="Index433"></A><A NAME="Index434"></A>forward referencing, since this
+has to do with the order of initialization and not the way the program is
+compiled. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I95' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I96>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This approach to initialization is simple
+and straightforward. It has the limitation that <I>every</I> object of type
+<B>Measurement</B> will get these same initialization values. Sometimes this is
+exactly what you need, but at other times you need more flexibility.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I96' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I97>
+</FONT><A NAME="_Toc375545286"></A><A NAME="_Toc481064583"></A><BR></P></DIV>
+<A NAME="Heading180"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Constructor initialization</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The constructor can be used to perform
+initialization, and this gives you greater flexibility in your programming since
+you can call methods and perform actions at run-time to determine the initial
+values. There&#8217;s one thing to keep in mind, however: you aren&#8217;t
+precluding the automatic initialization, which happens before the constructor is
+entered. So, for example, if you say:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>class</font> Counter {
+  <font color=#0000ff>int</font> i;
+  Counter() { i = 7; }
+  <font color=#009900>// . . .</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">then <B>i </B>will first be initialized
+to 0, then to 7. This is true with all the primitive types and with object
+references, including those that are given explicit initialization at the point
+of definition. For this reason, the compiler doesn&#8217;t try to force you to
+initialize elements in the constructor at any particular place, or before they
+are used&#8212;initialization is already
+guaranteed</FONT><A NAME="fnB30" HREF="#fn30">[30]</A><FONT FACE="Georgia">.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I97' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I98>
+</FONT><BR></P></DIV>
+<A NAME="Heading181"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Order of
+initialization<BR><A NAME="Index435"></A><A NAME="Index436"></A><A NAME="Index437"></A></H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Within a class, the order of
+initialization is determined by the order that the variables are defined within
+the class. The variable definitions may be scattered throughout and in between
+method definitions, but the variables are initialized before any methods can be
+called&#8212;even the constructor. For example:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I98' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I99>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c04:OrderOfInitialization.java</font>
+<font color=#009900>// Demonstrates initialization order.</font>
+
+<font color=#009900>// When the constructor is called to create a</font>
+<font color=#009900>// Tag object, you'll see a message:</font>
+<font color=#0000ff>class</font> Tag {
+  Tag(<font color=#0000ff>int</font> marker) {
+    System.out.println(<font color=#004488>"Tag("</font> + marker + <font color=#004488>")"</font>);
+  }
+}
+
+<font color=#0000ff>class</font> Card {
+  Tag t1 = <font color=#0000ff>new</font> Tag(1); <font color=#009900>// Before constructor</font>
+  Card() {
+    <font color=#009900>// Indicate we're in the constructor:</font>
+    System.out.println(<font color=#004488>"Card()"</font>);
+    t3 = <font color=#0000ff>new</font> Tag(33); <font color=#009900>// Reinitialize t3</font>
+  }
+  Tag t2 = <font color=#0000ff>new</font> Tag(2); <font color=#009900>// After constructor</font>
+  <font color=#0000ff>void</font> f() {
+    System.out.println(<font color=#004488>"f()"</font>);
+  }
+  Tag t3 = <font color=#0000ff>new</font> Tag(3); <font color=#009900>// At end</font>
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> OrderOfInitialization {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Card t = <font color=#0000ff>new</font> Card();
+    t.f(); <font color=#009900>// Shows that construction is done</font>
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In <B>Card</B>, the definitions of the
+<B>Tag</B> objects are intentionally scattered about to prove that they&#8217;ll
+all get initialized before the constructor is entered or anything else can
+happen. In addition, <B>t3</B> is reinitialized inside the constructor. The
+output is: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I99' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I100>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Tag(1)
+Tag(2)
+Tag(3)
+Card()
+Tag(33)
+f()</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Thus, the <B>t3</B> reference gets
+initialized twice, once before and once during the constructor call. (The first
+object is dropped, so it can be garbage-collected later.) This might not seem
+efficient at first, but it guarantees proper initialization&#8212;what would
+happen if an overloaded constructor were defined that did <I>not</I> initialize
+<B>t3</B> and there wasn&#8217;t a &#8220;default&#8221; initialization for
+<B>t3</B> in its definition?
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I100' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I101>
+</FONT><BR></P></DIV>
+<A NAME="Heading182"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Static data initialization</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When the
+<A NAME="Index438"></A><A NAME="Index439"></A>data is <B>static</B> the same
+thing happens; if it&#8217;s a primitive and you don&#8217;t initialize it, it
+gets the standard primitive initial values. If it&#8217;s a reference to an
+object, it&#8217;s <B>null</B> unless you create a new object and attach your
+reference to it. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I101' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I102>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you want to place initialization at
+the point of definition, it looks the same as for non-<B>static</B>s.
+There&#8217;s only a single piece of storage for a <B>static</B>, regardless of
+how many objects are created. But the question arises of when the <B>static</B>
+storage gets initialized. An example makes this question clear:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I102' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I103>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c04:StaticInitialization.java</font>
+<font color=#009900>// Specifying initial values in a</font>
+<font color=#009900>// class definition.</font>
+
+<font color=#0000ff>class</font> Bowl {
+  Bowl(<font color=#0000ff>int</font> marker) {
+    System.out.println(<font color=#004488>"Bowl("</font> + marker + <font color=#004488>")"</font>);
+  }
+  <font color=#0000ff>void</font> f(<font color=#0000ff>int</font> marker) {
+    System.out.println(<font color=#004488>"f("</font> + marker + <font color=#004488>")"</font>);
+  }
+}
+
+<font color=#0000ff>class</font> Table {
+  <font color=#0000ff>static</font> Bowl b1 = <font color=#0000ff>new</font> Bowl(1);
+  Table() {
+    System.out.println(<font color=#004488>"Table()"</font>);
+    b2.f(1);
+  }
+  <font color=#0000ff>void</font> f2(<font color=#0000ff>int</font> marker) {
+    System.out.println(<font color=#004488>"f2("</font> + marker + <font color=#004488>")"</font>);
+  }
+  <font color=#0000ff>static</font> Bowl b2 = <font color=#0000ff>new</font> Bowl(2);
+}
+
+<font color=#0000ff>class</font> Cupboard {
+  Bowl b3 = <font color=#0000ff>new</font> Bowl(3);
+  <font color=#0000ff>static</font> Bowl b4 = <font color=#0000ff>new</font> Bowl(4);
+  Cupboard() {
+    System.out.println(<font color=#004488>"Cupboard()"</font>);
+    b4.f(2);
+  }
+  <font color=#0000ff>void</font> f3(<font color=#0000ff>int</font> marker) {
+    System.out.println(<font color=#004488>"f3("</font> + marker + <font color=#004488>")"</font>);
+  }
+  <font color=#0000ff>static</font> Bowl b5 = <font color=#0000ff>new</font> Bowl(5);
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> StaticInitialization {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    System.out.println(
+      <font color=#004488>"Creating new Cupboard() in main"</font>);
+    <font color=#0000ff>new</font> Cupboard();
+    System.out.println(
+      <font color=#004488>"Creating new Cupboard() in main"</font>);
+    <font color=#0000ff>new</font> Cupboard();
+    t2.f2(1);
+    t3.f3(1);
+  }
+  <font color=#0000ff>static</font> Table t2 = <font color=#0000ff>new</font> Table();
+  <font color=#0000ff>static</font> Cupboard t3 = <font color=#0000ff>new</font> Cupboard();
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Bowl</B> allows you to view the
+creation of a class, and <B>Table</B> and <B>Cupboard</B> create <B>static</B>
+members of <B>Bowl</B> scattered through their class definitions. Note that
+<B>Cupboard</B> creates a non-<B>static</B> <B>Bowl b3</B> prior to the
+<B>static</B> definitions. The output shows what happens:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I103' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I104>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Bowl(1)
+Bowl(2)
+Table()
+f(1)
+Bowl(4)
+Bowl(5)
+Bowl(3)
+Cupboard()
+f(2)
+Creating <font color=#0000ff>new</font> Cupboard() in main
+Bowl(3)
+Cupboard()
+f(2)
+Creating <font color=#0000ff>new</font> Cupboard() in main
+Bowl(3)
+Cupboard()
+f(2)
+f2(1)
+f3(1)</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>static</B> initialization occurs
+only if it&#8217;s necessary. If you don&#8217;t create a <B>Table </B>object
+and you never refer to <B>Table.b1 </B>or <B>Table.b2</B>, the <B>static Bowl b1
+</B>and <B>b2 </B>will never be created. However, they are initialized only when
+the <I>first </I><B>Table </B>object is created (or the first <B>static</B>
+access occurs). After that, the <B>static</B> objects are not reinitialized.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I104' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I105>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The order of initialization is
+<B>static</B>s first, if they haven&#8217;t already been initialized by a
+previous object creation, and then the non-<B>static</B> objects. You can see
+the evidence of this in the output.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I105' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I106>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It&#8217;s helpful to summarize the
+<A NAME="Index440"></A><A NAME="Index441"></A>process of creating an object.
+Consider a class called <B>Dog</B>:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I106' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I107>
+</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">The first time an object
+of type <B>Dog</B> is created, <I>or</I> the first time a <B>static</B> method
+or <B>static </B>field of class <B>Dog</B> is accessed, the Java interpreter
+must locate <B>Dog.class</B>, which it does by searching through the classpath.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I107' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I108>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">As
+<B>Dog.class</B> is loaded (creating a <B>Class</B> object, which you&#8217;ll
+learn about later), all of its <B>static</B> initializers are run. Thus,
+<B>static </B>initialization takes place only once, as the <B>Class</B> object
+is loaded for the first time.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I108' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I109>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">When
+you create a <B>new Dog(&#160;)</B>, the construction process for a <B>Dog</B>
+object first allocates enough storage for a <B>Dog</B> object on the heap.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I109' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I110>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">This
+storage is wiped to zero, automatically setting all the primitives in that
+<B>Dog</B> object to their default values (zero for numbers and the equivalent
+for <B>boolean</B> and <B>char</B>) and the references to <B>null</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I110' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I111>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Any
+initializations that occur at the point of field definition are executed.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I111' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I112>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Constructors
+are executed. As you shall see in Chapter 6, this might actually involve a fair
+amount of activity, especially when inheritance is involved.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I112' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I113>
+</FONT></OL><A NAME="Heading183"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Explicit static initialization</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java allows you to group other
+<B>static</B> initializations inside a special
+&#8220;<A NAME="Index442"></A><A NAME="Index443"></A><B>static</B> construction
+clause&#8221; (sometimes called a <A NAME="Index444"></A><I>static block</I>)<I>
+</I>in a class. It looks like this:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I113' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I114>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>class</font> Spoon {
+  <font color=#0000ff>static</font> <font color=#0000ff>int</font> i;
+  <font color=#0000ff>static</font> {
+    i = 47;
+  }
+  <font color=#009900>// . . .</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It appears to be a method, but it&#8217;s
+just the <B>static</B> keyword followed by a method body. This code, like other
+<B>static</B> initializations, is executed only once, the first time you make an
+object of that class <I>or</I> the first time you access a <B>static</B> member
+of that class (even if you never make an object of that class). For example:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I114' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I115>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c04:ExplicitStatic.java</font>
+<font color=#009900>// Explicit static initialization</font>
+<font color=#009900>// with the "static" clause.</font>
+
+<font color=#0000ff>class</font> Cup {
+  Cup(<font color=#0000ff>int</font> marker) {
+    System.out.println(<font color=#004488>"Cup("</font> + marker + <font color=#004488>")"</font>);
+  }
+  <font color=#0000ff>void</font> f(<font color=#0000ff>int</font> marker) {
+    System.out.println(<font color=#004488>"f("</font> + marker + <font color=#004488>")"</font>);
+  }
+}
+
+<font color=#0000ff>class</font> Cups {
+  <font color=#0000ff>static</font> Cup c1;
+  <font color=#0000ff>static</font> Cup c2;
+  <font color=#0000ff>static</font> {
+    c1 = <font color=#0000ff>new</font> Cup(1);
+    c2 = <font color=#0000ff>new</font> Cup(2);
+  }
+  Cups() {
+    System.out.println(<font color=#004488>"Cups()"</font>);
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> ExplicitStatic {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    System.out.println(<font color=#004488>"Inside main()"</font>);
+    Cups.c1.f(99);  <font color=#009900>// (1)</font>
+  }
+  <font color=#009900>// static Cups x = new Cups();  // (2)</font>
+  <font color=#009900>// static Cups y = new Cups();  // (2) </font>
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>static</B> initializers for
+<B>Cups</B> run when either the access of the <B>static</B> object <B>c1</B>
+occurs on the line marked (1), or if line (1) is commented out and the lines
+marked (2) are uncommented. If both (1) and (2) are commented out, the
+<B>static</B> initialization for <B>Cups</B> never occurs. Also, it
+doesn&#8217;t matter if one or both of the lines marked (2) are uncommented; the
+static initialization only occurs once.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I115' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I116>
+</FONT><BR></P></DIV>
+<A NAME="Heading184"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Non-static instance
+initialization<BR><A NAME="Index445"></A><A NAME="Index446"></A><A NAME="Index447"></A></H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java provides a similar syntax for
+initializing non-<B>static</B> variables for each object. Here&#8217;s an
+example:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c04:Mugs.java</font>
+<font color=#009900>// Java "Instance Initialization."</font>
+
+<font color=#0000ff>class</font> Mug {
+  Mug(<font color=#0000ff>int</font> marker) {
+    System.out.println(<font color=#004488>"Mug("</font> + marker + <font color=#004488>")"</font>);
+  }
+  <font color=#0000ff>void</font> f(<font color=#0000ff>int</font> marker) {
+    System.out.println(<font color=#004488>"f("</font> + marker + <font color=#004488>")"</font>);
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Mugs {
+  Mug c1;
+  Mug c2;
+  {
+    c1 = <font color=#0000ff>new</font> Mug(1);
+    c2 = <font color=#0000ff>new</font> Mug(2);
+    System.out.println(<font color=#004488>"c1 &amp; c2 initialized"</font>);
+  }
+  Mugs() {
+    System.out.println(<font color=#004488>"Mugs()"</font>);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    System.out.println(<font color=#004488>"Inside main()"</font>);
+    Mugs x = <font color=#0000ff>new</font> Mugs();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can see that the instance
+initialization clause: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I116' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I117>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>  {
+    c1 = <font color=#0000ff>new</font> Mug(1);
+    c2 = <font color=#0000ff>new</font> Mug(2);
+    System.out.println(<font color=#004488>"c1 &amp; c2 initialized"</font>);
+  }</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">looks exactly like the static
+initialization clause except for the missing <B>static</B> keyword. This syntax
+is necessary to support the initialization of <I>anonymous inner classes</I>
+(see Chapter 8).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I117' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I118>
+</FONT><A NAME="_Toc312373861"></A><A NAME="_Toc375545287"></A><A NAME="_Toc481064584"></A><BR></P></DIV>
+<A NAME="Heading185"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Array initialization</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Initializing arrays in C is error-prone
+and tedious. C++ uses <I>aggregate initialization</I> to make it much
+safer</FONT><A NAME="fnB31" HREF="#fn31">[31]</A><FONT FACE="Georgia">. Java has
+no &#8220;aggregates&#8221; like C++, since everything is an object in Java. It
+does have arrays, and these are supported with
+<A NAME="Index448"></A><A NAME="Index449"></A><A NAME="Index450"></A>array
+initialization. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I118' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I119>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">An array is simply a sequence of either
+objects or primitives, all the same type and packaged together under one
+identifier name. Arrays are defined and used with the square-brackets
+<A NAME="Index451"></A><A NAME="Index452"></A><A NAME="Index453"></A><I>indexing
+operator</I> <B>[&#160;]</B>. To define an array you simply follow your type
+name with empty square brackets:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I119' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I120>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>int</font>[] a1;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can also put the square brackets
+after the identifier to produce exactly the same meaning:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I120' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I121>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>int</font> a1[];</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This conforms to expectations from C and
+C++ programmers. The former style, however, is probably a more sensible syntax,
+since it says that the type is &#8220;an <B>int</B> array.&#8221; That style
+will be used in this book.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I121' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I122>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The compiler doesn&#8217;t allow you to
+tell it how big the array is. This brings us back to that issue of
+&#8220;references.&#8221; All that you have at this point is a reference to an
+array, and there&#8217;s been no space allocated for the array. To create
+storage for the array you must write an initialization expression. For arrays,
+initialization can appear anywhere in your code, but you can also use a special
+kind of initialization expression that must occur at the point where the array
+is created. This special initialization is a set of values surrounded by curly
+braces. The storage allocation (the equivalent of using <B>new</B>) is taken
+care of by the compiler in this case. For example:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I122' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I123>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>int</font>[] a1 = { 1, 2, 3, 4, 5 };</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">So why would you ever define an array
+reference without an array?
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I123' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I124>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>int</font>[] a2;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Well, it&#8217;s possible to assign one
+array to another in Java, so you can say:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I124' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I125>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>a2 = a1;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">What you&#8217;re really doing is copying
+a reference, as demonstrated here:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I125' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I126>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c04:Arrays.java</font>
+<font color=#009900>// Arrays of primitives.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Arrays {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>int</font>[] a1 = { 1, 2, 3, 4, 5 };
+    <font color=#0000ff>int</font>[] a2;
+    a2 = a1;
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; a2.length; i++)
+      a2[i]++;
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; a1.length; i++)
+      System.out.println(
+        <font color=#004488>"a1["</font> + i + <font color=#004488>"] = "</font> + a1[i]);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can see that <B>a1</B> is given an
+initialization value while <B>a2</B> is not; <B>a2</B> is assigned
+later&#8212;in this case, to another array. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I126' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I127>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There&#8217;s something new here: all
+arrays have an intrinsic member (whether they&#8217;re arrays of objects or
+arrays of primitives) that you can query&#8212;but not change&#8212;to tell you
+how many elements there are in the array. This member is
+<B>length<A NAME="Index454"></A><A NAME="Index455"></A></B>. Since arrays in
+Java, like C and C++, start counting from element zero, the largest element you
+can index is <B>length - 1</B>. If you go out of
+<A NAME="Index456"></A><A NAME="Index457"></A>bounds, C and C++ quietly accept
+this and allow you to stomp all over your memory, which is the source of many
+infamous bugs. However, Java protects you against such problems by causing a
+run-time error (an <I>exception</I>, the subject of Chapter 10) if you step out
+of bounds. Of course, checking every array access costs time and code and
+there&#8217;s no way to turn it off, which means that array accesses might be a
+source of inefficiency in your program if they occur at a critical juncture. For
+Internet security and programmer productivity, the Java designers thought that
+this was a worthwhile trade-off.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I127' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I128>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">What if you don&#8217;t know how many
+elements you&#8217;re going to need in your array while you&#8217;re writing the
+program? You simply use <B>new</B> to create the elements in the array. Here,
+<A NAME="Index458"></A><B>new</B> works even though it&#8217;s creating an array
+of primitives (<B>new</B> won&#8217;t create a nonarray primitive):
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I128' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I129>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c04:ArrayNew.java</font>
+<font color=#009900>// Creating arrays with new.</font>
+<font color=#0000ff>import</font> java.util.*;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> ArrayNew {
+  <font color=#0000ff>static</font> Random rand = <font color=#0000ff>new</font> Random();
+  <font color=#0000ff>static</font> <font color=#0000ff>int</font> pRand(<font color=#0000ff>int</font> mod) {
+    <font color=#0000ff>return</font> Math.abs(rand.nextInt()) % mod + 1;
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>int</font>[] a;
+    a = <font color=#0000ff>new</font> <font color=#0000ff>int</font>[pRand(20)];
+    System.out.println(
+      <font color=#004488>"length of a = "</font> + a.length);
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; a.length; i++)
+      System.out.println(
+        <font color=#004488>"a["</font> + i + <font color=#004488>"] = "</font> + a[i]);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Since the size of the array is chosen at
+random (using the <B>pRand(&#160;)</B> method), it&#8217;s clear that array
+creation is actually happening at run-time. In addition, you&#8217;ll see from
+the output of this program that array elements of primitive types are
+automatically initialized to &#8220;empty&#8221; values. (For numerics and
+<B>char</B>, this is zero, and for <B>boolean</B>, it&#8217;s <B>false</B>.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I129' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I130>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Of course, the array could also have been
+defined and initialized in the same statement:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>int</font>[] a = <font color=#0000ff>new</font> <font color=#0000ff>int</font>[pRand(20)];</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you&#8217;re dealing with an array of
+nonprimitive objects, you must always use <B>new</B>. Here, the reference issue
+comes up again because what you create is an array of references. Consider the
+wrapper type <B>Integer<A NAME="Index459"></A>,</B> which is a class and not a
+primitive: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I130' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I131>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c04:ArrayClassObj.java</font>
+<font color=#009900>// Creating an array of nonprimitive objects.</font>
+<font color=#0000ff>import</font> java.util.*;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> ArrayClassObj {
+  <font color=#0000ff>static</font> Random rand = <font color=#0000ff>new</font> Random();
+  <font color=#0000ff>static</font> <font color=#0000ff>int</font> pRand(<font color=#0000ff>int</font> mod) {
+    <font color=#0000ff>return</font> Math.abs(rand.nextInt()) % mod + 1;
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Integer[] a = <font color=#0000ff>new</font> Integer[pRand(20)];
+    System.out.println(
+      <font color=#004488>"length of a = "</font> + a.length);
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; a.length; i++) {
+      a[i] = <font color=#0000ff>new</font> Integer(pRand(500));
+      System.out.println(
+        <font color=#004488>"a["</font> + i + <font color=#004488>"] = "</font> + a[i]);
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here, even after <B>new</B> is called to
+create the array: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I131' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I132>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Integer[] a = <font color=#0000ff>new</font> Integer[pRand(20)];</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">it&#8217;s only an array of references,
+and not until the reference itself is initialized by creating a new
+<B>Integer</B> object is the initialization complete:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I132' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I133>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>a[i] = <font color=#0000ff>new</font> Integer(pRand(500));</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you forget to create the object,
+however, you&#8217;ll get an exception at run-time when you try to read the
+empty array location. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I133' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I134>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Take a look at the formation of the
+<B>String </B>object inside the print statements. You can see that the reference
+to the <B>Integer</B> object is automatically converted to produce a <B>String
+</B>representing the value inside the object.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I134' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I135>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It&#8217;s also possible to initialize
+arrays of objects using the curly-brace-enclosed list. There are two
+forms:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c04:ArrayInit.java</font>
+<font color=#009900>// Array initialization.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> ArrayInit {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Integer[] a = {
+      <font color=#0000ff>new</font> Integer(1),
+      <font color=#0000ff>new</font> Integer(2),
+      <font color=#0000ff>new</font> Integer(3),
+    };
+
+    Integer[] b = <font color=#0000ff>new</font> Integer[] {
+      <font color=#0000ff>new</font> Integer(1),
+      <font color=#0000ff>new</font> Integer(2),
+      <font color=#0000ff>new</font> Integer(3),
+    };
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This is useful at times, but it&#8217;s
+more limited since the size of the array is determined at compile-time. The
+final comma in the list of initializers is optional. (This feature makes for
+easier maintenance of long lists.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I135' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I136>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The second form of array initialization
+provides a convenient syntax to create and call methods that can produce the
+same effect as C&#8217;s
+<A NAME="Index460"></A><A NAME="Index461"></A><I>variable argument lists</I>
+(known as &#8220;varargs&#8221; in C). These can include unknown quantity of
+arguments as well as unknown types. Since all classes are ultimately inherited
+from the common root class <B>Object</B> (a subject you will learn more about as
+this book progresses), you can create a method that takes an array of
+<B>Object</B> and call it like this:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I136' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I137>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c04:VarArgs.java</font>
+<font color=#009900>// Using the array syntax to create</font>
+<font color=#009900>// variable argument lists.</font>
+
+<font color=#0000ff>class</font> A { <font color=#0000ff>int</font> i; }
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> VarArgs {
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> f(Object[] x) {
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; x.length; i++)
+      System.out.println(x[i]);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    f(<font color=#0000ff>new</font> Object[] { 
+        <font color=#0000ff>new</font> Integer(47), <font color=#0000ff>new</font> VarArgs(), 
+        <font color=#0000ff>new</font> Float(3.14), <font color=#0000ff>new</font> Double(11.11) });
+    f(<font color=#0000ff>new</font> Object[] {<font color=#004488>"one"</font>, <font color=#004488>"two"</font>, <font color=#004488>"three"</font> });
+    f(<font color=#0000ff>new</font> Object[] {<font color=#0000ff>new</font> A(), <font color=#0000ff>new</font> A(), <font color=#0000ff>new</font> A()});
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">At this point, there&#8217;s not much you
+can do with these unknown objects, and this program uses the automatic
+<B>String</B> conversion to do something useful with each <B>Object</B>. In
+Chapter 12, which covers <I>run-time type identification</I> (RTTI),
+you&#8217;ll learn how to discover the exact type of such objects so that you
+can do something more interesting with them.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I137' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I138>
+</FONT><A NAME="_Toc481064585"></A><BR></P></DIV>
+<A NAME="Heading186"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Multidimensional arrays</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java allows you to easily create
+<A NAME="Index462"></A><A NAME="Index463"></A>multidimensional
+arrays:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c04:MultiDimArray.java</font>
+<font color=#009900>// Creating multidimensional arrays.</font>
+<font color=#0000ff>import</font> java.util.*;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> MultiDimArray {
+  <font color=#0000ff>static</font> Random rand = <font color=#0000ff>new</font> Random();
+  <font color=#0000ff>static</font> <font color=#0000ff>int</font> pRand(<font color=#0000ff>int</font> mod) {
+    <font color=#0000ff>return</font> Math.abs(rand.nextInt()) % mod + 1;
+  }
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> prt(String s) {
+    System.out.println(s);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>int</font>[][] a1 = {
+      { 1, 2, 3, },
+      { 4, 5, 6, },
+    };
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; a1.length; i++)
+      <font color=#0000ff>for</font>(<font color=#0000ff>int</font> j = 0; j &lt; a1[i].length; j++)
+        prt(<font color=#004488>"a1["</font> + i + <font color=#004488>"]["</font> + j +
+            <font color=#004488>"] = "</font> + a1[i][j]);
+    <font color=#009900>// 3-D array with fixed length:</font>
+    <font color=#0000ff>int</font>[][][] a2 = <font color=#0000ff>new</font> <font color=#0000ff>int</font>[2][2][4];
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; a2.length; i++)
+      <font color=#0000ff>for</font>(<font color=#0000ff>int</font> j = 0; j &lt; a2[i].length; j++)
+        <font color=#0000ff>for</font>(<font color=#0000ff>int</font> k = 0; k &lt; a2[i][j].length;
+            k++)
+          prt(<font color=#004488>"a2["</font> + i + <font color=#004488>"]["</font> +
+              j + <font color=#004488>"]["</font> + k +
+              <font color=#004488>"] = "</font> + a2[i][j][k]);
+    <font color=#009900>// 3-D array with varied-length vectors:</font>
+    <font color=#0000ff>int</font>[][][] a3 = <font color=#0000ff>new</font> <font color=#0000ff>int</font>[pRand(7)][][];
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; a3.length; i++) {
+      a3[i] = <font color=#0000ff>new</font> <font color=#0000ff>int</font>[pRand(5)][];
+      <font color=#0000ff>for</font>(<font color=#0000ff>int</font> j = 0; j &lt; a3[i].length; j++)
+        a3[i][j] = <font color=#0000ff>new</font> <font color=#0000ff>int</font>[pRand(5)];
+    }
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; a3.length; i++)
+      <font color=#0000ff>for</font>(<font color=#0000ff>int</font> j = 0; j &lt; a3[i].length; j++)
+        <font color=#0000ff>for</font>(<font color=#0000ff>int</font> k = 0; k &lt; a3[i][j].length;
+            k++)
+          prt(<font color=#004488>"a3["</font> + i + <font color=#004488>"]["</font> +
+              j + <font color=#004488>"]["</font> + k +
+              <font color=#004488>"] = "</font> + a3[i][j][k]);
+    <font color=#009900>// Array of nonprimitive objects:</font>
+    Integer[][] a4 = {
+      { <font color=#0000ff>new</font> Integer(1), <font color=#0000ff>new</font> Integer(2)},
+      { <font color=#0000ff>new</font> Integer(3), <font color=#0000ff>new</font> Integer(4)},
+      { <font color=#0000ff>new</font> Integer(5), <font color=#0000ff>new</font> Integer(6)},
+    };
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; a4.length; i++)
+      <font color=#0000ff>for</font>(<font color=#0000ff>int</font> j = 0; j &lt; a4[i].length; j++)
+        prt(<font color=#004488>"a4["</font> + i + <font color=#004488>"]["</font> + j +
+            <font color=#004488>"] = "</font> + a4[i][j]);
+    Integer[][] a5;
+    a5 = <font color=#0000ff>new</font> Integer[3][];
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; a5.length; i++) {
+      a5[i] = <font color=#0000ff>new</font> Integer[3];
+      <font color=#0000ff>for</font>(<font color=#0000ff>int</font> j = 0; j &lt; a5[i].length; j++)
+        a5[i][j] = <font color=#0000ff>new</font> Integer(i*j);
+    }
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; a5.length; i++)
+      <font color=#0000ff>for</font>(<font color=#0000ff>int</font> j = 0; j &lt; a5[i].length; j++)
+        prt(<font color=#004488>"a5["</font> + i + <font color=#004488>"]["</font> + j +
+            <font color=#004488>"] = "</font> + a5[i][j]);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The code used for printing uses
+<B>length</B> so that it doesn&#8217;t depend on fixed array sizes.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I138' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I139>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The first example shows a
+multidimensional array of primitives. You delimit each vector in the array with
+curly braces:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>    <font color=#0000ff>int</font>[][] a1 = {
+      { 1, 2, 3, },
+      { 4, 5, 6, },
+    };</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Each set of square brackets moves you
+into the next level of the array.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I139' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I140>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The second example shows a
+three-dimensional array allocated with <B>new</B>. Here, the whole array is
+allocated at once:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>int</font>[][][] a2 = <font color=#0000ff>new</font> <font color=#0000ff>int</font>[2][2][4];</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">But the third example shows that each
+vector in the arrays that make up the matrix can be of any
+length:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>    <font color=#0000ff>int</font>[][][] a3 = <font color=#0000ff>new</font> <font color=#0000ff>int</font>[pRand(7)][][];
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; a3.length; i++) {
+      a3[i] = <font color=#0000ff>new</font> <font color=#0000ff>int</font>[pRand(5)][];
+      <font color=#0000ff>for</font>(<font color=#0000ff>int</font> j = 0; j &lt; a3[i].length; j++)
+        a3[i][j] = <font color=#0000ff>new</font> <font color=#0000ff>int</font>[pRand(5)];
+    }</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The first <B>new</B> creates an array
+with a random-length first element and the rest undetermined. The second
+<B>new</B> inside the <B>for</B> loop fills out the elements but leaves the
+third index undetermined until you hit the third <B>new</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I140' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I141>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You will see from the output that array
+values are automatically initialized to zero if you don&#8217;t give them an
+explicit initialization value.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can deal with arrays of nonprimitive
+objects in a similar fashion, which is shown in the fourth example,
+demonstrating the ability to collect many <B>new</B> expressions with curly
+braces:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>    Integer[][] a4 = {
+      { <font color=#0000ff>new</font> Integer(1), <font color=#0000ff>new</font> Integer(2)},
+      { <font color=#0000ff>new</font> Integer(3), <font color=#0000ff>new</font> Integer(4)},
+      { <font color=#0000ff>new</font> Integer(5), <font color=#0000ff>new</font> Integer(6)},
+    };</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The fifth example shows how an array of
+nonprimitive objects can be built up piece by piece:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>    Integer[][] a5;
+    a5 = <font color=#0000ff>new</font> Integer[3][];
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; a5.length; i++) {
+      a5[i] = <font color=#0000ff>new</font> Integer[3];
+      <font color=#0000ff>for</font>(<font color=#0000ff>int</font> j = 0; j &lt; a5[i].length; j++)
+        a5[i][j] = <font color=#0000ff>new</font> Integer(i*j);
+    }</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>i*j</B> is just to put an
+interesting value into the <B>Integer</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I141' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I142>
+</FONT><A NAME="_Toc375545288"></A><A NAME="_Toc481064586"></A><BR></P></DIV>
+<A NAME="Heading187"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Summary</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This seemingly elaborate mechanism for
+initialization, the constructor, should give you a strong hint about the
+critical importance placed on initialization in the language. As Stroustrup was
+designing C++, one of the first observations he made about productivity in C was
+that improper initialization of variables causes a significant portion of
+programming problems. These kinds of bugs are hard to find, and similar issues
+apply to improper cleanup. Because constructors allow you to <I>guarantee</I>
+proper initialization and cleanup (the compiler will not allow an object to be
+created without the proper constructor calls), you get complete control and
+safety. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I142' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I143>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In C++, destruction is quite important
+because objects created with <B>new</B> must be explicitly destroyed. In Java,
+the garbage collector automatically releases the memory for all objects, so the
+equivalent cleanup method in Java isn&#8217;t necessary much of the time. In
+cases where you don&#8217;t need destructor-like behavior, Java&#8217;s garbage
+collector greatly simplifies programming, and adds much-needed safety in
+managing memory. Some garbage collectors can even clean up other resources like
+graphics and file handles. However, the garbage collector does add a run-time
+cost, the expense of which is difficult to put into perspective because of the
+overall slowness of Java interpreters at this writing. As this changes,
+we&#8217;ll be able to discover if the overhead of the garbage collector will
+preclude the use of Java for certain types of programs. (One of the issues is
+the unpredictability of the garbage collector.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I143' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I144>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Because of the guarantee that all objects
+will be constructed, there&#8217;s actually more to the constructor than what is
+shown here. In particular, when you create new classes using either
+<I>composition</I> or <I>inheritance</I> the guarantee of construction also
+holds, and some additional syntax is necessary to support this. You&#8217;ll
+learn about composition, inheritance, and how they affect constructors in future
+chapters.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I144' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I145>
+</FONT><A NAME="_Toc375545289"></A><A NAME="_Toc481064587"></A><BR></P></DIV>
+<A NAME="Heading188"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Exercises</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=2>Solutions to selected exercises
+can be found in the electronic document <I>The Thinking in Java Annotated
+Solution Guide</I>, available for a small fee from
+<I>www.BruceEckel.com</I>.</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create a class with a
+default constructor (one that takes no arguments) that prints a message. Create
+an object of this class.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I145' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I146>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Add
+an overloaded constructor to Exercise 1 that takes a <B>String</B> argument and
+prints it along with your message.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I146' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I147>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+an array of object references of the class you created in Exercise 2, but
+don&#8217;t actually create objects to assign into the array. When you run the
+program, notice whether the initialization messages from the constructor calls
+are printed.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I147' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I148>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Complete
+Exercise 3 by creating objects to attach to the array of references. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I148' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I149>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+an array of <B>String</B> objects and assign a string to each element. Print the
+array using a <B>for</B> loop.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I149' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I150>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class called <B>Dog</B> with an overloaded <B>bark(&#160;)</B> method. This
+method should be overloaded based on various primitive data types, and print
+different types of barking, howling, etc., depending on which overloaded version
+is called. Write a <B>main(&#160;)</B> that calls all the different versions.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I150' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I151>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Modify
+Exercise 6 so that two of the overloaded methods have two arguments (of two
+different types), but in reversed order relative to each other. Verify that this
+works.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I151' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I152>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class without a constructor, and then create an object of that class in
+<B>main(&#160;)</B> to verify that the default constructor is automatically
+synthesized.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I152' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I153>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class with two methods. Within the first method, call the second method twice:
+the first time without using <B>this</B>, and the second time using <B>this</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I153' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I154>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class with two (overloaded) constructors. Using <B>this</B>, call the second
+constructor inside the first one.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I154' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I155>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class with a <B>finalize(&#160;)</B> method that prints a message. In
+<B>main(&#160;)</B>, create an object of your class. Explain the behavior of
+your program.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I155' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I156>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Modify
+Exercise 11 so that your <B>finalize(&#160;)</B> will always be called.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I156' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I157>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class called <B>Tank</B> that can be filled and emptied, and has a <I>death
+condition</I> that it must be empty when the object is cleaned up. Write a
+<B>finalize(&#160;)</B> that verifies this death condition. In
+<B>main(&#160;)</B>, test the possible scenarios that can occur when your
+<B>Tank</B> is used.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I157' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I158>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class containing an <B>int</B> and a <B>char</B> that are not initialized, and
+print their values to verify that Java performs default initialization.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I158' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I159>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class containing an uninitialized <B>String</B> reference. Demonstrate that
+this reference is initialized by Java to <B>null</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I159' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I160>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class with a <B>String </B>field that is initialized at the point of
+definition, and another one that is initialized by the constructor. What is the
+difference between the two approaches?
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I160' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I161>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class with a <B>static String </B>field that is initialized at the point of
+definition, and another one that is initialized by the <B>static </B>block. Add
+a <B>static</B> method that prints both fields and demonstrates that they are
+both initialized before they are used.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I161' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I162>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class with a <B>String</B> that is initialized using &#8220;instance
+initialization.&#8221; Describe a use for this feature (other than the one
+specified in this book).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I162' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I163>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Write
+a method that creates and initializes a two-dimensional array of <B>double</B>.
+The size of the array is determined by the arguments of the method, and the
+initialization values are a range determined by beginning and ending values that
+are also arguments of the method. Create a second method that will print the
+array generated by the first method. In <B>main(&#160;)</B> test the methods by
+creating and printing several different sizes of arrays.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I163' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I164>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Repeat
+Exercise 19 for a three-dimensional array.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I164' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I165>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Comment
+the line marked (1) in <B>ExplicitStatic.java</B> and verify that the static
+initialization clause is not called. Now uncomment one of the lines marked (2)
+and verify that the static initialization clause <I>is</I> called. Now uncomment
+the other line marked (2) and verify that static initialization only occurs
+once.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I165' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER4_I166>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Experiment
+with <B>Garbage.java</B> by running the program using the arguments
+&#8220;gc,&#8221; &#8220;finalize,&#8221; or &#8220;all.&#8221; Repeat the
+process and see if you detect any patterns in the output. Change the code so
+that <B>System.runFinalization(&#160;) </B>is called <I>before</I>
+<B>System.gc(&#160;)</B> and observe the results.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER4_I166' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+</FONT></OL>
+<HR><DIV ALIGN="LEFT"><P><A NAME="fn27" HREF="#fnB27">[27]</A><FONT FACE="Georgia" SIZE=2>
+In some of the Java literature from Sun they instead refer to these with the
+clumsy but descriptive name &#8220;no-arg constructors.&#8221; The term
+&#8220;default constructor&#8221; has been in use for many years and so I will
+use that.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn28" HREF="#fnB28">[28]</A><FONT FACE="Georgia" SIZE=2>
+The one case in which this is possible occurs if you pass a reference to an
+object into the <B>static</B> method. Then, via the reference (which is now
+effectively <B>this</B>), you can call non-<B>static</B> methods and access
+non-<B>static</B> fields. But typically if you want to do something like this
+you&#8217;ll just make an ordinary, non-<B>static</B> method.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn29" HREF="#fnB29">[29]</A><FONT FACE="Georgia" SIZE=2>
+A term coined by Bill Venners (www.artima.com) during a seminar that he and I
+were giving together.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn30" HREF="#fnB30">[30]</A><FONT FACE="Georgia" SIZE=2>
+In contrast, C++ has the <I>constructor initializer list</I> that causes
+initialization to occur before entering the constructor body, and is enforced
+for objects. See <I>Thinking in C++, 2<SUP>nd</SUP> edition</I> (available on
+this book&#8217;s CD ROM and at <I>www.BruceEckel.com</I>).</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn31" HREF="#fnB31">[31]</A><FONT FACE="Georgia" SIZE=2>
+See <I>Thinking in C++, 2<SUP>nd</SUP> edition</I>  for a complete description
+of C++ aggregate initialization.</FONT><BR></P></DIV>
+
+<DIV ALIGN="CENTER">
+    <FONT FACE="Verdana" size = "-1">
+     [ <a href="Chap03.htm">Previous Chapter</a> ] 
+    [ <a href="SimpCont.htm">Short TOC</a> ] 
+    [ <a href="Contents.htm">Table of Contents</a> ] 
+    [ <a href="DocIdx.htm">Index</a> ]
+     [ <a href="Chap05.htm">Next Chapter</a> ] 
+    </FONT>
+    <BR>
+ Last Update:05/21/2001</P></DIV>
+
+</BODY>
+
+</HTML>

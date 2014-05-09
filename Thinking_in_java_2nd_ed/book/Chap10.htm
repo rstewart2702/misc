@@ -1,0 +1,2410 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<!--
+This document was converted from RTF source: 
+By rtftohtml 4.19
+See http://www.sunpack.com/RTF
+Filename:TIJ2.rtf
+Application Directory:C:\TOOLS\RTF2HTML\
+Subject:
+Author:Bruce Eckel
+Operator:Bruce Eckel
+Document Comments:
+Version Comments:
+Comments:
+Keywords:
+Translation Date:05/21/2001
+Translation Time:10:39:17
+Translation Platform:Win32
+Number of Output files:23
+This File:Chap10.htm
+SplitDepth=1
+SkipNavPanel=1
+SkipLeadingToc=1
+SkipTrailingToc=1
+GenContents=1
+GenFrames=1
+GenIndex=1
+-->
+<HEAD lang="en"><META http-equiv="Content-Type" content="text/html">
+<TITLE>10: Error Handling  with Exceptions</TITLE>
+</HEAD>
+
+<BODY  BGCOLOR="#FFFFFF"><DIV ALIGN="CENTER">
+  <a href="http://www.MindView.net">
+  <img src="mindview.gif" alt="MindView Inc." BORDER = "0"></a>
+  <CENTER>
+    <FONT FACE="Verdana" size = "-1">
+    [ <a href="README.txt">Viewing Hints</a> ]
+    [ <a href="RevHist.htm">Revision History</a> ]
+    [ <a href="http://www.mindview.net/Books/TIJ/">Book Home Page</a> ]
+    [ <a href="http://www.mindview.net/Etc/MailingList.html">Free Newsletter</a> ] <br>
+    [ <a href="http://www.mindview.net/Seminars">Seminars</a> ]
+    [ <a href="http://www.mindview.net/CDs">Seminars on CD ROM</a> ]
+    [ <a href="http://www.mindview.net/Services">Consulting</a> ]
+    </FONT>
+  <H2><FONT FACE="Verdana">
+  Thinking in Java, 2nd edition, Revision 12</FONT></H2>
+  <H3><FONT FACE="Verdana">&copy;2000 by Bruce Eckel</FONT></H3>
+  
+    <FONT FACE="Verdana" size = "-1">
+     [ <a href="Chap09.htm">Previous Chapter</a> ] 
+    [ <a href="SimpCont.htm">Short TOC</a> ] 
+    [ <a href="Contents.htm">Table of Contents</a> ] 
+    [ <a href="DocIdx.htm">Index</a> ]
+     [ <a href="Chap11.htm">Next Chapter</a> ] 
+    </FONT>
+    
+  </CENTER>
+  </P></DIV><A NAME="Chapter_9"></A><A NAME="_Toc375545361"></A><A NAME="_Toc477690730"></A><A NAME="_Toc481064713"></A><A NAME="Heading331"></A><FONT FACE = "Verdana"><H1 ALIGN="LEFT">
+10: Error Handling <BR>with Exceptions<A NAME="OLE_LINK1"></A></H1></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=4><backtalk:display ID=TIJ3_CHAPTER10_I0>
+The
+basic philosophy of Java is that &#8220;badly formed code will not be
+run.&#8221;</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The ideal time to catch an
+<A NAME="Index1049"></A><A NAME="Index1050"></A>error is at compile-time, before
+you even try to run the program. However, not all errors can be detected at
+compile-time. The rest of the problems must be handled at run-time, through some
+formality that allows the originator of the error to pass appropriate
+information to a recipient who will know how to handle the difficulty properly.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I0' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I1>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In C and other earlier languages, there
+could be several of these formalities, and they were generally established by
+convention and not as part of the programming language. Typically, you returned
+a special value or set a flag, and the recipient was supposed to look at the
+value or the flag and determine that something was amiss. However, as the years
+passed, it was discovered that programmers who use a library tend to think of
+themselves as invincible&#8212;as in, &#8220;Yes, errors might happen to others,
+but not in <I>my</I> code.&#8221; So, not too surprisingly, they wouldn&#8217;t
+check for the error conditions (and sometimes the error conditions were too
+silly to check
+for</FONT><A NAME="fnB51" HREF="#fn51">[51]</A><FONT FACE="Georgia">). If you
+<I>were</I> thorough enough to check for an error every time you called a
+method, your code could turn into an unreadable nightmare. Because programmers
+could still coax systems out of these languages they were resistant to admitting
+the truth: This approach to handling errors was a major limitation to creating
+large, robust, maintainable programs.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I1' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I2>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The solution is to take the casual nature
+out of error handling and to enforce formality. This actually has a long
+history, since implementations of <I>exception handling</I> go back to operating
+systems in the 1960s, and even to BASIC&#8217;s &#8220;<B>on error
+goto</B>.&#8221; But C++ exception handling was based on Ada, and Java&#8217;s
+is based primarily on C++ (although it looks even more like Object Pascal).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I2' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I3>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The word &#8220;exception&#8221; is meant
+in the sense of &#8220;I take exception to that.&#8221; At the point where the
+problem occurs you might not know what to do with it, but you do know that you
+can&#8217;t just continue on merrily; you must stop and somebody, somewhere,
+must figure out what to do. But you don&#8217;t have enough information in the
+current context to fix the problem. So you hand the problem out to a higher
+context where someone is qualified to make the proper decision (much like a
+chain of command). 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I3' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I4>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The other rather significant benefit of
+exceptions is that they clean up error handling code. Instead of checking for a
+particular error and dealing with it at multiple places in your program, you no
+longer need to check at the point of the method call (since the exception will
+guarantee that someone catches it). And, you need to handle the problem in only
+one place, the so-called <A NAME="Index1051"></A><I>exception handler</I>. This
+saves you code, and it separates the code that describes what you want to do
+from the code that is executed when things go awry. In general, reading,
+writing, and debugging code becomes much clearer with exceptions than when using
+the old way of error handling.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I4' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I5>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Because exception handling is enforced by
+the Java compiler, there are only so many examples that can be written in this
+book without learning about exception handling. This chapter introduces you to
+the code you need to write to properly handle exceptions, and the way you can
+generate your own exceptions if one of your methods gets into trouble.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I5' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I6>
+</FONT><A NAME="_Toc375545362"></A><A NAME="_Toc481064714"></A><BR></P></DIV>
+<A NAME="Heading332"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Basic exceptions</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">An <A NAME="Index1052"></A><I>exceptional
+condition</I> is a problem that prevents the continuation of the method or scope
+that you&#8217;re in. It&#8217;s important to distinguish an exceptional
+condition from a normal problem, in which you have enough information in the
+current context to somehow cope with the difficulty. With an exceptional
+condition, you cannot continue processing because you don&#8217;t have the
+information necessary to deal with the problem <I>in the current context</I>.
+All you can do is jump out of the current context and relegate that problem to a
+higher context. This is what happens when you throw an exception.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I6' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I7>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A simple example is a divide. If
+you&#8217;re about to divide by zero, it&#8217;s worth checking to make sure you
+don&#8217;t go ahead and perform the divide. But what does it mean that the
+denominator is zero? Maybe you know, in the context of the problem you&#8217;re
+trying to solve in that particular method, how to deal with a zero denominator.
+But if it&#8217;s an unexpected value, you can&#8217;t deal with it and so must
+throw an exception rather than continuing along that path.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I7' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I8>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When you throw an
+<A NAME="Index1053"></A>exception, several things happen. First, the exception
+object is created in the same way that any Java object is created: on the heap,
+with <B>new</B>. Then the current path of execution (the one you couldn&#8217;t
+continue) is stopped and the reference for the exception object is ejected from
+the current context. At this point the exception handling mechanism takes over
+and begins to look for an appropriate place to continue executing the program.
+This appropriate place is the <I>exception handler,</I> whose job is to recover
+from the problem so the program can either try another tack or just continue.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I8' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I9>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">As a simple example of throwing an
+exception, consider an object reference called <B>t</B>. It&#8217;s possible
+that you might be passed a reference that hasn&#8217;t been initialized, so you
+might want to check before trying to call a method using that object reference.
+You can send information about the error into a larger context by creating an
+object representing your information and &#8220;throwing&#8221; it out of your
+current context. This is called <I>throwing an exception.</I> Here&#8217;s what
+it looks like:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>if</font>(t == <font color=#0000ff>null</font>)
+  <font color=#0000ff>throw</font> <font color=#0000ff>new</font> NullPointerException();</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This throws the exception, which allows
+you&#8212;in the current context&#8212;to abdicate responsibility for thinking
+about the issue further. It&#8217;s just magically handled somewhere else.
+Precisely <I>where </I>will be shown shortly.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I9' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I10>
+</FONT><A NAME="_Toc375545363"></A><A NAME="_Toc481064715"></A><BR></P></DIV>
+<A NAME="Heading333"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Exception arguments<BR><A NAME="Index1054"></A><A NAME="Index1055"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Like any object in Java, you always
+create exceptions on the heap using <B>new</B>, which allocates storage and
+calls a constructor. There are two constructors in all standard exceptions: the
+first is the default constructor, and the second takes a string argument so you
+can place pertinent information in the exception:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>if</font>(t == <font color=#0000ff>null</font>)
+  <font color=#0000ff>throw</font> <font color=#0000ff>new</font> NullPointerException(<font color=#004488>"t = null"</font>);</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This string can later be extracted using
+various methods, as you&#8217;ll see.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I10' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I11>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <A NAME="Index1056"></A>keyword
+<B>throw</B> causes a number of relatively magical things to happen. Typically,
+you&#8217;ll first use <B>new</B> to create<B> </B>an object that represents the
+error condition. You give the resulting reference to <B>throw</B>. The object
+is, in effect, &#8220;returned&#8221; from the method, even though that object
+type isn&#8217;t normally what the method is designed to return. A simplistic
+way to think about exception handling is as an alternate return mechanism,
+although you get into trouble if you take that analogy too far. You can also
+exit from ordinary scopes by throwing an exception. But a value is returned, and
+the method or scope exits.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I11' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I12>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Any similarity to an ordinary return from
+a method ends here, because <I>where</I> you return is someplace completely
+different from where you return for a normal method call. (You end up in an
+appropriate exception handler that might be miles away&#8212;many levels lower
+on the call stack&#8212;from where the exception was thrown.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I12' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I13>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In addition, you can throw any type of
+<B>Throwable</B> object that you want. Typically, you&#8217;ll throw a different
+class of exception for each different type of error. The information about the
+error is represented both inside the exception object and implicitly in the type
+of exception object chosen, so someone in the bigger context can figure out what
+to do with your exception. (Often, the only information is the type of exception
+object, and nothing meaningful is stored within the exception object.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I13' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I14>
+</FONT><A NAME="_Toc305593298"></A><A NAME="_Toc305628770"></A><A NAME="_Toc312374113"></A><A NAME="_Toc375545364"></A><A NAME="_Toc481064716"></A><BR></P></DIV>
+<A NAME="Heading334"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Catching an exception<BR><A NAME="Index1057"></A><A NAME="Index1058"></A></H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If a method throws an exception, it must
+assume that exception is &#8220;caught&#8221; and dealt with. One of the
+advantages of Java exception handling is that it allows you to concentrate on
+the problem you&#8217;re trying to solve in one place, and then deal with the
+errors from that code in another place.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I14' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I15>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To see how an exception is caught, you
+must first understand the concept of a
+<A NAME="Index1059"></A><A NAME="Index1060"></A><I>guarded region,</I> which is
+a section of code that might produce exceptions, and which is followed by the
+code to handle those exceptions.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I15' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I16>
+</FONT><A NAME="_Toc312374114"></A><A NAME="_Toc375545365"></A><A NAME="_Toc481064717"></A><BR></P></DIV>
+<A NAME="Heading335"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+The try block</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you&#8217;re inside a method and you
+throw an exception (or another method you call within this method throws an
+exception), that method will exit in the process of throwing. If you don&#8217;t
+want a <B>throw </B>to exit the method, you can set up a special block within
+that method to capture the exception. This is called the <I>try</I>
+<I>block<A NAME="Index1061"></A><A NAME="Index1062"></A></I> because you
+&#8220;try&#8221; your various method calls there. The try block is an ordinary
+scope, preceded by the keyword <B>try</B>:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>try</font> {
+  <font color=#009900>// Code that might generate exceptions</font>
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you were checking for errors carefully
+in a programming language that didn&#8217;t support exception handling,
+you&#8217;d have to surround every method call with setup and error testing
+code, even if you call the same method several times. With exception handling,
+you put everything in a try block and capture all the exceptions in one place.
+This means your code is a lot easier to write and easier to read because the
+goal of the code is not confused with the error checking.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I16' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I17>
+</FONT><A NAME="_Toc312374115"></A><A NAME="_Toc375545366"></A><A NAME="_Toc481064718"></A><BR></P></DIV>
+<A NAME="Heading336"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Exception handlers</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Of course, the thrown exception must end
+up someplace. This &#8220;place&#8221; is the <I>exception
+handler<A NAME="Index1063"></A><A NAME="Index1064"></A>,</I> and there&#8217;s
+one for every exception type you want to catch. Exception handlers immediately
+follow the try block and are denoted by the keyword
+<B>catch<A NAME="Index1065"></A></B>:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>try</font> {
+  <font color=#009900>// Code that might generate exceptions</font>
+} <font color=#0000ff>catch</font>(Type1 id1) {
+  <font color=#009900>// Handle exceptions of Type1</font>
+} <font color=#0000ff>catch</font>(Type2 id2) {
+  <font color=#009900>// Handle exceptions of Type2</font>
+} <font color=#0000ff>catch</font>(Type3 id3) {
+  <font color=#009900>// Handle exceptions of Type3</font>
+}
+
+<font color=#009900>// etc...</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Each catch clause (exception handler) is
+like a little method that takes one and only one argument of a particular type.
+The identifier (<B>id1</B>, <B>id2</B>, and so on) can be used inside the
+handler, just like a method argument. Sometimes you never use the identifier
+because the type of the exception gives you enough information to deal with the
+exception, but the identifier must still be there.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I17' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I18>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The handlers must appear directly after
+the try block. If an exception is thrown, the exception handling mechanism goes
+hunting for the first handler with an argument that matches the type of the
+exception. Then it enters that catch clause, and the exception is considered
+handled. The search for handlers stops once the catch clause is finished. Only
+the matching catch clause executes; it&#8217;s not like a <B>switch</B>
+statement in which you need a <B>break</B> after each <B>case</B> to prevent the
+remaining ones from executing.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I18' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I19>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Note that, within the try block, a number
+of different method calls might generate the same exception, but you need only
+one handler. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I19' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I20>
+</FONT><BR></P></DIV>
+<A NAME="Heading337"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Termination vs.
+resumption<BR><A NAME="Index1066"></A><A NAME="Index1067"></A><A NAME="Index1068"></A></H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There are two basic models in exception
+handling theory. In <I>termination</I> (which is what Java and C++ support), you
+assume the error is so critical that there&#8217;s no way to get back to where
+the exception occurred. Whoever threw the exception decided that there was no
+way to salvage the situation, and they don&#8217;t <I>want</I> to come back.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I20' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I21>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The alternative is called
+<I>resumption</I>. It means that the exception handler is expected to do
+something to rectify the situation, and then the faulting method is retried,
+presuming success the second time. If you want resumption, it means you still
+hope to continue execution after the exception is handled. In this case, your
+exception is more like a method call&#8212;which is how you should set up
+situations in Java in which you want resumption-like behavior. (That is,
+don&#8217;t throw an exception; call a method that fixes the problem.)
+Alternatively, place your <B>try</B> block inside a <B>while</B> loop that keeps
+reentering the <B>try</B> block until the result is satisfactory.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I21' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I22>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Historically, programmers using operating
+systems that supported resumptive exception handling eventually ended up using
+termination-like code and skipping resumption. So although resumption sounds
+attractive at first, it isn&#8217;t quite so useful in practice. The dominant
+reason is probably the <A NAME="Index1069"></A><I>coupling </I>that results:
+your handler must often be aware of where the exception is thrown from and
+contain nongeneric code specific to the throwing location. This makes the code
+difficult to write and maintain, especially for large systems where the
+exception can be generated from many points.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I22' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I23>
+</FONT><A NAME="_Toc375545373"></A><A NAME="_Toc481064719"></A><BR></P></DIV>
+<A NAME="Heading338"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Creating your own exceptions</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You&#8217;re not stuck using the existing
+Java <A NAME="Index1070"></A>exceptions. This is important because you&#8217;ll
+often need to create your own exceptions to denote a special error that your
+library is capable of creating, but which was not foreseen when the Java
+exception hierarchy was created.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I23' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I24>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To create your own exception class,
+you&#8217;re forced to inherit from an existing type of exception, preferably
+one that is close in meaning to your new exception (this is often not possible,
+however). The most trivial way to create a new type of exception is just to let
+the compiler create the default constructor for you, so it requires almost no
+code at all:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c10:SimpleExceptionDemo.java</font>
+<font color=#009900>// Inheriting your own exceptions.</font>
+<font color=#0000ff>class</font> SimpleException <font color=#0000ff>extends</font> Exception {} 
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> SimpleExceptionDemo {
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> f() <font color=#0000ff>throws</font> SimpleException {
+    System.out.println(
+      <font color=#004488>"Throwing SimpleException from f()"</font>);
+    <font color=#0000ff>throw</font> <font color=#0000ff>new</font> SimpleException ();
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    SimpleExceptionDemo sed = 
+      <font color=#0000ff>new</font> SimpleExceptionDemo();
+    <font color=#0000ff>try</font> {
+      sed.f();
+    } <font color=#0000ff>catch</font>(SimpleException e) {
+      System.err.println(<font color=#004488>"Caught it!"</font>);
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When the compiler creates the default
+constructor, it which automatically (and invisibly) calls the base-class default
+constructor. Of course, in this case you don&#8217;t get a
+<B>SimpleException(String)</B> constructor, but in practice that isn&#8217;t
+used much. As you&#8217;ll see, the most important thing about an exception is
+the class name, so most of the time an exception like the one shown above is
+satisfactory. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I24' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I25>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here, the result is printed to the
+console <A NAME="Index1071"></A><I>standard error</I> stream by writing to
+<A NAME="Index1072"></A><B>System.err</B>. This is usually a better place to
+send error information than <B>System.out</B>, which may be redirected. If you
+send output to <B>System.err</B> it will not be redirected along with
+<B>System.out</B> so the user is more likely to notice it.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I25' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I26>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Creating an exception class that also has
+a constructor that takes a <B>String</B> is also quite simple:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c10:FullConstructors.java</font>
+<font color=#009900>// Inheriting your own exceptions.</font>
+
+<font color=#0000ff>class</font> MyException <font color=#0000ff>extends</font> Exception {
+  <font color=#0000ff>public</font> MyException() {}
+  <font color=#0000ff>public</font> MyException(String msg) {
+    <font color=#0000ff>super</font>(msg);
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> FullConstructors {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> f() <font color=#0000ff>throws</font> MyException {
+    System.out.println(
+      <font color=#004488>"Throwing MyException from f()"</font>);
+    <font color=#0000ff>throw</font> <font color=#0000ff>new</font> MyException();
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> g() <font color=#0000ff>throws</font> MyException {
+    System.out.println(
+      <font color=#004488>"Throwing MyException from g()"</font>);
+    <font color=#0000ff>throw</font> <font color=#0000ff>new</font> MyException(<font color=#004488>"Originated in g()"</font>);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>try</font> {
+      f();
+    } <font color=#0000ff>catch</font>(MyException e) {
+      e.printStackTrace(System.err);
+    }
+    <font color=#0000ff>try</font> {
+      g();
+    } <font color=#0000ff>catch</font>(MyException e) {
+      e.printStackTrace(System.err);
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The added code is small&#8212;the
+addition of two constructors that define the way <B>MyException</B> is created.
+In the second constructor, the base-class constructor with a <B>String</B>
+argument is explicitly invoked by using the <B>super</B> keyword.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I26' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I27>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The stack trace information is sent to
+<B>System.err</B> so that it&#8217;s more likely it will be noticed in the event
+that <B>System.out</B> has been redirected.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I27' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I28>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The output of the program
+is:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Throwing MyException from f()
+MyException
+        at FullConstructors.f(FullConstructors.java:16)
+        at FullConstructors.main(FullConstructors.java:24)
+Throwing MyException from g()
+MyException: Originated in g()
+        at FullConstructors.g(FullConstructors.java:20)
+        at FullConstructors.main(FullConstructors.java:29)</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can see the absence of the detail
+message in the <B>MyException</B> thrown from <B>f(&#160;)</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I28' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I29>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The process of creating your own
+exceptions can be taken further. You can add extra constructors and
+members:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c10:ExtraFeatures.java</font>
+<font color=#009900>// Further embellishment of exception classes.</font>
+
+<font color=#0000ff>class</font> MyException2 <font color=#0000ff>extends</font> Exception {
+  <font color=#0000ff>public</font> MyException2() {}
+  <font color=#0000ff>public</font> MyException2(String msg) {
+    <font color=#0000ff>super</font>(msg);
+  }
+  <font color=#0000ff>public</font> MyException2(String msg, <font color=#0000ff>int</font> x) {
+    <font color=#0000ff>super</font>(msg);
+    i = x;
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>int</font> val() { <font color=#0000ff>return</font> i; }
+  <font color=#0000ff>private</font> <font color=#0000ff>int</font> i;
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> ExtraFeatures {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> f() <font color=#0000ff>throws</font> MyException2 {
+    System.out.println(
+      <font color=#004488>"Throwing MyException2 from f()"</font>);
+    <font color=#0000ff>throw</font> <font color=#0000ff>new</font> MyException2();
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> g() <font color=#0000ff>throws</font> MyException2 {
+    System.out.println(
+      <font color=#004488>"Throwing MyException2 from g()"</font>);
+    <font color=#0000ff>throw</font> <font color=#0000ff>new</font> MyException2(<font color=#004488>"Originated in g()"</font>);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> h() <font color=#0000ff>throws</font> MyException2 {
+    System.out.println(
+      <font color=#004488>"Throwing MyException2 from h()"</font>);
+    <font color=#0000ff>throw</font> <font color=#0000ff>new</font> MyException2(
+      <font color=#004488>"Originated in h()"</font>, 47);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>try</font> {
+      f();
+    } <font color=#0000ff>catch</font>(MyException2 e) {
+      e.printStackTrace(System.err);
+    }
+    <font color=#0000ff>try</font> {
+      g();
+    } <font color=#0000ff>catch</font>(MyException2 e) {
+      e.printStackTrace(System.err);
+    }
+    <font color=#0000ff>try</font> {
+      h();
+    } <font color=#0000ff>catch</font>(MyException2 e) {
+      e.printStackTrace(System.err);
+      System.err.println(<font color=#004488>"e.val() = "</font> + e.val());
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A data member <B>i</B> has been added,
+along with a method that reads that value and an additional constructor that
+sets it. The output is: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I29' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I30>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Throwing MyException2 from f()
+MyException2
+        at ExtraFeatures.f(ExtraFeatures.java:22)
+        at ExtraFeatures.main(ExtraFeatures.java:34)
+Throwing MyException2 from g()
+MyException2: Originated in g()
+        at ExtraFeatures.g(ExtraFeatures.java:26)
+        at ExtraFeatures.main(ExtraFeatures.java:39)
+Throwing MyException2 from h()
+MyException2: Originated in h()
+        at ExtraFeatures.h(ExtraFeatures.java:30)
+        at ExtraFeatures.main(ExtraFeatures.java:44)
+e.val() = 47</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Since an exception is just another kind
+of object, you can continue this process of embellishing the power of your
+exception classes. Keep in mind, however, that all this dressing-up might be
+lost on the client programmers using your packages, since they might simply look
+for the exception to be thrown and nothing more. (That&#8217;s the way most of
+the Java library exceptions are used.) 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I30' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I31>
+</FONT><A NAME="_Toc312374116"></A><A NAME="_Toc375545367"></A><A NAME="_Toc481064720"></A><BR></P></DIV>
+<A NAME="Heading339"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+The exception
+specification<BR><A NAME="Index1073"></A><A NAME="Index1074"></A></H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In Java, you&#8217;re required to inform
+the client programmer, who calls your method, of the exceptions that might be
+thrown from your method. This is civilized, because the caller can know exactly
+what code to write to catch all potential exceptions. Of course, if source code
+is available, the client programmer could hunt through and look for <B>throw</B>
+statements, but often a library doesn&#8217;t come with sources. To prevent this
+from being a problem, Java provides syntax (and <I>forces </I>you to use that
+syntax) to allow you to politely tell the client programmer what exceptions this
+method throws, so the client programmer can handle them. This is the
+<I>exception specification,</I> and it&#8217;s part of the method declaration,
+appearing after the argument list.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I31' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I32>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The exception specification uses an
+additional keyword, <B>throws</B>, followed by a list of all the potential
+exception types. So your method definition might look like
+this:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>void</font> f() <font color=#0000ff>throws</font> TooBig, TooSmall, DivZero { <font color=#009900>//... </font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you say</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>void</font> f() { <font color=#009900>// ...</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">it means that no exceptions are thrown
+from the method. (<I>Except </I>for the exceptions of type
+<B>RuntimeException</B>, which can reasonably be thrown anywhere&#8212;this will
+be described later.) 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I32' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I33>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can&#8217;t lie about an exception
+specification&#8212;if your method causes exceptions and doesn&#8217;t handle
+them, the compiler will detect this and tell you that you must either handle the
+exception or indicate with an exception specification that it may be thrown from
+your method. By enforcing exception specifications from top to bottom, Java
+guarantees that exception correctness can be ensured <I>at
+compile-time</I></FONT><A NAME="fnB52" HREF="#fn52">[52]</A><FONT FACE="Georgia">.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I33' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I34>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There is one place you can lie: you can
+claim to throw an exception that you really don&#8217;t. The compiler takes your
+word for it, and forces the users of your method to treat it as if it really
+does throw that exception. This has the beneficial effect of being a placeholder
+for that exception, so you can actually start throwing the exception later
+without requiring changes to existing code. It&#8217;s also important for
+creating <B>abstract</B> base classes and <B>interface</B>s whose derived
+classes or implementations may need to throw exceptions.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I34' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I35>
+</FONT><A NAME="_Toc312374118"></A><A NAME="_Toc375545368"></A><A NAME="_Toc481064721"></A><BR></P></DIV>
+<A NAME="Heading340"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Catching any exception<BR><A NAME="Index1075"></A><A NAME="Index1076"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It is possible to create a handler that
+catches any type of exception. You do this by catching the base-class exception
+type <B>Exception</B> (there are other types of base exceptions, but
+<B>Exception</B> is the base that&#8217;s pertinent to virtually all programming
+activities):</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>catch</font>(Exception e) {
+  System.err.println(<font color=#004488>"Caught an exception"</font>);
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This will catch any exception, so if you
+use it you&#8217;ll want to put it at the <I>end</I> of your list of handlers to
+avoid preempting any exception handlers that might otherwise follow it.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I35' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I36>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Since the <B>Exception</B> class is the
+base of all the exception classes that are important to the programmer, you
+don&#8217;t get much specific information about the exception, but you can call
+the methods that come from <I>its</I> base type
+<A NAME="Index1077"></A><A NAME="Index1078"></A><B>Throwable</B>:</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>String
+getMessage(&#160;)</B></FONT><BR><FONT FACE="Georgia"><B>String
+</B><A HREF="C:#getLocalizedMessage()">getLocalizedMessage</A><B>(&#160;)</B></FONT><BR><FONT FACE="Georgia">Gets
+the detail message, or a message adjusted for this particular locale.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I36' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I37>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>String
+toString(&#160;)</B></FONT><BR><FONT FACE="Georgia">Returns a short description
+of the Throwable, including the detail message if there is one.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I37' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I38>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>void
+<A NAME="Index1079"></A>printStackTrace(&#160;)
+</B></FONT><BR><FONT FACE="Georgia"><B>void
+printStackTrace(PrintStream)</B></FONT><BR><FONT FACE="Georgia"><B>void
+</B><A HREF="C:#printStackTrace(java.io.PrintWriter)">printStackTrace</A><B>(</B><A HREF="C:">PrintWriter</A><B>)
+</B></FONT><BR><FONT FACE="Georgia">Prints the Throwable and the
+Throwable&#8217;s call stack trace. The call stack shows the sequence of method
+calls that brought you to the point at which the exception was thrown. The first
+version prints to standard error, the second and third prints to a stream of
+your choice (in Chapter 11, you&#8217;ll understand why there are two types of
+streams). 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I38' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I39>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Throwable
+</B><A HREF="C:#fillInStackTrace()">fillInStackTrace</A><B>(&#160;)</B></FONT><BR><FONT FACE="Georgia">Records
+information within this <B>Throwable </B>object about the current state of the
+stack frames. Useful when an application is rethrowing an error or exception
+(more about this shortly).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I39' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I40>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In addition, you get some other methods
+from <B>Throwable</B>&#8217;s base type <B>Object</B> (everybody&#8217;s base
+type). The one that might come in handy for exceptions is
+<A NAME="Index1080"></A><A NAME="Index1081"></A><B>getClass(&#160;)</B>, which
+returns an object representing the class of this object. You can in turn query
+this <B>Class</B> object for its name with <B>getName(&#160;)</B> or
+<B>toString(&#160;)</B>. You can also do more sophisticated things with
+<B>Class</B> objects that aren&#8217;t necessary in exception handling.
+<B>Class</B> objects will be studied later in this book.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I40' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I41>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here&#8217;s an example that shows the
+use of the basic <B>Exception</B> methods:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c10:ExceptionMethods.java</font>
+<font color=#009900>// Demonstrating the Exception Methods.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> ExceptionMethods {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>try</font> {
+      <font color=#0000ff>throw</font> <font color=#0000ff>new</font> Exception(<font color=#004488>"Here's my Exception"</font>);
+    } <font color=#0000ff>catch</font>(Exception e) {
+      System.err.println(<font color=#004488>"Caught Exception"</font>);
+      System.err.println(
+        <font color=#004488>"e.getMessage(): "</font> + e.getMessage());
+      System.err.println(
+        <font color=#004488>"e.getLocalizedMessage(): "</font> +
+         e.getLocalizedMessage());
+      System.err.println(<font color=#004488>"e.toString(): "</font> + e);
+      System.err.println(<font color=#004488>"e.printStackTrace():"</font>);
+      e.printStackTrace(System.err);
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The output for this program
+is:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Caught Exception
+e.getMessage(): Here's my Exception
+e.getLocalizedMessage(): Here's my Exception
+e.toString(): java.lang.Exception: 
+   Here's my Exception
+e.printStackTrace():
+java.lang.Exception: Here's my Exception
+ at ExceptionMethods.main(ExceptionMethods.java:7)
+java.lang.Exception: 
+   Here's my Exception
+ at ExceptionMethods.main(ExceptionMethods.java:7)</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can see that the methods provide
+successively more information&#8212;each is effectively a superset of the
+previous one.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I41' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I42>
+</FONT><A NAME="_Toc312374119"></A><A NAME="_Toc375545369"></A><A NAME="_Toc481064722"></A><BR></P></DIV>
+<A NAME="Heading341"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Rethrowing an exception<BR><A NAME="Index1082"></A><A NAME="Index1083"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Sometimes you&#8217;ll want to rethrow
+the exception that you just caught, particularly when you use <B>Exception</B>
+to catch any exception. Since you already have the reference to the current
+exception, you can simply rethrow that reference:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>catch</font>(Exception e) {
+  System.err.println(<font color=#004488>"An exception was thrown"</font>);
+  <font color=#0000ff>throw</font> e;
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Rethrowing an exception causes the
+exception to go to the exception handlers in the next-higher context. Any
+further <B>catch</B> clauses for the same <B>try</B> block are still ignored. In
+addition, everything about the exception object is preserved, so the handler at
+the higher context that catches the specific exception type can extract all the
+information from that object.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I42' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I43>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you simply rethrow the current
+exception, the information that you print about that exception in
+<A NAME="Index1084"></A><A NAME="Index1085"></A><B>printStackTrace(&#160;)
+</B>will pertain to the exception&#8217;s origin, not the place where you
+rethrow it. If you want to install new stack trace information, you can do so by
+calling
+<A NAME="Index1086"></A><A NAME="Index1087"></A><B>fillInStackTrace(&#160;)</B>,
+which returns an exception object that it creates by stuffing the current stack
+information into the old exception object. Here&#8217;s what it looks
+like:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c10:Rethrowing.java</font>
+<font color=#009900>// Demonstrating fillInStackTrace()</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Rethrowing {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> f() <font color=#0000ff>throws</font> Exception {
+    System.out.println(
+      <font color=#004488>"originating the exception in f()"</font>);
+    <font color=#0000ff>throw</font> <font color=#0000ff>new</font> Exception(<font color=#004488>"thrown from f()"</font>);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> g() <font color=#0000ff>throws</font> Throwable {
+    <font color=#0000ff>try</font> {
+      f();
+    } <font color=#0000ff>catch</font>(Exception e) {
+      System.err.println(
+        <font color=#004488>"Inside g(), e.printStackTrace()"</font>);
+      e.printStackTrace(System.err);
+      <font color=#0000ff>throw</font> e; <font color=#009900>// 17</font>
+      <font color=#009900>// throw e.fillInStackTrace(); // 18</font>
+    }
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font>
+  main(String[] args) <font color=#0000ff>throws</font> Throwable {
+    <font color=#0000ff>try</font> {
+      g();
+    } <font color=#0000ff>catch</font>(Exception e) {
+      System.err.println(
+        <font color=#004488>"Caught in main, e.printStackTrace()"</font>);
+      e.printStackTrace(System.err);
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The important line numbers are marked as
+comments. With line 17 uncommented (as shown), the output is:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>originating the exception in f()
+Inside g(), e.printStackTrace()
+java.lang.Exception: thrown from f()
+        at Rethrowing.f(Rethrowing.java:8)
+        at Rethrowing.g(Rethrowing.java:12)
+        at Rethrowing.main(Rethrowing.java:24)
+Caught in main, e.printStackTrace()
+java.lang.Exception: thrown from f()
+        at Rethrowing.f(Rethrowing.java:8)
+        at Rethrowing.g(Rethrowing.java:12)
+        at Rethrowing.main(Rethrowing.java:24)</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">So the exception stack trace always
+remembers its true point of origin, no matter how many times it gets rethrown.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I43' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I44>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">With line 17 commented and line 18
+uncommented, <B>fillInStackTrace(&#160;)</B> is used instead, and the result
+is:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>originating the exception in f()
+Inside g(), e.printStackTrace()
+java.lang.Exception: thrown from f()
+        at Rethrowing.f(Rethrowing.java:8)
+        at Rethrowing.g(Rethrowing.java:12)
+        at Rethrowing.main(Rethrowing.java:24)
+Caught in main, e.printStackTrace()
+java.lang.Exception: thrown from f()
+        at Rethrowing.g(Rethrowing.java:18)
+        at Rethrowing.main(Rethrowing.java:24)</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Because of
+<B>fillInStackTrace(&#160;)</B>, line 18 becomes the new
+<A NAME="Index1088"></A>point of origin of the exception.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I44' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I45>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The class <B>Throwable</B> must appear in
+the exception specification for <B>g(&#160;)</B> and <B>main(&#160;)</B> because
+<B>fillInStackTrace(&#160;)</B> produces a reference to a <B>Throwable</B>
+object. Since <A NAME="Index1089"></A><B>Throwable</B> is a base class of
+<B>Exception</B>, it&#8217;s possible to get an object that&#8217;s a
+<B>Throwable</B> but <I>not</I> an <B>Exception</B>, so the handler for
+<B>Exception</B> in <B>main(&#160;) </B>might miss it. To make sure everything
+is in order, the compiler forces an exception specification for
+<B>Throwable</B>. For example, the exception in the following program is
+<I>not</I> caught in <B>main(&#160;)</B>:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I45' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I46>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c10:ThrowOut.java</font>
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> ThrowOut {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font>
+  main(String[] args) <font color=#0000ff>throws</font> Throwable {
+    <font color=#0000ff>try</font> {
+      <font color=#0000ff>throw</font> <font color=#0000ff>new</font> Throwable(); 
+    } <font color=#0000ff>catch</font>(Exception e) {
+      System.err.println(<font color=#004488>"Caught in main()"</font>);
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It&#8217;s also possible to rethrow a
+different exception from the one you caught. If you do this, you get a similar
+effect as when you use <B>fillInStackTrace(&#160;)</B>&#8212;the information
+about the original site of the exception is lost, and what you&#8217;re left
+with is the information pertaining to the new <B>throw</B>:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I46' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I47>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c10:RethrowNew.java</font>
+<font color=#009900>// Rethrow a different object </font>
+<font color=#009900>// from the one that was caught.</font>
+
+<font color=#0000ff>class</font> OneException <font color=#0000ff>extends</font> Exception {
+  <font color=#0000ff>public</font> OneException(String s) { <font color=#0000ff>super</font>(s); }
+}
+
+<font color=#0000ff>class</font> TwoException <font color=#0000ff>extends</font> Exception {
+  <font color=#0000ff>public</font> TwoException(String s) { <font color=#0000ff>super</font>(s); }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> RethrowNew {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> f() <font color=#0000ff>throws</font> OneException {
+    System.out.println(
+      <font color=#004488>"originating the exception in f()"</font>);
+    <font color=#0000ff>throw</font> <font color=#0000ff>new</font> OneException(<font color=#004488>"thrown from f()"</font>);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) 
+  <font color=#0000ff>throws</font> TwoException {
+    <font color=#0000ff>try</font> {
+      f();
+    } <font color=#0000ff>catch</font>(OneException e) {
+      System.err.println(
+        <font color=#004488>"Caught in main, e.printStackTrace()"</font>);
+      e.printStackTrace(System.err);
+      <font color=#0000ff>throw</font> <font color=#0000ff>new</font> TwoException(<font color=#004488>"from main()"</font>);
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The output is:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>originating the exception in f()
+Caught in main, e.printStackTrace()
+OneException: thrown from f()
+        at RethrowNew.f(RethrowNew.java:17)
+        at RethrowNew.main(RethrowNew.java:22)
+Exception in thread <font color=#004488>"main"</font> TwoException: from main()
+        at RethrowNew.main(RethrowNew.java:27)</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The final exception knows only that it
+came from <B>main(&#160;)</B>, and not from <B>f(&#160;)</B>. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I47' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I48>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You never have to worry about cleaning up
+the previous exception, or any exceptions for that matter. They&#8217;re all
+heap-based objects created with <B>new</B>, so the garbage collector
+automatically cleans them all up.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I48' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I49>
+</FONT><A NAME="_Toc375545370"></A><A NAME="_Toc481064723"></A><BR></P></DIV>
+<A NAME="Heading342"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Standard Java exceptions</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The Java class <B>Throwable</B> describes
+anything that can be thrown as an exception. There are two general types of
+<B>Throwable</B> objects (&#8220;types of&#8221; = &#8220;inherited
+from&#8221;). <A NAME="Index1090"></A><B>Error</B> represents compile-time and
+system errors that you don&#8217;t worry about catching (except in special
+cases). <A NAME="Index1091"></A><B>Exception</B> is the basic type that can be
+thrown from any of the standard Java library class methods and from your methods
+and run-time accidents. So the Java programmer&#8217;s base type of interest is
+<B>Exception</B>. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I49' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I50>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The best way to get an overview of the
+exceptions is to browse the HTML Java documentation that you can download from
+<I>java.sun.com.</I> It&#8217;s worth doing this once just to get a feel for the
+various exceptions, but you&#8217;ll soon see that there isn&#8217;t anything
+special between one exception and the next except for the name. Also, the number
+of exceptions in Java keeps expanding; basically it&#8217;s pointless to print
+them in a book. Any new library you get from a third-party vendor will probably
+have its own exceptions as well. The important thing to understand is the
+concept and what you should do with the exceptions.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I50' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I51>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The basic idea is that the name of the
+exception represents the problem that occurred, and the exception name is
+intended to be relatively self-explanatory. The exceptions are not all defined
+in <B>java.lang</B>; some are created to support other libraries such as
+<B>util</B>, <B>net,</B> and <B>io</B>, which you can see from their full class
+names or what they are inherited from. For example, all I/O exceptions are
+inherited from <B>java.io.IOException</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I51' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I52>
+</FONT><A NAME="_Toc375545372"></A><A NAME="_Toc481064724"></A><BR></P></DIV>
+<A NAME="Heading343"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+The special case of RuntimeException</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The first example in this chapter
+was</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>if</font>(t == <font color=#0000ff>null</font>)
+  <font color=#0000ff>throw</font> <font color=#0000ff>new</font> NullPointerException();</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It can be a bit horrifying to think that
+you must check for <B>null</B> on every reference that is passed into a method
+(since you can&#8217;t know if the caller has passed you a valid reference).
+Fortunately, you don&#8217;t&#8212;this is part of the standard run-time
+checking that Java performs for you, and if any call is made to a <B>null</B>
+reference, Java will automatically throw a
+<A NAME="Index1092"></A><A NAME="Index1093"></A><B>NullPointerException</B>. So
+the above bit of code is always superfluous. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I52' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I53>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There&#8217;s a whole group of exception
+types that are in this category. They&#8217;re always thrown automatically by
+Java and you don&#8217;t need to include them in your exception specifications.
+Conveniently enough, they&#8217;re all grouped together by putting them under a
+single base class called <B>RuntimeException</B>, which is a perfect example of
+inheritance: it establishes a family of types that have some characteristics and
+behaviors in common. Also, you never need to write an exception specification
+saying that a method might throw a <B>RuntimeException</B>, since that&#8217;s
+just assumed. Because they indicate bugs, you virtually never catch a
+<A NAME="Index1094"></A><A NAME="Index1095"></A><B>RuntimeException</B>&#8212;it&#8217;s
+dealt with automatically. If you were forced to check for
+<B>RuntimeException</B>s your code could get messy. Even though you don&#8217;t
+typically catch <B>RuntimeExceptions</B>,<B> </B>in your own packages you might
+choose to throw some of the <B>RuntimeException</B>s. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I53' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I54>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">What happens when you don&#8217;t catch
+such exceptions? Since the compiler doesn&#8217;t enforce exception
+specifications for these, it&#8217;s quite plausible that a
+<B>RuntimeException</B> could percolate all the way out to your <B>main(&#160;)
+</B>method without being caught. To see what happens in this case, try the
+following example:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c10:NeverCaught.java</font>
+<font color=#009900>// Ignoring RuntimeExceptions.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> NeverCaught {
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> f() {
+    <font color=#0000ff>throw</font> <font color=#0000ff>new</font> RuntimeException(<font color=#004488>"From f()"</font>);
+  }
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> g() {
+    f();
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    g();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can already see that a
+<B>RuntimeException </B>(or anything inherited from it) is a special case, since
+the compiler doesn&#8217;t require an exception specification for these types.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I54' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I55>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The output is:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Exception in thread <font color=#004488>"main"</font>
+java.lang.RuntimeException: From f()
+        at NeverCaught.f(NeverCaught.java:9)
+        at NeverCaught.g(NeverCaught.java:12)
+        at NeverCaught.main(NeverCaught.java:15)</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">So the answer is: If a
+<B>RuntimeException</B> gets all the way out to <B>main(&#160;)</B> without
+being caught, <B>printStackTrace(&#160;)</B> is called for that exception as the
+program exits. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I55' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I56>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Keep in mind that you can only ignore
+<B>RuntimeException</B>s in your coding, since all other handling is carefully
+enforced by the compiler. The reasoning is that a <B>RuntimeException</B>
+represents a programming error:</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">An error you cannot catch
+(receiving a <B>null</B> reference handed to your method by a client programmer,
+for example) .
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I56' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I57>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">An
+error that you, as a programmer, should have checked for in your code (such as
+<B>ArrayIndexOutOfBoundsException</B> where you should have paid attention to
+the size of the array). 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I57' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I58>
+</FONT></OL><DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You
+can see what a tremendous benefit it is to have exceptions in this case, since
+they help in the debugging process.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I58' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I59>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It&#8217;s interesting to notice that you
+cannot classify Java exception handling as a single-purpose tool. Yes, it is
+designed to handle those pesky run-time errors that will occur because of forces
+outside your code&#8217;s control, but it&#8217;s also essential for certain
+types of programming bugs that the compiler cannot detect.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I59' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I60>
+</FONT><A NAME="_Toc481064725"></A><BR></P></DIV>
+<A NAME="Heading344"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Performing cleanup <BR>with finally</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There&#8217;s often some piece of code
+that you want to execute whether or not an exception is thrown within a
+<B>try</B> block. This usually pertains to some operation other than memory
+recovery (since that&#8217;s taken care of by the garbage collector). To achieve
+this effect, you use a
+<A NAME="Index1096"></A><A NAME="Index1097"></A><B>finally</B>
+clause</FONT><A NAME="fnB53" HREF="#fn53">[53]</A><FONT FACE="Georgia"> at the
+end of all the exception handlers. The full picture of an exception handling
+section is thus:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>try</font> {
+  <font color=#009900>// The guarded region: Dangerous activities</font>
+  <font color=#009900>// that might throw A, B, or C </font>
+} <font color=#0000ff>catch</font>(A a1) {
+  <font color=#009900>// Handler for situation A</font>
+} <font color=#0000ff>catch</font>(B b1) {
+  <font color=#009900>// Handler for situation B</font>
+} <font color=#0000ff>catch</font>(C c1) {
+  <font color=#009900>// Handler for situation C</font>
+} <font color=#0000ff>finally</font> {
+  <font color=#009900>// Activities that happen every time</font>
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To demonstrate that the <B>finally</B>
+clause always runs, try this program:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I60' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I61>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c10:FinallyWorks.java</font>
+<font color=#009900>// The finally clause is always executed.</font>
+
+<font color=#0000ff>class</font> ThreeException <font color=#0000ff>extends</font> Exception {}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> FinallyWorks {
+  <font color=#0000ff>static</font> <font color=#0000ff>int</font> count = 0;
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>while</font>(<font color=#0000ff>true</font>) {
+      <font color=#0000ff>try</font> {
+        <font color=#009900>// Post-increment is zero first time:</font>
+        <font color=#0000ff>if</font>(count++ == 0)
+          <font color=#0000ff>throw</font> <font color=#0000ff>new</font> ThreeException();
+        System.out.println(<font color=#004488>"No exception"</font>);
+      } <font color=#0000ff>catch</font>(ThreeException e) {
+        System.err.println(<font color=#004488>"ThreeException"</font>);
+      } <font color=#0000ff>finally</font> {
+        System.err.println(<font color=#004488>"In finally clause"</font>);
+        <font color=#0000ff>if</font>(count == 2) <font color=#0000ff>break</font>; <font color=#009900>// out of "while"</font>
+      }
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This program also gives a hint for how
+you can deal with the fact that exceptions in Java (like exceptions in C++) do
+not allow you to resume back to where the exception was thrown, as discussed
+earlier. If you place your <B>try</B> block in a loop, you can establish a
+condition that must be met before you continue the program. You can also add a
+<B>static</B> counter or some other device to allow the loop to try several
+different approaches before giving up. This way you can build a greater level of
+robustness into your programs.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I61' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I62>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The output is:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>ThreeException
+In <font color=#0000ff>finally</font> clause
+No exception
+In <font color=#0000ff>finally</font> clause</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Whether an exception is thrown or not,
+the <B>finally</B> clause is always executed.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I62' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I63>
+</FONT><A NAME="_Toc375545375"></A><A NAME="_Toc481064726"></A><BR></P></DIV>
+<A NAME="Heading345"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+What&#8217;s finally for?</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In a language without garbage collection
+<I>and</I> without automatic <A NAME="Index1098"></A>destructor
+calls</FONT><A NAME="fnB54" HREF="#fn54">[54]</A><FONT FACE="Georgia">,
+<B>finally</B> is important because it allows the programmer to guarantee the
+release of memory regardless of what happens in the
+<A NAME="Index1099"></A><A NAME="Index1100"></A><B>try</B> block. But Java has
+garbage collection, so releasing memory is virtually never a problem. Also, it
+has no destructors to call. So when do you need to use
+<A NAME="Index1101"></A><B>finally</B> in Java?
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I63' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I64>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>finally</B> is necessary when you need
+to set something <I>other</I> than memory back to its original state. This is
+some kind of cleanup like an open file or network connection, something
+you&#8217;ve drawn on the screen, or even a switch in the outside world, as
+modeled in the following example:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c10:OnOffSwitch.java </font>
+<font color=#009900>// Why use finally?</font>
+
+<font color=#0000ff>class</font> Switch {
+  <font color=#0000ff>boolean</font> state = <font color=#0000ff>false</font>;
+  <font color=#0000ff>boolean</font> read() { <font color=#0000ff>return</font> state; }
+  <font color=#0000ff>void</font> on() { state = <font color=#0000ff>true</font>; }
+  <font color=#0000ff>void</font> off() { state = <font color=#0000ff>false</font>; }
+} 
+<font color=#0000ff>class</font> OnOffException1 <font color=#0000ff>extends</font> Exception {}
+<font color=#0000ff>class</font> OnOffException2 <font color=#0000ff>extends</font> Exception {}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> OnOffSwitch {
+  <font color=#0000ff>static</font> Switch sw = <font color=#0000ff>new</font> Switch();
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> f() <font color=#0000ff>throws</font> 
+    OnOffException1, OnOffException2 {}
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>try</font> {
+      sw.on();
+      <font color=#009900>// Code that can throw exceptions...</font>
+      f();
+      sw.off();
+    } <font color=#0000ff>catch</font>(OnOffException1 e) {
+      System.err.println(<font color=#004488>"OnOffException1"</font>);
+      sw.off();
+    } <font color=#0000ff>catch</font>(OnOffException2 e) {
+      System.err.println(<font color=#004488>"OnOffException2"</font>);
+      sw.off();
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The goal here is to make sure that the
+switch is off when <B>main(&#160;)</B> is completed, so <B>sw.off(&#160;)</B> is
+placed at the end of the try block and at the end of each exception handler. But
+it&#8217;s possible that an exception could be thrown that isn&#8217;t caught
+here, so <B>sw.off(&#160;) </B>would be missed. However, with <B>finally</B> you
+can place the cleanup code from a try block in just one place:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I64' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I65>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c10:WithFinally.java</font>
+<font color=#009900>// Finally Guarantees cleanup.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> WithFinally {
+  <font color=#0000ff>static</font> Switch sw = <font color=#0000ff>new</font> Switch();
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>try</font> {
+      sw.on();
+      <font color=#009900>// Code that can throw exceptions...</font>
+      OnOffSwitch.f();
+    } <font color=#0000ff>catch</font>(OnOffException1 e) {
+      System.err.println(<font color=#004488>"OnOffException1"</font>);
+    } <font color=#0000ff>catch</font>(OnOffException2 e) {
+      System.err.println(<font color=#004488>"OnOffException2"</font>);
+    } <font color=#0000ff>finally</font> {
+      sw.off();
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here the <B>sw.off(&#160;)</B> has been
+moved to just one place, where it&#8217;s guaranteed to run no matter what
+happens. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I65' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I66>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Even in cases in which the exception is
+not caught in the current set of <B>catch</B> clauses, <B>finally</B> will be
+executed before the exception handling mechanism continues its search for a
+handler at the next higher level:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c10:AlwaysFinally.java</font>
+<font color=#009900>// Finally is always executed.</font>
+
+<font color=#0000ff>class</font> FourException <font color=#0000ff>extends</font> Exception {}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> AlwaysFinally {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    System.out.println(
+      <font color=#004488>"Entering first try block"</font>);
+    <font color=#0000ff>try</font> {
+      System.out.println(
+        <font color=#004488>"Entering second try block"</font>);
+      <font color=#0000ff>try</font> {
+        <font color=#0000ff>throw</font> <font color=#0000ff>new</font> FourException();
+      } <font color=#0000ff>finally</font> {
+        System.out.println(
+          <font color=#004488>"finally in 2nd try block"</font>);
+      }
+    } <font color=#0000ff>catch</font>(FourException e) {
+      System.err.println(
+        <font color=#004488>"Caught FourException in 1st try block"</font>);
+    } <font color=#0000ff>finally</font> {
+      System.err.println(
+        <font color=#004488>"finally in 1st try block"</font>);
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The output for this program shows you
+what happens: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I66' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I67>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Entering first <font color=#0000ff>try</font> block
+Entering second <font color=#0000ff>try</font> block
+<font color=#0000ff>finally</font> in 2nd <font color=#0000ff>try</font> block
+Caught FourException in 1st <font color=#0000ff>try</font> block
+<font color=#0000ff>finally</font> in 1st <font color=#0000ff>try</font> block</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>finally</B> statement will also be
+executed in situations in which <B>break</B> and <B>continue</B> statements are
+involved. Note that, along with the labeled <B>break</B> and labeled
+<B>continue</B>, <B>finally</B> eliminates the need for a <B>goto </B>statement
+in Java.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I67' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I68>
+</FONT><A NAME="_Toc481064727"></A><BR></P></DIV>
+<A NAME="Heading346"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Pitfall: the lost exception</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In general, Java&#8217;s exception
+implementation is quite outstanding, but unfortunately there&#8217;s a flaw.
+Although exceptions are an indication of a crisis in your program and should
+never be ignored, it&#8217;s possible for an exception to simply be
+<A NAME="Index1102"></A>lost. This happens with a particular configuration using
+a <A NAME="Index1103"></A><B>finally</B> clause:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c10:LostMessage.java</font>
+<font color=#009900>// How an exception can be lost.</font>
+
+<font color=#0000ff>class</font> VeryImportantException <font color=#0000ff>extends</font> Exception {
+  <font color=#0000ff>public</font> String toString() {
+    <font color=#0000ff>return</font> <font color=#004488>"A very important exception!"</font>;
+  }
+}
+
+<font color=#0000ff>class</font> HoHumException <font color=#0000ff>extends</font> Exception {
+  <font color=#0000ff>public</font> String toString() {
+    <font color=#0000ff>return</font> <font color=#004488>"A trivial exception"</font>;
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> LostMessage {
+  <font color=#0000ff>void</font> f() <font color=#0000ff>throws</font> VeryImportantException {
+    <font color=#0000ff>throw</font> <font color=#0000ff>new</font> VeryImportantException();
+  }
+  <font color=#0000ff>void</font> dispose() <font color=#0000ff>throws</font> HoHumException {
+    <font color=#0000ff>throw</font> <font color=#0000ff>new</font> HoHumException();
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) 
+      <font color=#0000ff>throws</font> Exception {
+    LostMessage lm = <font color=#0000ff>new</font> LostMessage();
+    <font color=#0000ff>try</font> {
+      lm.f();
+    } <font color=#0000ff>finally</font> {
+      lm.dispose();
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The output is:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Exception in thread <font color=#004488>"main"</font> A trivial exception
+    at LostMessage.dispose(LostMessage.java:21)
+    at LostMessage.main(LostMessage.java:29)</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can see that there&#8217;s no
+evidence of the <B>VeryImportantException</B>, which is simply replaced by the
+<B>HoHumException</B> in the <B>finally</B> clause. This is a rather serious
+pitfall, since it means that an exception can be completely lost, and in a far
+more subtle and difficult-to-detect fashion than the example above. In contrast,
+C++ treats the situation in which a second exception is thrown before the first
+one is handled as a dire programming error. Perhaps a future version of Java
+will repair this problem (on the other hand, you will typically wrap any method
+that throws an exception, such as <B>dispose(&#160;)</B>, inside a
+<B>try-catch</B> clause).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I68' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I69>
+</FONT><A NAME="_Toc375545374"></A><A NAME="_Toc481064728"></A><BR></P></DIV>
+<A NAME="Heading347"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Exception restrictions<BR><A NAME="Index1104"></A><A NAME="Index1105"></A></H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When you override a method, you can throw
+only the exceptions that have been specified in the base-class version of the
+method. This is a useful restriction, since it means that code that works with
+the base class will automatically work with any object derived from the base
+class (a fundamental OOP concept, of course), including exceptions.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I69' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I70>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This example demonstrates the kinds of
+restrictions imposed (at compile-time) for exceptions:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c10:StormyInning.java</font>
+<font color=#009900>// Overridden methods may throw only the </font>
+<font color=#009900>// exceptions specified in their base-class </font>
+<font color=#009900>// versions, or exceptions derived from the </font>
+<font color=#009900>// base-class exceptions.</font>
+
+<font color=#0000ff>class</font> BaseballException <font color=#0000ff>extends</font> Exception {}
+<font color=#0000ff>class</font> Foul <font color=#0000ff>extends</font> BaseballException {}
+<font color=#0000ff>class</font> Strike <font color=#0000ff>extends</font> BaseballException {}
+
+<font color=#0000ff>abstract</font> <font color=#0000ff>class</font> Inning {
+  Inning() <font color=#0000ff>throws</font> BaseballException {}
+  <font color=#0000ff>void</font> event () <font color=#0000ff>throws</font> BaseballException {
+   <font color=#009900>// Doesn't actually have to throw anything</font>
+  }
+  <font color=#0000ff>abstract</font> <font color=#0000ff>void</font> atBat() <font color=#0000ff>throws</font> Strike, Foul;
+  <font color=#0000ff>void</font> walk() {} <font color=#009900>// Throws nothing</font>
+}
+
+<font color=#0000ff>class</font> StormException <font color=#0000ff>extends</font> Exception {}
+<font color=#0000ff>class</font> RainedOut <font color=#0000ff>extends</font> StormException {}
+<font color=#0000ff>class</font> PopFoul <font color=#0000ff>extends</font> Foul {}
+
+<font color=#0000ff>interface</font> Storm {
+  <font color=#0000ff>void</font> event() <font color=#0000ff>throws</font> RainedOut;
+  <font color=#0000ff>void</font> rainHard() <font color=#0000ff>throws</font> RainedOut;
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> StormyInning <font color=#0000ff>extends</font> Inning 
+    <font color=#0000ff>implements</font> Storm {
+  <font color=#009900>// OK to add new exceptions for </font>
+  <font color=#009900>// constructors, but you must deal </font>
+  <font color=#009900>// with the base constructor exceptions:</font>
+  StormyInning() <font color=#0000ff>throws</font> RainedOut, 
+    BaseballException {}
+  StormyInning(String s) <font color=#0000ff>throws</font> Foul, 
+    BaseballException {}
+  <font color=#009900>// Regular methods must conform to base class:</font>
+<font color=#009900>//! void walk() throws PopFoul {} //Compile error</font>
+  <font color=#009900>// Interface CANNOT add exceptions to existing</font>
+  <font color=#009900>// methods from the base class:</font>
+<font color=#009900>//! public void event() throws RainedOut {}</font>
+  <font color=#009900>// If the method doesn't already exist in the</font>
+  <font color=#009900>// base class, the exception is OK:</font>
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> rainHard() <font color=#0000ff>throws</font> RainedOut {}
+  <font color=#009900>// You can choose to not throw any exceptions,</font>
+  <font color=#009900>// even if base version does:</font>
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> event() {}
+  <font color=#009900>// Overridden methods can throw </font>
+  <font color=#009900>// inherited exceptions:</font>
+  <font color=#0000ff>void</font> atBat() <font color=#0000ff>throws</font> PopFoul {}
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>try</font> {
+      StormyInning si = <font color=#0000ff>new</font> StormyInning();
+      si.atBat();
+    } <font color=#0000ff>catch</font>(PopFoul e) {
+      System.err.println(<font color=#004488>"Pop foul"</font>);
+    } <font color=#0000ff>catch</font>(RainedOut e) {
+      System.err.println(<font color=#004488>"Rained out"</font>);
+    } <font color=#0000ff>catch</font>(BaseballException e) {
+      System.err.println(<font color=#004488>"Generic error"</font>);
+    }
+    <font color=#009900>// Strike not thrown in derived version.</font>
+    <font color=#0000ff>try</font> {
+      <font color=#009900>// What happens if you upcast?</font>
+      Inning i = <font color=#0000ff>new</font> StormyInning();
+      i.atBat();
+      <font color=#009900>// You must catch the exceptions from the</font>
+      <font color=#009900>// base-class version of the method:</font>
+    } <font color=#0000ff>catch</font>(Strike e) {
+      System.err.println(<font color=#004488>"Strike"</font>);
+    } <font color=#0000ff>catch</font>(Foul e) {
+      System.err.println(<font color=#004488>"Foul"</font>);
+    } <font color=#0000ff>catch</font>(RainedOut e) {
+      System.err.println(<font color=#004488>"Rained out"</font>);
+    } <font color=#0000ff>catch</font>(BaseballException e) {
+      System.err.println(
+        <font color=#004488>"Generic baseball exception"</font>);
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In <B>Inning</B>, you can see that both
+the constructor and the <B>event(&#160;)</B> method say they will throw an
+exception, but they never do. This is legal because it allows you to force the
+user to catch any exceptions that might be added in overridden versions of
+<B>event(&#160;)</B>. The same idea holds for <B>abstract</B> methods, as seen
+in <B>atBat(&#160;)</B>. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I70' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I71>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>interface Storm</B> is interesting
+because it contains one method (<B>event(&#160;)</B>) that is defined in
+<B>Inning</B>, and one method that isn&#8217;t. Both methods throw a new type of
+exception, <B>RainedOut</B>. When <B>StormyInning</B> <B>extends Inning</B> and
+<B>implements Storm</B>, you&#8217;ll see that the <B>event(&#160;)</B> method
+in <B>Storm</B> <I>cannot</I> change the exception interface of
+<B>event(&#160;)</B> in <B>Inning</B>. Again, this makes sense because otherwise
+you&#8217;d never know if you were catching the correct thing when working with
+the base class. Of course, if a method described in an <B>interface</B> is not
+in the base class, such as <B>rainHard(&#160;)</B>,<B> </B>then there&#8217;s no
+problem if it throws exceptions.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I71' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I72>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The restriction on exceptions does not
+apply to <A NAME="Index1106"></A><A NAME="Index1107"></A>constructors. You can
+see in <B>StormyInning </B>that a constructor can throw anything it wants,
+regardless of what the base-class constructor throws. However, since a
+base-class constructor must always be called one way or another (here, the
+default constructor is called automatically), the derived-class constructor must
+declare any base-class constructor exceptions in its exception specification.
+Note that a derived-class constructor cannot catch exceptions thrown by its
+base-class constructor. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I72' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I73>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The reason
+<B>StormyInning.walk(&#160;)</B> will not compile is that it throws an
+exception, while <B>Inning.walk(&#160;)</B> does not. If this was allowed, then
+you could write code that called <B>Inning.walk(&#160;)</B> and that
+didn&#8217;t have to handle any exceptions, but then when you substituted an
+object of a class derived from <B>Inning</B>, exceptions would be thrown so your
+code would break. By forcing the derived-class methods to conform to the
+exception specifications of the base-class methods, substitutability of objects
+is maintained. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I73' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I74>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The overridden <B>event(&#160;)</B>
+method shows that a derived-class version of a method may choose not to throw
+any exceptions, even if the base-class version does. Again, this is fine since
+it doesn&#8217;t break any code that is written&#8212;assuming the base-class
+version throws exceptions. Similar logic applies to <B>atBat(&#160;)</B>, which
+throws <B>PopFoul</B>, an exception that is derived from <B>Foul</B> thrown by
+the base-class version of <B>atBat(&#160;)</B>. This way, if someone writes code
+that works with <B>Inning</B> and calls <B>atBat(&#160;)</B>, they must catch
+the <B>Foul</B> exception. Since <B>PopFoul</B> is derived from <B>Foul</B>, the
+exception handler will also catch <B>PopFoul</B>. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I74' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I75>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The last point of interest is in
+<B>main(&#160;)</B>. Here you can see that if you&#8217;re dealing with exactly
+a <B>StormyInning</B> object, the compiler forces you to catch only the
+exceptions that are specific to that class, but if you upcast to the base type
+then the compiler (correctly) forces you to catch the exceptions for the base
+type. All these constraints produce much more robust exception-handling
+code</FONT><A NAME="fnB55" HREF="#fn55">[55]</A><FONT FACE="Georgia">.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I75' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I76>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It&#8217;s useful to realize that
+although exception specifications are enforced by the compiler during
+inheritance, the exception specifications are not part of the type of a method,
+which is comprised of only the method name and argument types. Therefore, you
+cannot overload methods based on exception specifications. In addition, just
+because an exception specification exists in a base-class version of a method
+doesn&#8217;t mean that it must exist in the derived-class version of the
+method. This is quite different from inheritance rules, where a method in the
+base class must also exist in the derived class. Put another way, the
+&#8220;exception specification interface&#8221; for a particular method may
+narrow during inheritance and overriding, but it may not widen&#8212;this is
+precisely the opposite of the rule for the class interface during inheritance.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I76' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I77>
+</FONT><A NAME="_Toc305593300"></A><A NAME="_Toc305628772"></A><A NAME="_Toc312374122"></A><A NAME="_Toc375545376"></A><A NAME="_Toc481064729"></A><BR></P></DIV>
+<A NAME="Heading348"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Constructors<BR><A NAME="Index1108"></A><A NAME="Index1109"></A></H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When writing code with exceptions,
+it&#8217;s particularly important that you always ask, &#8220;If an exception
+occurs, will this be properly cleaned up?&#8221; Most of the time you&#8217;re
+fairly safe, but in constructors there&#8217;s a problem. The constructor puts
+the object into a safe starting state, but it might perform some
+operation&#8212;such as opening a file&#8212;that doesn&#8217;t get cleaned up
+until the user is finished with the object and calls a special cleanup method.
+If you throw an exception from inside a constructor, these cleanup behaviors
+might not occur properly. This means that you must be especially diligent while
+you write your constructor.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I77' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I78>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Since you&#8217;ve just learned about
+<A NAME="Index1110"></A><A NAME="Index1111"></A><B>finally</B>, you might think
+that it is the correct solution. But it&#8217;s not quite that simple, because
+<B>finally </B>performs the cleanup code <I>every time,</I> even in the
+situations in which you don&#8217;t want the cleanup code executed until the
+cleanup method runs. Thus, if you do perform cleanup in <B>finally</B>, you must
+set some kind of flag when the constructor finishes normally so that you
+don&#8217;t do anything in the <B>finally</B> block if the flag is set. Because
+this isn&#8217;t particularly elegant (you are coupling your code from one place
+to another), it&#8217;s best if you try to avoid performing this kind of cleanup
+in <B>finally</B> unless you are forced to.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I78' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I79>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In the following example, a class called
+<B>InputFile</B> is created that opens a file and allows you to read it one line
+(converted into a <B>String</B>) at a time. It uses the classes
+<A NAME="Index1112"></A><A NAME="Index1113"></A><B>FileReader</B> and
+<A NAME="Index1114"></A><A NAME="Index1115"></A><B>BufferedReader</B> from the
+Java standard I/O library that will be discussed in Chapter 11, but which are
+simple enough that you probably won&#8217;t have any trouble understanding their
+basic use:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c10:Cleanup.java</font>
+<font color=#009900>// Paying attention to exceptions</font>
+<font color=#009900>// in constructors.</font>
+<font color=#0000ff>import</font> java.io.*;
+
+<font color=#0000ff>class</font> InputFile {
+  <font color=#0000ff>private</font> BufferedReader in;
+  InputFile(String fname) <font color=#0000ff>throws</font> Exception {
+    <font color=#0000ff>try</font> {
+      in = 
+        <font color=#0000ff>new</font> BufferedReader(
+          <font color=#0000ff>new</font> FileReader(fname));
+      <font color=#009900>// Other code that might throw exceptions</font>
+    } <font color=#0000ff>catch</font>(FileNotFoundException e) {
+      System.err.println(
+        <font color=#004488>"Could not open "</font> + fname);
+      <font color=#009900>// Wasn't open, so don't close it</font>
+      <font color=#0000ff>throw</font> e;
+    } <font color=#0000ff>catch</font>(Exception e) {
+      <font color=#009900>// All other exceptions must close it</font>
+      <font color=#0000ff>try</font> {
+        in.close();
+      } <font color=#0000ff>catch</font>(IOException e2) {
+        System.err.println(
+          <font color=#004488>"in.close() unsuccessful"</font>);
+      }
+      <font color=#0000ff>throw</font> e; <font color=#009900>// Rethrow</font>
+    } <font color=#0000ff>finally</font> {
+      <font color=#009900>// Don't close it here!!!</font>
+    }
+  }
+  String getLine() {
+    String s;
+    <font color=#0000ff>try</font> {
+      s = in.readLine();
+    } <font color=#0000ff>catch</font>(IOException e) {
+      System.err.println(
+        <font color=#004488>"readLine() unsuccessful"</font>);
+      s = <font color=#004488>"failed"</font>;
+    }
+    <font color=#0000ff>return</font> s;
+  }
+  <font color=#0000ff>void</font> cleanup() {
+    <font color=#0000ff>try</font> {
+      in.close();
+    } <font color=#0000ff>catch</font>(IOException e2) {
+      System.err.println(
+        <font color=#004488>"in.close() unsuccessful"</font>);
+    }
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Cleanup {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>try</font> {
+      InputFile in = 
+        <font color=#0000ff>new</font> InputFile(<font color=#004488>"Cleanup.java"</font>);
+      String s;
+      <font color=#0000ff>int</font> i = 1;
+      <font color=#0000ff>while</font>((s = in.getLine()) != <font color=#0000ff>null</font>)
+        System.out.println(<font color=#004488>""</font>+ i++ + <font color=#004488>": "</font> + s);
+      in.cleanup();
+    } <font color=#0000ff>catch</font>(Exception e) {
+      System.err.println(
+        <font color=#004488>"Caught in main, e.printStackTrace()"</font>);
+      e.printStackTrace(System.err);
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The constructor for <B>InputFile</B>
+takes a <B>String</B> argument, which is the name of the file you want to open.
+Inside a <B>try</B> block, it creates a <B>FileReader</B> using the file name. A
+<B>FileReader</B> isn&#8217;t particularly useful until you turn around and use
+it to create a <B>BufferedReader</B> that you can actually talk to&#8212;notice
+that one of the benefits of <B>InputFile</B> is that it combines these two
+actions. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I79' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I80>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If the <B>FileReader</B> constructor is
+unsuccessful, it throws a
+<A NAME="Index1116"></A><A NAME="Index1117"></A><B>FileNotFoundException</B>,
+which must be caught separately because that&#8217;s the one case in which you
+don&#8217;t want to close the file since it wasn&#8217;t successfully opened.
+Any <I>other</I> catch clauses must close the file because it <I>was</I> opened
+by the time those catch clauses are entered. (Of course, this is trickier if
+more than one method can throw a <B>FileNotFoundException</B>. In that case, you
+might want to break things into several <B>try </B>blocks.) The
+<B>close(&#160;)</B> method might throw an exception so it is tried and caught
+even though it&#8217;s within the block of another <B>catch</B>
+clause&#8212;it&#8217;s just another pair of curly braces to the Java compiler.
+After performing local operations, the exception is rethrown, which is
+appropriate because this constructor failed, and you wouldn&#8217;t want the
+calling method to assume that the object had been properly created and was
+valid. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I80' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I81>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In this example, which doesn&#8217;t use
+the aforementioned flagging technique, the <B>finally</B> clause is definitely
+<I>not</I> the place to <B>close(&#160;)</B> the file, since that would close it
+every time the constructor completed. Since we want the file to be open for the
+useful lifetime of the <B>InputFile</B> object this would not be appropriate.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I81' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I82>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>getLine(&#160;)</B> method returns
+a <B>String</B> containing the next line in the file. It calls
+<A NAME="Index1118"></A><A NAME="Index1119"></A><B>readLine(&#160;),</B> which
+can throw an exception, but that exception is caught so <B>getLine(&#160;)</B>
+doesn&#8217;t throw any exceptions. One of the design issues with
+<A NAME="Index1120"></A>exceptions is whether to handle an exception completely
+at this level, to handle it partially and pass the same exception (or a
+different one) on, or whether to simply pass it on. Passing it on, when
+appropriate, can certainly simplify coding. The <B>getLine(&#160;)</B> method
+becomes:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>String getLine() <font color=#0000ff>throws</font> IOException {
+  <font color=#0000ff>return</font> in.readLine();
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">But of course, the caller is now
+responsible for handling any <B>IOException</B> that might arise.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I82' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I83>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>cleanup(&#160;)</B> method must be
+called by the user when finished using the <B>InputFile</B> object. This will
+release the system resources (such as file handles) that are used by the
+<B>BufferedReader</B> and/or <B>FileReader</B>
+objects</FONT><A NAME="fnB56" HREF="#fn56">[56]</A><FONT FACE="Georgia">. You
+don&#8217;t want to do this until you&#8217;re finished with the
+<B>InputFile</B> object, at the point you&#8217;re going to let it go. You might
+think of putting such functionality into a
+<A NAME="Index1121"></A><B>finalize(&#160;)</B> method, but as mentioned in
+Chapter 4 you can&#8217;t always be sure that <B>finalize(&#160;)</B> will be
+called (even if you <I>can</I> be sure that it will be called, you don&#8217;t
+know <I>when</I>). This is one of the downsides to Java: all cleanup&#8212;other
+than memory cleanup&#8212;doesn&#8217;t happen automatically, so you must inform
+the client programmer that they are responsible, and possibly guarantee that
+cleanup occurs using <B>finalize(&#160;)</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I83' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I84>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In <B>Cleanup.java</B> an
+<B>InputFile</B> is created to open the same source file that creates the
+program, the file is read in a line at a time, and line numbers are added. All
+exceptions are caught generically in <B>main(&#160;)</B>, although you could
+choose greater granularity.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I84' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I85>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">One of the benefits of this example is to
+show you why exceptions are introduced at this point in the book&#8212;you
+can&#8217;t do basic I/O without using exceptions. Exceptions are so integral to
+programming in Java, especially because the compiler enforces them, that you can
+accomplish only so much without knowing how to work with them.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I85' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I86>
+</FONT><A NAME="_Toc305593301"></A><A NAME="_Toc305628773"></A><A NAME="_Toc312374124"></A><A NAME="_Toc375545377"></A><A NAME="_Toc481064730"></A><BR></P></DIV>
+<A NAME="Heading349"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Exception matching<BR><A NAME="Index1122"></A><A NAME="Index1123"></A></H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When an exception is thrown, the
+exception handling system looks through the &#8220;nearest&#8221; handlers in
+the order they are written. When it finds a match, the exception is considered
+handled, and no further searching occurs. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I86' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I87>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Matching an exception doesn&#8217;t
+require a perfect match between the exception and its handler. A derived-class
+object will match a handler for the base class, as shown in
+<A NAME="Index1124"></A><A NAME="Index1125"></A>this example:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c10:Human.java</font>
+<font color=#009900>// Catching exception hierarchies.</font>
+
+<font color=#0000ff>class</font> Annoyance <font color=#0000ff>extends</font> Exception {}
+<font color=#0000ff>class</font> Sneeze <font color=#0000ff>extends</font> Annoyance {}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Human {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>try</font> {
+      <font color=#0000ff>throw</font> <font color=#0000ff>new</font> Sneeze();
+    } <font color=#0000ff>catch</font>(Sneeze s) {
+      System.err.println(<font color=#004488>"Caught Sneeze"</font>);
+    } <font color=#0000ff>catch</font>(Annoyance a) {
+      System.err.println(<font color=#004488>"Caught Annoyance"</font>);
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>Sneeze</B> exception will be
+caught by the first <B>catch</B> clause that it matches&#8212;which is the first
+one, of course. However, if you remove the first catch clause, leaving only:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I87' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I88>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>    <font color=#0000ff>try</font> {
+      <font color=#0000ff>throw</font> <font color=#0000ff>new</font> Sneeze();
+    } <font color=#0000ff>catch</font>(Annoyance a) {
+      System.err.println(<font color=#004488>"Caught Annoyance"</font>);
+    }</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The code will still work because
+it&#8217;s catching the base class of <B>Sneeze</B>. Put another way,
+<B>catch(Annoyance e)</B> will catch an <B>Annoyance</B> <I>or any class derived
+from it</I>. This is useful because if you decide to add more  derived
+exceptions to a method, then the client programmer&#8217;s code will not need
+changing as long as the client catches the base class exceptions.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I88' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I89>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you try to &#8220;mask&#8221; the
+derived-class exceptions by putting the base-class catch clause first, like
+this:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>    <font color=#0000ff>try</font> {
+      <font color=#0000ff>throw</font> <font color=#0000ff>new</font> Sneeze();
+    } <font color=#0000ff>catch</font>(Annoyance a) {
+      System.err.println(<font color=#004488>"Caught Annoyance"</font>);
+    } <font color=#0000ff>catch</font>(Sneeze s) {
+      System.err.println(<font color=#004488>"Caught Sneeze"</font>);
+    }</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">the compiler will give you an error
+message, since it sees that the <B>Sneeze</B> catch-clause can never be reached.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I89' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I90>
+</FONT><A NAME="_Toc312374128"></A><A NAME="_Toc375545378"></A><A NAME="_Toc481064731"></A><BR></P></DIV>
+<A NAME="Heading350"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Exception guidelines<BR><A NAME="Index1126"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Use exceptions to:</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Fix the problem and call
+the method that caused the exception
+again.</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Patch things
+up and continue without retrying the
+method.</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Calculate
+some alternative result instead of what the method was supposed to
+produce.</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Do whatever
+you can in the current context and rethrow the <I>same</I> exception to a higher
+context.</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Do whatever
+you can in the current context and throw a <I>different</I> exception to a
+higher
+context.</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Terminate
+the
+program.</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Simplify.
+(If your exception scheme makes things more complicated, then it is painful and
+annoying to
+use.)</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Make your
+library and program safer. (This is a short-term investment for debugging, and a
+long-term investment (for application robustness.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I90' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I91>
+</FONT><A NAME="_Toc375545379"></A><A NAME="_Toc481064732"></A></OL><A NAME="Heading351"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Summary</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Improved error
+recovery<A NAME="Index1127"></A> is one of the most powerful ways that you can
+increase the robustness of your code. Error recovery is a fundamental concern
+for every program you write, but it&#8217;s especially important in Java, where
+one of the primary goals is to create program components for others to use.
+<I>To create a robust system, each component must be robust.</I>
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I91' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I92>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The goals for exception handling in Java
+are to simplify the creation of large, reliable programs using less code than
+currently possible, and with more confidence that your application doesn&#8217;t
+have an unhandled error. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I92' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I93>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Exceptions are not terribly difficult to learn, and are one of those features that provide immediate and significant benefits to your project. Fortunately, Java enforces all aspects of exceptions so it&#8217;s guaranteed that they will be used consistently by both library designers and client programmers. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I93' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I94>
+<A NAME=<font color=#004488>"_Toc375545380"</font>></A><A NAME=<font color=#004488>"_Toc481064733"</font>></A></PRE></FONT></BLOCKQUOTE><A NAME="Heading352"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Exercises</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=2>Solutions to selected exercises
+can be found in the electronic document <I>The Thinking in Java Annotated
+Solution Guide</I>, available for a small fee from
+<I>www.BruceEckel.com</I>.</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create a class with a
+<B>main(&#160;)</B> that throws an object of class <B>Exception</B> inside a
+<B>try</B> block. Give the constructor for <B>Exception</B> a <B>String</B>
+argument. Catch the exception inside a <B>catch</B> clause and print the
+<B>String</B> argument. Add a <B>finally</B> clause and print a message to prove
+you were there.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I94' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I95>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+your own exception class using the <B>extends</B> keyword. Write a constructor
+for this class that takes a <B>String</B> argument and stores it inside the
+object with a <B>String</B> reference. Write a method that prints out the stored
+<B>String</B>. Create a <B>try-catch</B> clause to exercise your new exception.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I95' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I96>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Write
+a class with a method that throws an exception of the type created in Exercise
+2. Try compiling it without an exception specification to see what the compiler
+says. Add the appropriate exception specification. Try out your class and its
+exception inside a try-catch clause.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I96' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I97>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Define
+an object reference and initialize it to <B>null</B>. Try to call a method
+through this reference. Now wrap the code in a <B>try-catch</B> clause to catch
+the exception.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I97' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I98>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class with two methods, <B>f(&#160;)</B> and <B>g(&#160;)</B>. In
+<B>g(&#160;)</B>, throw an exception of a new type that you define. In
+<B>f(&#160;)</B>, call <B>g(&#160;)</B>, catch its exception and, in the
+<B>catch</B> clause, throw a different exception (of a second type that you
+define). Test your code in <B>main(&#160;)</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I98' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I99>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+three new types of exceptions. Write a class with a method that throws all
+three. In <B>main(&#160;)</B>, call the method but only use a single
+<B>catch</B> clause that will catch all three types of exceptions.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I99' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I100>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Write
+code to generate and catch an <B>ArrayIndexOutOfBoundsException</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I100' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I101>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+your own resumption-like behavior using a <B>while</B> loop that repeats until
+an exception is no longer thrown.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I101' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I102>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a three-level hierarchy of exceptions. Now create a base-class <B>A </B>with a
+method that throws an exception at the base of your hierarchy. Inherit <B>B</B>
+from <B>A</B> and override the method so it throws an exception at level two of
+your hierarchy. Repeat by inheriting class <B>C</B> from <B>B</B>. In
+<B>main(&#160;)</B>, create a <B>C</B> and upcast it to <B>A</B>, then call the
+method.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I102' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I103>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Demonstrate
+that a derived-class constructor cannot catch exceptions thrown by its
+base-class constructor.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I103' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I104>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Show
+that <B>OnOffSwitch.java</B> can fail by throwing a <B>RuntimeException</B>
+inside the <B>try</B> block.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I104' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I105>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Show
+that <B>WithFinally.java</B> doesn&#8217;t fail by throwing a
+<B>RuntimeException</B> inside the <B>try</B> block.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I105' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I106>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Modify
+Exercise 6 by adding a <B>finally</B> clause. Verify your <B>finally</B> clause
+is executed, even if a <B>NullPointerException</B> is thrown.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I106' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I107>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+an example where you use a flag to control whether cleanup code is called, as
+described in the second paragraph after the heading &#8220;Constructors.&#8221;
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I107' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I108>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Modify
+<B>StormyInning.java</B> by adding an <B>UmpireArgument</B> exception type, and
+methods that throw this exception. Test the modified hierarchy.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I108' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I109>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Remove
+the first catch clause in <B>Human.java</B> and verify that the code still
+compiles and runs properly.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I109' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I110>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Add
+a second level of exception loss to <B>LostMessage.java</B> so that the
+<B>HoHumException</B> is itself replaced by a third exception.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I110' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I111>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">In
+Chapter 5, find the two programs called <B>Assert.java</B> and modify these to
+throw their own type of exception instead of printing to <B>System.err</B>. This
+exception should be an inner class that extends <B>RuntimeException</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I111' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER10_I112>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Add
+an appropriate set of exceptions to <B>c08:GreenhouseControls.java</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER10_I112' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+</FONT></OL>
+<HR><DIV ALIGN="LEFT"><P><A NAME="fn51" HREF="#fnB51">[51]</A><FONT FACE="Georgia" SIZE=2>
+The C programmer can look up the return value of <B>printf(&#160;)</B> for an
+example of this.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn52" HREF="#fnB52">[52]</A><FONT FACE="Georgia" SIZE=2>
+This is a significant improvement over C++ exception handling, which
+doesn&#8217;t catch violations of exception specifications until run time, when
+it&#8217;s not very useful.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn53" HREF="#fnB53">[53]</A><FONT FACE="Georgia" SIZE=2>
+C++ exception handling does not have the <B>finally</B> clause because it relies
+on destructors to accomplish this sort of cleanup.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn54" HREF="#fnB54">[54]</A><FONT FACE="Georgia" SIZE=2>
+A destructor is a function that&#8217;s always called when an object becomes
+unused. You always know exactly where and when the destructor gets called. C++
+has automatic destructor calls, but Delphi&#8217;s Object Pascal versions 1 and
+2 do not (which changes the meaning and use of the concept of a destructor for
+that language).</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn55" HREF="#fnB55">[55]</A><FONT FACE="Georgia" SIZE=2>
+ISO C++ added similar constraints that require derived-method exceptions to be
+the same as, or derived from, the exceptions thrown by the base-class method.
+This is one case in which C++ is actually able to check exception specifications
+at compile-time.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn56" HREF="#fnB56">[56]</A><FONT FACE="Georgia" SIZE=2>
+In C++, a <I>destructor</I> would handle this for you.</FONT><BR></P></DIV>
+
+<DIV ALIGN="CENTER">
+    <FONT FACE="Verdana" size = "-1">
+     [ <a href="Chap09.htm">Previous Chapter</a> ] 
+    [ <a href="SimpCont.htm">Short TOC</a> ] 
+    [ <a href="Contents.htm">Table of Contents</a> ] 
+    [ <a href="DocIdx.htm">Index</a> ]
+     [ <a href="Chap11.htm">Next Chapter</a> ] 
+    </FONT>
+    <BR>
+ Last Update:05/21/2001</P></DIV>
+
+</BODY>
+
+</HTML>

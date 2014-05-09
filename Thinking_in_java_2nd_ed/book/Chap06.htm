@@ -1,0 +1,2307 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<!--
+This document was converted from RTF source: 
+By rtftohtml 4.19
+See http://www.sunpack.com/RTF
+Filename:TIJ2.rtf
+Application Directory:C:\TOOLS\RTF2HTML\
+Subject:
+Author:Bruce Eckel
+Operator:Bruce Eckel
+Document Comments:
+Version Comments:
+Comments:
+Keywords:
+Translation Date:05/21/2001
+Translation Time:10:39:08
+Translation Platform:Win32
+Number of Output files:23
+This File:Chap06.htm
+SplitDepth=1
+SkipNavPanel=1
+SkipLeadingToc=1
+SkipTrailingToc=1
+GenContents=1
+GenFrames=1
+GenIndex=1
+-->
+<HEAD lang="en"><META http-equiv="Content-Type" content="text/html">
+<TITLE>6: Reusing Classes</TITLE>
+</HEAD>
+
+<BODY  BGCOLOR="#FFFFFF"><DIV ALIGN="CENTER">
+  <a href="http://www.MindView.net">
+  <img src="mindview.gif" alt="MindView Inc." BORDER = "0"></a>
+  <CENTER>
+    <FONT FACE="Verdana" size = "-1">
+    [ <a href="README.txt">Viewing Hints</a> ]
+    [ <a href="RevHist.htm">Revision History</a> ]
+    [ <a href="http://www.mindview.net/Books/TIJ/">Book Home Page</a> ]
+    [ <a href="http://www.mindview.net/Etc/MailingList.html">Free Newsletter</a> ] <br>
+    [ <a href="http://www.mindview.net/Seminars">Seminars</a> ]
+    [ <a href="http://www.mindview.net/CDs">Seminars on CD ROM</a> ]
+    [ <a href="http://www.mindview.net/Services">Consulting</a> ]
+    </FONT>
+  <H2><FONT FACE="Verdana">
+  Thinking in Java, 2nd edition, Revision 12</FONT></H2>
+  <H3><FONT FACE="Verdana">&copy;2000 by Bruce Eckel</FONT></H3>
+  
+    <FONT FACE="Verdana" size = "-1">
+     [ <a href="Chap05.htm">Previous Chapter</a> ] 
+    [ <a href="SimpCont.htm">Short TOC</a> ] 
+    [ <a href="Contents.htm">Table of Contents</a> ] 
+    [ <a href="DocIdx.htm">Index</a> ]
+     [ <a href="Chap07.htm">Next Chapter</a> ] 
+    </FONT>
+    
+  </CENTER>
+  </P></DIV><A NAME="Chapter_6"></A><A NAME="_Toc375545305"></A><A NAME="_Toc477690726"></A><A NAME="_Toc481064603"></A><A NAME="Heading206"></A><FONT FACE = "Verdana"><H1 ALIGN="LEFT">
+6: Reusing Classes</H1></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=4><backtalk:display ID=TIJ3_CHAPTER6_I0>
+One of
+the most compelling features about Java is code
+reuse<A NAME="Index541"></A><A NAME="Index542"></A>. But to be revolutionary,
+you&#8217;ve got to be able to do a lot more than copy code and change
+it.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">That&#8217;s the approach used in
+procedural languages like C, and it hasn&#8217;t worked very well. Like
+everything in Java, the solution revolves around the class. You reuse code by
+creating new classes, but instead of creating them from scratch, you use
+existing classes that someone has already built and debugged.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I0' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I1>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The trick is to use the classes without
+soiling the existing code. In this chapter you&#8217;ll see two ways to
+accomplish this. The first is quite straightforward: You simply create objects
+of your existing class inside the new class. This is called <I>composition,</I>
+<A NAME="Index543"></A>because the new class is composed of objects of existing
+classes. You&#8217;re simply reusing the functionality of the code, not its
+form. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I1' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I2>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The second approach is more subtle. It
+creates a new class as a <I>type of</I> an existing class. You literally take
+the form of the existing class and add code to it without modifying the existing
+class. This magical act is called <I>inheritance<A NAME="Index544"></A></I>, and
+the compiler does most of the work. Inheritance is one of the cornerstones of
+object-oriented programming, and has additional implications that will be
+explored in Chapter 7. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I2' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I3>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It turns out that much of the syntax and
+behavior are similar for both composition and inheritance (which makes sense
+because they are both ways of making new types from existing types). In this
+chapter, you&#8217;ll learn about these code reuse mechanisms.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I3' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I4>
+</FONT><A NAME="_Toc305593251"></A><A NAME="_Toc305628723"></A><A NAME="_Toc312374014"></A><A NAME="_Toc375545306"></A><A NAME="_Toc481064604"></A><BR></P></DIV>
+<A NAME="Heading207"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Composition syntax</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Until now, composition has been used
+quite frequently. You simply place object references inside new classes. For
+example, suppose you&#8217;d like an object that holds several <B>String</B>
+objects, a couple of primitives, and an object of another class. For the
+nonprimitive objects, you put references inside your new class, but you define
+the primitives directly:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c06:SprinklerSystem.java</font>
+<font color=#009900>// Composition for code reuse.</font>
+
+<font color=#0000ff>class</font> WaterSource {
+  <font color=#0000ff>private</font> String s;
+  WaterSource() {
+    System.out.println(<font color=#004488>"WaterSource()"</font>);
+    s = <font color=#0000ff>new</font> String(<font color=#004488>"Constructed"</font>);
+  }
+  <font color=#0000ff>public</font> String toString() { <font color=#0000ff>return</font> s; }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> SprinklerSystem {
+  <font color=#0000ff>private</font> String valve1, valve2, valve3, valve4;
+  WaterSource source;
+  <font color=#0000ff>int</font> i;
+  <font color=#0000ff>float</font> f;
+  <font color=#0000ff>void</font> print() {
+    System.out.println(<font color=#004488>"valve1 = "</font> + valve1);
+    System.out.println(<font color=#004488>"valve2 = "</font> + valve2);
+    System.out.println(<font color=#004488>"valve3 = "</font> + valve3);
+    System.out.println(<font color=#004488>"valve4 = "</font> + valve4);
+    System.out.println(<font color=#004488>"i = "</font> + i);
+    System.out.println(<font color=#004488>"f = "</font> + f);
+    System.out.println(<font color=#004488>"source = "</font> + source);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    SprinklerSystem x = <font color=#0000ff>new</font> SprinklerSystem();
+    x.print();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">One of the methods defined in
+<B>WaterSource </B>is special: <B>toString(&#160;)</B>. You will learn later
+that every nonprimitive object has a
+<A NAME="Index545"></A><A NAME="Index546"></A><B>toString(&#160;)</B> method,
+and it&#8217;s called in special situations when the compiler wants a
+<B>String</B> but it&#8217;s got one of these objects. So in the
+expression:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>System.out.println(<font color=#004488>"source = "</font> + source);</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">the compiler sees you trying to add a
+<B>String</B> object ("<B>source = </B>") to a <B>WaterSource</B>. This
+doesn&#8217;t make sense to it, because you can only &#8220;add&#8221; a
+<B>String</B> to another <B>String</B>, so it says &#8220;I&#8217;ll turn
+<B>source</B> into a <B>String</B> by calling <B>toString(&#160;)</B>!&#8221;
+After doing this it can combine the two <B>String</B>s and pass the resulting
+<B>String</B> to <B>System.out.println(&#160;)</B>. Any time you want to allow
+this behavior with a class you create you need only write a
+<B>toString(&#160;)</B> method. <A NAME="Index547"></A><A NAME="Index548"></A>
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I4' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I5>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">At first glance, you might
+assume&#8212;Java being as safe and careful as it is&#8212;that the compiler
+would automatically construct objects for each of the references in the above
+code; for example, calling the default constructor for <B>WaterSource</B> to
+initialize <B>source</B>. The output of the print statement is in
+fact:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>valve1 = <font color=#0000ff>null</font>
+valve2 = <font color=#0000ff>null</font>
+valve3 = <font color=#0000ff>null</font>
+valve4 = <font color=#0000ff>null</font>
+i = 0
+f = 0.0
+source = <font color=#0000ff>null</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Primitives that are fields in a class are
+automatically <A NAME="Index549"></A><A NAME="Index550"></A>initialized to zero,
+as noted in Chapter 2. But the object references are initialized to <B>null</B>,
+and if you try to call methods for any of them you&#8217;ll get an exception.
+It&#8217;s actually pretty good (and useful) that you can still print them out
+without throwing an exception.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I5' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I6>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It makes sense that the compiler
+doesn&#8217;t just create a default object for every reference because that
+would incur unnecessary overhead in many cases. If you want the references
+initialized, you can do it: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I6' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I7>
+</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">At the point the objects
+are defined. This means that they&#8217;ll always be initialized before the
+constructor is called.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I7' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I8>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">In
+the constructor for that class.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I8' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I9>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Right
+before you actually need to use the object. This is often called <I>lazy
+initializatio</I></FONT></OL><DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><I>n<A NAME="Index551"></A><A NAME="Index552"></A></I>.
+It can reduce overhead in situations where the object doesn&#8217;t need to be
+created every time. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I9' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I10>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">All three approaches are shown here:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I10' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I11>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c06:Bath.java</font>
+<font color=#009900>// Constructor initialization with composition.</font>
+
+<font color=#0000ff>class</font> Soap {
+  <font color=#0000ff>private</font> String s;
+  Soap() {
+    System.out.println(<font color=#004488>"Soap()"</font>);
+    s = <font color=#0000ff>new</font> String(<font color=#004488>"Constructed"</font>);
+  }
+  <font color=#0000ff>public</font> String toString() { <font color=#0000ff>return</font> s; }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Bath {
+  <font color=#0000ff>private</font> String 
+    <font color=#009900>// Initializing at point of definition:</font>
+    s1 = <font color=#0000ff>new</font> String(<font color=#004488>"Happy"</font>), 
+    s2 = <font color=#004488>"Happy"</font>, 
+    s3, s4;
+  Soap castille;
+  <font color=#0000ff>int</font> i;
+  <font color=#0000ff>float</font> toy;
+  Bath() {
+    System.out.println(<font color=#004488>"Inside Bath()"</font>);
+    s3 = <font color=#0000ff>new</font> String(<font color=#004488>"Joy"</font>);
+    i = 47;
+    toy = 3.14f;
+    castille = <font color=#0000ff>new</font> Soap();
+  }
+  <font color=#0000ff>void</font> print() {
+    <font color=#009900>// Delayed initialization:</font>
+    <font color=#0000ff>if</font>(s4 == <font color=#0000ff>null</font>)
+      s4 = <font color=#0000ff>new</font> String(<font color=#004488>"Joy"</font>);
+    System.out.println(<font color=#004488>"s1 = "</font> + s1);
+    System.out.println(<font color=#004488>"s2 = "</font> + s2);
+    System.out.println(<font color=#004488>"s3 = "</font> + s3);
+    System.out.println(<font color=#004488>"s4 = "</font> + s4);
+    System.out.println(<font color=#004488>"i = "</font> + i);
+    System.out.println(<font color=#004488>"toy = "</font> + toy);
+    System.out.println(<font color=#004488>"castille = "</font> + castille);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Bath b = <font color=#0000ff>new</font> Bath();
+    b.print();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Note that in the <B>Bath </B>constructor
+a statement is executed before any of the initializations take place. When you
+don&#8217;t initialize at the point of definition, there&#8217;s still no
+guarantee that you&#8217;ll perform any initialization before you send a message
+to an object reference&#8212;except for the inevitable run-time exception.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I11' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I12>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here&#8217;s the output for the
+program:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Inside Bath()
+Soap()
+s1 = Happy
+s2 = Happy
+s3 = Joy
+s4 = Joy
+i = 47
+toy = 3.14
+castille = Constructed</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When <B>print(&#160;)</B> is called it
+fills in <B>s4</B> so that all the fields are properly initialized by the time
+they are used.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I12' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I13>
+</FONT><A NAME="_Toc305593252"></A><A NAME="_Toc305628724"></A><A NAME="_Toc312374015"></A><A NAME="_Toc375545307"></A><A NAME="_Toc481064605"></A><BR></P></DIV>
+<A NAME="Heading208"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Inheritance syntax<BR><A NAME="Index553"></A></H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Inheritance is an integral part of Java
+(and OOP languages in general). It turns out that you&#8217;re always doing
+inheritance when you create a class, because unless you explicitly inherit from
+some other class, you implicitly inherit from Java&#8217;s
+<A NAME="Index554"></A>standard root class <B>Object</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I13' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I14>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The syntax for composition is obvious,
+but to perform inheritance there&#8217;s a distinctly different form. When you
+inherit, you say &#8220;This new class is like that old class.&#8221; You state
+this in code by giving the name of the class as usual, but before the opening
+brace of the class body, put the <A NAME="Index555"></A>keyword <B>extends</B>
+followed by the name of the
+<A NAME="Index556"></A><A NAME="Index557"></A><I>base class</I>. When you do
+this, you automatically get all the data members and methods in the base class.
+Here&#8217;s an example: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I14' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I15>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c06:Detergent.java</font>
+<font color=#009900>// Inheritance syntax &amp; properties.</font>
+
+<font color=#0000ff>class</font> Cleanser {
+  <font color=#0000ff>private</font> String s = <font color=#0000ff>new</font> String(<font color=#004488>"Cleanser"</font>);
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> append(String a) { s += a; }
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> dilute() { append(<font color=#004488>" dilute()"</font>); }
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> apply() { append(<font color=#004488>" apply()"</font>); }
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> scrub() { append(<font color=#004488>" scrub()"</font>); }
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> print() { System.out.println(s); }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Cleanser x = <font color=#0000ff>new</font> Cleanser();
+    x.dilute(); x.apply(); x.scrub();
+    x.print();
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Detergent <font color=#0000ff>extends</font> Cleanser {
+  <font color=#009900>// Change a method:</font>
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> scrub() {
+    append(<font color=#004488>" Detergent.scrub()"</font>);
+    <font color=#0000ff>super</font>.scrub(); <font color=#009900>// Call base-class version</font>
+  }
+  <font color=#009900>// Add methods to the interface:</font>
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> foam() { append(<font color=#004488>" foam()"</font>); }
+  <font color=#009900>// Test the new class:</font>
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Detergent x = <font color=#0000ff>new</font> Detergent();
+    x.dilute();
+    x.apply();
+    x.scrub();
+    x.foam();
+    x.print();
+    System.out.println(<font color=#004488>"Testing base class:"</font>);
+    Cleanser.main(args);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This demonstrates a number of features.
+First, in the <B>Cleanser</B> <B>append(&#160;)</B> method, <B>String</B>s are
+concatenated to <B>s</B> using the <B>+=</B> operator, which is one of the
+operators (along with &#8216;<B>+</B>&#8217;) that the Java designers
+&#8220;overloaded&#8221; to work with
+<A NAME="Index558"></A><A NAME="Index559"></A><A NAME="Index560"></A><B>String</B>s.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I15' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I16>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Second, both <B>Cleanser</B> and
+<B>Detergent</B> contain a <A NAME="Index561"></A><B>main(&#160;)</B> method.
+You can create a <B>main(&#160;)</B> for each one of your classes, and
+it&#8217;s often recommended to code this way so that your test code is wrapped
+in with the class. Even if you have a lot of classes in a program, only the
+<B>main(&#160;)</B> for the class invoked on the command line will be called.
+(As long as <B>main(&#160;)</B> is <B>public</B>, it doesn&#8217;t matter
+whether the class that it&#8217;s part of is <B>public</B>.) So in this case,
+when you say <B>java Detergent</B>, <B>Detergent.main(&#160;)</B> will be
+called. But you can also say <B>java Cleanser </B>to invoke
+<B>Cleanser.main(&#160;)</B>, even though <B>Cleanser</B> is not a <B>public</B>
+class. This technique of putting a <B>main(&#160;)</B> in each class allows easy
+<A NAME="Index562"></A><A NAME="Index563"></A>unit testing for each class. And
+you don&#8217;t need to remove the <B>main(&#160;)</B> when you&#8217;re
+finished testing; you can leave it in for later testing.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I16' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I17>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here, you can see that
+<B>Detergent.main(&#160;)</B> calls <B>Cleanser.main(&#160;)</B> explicitly,
+passing it the same arguments from the command line (however, you could pass it
+any <B>String</B> array). 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I17' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I18>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It&#8217;s important that all of the
+methods in <B>Cleanser </B>are <B>public</B>. Remember that if you leave off any
+access specifier the member defaults to &#8220;friendly,&#8221; which allows
+access only to package members. Thus, <I>within this package</I>, anyone could
+use those methods if there were no access specifier. <B>Detergent</B> would have
+no trouble, for example. However, if a class from some other package were to
+inherit from <B>Cleanser</B> it could access only <B>public </B>members. So to
+plan for inheritance, as a general rule make all fields <B>private </B>and all
+methods <B>public</B>.<B> </B>(<B>protected </B>members also allow access by
+derived classes; you&#8217;ll learn about this later.) Of course, in particular
+cases you must make adjustments, but this is a useful guideline.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I18' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I19>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Note that <B>Cleanser</B> has a set of
+methods in its interface: <B>append(&#160;)</B>, <B>dilute(&#160;)</B>,
+<B>apply(&#160;)</B>, <B>scrub(&#160;)</B>, and <B>print(&#160;)</B>. Because
+<B>Detergent</B> is <I>derived from</I> <B>Cleanser</B> (via the
+<A NAME="Index564"></A><B>extends</B> keyword) it automatically gets all these
+methods in its interface, even though you don&#8217;t see them all explicitly
+defined in <B>Detergent</B>. You can think of inheritance, then, as <I>reusing
+the interface.</I> (The implementation also comes with it, but that part
+isn&#8217;t the primary point.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I19' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I20>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">As seen in <B>scrub(&#160;)</B>,
+it&#8217;s possible to take a method that&#8217;s been defined in the base class
+and modify it. In this case, you might want to call the method from the base
+class inside the new version. But inside <B>scrub(&#160;)</B> you cannot simply
+call <B>scrub(&#160;)</B>, since that would produce a recursive call, which
+isn&#8217;t what you want. To solve this problem Java has the
+<A NAME="Index565"></A>keyword <B>super</B> that refers to the
+&#8220;<A NAME="Index566"></A>superclass&#8221; that the current class has been
+inherited from. Thus the expression <B>super.scrub(&#160;)</B> calls the
+base-class version of the method <B>scrub(&#160;)</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I20' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I21>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When inheriting you&#8217;re not
+restricted to using the methods of the base class. You can also add new methods
+to the derived class exactly the way you put any method in a class: just define
+it. The method <B>foam(&#160;)</B> is an example of this.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I21' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I22>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In <B>Detergent.main(&#160;) </B>you can
+see that for a <B>Detergent</B> object you can call all the methods that are
+available in <B>Cleanser</B> as well as in <B>Detergent </B>(i.e.,
+<B>foam(&#160;)</B>).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I22' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I23>
+</FONT><A NAME="_Toc375545308"></A><A NAME="_Toc481064606"></A><BR></P></DIV>
+<A NAME="Heading209"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Initializing the base
+class<BR><A NAME="Index567"></A><A NAME="Index568"></A><A NAME="Index569"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Since there are now two classes
+involved&#8212;the base class and the
+<A NAME="Index570"></A><A NAME="Index571"></A>derived class&#8212;instead of
+just one, it can be a bit confusing to try to imagine the resulting object
+produced by a derived class. From the outside, it looks like the new class has
+the same interface as the base class and maybe some additional methods and
+fields. But inheritance doesn&#8217;t just copy the interface of the base class.
+When you create an object of the derived class, it contains within it a
+<I>subobject</I> of the base class. This
+<A NAME="Index572"></A><A NAME="Index573"></A>subobject is the same as if you
+had created an object of the base class by itself. It&#8217;s just that, from
+the outside, the subobject of the base class is wrapped within the derived-class
+object. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I23' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I24>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Of course, it&#8217;s essential that the
+base-class subobject be initialized correctly and there&#8217;s only one way to
+guarantee that: perform the initialization in the constructor, by calling the
+base-class constructor, which has all the appropriate knowledge and privileges
+to perform the base-class initialization. Java automatically inserts calls to
+the base-class constructor in the derived-class constructor. The following
+example shows this working with three levels of inheritance:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c06:Cartoon.java</font>
+<font color=#009900>// Constructor calls during inheritance.</font>
+
+<font color=#0000ff>class</font> Art {
+  Art() {
+    System.out.println(<font color=#004488>"Art constructor"</font>);
+  }
+}
+
+<font color=#0000ff>class</font> Drawing <font color=#0000ff>extends</font> Art {
+  Drawing() {
+    System.out.println(<font color=#004488>"Drawing constructor"</font>);
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Cartoon <font color=#0000ff>extends</font> Drawing {
+  Cartoon() {
+    System.out.println(<font color=#004488>"Cartoon constructor"</font>);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Cartoon x = <font color=#0000ff>new</font> Cartoon();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The output for this program shows the
+automatic calls:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Art constructor
+Drawing constructor
+Cartoon constructor</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can see that the construction happens
+from the base &#8220;outward,&#8221; so the base class is initialized before the
+derived-class constructors can access it.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I24' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I25>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Even if you don&#8217;t create a
+constructor for <B>Cartoon(&#160;)</B>, the compiler will
+<A NAME="Index574"></A>synthesize a default constructor for you that calls the
+base class constructor. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I25' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I26>
+</FONT><BR></P></DIV>
+<A NAME="Heading210"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Constructors with arguments</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The above example has default
+<A NAME="Index575"></A>constructors; that is, they don&#8217;t have any
+arguments. It&#8217;s easy for the compiler to call these because there&#8217;s
+no question about what arguments to pass. If your class doesn&#8217;t have
+default arguments, or if you want to call a base-class constructor that has an
+argument, you must explicitly write the calls to the base-class constructor
+using the <A NAME="Index576"></A><B>super</B> keyword and the appropriate
+argument list:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c06:Chess.java</font>
+<font color=#009900>// Inheritance, constructors and arguments.</font>
+
+<font color=#0000ff>class</font> Game {
+  Game(<font color=#0000ff>int</font> i) {
+    System.out.println(<font color=#004488>"Game constructor"</font>);
+  }
+}
+
+<font color=#0000ff>class</font> BoardGame <font color=#0000ff>extends</font> Game {
+  BoardGame(<font color=#0000ff>int</font> i) {
+    <font color=#0000ff>super</font>(i);
+    System.out.println(<font color=#004488>"BoardGame constructor"</font>);
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Chess <font color=#0000ff>extends</font> BoardGame {
+  Chess() {
+    <font color=#0000ff>super</font>(11);
+    System.out.println(<font color=#004488>"Chess constructor"</font>);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Chess x = <font color=#0000ff>new</font> Chess();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you don&#8217;t call the base-class
+constructor in <B>BoardGame(&#160;)</B>, the compiler will complain that it
+can&#8217;t find a constructor of the form <B>Game(&#160;)</B>. In addition, the
+call to the base-class constructor <I>must</I> be the first thing you do in the
+derived-class constructor. (The compiler will remind you if you get it wrong.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I26' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I27>
+</FONT><BR></P></DIV>
+<A NAME="Heading211"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Catching base constructor
+exceptions<BR><A NAME="Index577"></A><A NAME="Index578"></A><A NAME="Index579"></A></H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">As just noted, the compiler forces you to
+place the base-class constructor call first in the body of the derived-class
+constructor. This means nothing else can appear before it. As you&#8217;ll see
+in Chapter 10, this also prevents a derived-class constructor from catching any
+exceptions that come from a base class. This can be inconvenient at times.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I27' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I28>
+</FONT><A NAME="_Toc305593254"></A><A NAME="_Toc305628726"></A><A NAME="_Toc312374019"></A><A NAME="_Toc375545309"></A><A NAME="_Toc481064607"></A><BR></P></DIV>
+<A NAME="Heading212"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Combining composition <BR>and
+inheritance<BR><A NAME="Index580"></A><A NAME="Index581"></A></H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It is very common to use composition and
+inheritance together. The following example shows the creation of a more complex
+class, using both inheritance and composition, along with the necessary
+<A NAME="Index582"></A><A NAME="Index583"></A>constructor
+initialization:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c06:PlaceSetting.java</font>
+<font color=#009900>// Combining composition &amp; inheritance.</font>
+
+<font color=#0000ff>class</font> Plate {
+  Plate(<font color=#0000ff>int</font> i) {
+    System.out.println(<font color=#004488>"Plate constructor"</font>);
+  }
+}
+
+<font color=#0000ff>class</font> DinnerPlate <font color=#0000ff>extends</font> Plate {
+  DinnerPlate(<font color=#0000ff>int</font> i) {
+    <font color=#0000ff>super</font>(i);
+    System.out.println(
+      <font color=#004488>"DinnerPlate constructor"</font>);
+  }
+}
+
+<font color=#0000ff>class</font> Utensil {
+  Utensil(<font color=#0000ff>int</font> i) {
+    System.out.println(<font color=#004488>"Utensil constructor"</font>);
+  }
+}
+
+<font color=#0000ff>class</font> Spoon <font color=#0000ff>extends</font> Utensil {
+  Spoon(<font color=#0000ff>int</font> i) {
+    <font color=#0000ff>super</font>(i);
+    System.out.println(<font color=#004488>"Spoon constructor"</font>);
+  }
+}
+
+<font color=#0000ff>class</font> Fork <font color=#0000ff>extends</font> Utensil {
+  Fork(<font color=#0000ff>int</font> i) {
+    <font color=#0000ff>super</font>(i);
+    System.out.println(<font color=#004488>"Fork constructor"</font>);
+  }
+}
+
+<font color=#0000ff>class</font> Knife <font color=#0000ff>extends</font> Utensil {
+  Knife(<font color=#0000ff>int</font> i) {
+    <font color=#0000ff>super</font>(i);
+    System.out.println(<font color=#004488>"Knife constructor"</font>);
+  }
+}
+
+<font color=#009900>// A cultural way of doing something:</font>
+<font color=#0000ff>class</font> Custom {
+  Custom(<font color=#0000ff>int</font> i) {
+    System.out.println(<font color=#004488>"Custom constructor"</font>);
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> PlaceSetting <font color=#0000ff>extends</font> Custom {
+  Spoon sp;
+  Fork frk;
+  Knife kn;
+  DinnerPlate pl;
+  PlaceSetting(<font color=#0000ff>int</font> i) {
+    <font color=#0000ff>super</font>(i + 1);
+    sp = <font color=#0000ff>new</font> Spoon(i + 2);
+    frk = <font color=#0000ff>new</font> Fork(i + 3);
+    kn = <font color=#0000ff>new</font> Knife(i + 4);
+    pl = <font color=#0000ff>new</font> DinnerPlate(i + 5);
+    System.out.println(
+      <font color=#004488>"PlaceSetting constructor"</font>);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    PlaceSetting x = <font color=#0000ff>new</font> PlaceSetting(9);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">While the compiler forces you to
+initialize the base classes, and requires that you do it right at the beginning
+of the constructor, it doesn&#8217;t watch over you to make sure that you
+initialize the member objects, so you must remember to pay attention to that.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I28' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I29>
+</FONT><A NAME="_Toc375545310"></A><A NAME="_Toc481064608"></A><BR></P></DIV>
+<A NAME="Heading213"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Guaranteeing proper cleanup</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java doesn&#8217;t have the C++ concept
+of a <A NAME="Index584"></A><I>destructor</I>, a method that is automatically
+called when an object is destroyed. The reason is probably that in Java the
+practice is simply to forget about objects rather than to destroy them, allowing
+the <A NAME="Index585"></A><A NAME="Index586"></A>garbage collector to reclaim
+the memory as necessary. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I29' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I30>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Often this is fine, but there are times
+when your class might perform some activities during its lifetime that require
+cleanup. As mentioned in Chapter 4, you can&#8217;t know when the garbage
+collector will be called, or if it will be called. So if you want something
+cleaned up for a class, you must explicitly write a special method to do it, and
+make sure that the client programmer knows that they must call this method. On
+top of this&#8212;as described in Chapter 10
+(&#8220;<A NAME="Index587"></A>Error Handling with Exceptions&#8221;)&#8212;you
+must guard against an exception by putting such cleanup in a
+<A NAME="Index588"></A><B>finally</B> clause.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I30' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I31>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Consider an example of a computer-aided
+design system that draws pictures on the screen:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c06:CADSystem.java</font>
+<font color=#009900>// Ensuring proper cleanup.</font>
+<font color=#0000ff>import</font> java.util.*;
+
+<font color=#0000ff>class</font> Shape {
+  Shape(<font color=#0000ff>int</font> i) {
+    System.out.println(<font color=#004488>"Shape constructor"</font>);
+  }
+  <font color=#0000ff>void</font> cleanup() {
+    System.out.println(<font color=#004488>"Shape cleanup"</font>);
+  }
+}
+
+<font color=#0000ff>class</font> Circle <font color=#0000ff>extends</font> Shape {
+  Circle(<font color=#0000ff>int</font> i) {
+    <font color=#0000ff>super</font>(i);
+    System.out.println(<font color=#004488>"Drawing a Circle"</font>);
+  }
+  <font color=#0000ff>void</font> cleanup() {
+    System.out.println(<font color=#004488>"Erasing a Circle"</font>);
+    <font color=#0000ff>super</font>.cleanup();
+  }
+}
+
+<font color=#0000ff>class</font> Triangle <font color=#0000ff>extends</font> Shape {
+  Triangle(<font color=#0000ff>int</font> i) {
+    <font color=#0000ff>super</font>(i);
+    System.out.println(<font color=#004488>"Drawing a Triangle"</font>);
+  }
+  <font color=#0000ff>void</font> cleanup() {
+    System.out.println(<font color=#004488>"Erasing a Triangle"</font>);
+    <font color=#0000ff>super</font>.cleanup();
+  }
+}
+
+<font color=#0000ff>class</font> Line <font color=#0000ff>extends</font> Shape {
+  <font color=#0000ff>private</font> <font color=#0000ff>int</font> start, end;
+  Line(<font color=#0000ff>int</font> start, <font color=#0000ff>int</font> end) {
+    <font color=#0000ff>super</font>(start);
+    <font color=#0000ff>this</font>.start = start;
+    <font color=#0000ff>this</font>.end = end;
+    System.out.println(<font color=#004488>"Drawing a Line: "</font> +
+           start + <font color=#004488>", "</font> + end);
+  }
+  <font color=#0000ff>void</font> cleanup() {
+    System.out.println(<font color=#004488>"Erasing a Line: "</font> +
+           start + <font color=#004488>", "</font> + end);
+    <font color=#0000ff>super</font>.cleanup();
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> CADSystem <font color=#0000ff>extends</font> Shape {
+  <font color=#0000ff>private</font> Circle c;
+  <font color=#0000ff>private</font> Triangle t;
+  <font color=#0000ff>private</font> Line[] lines = <font color=#0000ff>new</font> Line[10];
+  CADSystem(<font color=#0000ff>int</font> i) {
+    <font color=#0000ff>super</font>(i + 1);
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> j = 0; j &lt; 10; j++)
+      lines[j] = <font color=#0000ff>new</font> Line(j, j*j);
+    c = <font color=#0000ff>new</font> Circle(1);
+    t = <font color=#0000ff>new</font> Triangle(1);
+    System.out.println(<font color=#004488>"Combined constructor"</font>);
+  }
+  <font color=#0000ff>void</font> cleanup() {
+    System.out.println(<font color=#004488>"CADSystem.cleanup()"</font>);
+    <font color=#009900>// The order of cleanup is the reverse </font>
+    <font color=#009900>// of the order of initialization</font>
+    t.cleanup();
+    c.cleanup();
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = lines.length - 1; i &gt;= 0; i--)
+      lines[i].cleanup();
+    <font color=#0000ff>super</font>.cleanup();
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    CADSystem x = <font color=#0000ff>new</font> CADSystem(47);
+    <font color=#0000ff>try</font> {
+      <font color=#009900>// Code and exception handling...</font>
+    } <font color=#0000ff>finally</font> {
+      x.cleanup();
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Everything in this system is some kind of
+<B>Shape</B> (which is itself a kind of <B>Object</B> since it&#8217;s
+implicitly inherited from the root class). Each class redefines
+<B>Shape</B>&#8217;s <B>cleanup(&#160;)</B> method in addition to calling the
+base-class version of that method using <B>super</B>. The specific <B>Shape</B>
+classes&#8212;<B>Circle</B>, <B>Triangle</B> and <B>Line</B>&#8212;all have
+constructors that &#8220;draw,&#8221; although any method called during the
+lifetime of the object could be responsible for doing something that needs
+cleanup. Each class has its own <B>cleanup(&#160;)</B> method to restore
+nonmemory things back to the way they were before the object existed.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I31' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I32>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In <B>main(&#160;)</B>, you can see two
+keywords that are new, and won&#8217;t officially be introduced until Chapter
+10: <A NAME="Index589"></A><B>try</B> and <A NAME="Index590"></A><B>finally</B>.
+The <B>try</B> keyword indicates that the block that follows (delimited by curly
+braces) is a <I>guarded region</I>, which means that it is given special
+treatment. One of these special treatments is that the code in the
+<B>finally</B> clause following this guarded region is <I>always</I> executed,
+no matter how the <B>try</B> block exits. (With exception handling, it&#8217;s
+possible to leave a <B>try</B> block in a number of nonordinary ways.) Here, the
+<B>finally</B> clause is saying &#8220;always call <B>cleanup(&#160;)</B> for
+<B>x</B>, no matter what happens.&#8221; These keywords will be explained
+thoroughly in Chapter 10. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I32' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I33>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Note that in your cleanup method you must
+also pay attention to the calling order for the base-class and member-object
+cleanup methods in case one subobject depends on another. In general, you should
+follow the same form that is imposed by a C++ compiler on its destructors: First
+perform all of the cleanup work specific to your class, in the reverse order of
+creation. (In general, this requires that base-class elements still be viable.)
+Then call the base-class cleanup method, as demonstrated here.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I33' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I34>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There can be many cases in which the
+cleanup issue is not a problem; you just let the garbage collector do the work.
+But when you must do it explicitly, diligence and attention is required.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I34' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I35>
+</FONT><A NAME="_Toc312374020"></A><BR></P></DIV>
+<A NAME="Heading214"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Order of garbage collection</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There&#8217;s not much you can rely on
+when it comes to <A NAME="Index591"></A>garbage collection. The garbage
+collector might never be called. If it is, it can reclaim objects in any order
+it wants. It&#8217;s best to not rely on garbage collection for anything but
+memory reclamation. If you want cleanup to take place, make your own cleanup
+methods and don&#8217;t rely on <A NAME="Index592"></A><B>finalize(&#160;)</B>.
+(As mentioned in Chapter 4, Java can be forced to call all the finalizers.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I35' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I36>
+</FONT><A NAME="_Toc312374021"></A><A NAME="_Toc375545311"></A><A NAME="_Toc481064609"></A><BR></P></DIV>
+<A NAME="Heading215"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Name hiding</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Only C++ programmers might be surprised
+by name hiding, since it works differently in that language.
+<A NAME="Index593"></A><A NAME="Index594"></A><A NAME="Index595"></A><A NAME="Index596"></A>If
+a Java base class has a method name that&#8217;s overloaded several times,
+redefining that method name in the derived class will <I>not </I>hide any of the
+base-class versions. Thus overloading works regardless of whether the method was
+defined at this level or in a base class:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c06:Hide.java</font>
+<font color=#009900>// Overloading a base-class method name</font>
+<font color=#009900>// in a derived class does not hide the</font>
+<font color=#009900>// base-class versions.</font>
+
+<font color=#0000ff>class</font> Homer {
+  <font color=#0000ff>char</font> doh(<font color=#0000ff>char</font> c) {
+    System.out.println(<font color=#004488>"doh(char)"</font>);
+    <font color=#0000ff>return</font> 'd';
+  }
+  <font color=#0000ff>float</font> doh(<font color=#0000ff>float</font> f) {
+    System.out.println(<font color=#004488>"doh(float)"</font>);
+    <font color=#0000ff>return</font> 1.0f;
+  }
+}
+
+<font color=#0000ff>class</font> Milhouse {}
+
+<font color=#0000ff>class</font> Bart <font color=#0000ff>extends</font> Homer {
+  <font color=#0000ff>void</font> doh(Milhouse m) {}
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Hide {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Bart b = <font color=#0000ff>new</font> Bart();
+    b.doh(1); <font color=#009900>// doh(float) used</font>
+    b.doh('x');
+    b.doh(1.0f);
+    b.doh(<font color=#0000ff>new</font> Milhouse());
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">As you&#8217;ll see in the next chapter,
+it&#8217;s far more common to override methods of the same name using exactly
+the same signature and return type as in the base class. It can be confusing
+otherwise (which is why C++ disallows it, to prevent you from making what is
+probably a mistake).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I36' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I37>
+</FONT><A NAME="_Toc305593255"></A><A NAME="_Toc305628727"></A><A NAME="_Toc312374023"></A><A NAME="_Toc375545312"></A><A NAME="_Toc481064610"></A><BR></P></DIV>
+<A NAME="Heading216"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Choosing composition <BR>vs.
+inheritance<BR><A NAME="Index597"></A><A NAME="Index598"></A></H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Both composition and inheritance allow
+you to place subobjects<A NAME="Index599"></A> inside your new class. You might
+wonder about the difference between the two, and when to choose one over the
+other. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I37' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I38>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Composition is generally used when you
+want the features of an existing class inside your new class, but not its
+interface. That is, you embed an object so that you can use it to implement
+functionality in your new class, but the user of your new class sees the
+interface you&#8217;ve defined for the new class rather than the interface from
+the embedded object. For this effect, you embed <B>private</B> objects of
+existing classes inside your new class.
+<A NAME="Index600"></A><A NAME="Index601"></A>
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I38' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I39>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Sometimes it makes sense to allow the
+class user to directly access the composition of your new class; that is, to
+make the member objects <B>public</B>. The member objects use implementation
+hiding themselves, so this is a safe thing to do. When the user knows
+you&#8217;re assembling a bunch of parts, it makes the interface easier to
+understand. A <B>car</B> object is a good example:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c06:Car.java</font>
+<font color=#009900>// Composition with public objects.</font>
+
+<font color=#0000ff>class</font> Engine {
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> start() {}
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> rev() {}
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> stop() {}
+}
+
+<font color=#0000ff>class</font> Wheel {
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> inflate(<font color=#0000ff>int</font> psi) {}
+}
+
+<font color=#0000ff>class</font> Window {
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> rollup() {}
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> rolldown() {}
+}
+
+<font color=#0000ff>class</font> Door {
+  <font color=#0000ff>public</font> Window window = <font color=#0000ff>new</font> Window();
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> open() {}
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> close() {}
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Car {
+  <font color=#0000ff>public</font> Engine engine = <font color=#0000ff>new</font> Engine();
+  <font color=#0000ff>public</font> Wheel[] wheel = <font color=#0000ff>new</font> Wheel[4];
+  <font color=#0000ff>public</font> Door left = <font color=#0000ff>new</font> Door(),
+       right = <font color=#0000ff>new</font> Door(); <font color=#009900>// 2-door</font>
+  <font color=#0000ff>public</font> Car() {
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; 4; i++)
+      wheel[i] = <font color=#0000ff>new</font> Wheel();
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Car car = <font color=#0000ff>new</font> Car();
+    car.left.window.rollup();
+    car.wheel[0].inflate(72);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Because the composition of a car is part
+of the analysis of the problem (and not simply part of the underlying design),
+making the members <B>public</B> assists the client programmer&#8217;s
+understanding of how to use the class and requires less code complexity for the
+creator of the class. However, keep in mind that this is a special case and that
+in general you should make fields <B>private</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I39' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I40>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="Index602"></A><A NAME="Index603"></A><FONT FACE="Georgia">When
+you inherit, you take an existing class and make a special version of it. In
+general, this means that you&#8217;re taking a general-purpose class and
+specializing it for a particular need. With a little thought, you&#8217;ll see
+that it would make no sense to compose a car using a vehicle object&#8212;a car
+doesn&#8217;t contain a vehicle, it <I>is</I> a vehicle. The
+<A NAME="Index604"></A><I>is-a</I> relationship is expressed with inheritance,
+and the <A NAME="Index605"></A><I>has-a</I> relationship is expressed with
+composition.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I40' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I41>
+</FONT><A NAME="_Toc305593256"></A><A NAME="_Toc305628728"></A><A NAME="_Toc312374027"></A><A NAME="_Toc375545313"></A><A NAME="_Toc481064611"></A><BR></P></DIV>
+<A NAME="Heading217"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+protected</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Now that you&#8217;ve been introduced to
+inheritance, the keyword <B>protected<A NAME="Index606"></A></B> finally has
+meaning. In an ideal world, <B>private</B> members would always be hard-and-fast
+<B>private</B>, but in real projects there are times when you want to make
+something hidden from the world at large and yet allow access for members of
+derived classes. The <B>protected</B> keyword is a nod to pragmatism. It says
+&#8220;This is <B>private</B> as far as the class user is concerned, but
+available to anyone who inherits from this class or anyone else in the same
+<B>package</B>.&#8221; That is,
+<A NAME="Index607"></A><A NAME="Index608"></A><B>protected</B> in Java is
+automatically &#8220;friendly.&#8221;
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I41' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I42>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The best tack to take is to leave the
+data members <A NAME="Index609"></A><B>private</B>&#8212;you should always
+preserve your right to change the underlying implementation. You can then allow
+controlled access to inheritors of your class through
+<A NAME="Index610"></A><B>protected </B>methods:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c06:Orc.java</font>
+<font color=#009900>// The protected keyword.</font>
+<font color=#0000ff>import</font> java.util.*;
+
+<font color=#0000ff>class</font> Villain {
+  <font color=#0000ff>private</font> <font color=#0000ff>int</font> i;
+  <font color=#0000ff>protected</font> <font color=#0000ff>int</font> read() { <font color=#0000ff>return</font> i; }
+  <font color=#0000ff>protected</font> <font color=#0000ff>void</font> set(<font color=#0000ff>int</font> ii) { i = ii; }
+  <font color=#0000ff>public</font> Villain(<font color=#0000ff>int</font> ii) { i = ii; }
+  <font color=#0000ff>public</font> <font color=#0000ff>int</font> value(<font color=#0000ff>int</font> m) { <font color=#0000ff>return</font> m*i; }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Orc <font color=#0000ff>extends</font> Villain {
+  <font color=#0000ff>private</font> <font color=#0000ff>int</font> j;
+  <font color=#0000ff>public</font> Orc(<font color=#0000ff>int</font> jj) { <font color=#0000ff>super</font>(jj); j = jj; }
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> change(<font color=#0000ff>int</font> x) { set(x); }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can see that <B>change(&#160;)</B>
+has access to <B>set(&#160;)</B> because it&#8217;s <B>protected</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I42' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I43>
+</FONT><A NAME="_Toc305593258"></A><A NAME="_Toc305628730"></A><A NAME="_Toc312374030"></A><A NAME="_Toc375545314"></A><A NAME="_Toc481064612"></A><BR></P></DIV>
+<A NAME="Heading218"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Incremental development</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">One of the advantages of inheritance is
+that it supports <I>incremental
+development<A NAME="Index611"></A><A NAME="Index612"></A></I> by allowing you to
+introduce new code without causing bugs in existing code. This also isolates new
+bugs inside the new code. By inheriting from an existing, functional class and
+adding data members and methods (and redefining existing methods), you leave the
+existing code&#8212;that someone else might still be using&#8212;untouched and
+unbugged. If a bug happens, you know that it&#8217;s in your new code, which is
+much shorter and easier to read than if you had modified the body of existing
+code. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I43' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I44>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It&#8217;s rather amazing how cleanly the
+classes are separated. You don&#8217;t even need the source code for the methods
+in order to reuse the code. At most, you just import a package. (This is true
+for both inheritance and composition.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I44' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I45>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It&#8217;s important to realize that
+program development is an incremental process, just like human learning. You can
+do as much analysis as you want, but you still won&#8217;t know all the answers
+when you set out on a project. You&#8217;ll have much more success&#8212;and
+more immediate feedback&#8212;if you start out to &#8220;grow&#8221; your
+project as an organic, evolutionary creature, rather than constructing it all at
+once like a glass-box skyscraper.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I45' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I46>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Although inheritance for experimentation
+can be a useful technique, at some point after things stabilize you need to take
+a new look at your class hierarchy with an eye to collapsing it into a sensible
+structure. Remember that underneath it all, inheritance is meant to express a
+relationship that says &#8220;This new class is a <I>type of</I> that old
+class.&#8221; Your program should not be concerned with pushing bits around, but
+instead with creating and manipulating objects of various types to express a
+model in the terms that come from the <A NAME="Index613"></A>problem space.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I46' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I47>
+</FONT><A NAME="_Toc305593259"></A><A NAME="_Toc305628731"></A><A NAME="_Toc312374031"></A><A NAME="_Toc375545315"></A><A NAME="_Toc481064613"></A><BR></P></DIV>
+<A NAME="Heading219"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Upcasting<BR><A NAME="Index614"></A></H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The most important aspect of inheritance
+is not that it provides methods for the new class. It&#8217;s the relationship
+expressed between the new class and the base class. This
+<A NAME="Index615"></A>relationship can be summarized by saying &#8220;The new
+class <I>is a type of</I> the existing class.&#8221; 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I47' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I48>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This description is not just a fanciful
+way of explaining inheritance&#8212;it&#8217;s supported directly by the
+language. As an example, consider a base class called <B>Instrument</B> that
+represents musical instruments, and a derived class called <B>Wind</B>. Because
+inheritance means that all of the methods in the base class are also available
+in the derived class, any message you can send to the base class can also be
+sent to the derived class. If the <B>Instrument</B> class has a
+<B>play(&#160;)</B> method, so will <B>Wind</B> instruments. This means we can
+accurately say that a <B>Wind</B> object is also a type of <B>Instrument</B>.
+The following example shows how the compiler supports this
+notion:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c06:Wind.java</font>
+<font color=#009900>// Inheritance &amp; upcasting.</font>
+<font color=#0000ff>import</font> java.util.*;
+
+<font color=#0000ff>class</font> Instrument {
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> play() {}
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> tune(Instrument i) {
+    <font color=#009900>// ...</font>
+    i.play();
+  }
+}
+
+<font color=#009900>// Wind objects are instruments</font>
+<font color=#009900>// because they have the same interface:</font>
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Wind <font color=#0000ff>extends</font> Instrument {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Wind flute = <font color=#0000ff>new</font> Wind();
+    Instrument.tune(flute); <font color=#009900>// Upcasting</font>
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">What&#8217;s interesting in this example
+is the <B>tune(&#160;)</B> method, which accepts an <B>Instrument</B> reference.
+However, in <B>Wind</B>.<B>main(&#160;)</B> the <B>tune(&#160;)</B> method is
+called by giving it a <B>Wind</B> reference. Given that Java is particular about
+type checking, it seems strange that a method that accepts one type will readily
+accept another type, until you realize that a <B>Wind</B> object is also an
+<B>Instrument</B> object, and there&#8217;s no method that <B>tune(&#160;)</B>
+could call for an <B>Instrument</B> that isn&#8217;t also in <B>Wind</B>. Inside
+<B>tune(&#160;)</B>, the code works for <B>Instrument</B> and anything derived
+from <B>Instrument</B>, and the act of converting a <B>Wind</B> reference into
+an <B>Instrument</B> reference is called <I>upcasting</I>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I48' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I49>
+</FONT><A NAME="_Toc312374032"></A><A NAME="_Toc375545316"></A><A NAME="_Toc481064614"></A><BR></P></DIV>
+<A NAME="Heading220"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Why &#8220;upcasting&#8221;?</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The reason for the term is historical,
+and based on the way class inheritance diagrams
+<A NAME="Index616"></A><A NAME="Index617"></A><A NAME="Index618"></A>have
+traditionally been drawn: with the root at the top of the page, growing
+downward. (Of course, you can draw your diagrams any way you find helpful.) The
+inheritance diagram for <B>Wind.java</B> is then: </FONT><BR></P></DIV>
+<DIV ALIGN="CENTER"><FONT FACE="Georgia"><IMG SRC="TIJ214.gif"></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Casting from derived to base moves
+<I>up</I> on the inheritance diagram, so it&#8217;s commonly referred to as
+<I>upcasting</I>. Upcasting is always safe because you&#8217;re going from a
+more specific type to a more general type. That is, the derived class is a
+superset of the base class. It might contain more methods than the base class,
+but it must contain <I>at least</I> the methods in the base class. The only
+thing that can occur to the class interface during the upcast is that it can
+lose methods, not gain them. This is why the compiler allows upcasting without
+any explicit casts or other special notation.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I49' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I50>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can also perform the reverse of
+upcasting, called <A NAME="Index619"></A><I>downcasting</I>, but this involves a
+dilemma that is the subject of Chapter 12.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I50' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I51>
+</FONT><A NAME="_Toc312374033"></A><BR></P></DIV>
+<A NAME="Heading221"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Composition vs. inheritance revisited</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In object-oriented programming, the most
+likely way that you&#8217;ll create and use code is by simply packaging data and
+methods together into a class, and using objects of that class. You&#8217;ll
+also use existing classes to build new classes with composition. Less
+frequently, you&#8217;ll use inheritance. So although inheritance gets a lot of
+emphasis while learning OOP, it doesn&#8217;t mean that you should use it
+everywhere you possibly can. On the contrary, you should use it sparingly, only
+when it&#8217;s clear that inheritance is useful.
+<A NAME="Index620"></A><A NAME="Index621"></A>One of the clearest ways to
+determine whether you should use composition or inheritance is to ask whether
+you&#8217;ll ever need to upcast from your new class to the base class. If you
+must upcast, then inheritance is necessary, but if you don&#8217;t need to
+upcast, then you should look closely at whether you need inheritance. The next
+chapter (polymorphism) provides one of the most compelling reasons for
+upcasting, but if you remember to ask &#8220;Do I need to upcast?&#8221;
+you&#8217;ll have a good tool for deciding between composition and inheritance.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I51' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I52>
+</FONT><A NAME="_Toc305593260"></A><A NAME="_Toc305628732"></A><A NAME="_Toc312374036"></A><A NAME="_Toc375545317"></A><A NAME="_Toc481064615"></A><BR></P></DIV>
+<A NAME="Heading222"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+The final keyword</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java&#8217;s
+<A NAME="Index622"></A><B>final</B> keyword has slightly different meanings
+depending on the context, but in general it says &#8220;This cannot be
+changed.&#8221; You might want to prevent changes for two reasons: design or
+efficiency. Because these two reasons are quite different, it&#8217;s possible
+to misuse the <B>final</B> keyword.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I52' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I53>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The following sections discuss the three
+places where <B>final</B> can be used: for data, methods, and classes.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I53' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I54>
+</FONT><A NAME="_Toc375545318"></A><A NAME="_Toc481064616"></A><BR></P></DIV>
+<A NAME="Heading223"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Final data<BR><A NAME="Index623"></A><A NAME="Index624"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Many programming languages have a way to
+tell the compiler that a piece of data is &#8220;constant.&#8221; A constant is
+useful for two reasons:
+<A NAME="Index625"></A><A NAME="Index626"></A><A NAME="Index627"></A></FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">It can be a
+<I>compile-time constant</I> that won&#8217;t ever change.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I54' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I55>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">It
+can be a value initialized at run-time that you don&#8217;t want changed.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I55' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I56>
+</FONT></OL><DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In
+the case of a compile-time constant, the compiler is allowed to
+&#8220;fold&#8221; the <A NAME="Index628"></A><A NAME="Index629"></A>constant
+value into any calculations in which it&#8217;s used; that is, the calculation
+can be performed at compile-time, eliminating some run-time overhead. In Java,
+these sorts of constants must be <A NAME="Index630"></A>primitives and are
+expressed using the <B>final</B> keyword. A value must be given at the time of
+definition of such a constant.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I56' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I57>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A field that is both
+<A NAME="Index631"></A><A NAME="Index632"></A><B>static</B> and <B>final</B> has
+only one piece of storage that cannot be changed.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I57' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I58>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When using
+<A NAME="Index633"></A><A NAME="Index634"></A><A NAME="Index635"></A><B>final</B>
+with object references rather than primitives the meaning gets a bit confusing.
+With a primitive, <B>final</B> makes the <I>value</I> a constant, but with an
+object reference, <B>final</B> makes the <I>reference</I> a constant. Once the
+reference is initialized to an object, it can never be changed to point to
+another object. However, the object itself can be modified; Java does not
+provide a way to make any arbitrary object a constant. (You can, however, write
+your class so that objects have the effect of being constant.) This restriction
+includes arrays, which are also objects.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I58' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I59>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here&#8217;s an example that demonstrates
+<B>final</B> fields:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c06:FinalData.java</font>
+<font color=#009900>// The effect of final on fields.</font>
+
+<font color=#0000ff>class</font> Value {
+  <font color=#0000ff>int</font> i = 1;
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> FinalData {
+  <font color=#009900>// Can be compile-time constants</font>
+  <font color=#0000ff>final</font> <font color=#0000ff>int</font> i1 = 9;
+  <font color=#0000ff>static</font> <font color=#0000ff>final</font> <font color=#0000ff>int</font> VAL_TWO = 99;
+  <font color=#009900>// Typical public constant:</font>
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>final</font> <font color=#0000ff>int</font> VAL_THREE = 39;
+  <font color=#009900>// Cannot be compile-time constants:</font>
+  <font color=#0000ff>final</font> <font color=#0000ff>int</font> i4 = (<font color=#0000ff>int</font>)(Math.random()*20);
+  <font color=#0000ff>static</font> <font color=#0000ff>final</font> <font color=#0000ff>int</font> i5 = (<font color=#0000ff>int</font>)(Math.random()*20);
+  
+  Value v1 = <font color=#0000ff>new</font> Value();
+  <font color=#0000ff>final</font> Value v2 = <font color=#0000ff>new</font> Value();
+  <font color=#0000ff>static</font> <font color=#0000ff>final</font> Value v3 = <font color=#0000ff>new</font> Value();
+  <font color=#009900>// Arrays:</font>
+  <font color=#0000ff>final</font> <font color=#0000ff>int</font>[] a = { 1, 2, 3, 4, 5, 6 };
+
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> print(String id) {
+    System.out.println(
+      id + <font color=#004488>": "</font> + <font color=#004488>"i4 = "</font> + i4 + 
+      <font color=#004488>", i5 = "</font> + i5);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    FinalData fd1 = <font color=#0000ff>new</font> FinalData();
+    <font color=#009900>//! fd1.i1++; // Error: can't change value</font>
+    fd1.v2.i++; <font color=#009900>// Object isn't constant!</font>
+    fd1.v1 = <font color=#0000ff>new</font> Value(); <font color=#009900>// OK -- not final</font>
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; fd1.a.length; i++)
+      fd1.a[i]++; <font color=#009900>// Object isn't constant!</font>
+    <font color=#009900>//! fd1.v2 = new Value(); // Error: Can't </font>
+    <font color=#009900>//! fd1.v3 = new Value(); // change reference</font>
+    <font color=#009900>//! fd1.a = new int[3];</font>
+
+    fd1.print(<font color=#004488>"fd1"</font>);
+    System.out.println(<font color=#004488>"Creating new FinalData"</font>);
+    FinalData fd2 = <font color=#0000ff>new</font> FinalData();
+    fd1.print(<font color=#004488>"fd1"</font>);
+    fd2.print(<font color=#004488>"fd2"</font>);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Since <B>i1</B> and <B>VAL_TWO</B> are
+<B>final</B> primitives with compile-time values, they can both be used as
+compile-time constants and are not different in any important way.
+<B>VAL_THREE</B> is the more typical way you&#8217;ll see such constants
+defined: <B>public</B> so they&#8217;re usable outside the package,
+<B>static</B> to emphasize that there&#8217;s only one, and <B>final</B> to say
+that it&#8217;s a constant. Note that
+<A NAME="Index636"></A><A NAME="Index637"></A><A NAME="Index638"></A><B>final
+static</B> primitives with constant initial values (that is, compile-time
+constants) are named with all capitals by convention, with words separated by
+underscores (This is just like C constants, which is where the convention
+originated.) Also note that <B>i5</B> cannot be known at compile-time, so it is
+not capitalized. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I59' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I60>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Just because something is <B>final</B>
+doesn&#8217;t mean that its value is known at compile-time. This is demonstrated
+by initializing <B>i4</B> and <B>i5</B> at run-time using randomly generated
+numbers. This portion of the example also shows the difference between making a
+<B>final</B> value <B>static</B> or non-<B>static</B>. This difference shows up
+only when the values are initialized at run-time, since the compile-time values
+are treated the same by the compiler. (And presumably optimized out of
+existence.) The difference is shown in the output from one run:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>fd1: i4 = 15, i5 = 9
+Creating <font color=#0000ff>new</font> FinalData
+fd1: i4 = 15, i5 = 9
+fd2: i4 = 10, i5 = 9</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Note that the values of <B>i4</B> for
+<B>fd1</B> and <B>fd2</B> are unique, but the value for <B>i5</B> is not changed
+by creating the second <B>FinalData</B> object. That&#8217;s because it&#8217;s
+<B>static</B> and is initialized once upon loading and not each time a new
+object is created. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I60' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I61>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The variables <B>v1</B> through <B>v4</B>
+demonstrate the meaning of a <B>final</B> reference. As you can see in
+<B>main(&#160;)</B>, just because <B>v2</B> is <B>final</B> doesn&#8217;t mean
+that you can&#8217;t change its value. However, you cannot rebind <B>v2</B> to a
+new object, precisely because it&#8217;s <B>final</B>. That&#8217;s what
+<B>final</B> means for a reference. You can also see the same meaning holds true
+for an array, which is just another kind of reference. (There is no way that I
+know of to make the array references themselves <B>final</B>.) Making references
+<B>final</B> seems less useful than making primitives <B>final</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I61' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I62>
+</FONT><BR></P></DIV>
+<A NAME="Heading224"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Blank finals</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java allows the creation of
+<A NAME="Index639"></A><A NAME="Index640"></A><I>blank finals</I>, which are
+fields that are declared as <B>final</B> but are not given an initialization
+value. In all cases, the blank final <I>must</I> be initialized before it is
+used, and the compiler ensures this. However, blank finals provide much more
+flexibility in the use of the <B>final</B> keyword since, for example, a
+<B>final</B> field inside a class can now be different for each object and yet
+it retains its immutable quality. Here&#8217;s an example:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c06:BlankFinal.java</font>
+<font color=#009900>// "Blank" final data members.</font>
+
+<font color=#0000ff>class</font> Poppet { }
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> BlankFinal {
+  <font color=#0000ff>final</font> <font color=#0000ff>int</font> i = 0; <font color=#009900>// Initialized final</font>
+  <font color=#0000ff>final</font> <font color=#0000ff>int</font> j; <font color=#009900>// Blank final</font>
+  <font color=#0000ff>final</font> Poppet p; <font color=#009900>// Blank final reference</font>
+  <font color=#009900>// Blank finals MUST be initialized</font>
+  <font color=#009900>// in the constructor:</font>
+  BlankFinal() {
+    j = 1; <font color=#009900>// Initialize blank final</font>
+    p = <font color=#0000ff>new</font> Poppet();
+  }
+  BlankFinal(<font color=#0000ff>int</font> x) {
+    j = x; <font color=#009900>// Initialize blank final</font>
+    p = <font color=#0000ff>new</font> Poppet();
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    BlankFinal bf = <font color=#0000ff>new</font> BlankFinal();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You&#8217;re forced to perform
+assignments to <B>final</B>s either with an expression at the point of
+definition of the field or in every constructor. This way it&#8217;s guaranteed
+that the <B>final</B> field is always initialized before use.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I62' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I63>
+</FONT><BR></P></DIV>
+<A NAME="Heading225"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Final arguments</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java allows you to make
+<A NAME="Index641"></A><A NAME="Index642"></A>arguments <B>final</B> by
+declaring them as such in the argument list. This means that inside the method
+you cannot change what the argument reference points to:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c06:FinalArguments.java</font>
+<font color=#009900>// Using "final" with method arguments.</font>
+
+<font color=#0000ff>class</font> Gizmo {
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> spin() {}
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> FinalArguments {
+  <font color=#0000ff>void</font> with(<font color=#0000ff>final</font> Gizmo g) {
+    <font color=#009900>//! g = new Gizmo(); // Illegal -- g is final</font>
+  }
+  <font color=#0000ff>void</font> without(Gizmo g) {
+    g = <font color=#0000ff>new</font> Gizmo(); <font color=#009900>// OK -- g not final</font>
+    g.spin();
+  }
+  <font color=#009900>// void f(final int i) { i++; } // Can't change</font>
+  <font color=#009900>// You can only read from a final primitive:</font>
+  <font color=#0000ff>int</font> g(<font color=#0000ff>final</font> <font color=#0000ff>int</font> i) { <font color=#0000ff>return</font> i + 1; }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    FinalArguments bf = <font color=#0000ff>new</font> FinalArguments();
+    bf.without(<font color=#0000ff>null</font>);
+    bf.with(<font color=#0000ff>null</font>);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Note that you can still assign a
+<B>null</B> reference to an argument that&#8217;s final without the compiler
+catching it, just like you can with a non-<B>final</B> argument.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I63' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I64>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The methods <B>f(&#160;)</B> and
+<B>g(&#160;)</B> show what happens when primitive arguments are <B>final</B>:
+you can read the argument, but you can't change it.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I64' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I65>
+</FONT><A NAME="_Toc375545319"></A><A NAME="_Toc481064617"></A><BR></P></DIV>
+<A NAME="Heading226"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Final methods</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There are two reasons for
+<A NAME="Index643"></A><A NAME="Index644"></A><B>final</B> methods. The first is
+to put a &#8220;lock&#8221; on the method to prevent any inheriting class from
+changing its meaning. This is done for design reasons when you want to make sure
+that a method&#8217;s behavior is retained during inheritance and cannot be
+overridden. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I65' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I66>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The second reason for <B>final</B>
+methods is efficiency. If you make a method <B>final</B>, you are allowing the
+compiler to turn any calls to that method into
+<A NAME="Index645"></A><A NAME="Index646"></A><I>inline</I> calls. When the
+compiler sees a <B>final</B> method call it can (at its discretion) skip the
+normal approach of inserting code to perform the method call mechanism (push
+arguments on the stack, hop over to the method code and execute it, hop back and
+clean off the stack arguments, and deal with the return value) and instead
+replace the method call with a copy of the actual code in the method body. This
+eliminates the overhead of the method call. Of course, if a method is big, then
+your code begins to bloat and you probably won&#8217;t see any performance gains
+from inlining, since any improvements will be dwarfed by the amount of time
+spent inside the method. It is implied that the Java compiler is able to detect
+these situations and choose wisely whether to inline a <B>final</B> method.
+However, it&#8217;s better to not trust that the compiler is able to do this and
+make a method <B>final</B> only if it&#8217;s quite small or if you want to
+explicitly prevent overriding.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I66' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I67>
+</FONT><BR></P></DIV>
+<A NAME="Heading227"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+final and private<BR><A NAME="Index647"></A><A NAME="Index648"></A></H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Any <B>private</B> methods in a class are
+implicitly <B>final</B>. Because you can&#8217;t access a <B>private </B>method,
+you can&#8217;t override it (even though the compiler doesn&#8217;t give an
+error message if you try to override it, you haven&#8217;t overridden the
+method, you&#8217;ve just created a new method). You can add the <B>final</B>
+specifier to a <B>private</B> method but it doesn&#8217;t give that method any
+extra meaning. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I67' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I68>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This issue can cause confusion, because
+if you try to override a <B>private</B> method (which is implicitly
+<B>final</B>)<B> </B>it seems to work:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c06:FinalOverridingIllusion.java</font>
+<font color=#009900>// It only looks like you can override</font>
+<font color=#009900>// a private or private final method.</font>
+
+<font color=#0000ff>class</font> WithFinals {
+  <font color=#009900>// Identical to "private" alone:</font>
+  <font color=#0000ff>private</font> <font color=#0000ff>final</font> <font color=#0000ff>void</font> f() {
+    System.out.println(<font color=#004488>"WithFinals.f()"</font>);
+  }
+  <font color=#009900>// Also automatically "final":</font>
+  <font color=#0000ff>private</font> <font color=#0000ff>void</font> g() {
+    System.out.println(<font color=#004488>"WithFinals.g()"</font>);
+  }
+}
+
+<font color=#0000ff>class</font> OverridingPrivate <font color=#0000ff>extends</font> WithFinals {
+  <font color=#0000ff>private</font> <font color=#0000ff>final</font> <font color=#0000ff>void</font> f() {
+    System.out.println(<font color=#004488>"OverridingPrivate.f()"</font>);
+  }
+  <font color=#0000ff>private</font> <font color=#0000ff>void</font> g() {
+    System.out.println(<font color=#004488>"OverridingPrivate.g()"</font>);
+  }
+}
+
+<font color=#0000ff>class</font> OverridingPrivate2 
+  <font color=#0000ff>extends</font> OverridingPrivate {
+  <font color=#0000ff>public</font> <font color=#0000ff>final</font> <font color=#0000ff>void</font> f() {
+    System.out.println(<font color=#004488>"OverridingPrivate2.f()"</font>);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> g() {
+    System.out.println(<font color=#004488>"OverridingPrivate2.g()"</font>);
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> FinalOverridingIllusion {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    OverridingPrivate2 op2 = 
+      <font color=#0000ff>new</font> OverridingPrivate2();
+    op2.f();
+    op2.g();
+    <font color=#009900>// You can upcast:</font>
+    OverridingPrivate op = op2;
+    <font color=#009900>// But you can't call the methods:</font>
+    <font color=#009900>//! op.f();</font>
+    <font color=#009900>//! op.g();</font>
+    <font color=#009900>// Same here:</font>
+    WithFinals wf = op2;
+    <font color=#009900>//! wf.f();</font>
+    <font color=#009900>//! wf.g();</font>
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">&#8220;Overriding&#8221; can only occur
+if something is part of the base-class interface. That is, you must be able to
+upcast an object to its base type and call the same method (the point of this
+will become clear in the next chapter). If a method is <B>private</B>, it
+isn&#8217;t part of the base-class interface. It is just some code that&#8217;s
+hidden away inside the class, and it just happens to have that name, but if you
+create a <B>public</B>, <B>protected</B> or &#8220;friendly&#8221; method in the
+derived class, there&#8217;s no connection to the method that might happen to
+have that name in the base class. Since a <B>private </B>method is unreachable
+and effectively invisible, it doesn&#8217;t factor into anything except for the
+code organization of the class for which it was defined.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I68' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I69>
+</FONT><A NAME="_Toc375545320"></A><A NAME="_Toc481064618"></A><BR></P></DIV>
+<A NAME="Heading228"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Final classes<BR><A NAME="Index649"></A><A NAME="Index650"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When you say that an entire class is
+<B>final</B> (by preceding its definition with the <B>final</B> keyword), you
+state that you don&#8217;t want to inherit from this class or allow anyone else
+to do so. In other words, for some reason the design of your class is such that
+there is never a need to make any changes, or for safety or security reasons you
+don&#8217;t want subclassing. Alternatively, you might be dealing with an
+efficiency issue, and you want to make sure that any activity involved with
+objects of this class are as efficient as possible.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I69' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I70>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c06:Jurassic.java</font>
+<font color=#009900>// Making an entire class final.</font>
+
+<font color=#0000ff>class</font> SmallBrain {}
+
+<font color=#0000ff>final</font> <font color=#0000ff>class</font> Dinosaur {
+  <font color=#0000ff>int</font> i = 7;
+  <font color=#0000ff>int</font> j = 1;
+  SmallBrain x = <font color=#0000ff>new</font> SmallBrain();
+  <font color=#0000ff>void</font> f() {}
+}
+
+<font color=#009900>//! class Further extends Dinosaur {}</font>
+<font color=#009900>// error: Cannot extend final class 'Dinosaur'</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Jurassic {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Dinosaur n = <font color=#0000ff>new</font> Dinosaur();
+    n.f();
+    n.i = 40;
+    n.j++;
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Note that the data members can be
+<B>final</B> or not, as you choose. The same rules apply to <B>final</B> for
+data members regardless of whether the class is defined as <B>final</B>.
+Defining the class as <B>final</B> simply prevents inheritance&#8212;nothing
+more. However, because it prevents <A NAME="Index651"></A>inheritance all
+methods in a <B>final</B> class are implicitly <B>final</B>, since there&#8217;s
+no way to override them. So the compiler has the same efficiency options as it
+does if you explicitly declare a method <B>final</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I70' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I71>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can add the <B>final</B> specifier to
+a method in a <B>final</B> class, but it doesn&#8217;t add any meaning.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I71' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I72>
+</FONT><A NAME="_Toc375545321"></A><A NAME="_Toc481064619"></A><BR></P></DIV>
+<A NAME="Heading229"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Final caution</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It can seem to be sensible to make a
+method <B>final</B> while you&#8217;re designing a class. You might feel that
+<A NAME="Index652"></A><A NAME="Index653"></A><A NAME="Index654"></A>efficiency
+is very important when using your class and that no one could possibly want to
+override your methods anyway. Sometimes this is true.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I72' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I73>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">But be careful with your assumptions. In
+general, it&#8217;s difficult to anticipate how a class can be reused,
+especially a general-purpose class. If you define a method as <B>final</B> you
+might prevent the possibility of reusing your class through inheritance in some
+other programmer&#8217;s project simply because you couldn&#8217;t imagine it
+being used that way. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I73' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I74>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The standard Java library is a good
+example of this. In particular, the Java 1.0/1.1 <B>Vector</B> class was
+commonly used and might have been even more useful if, in the name of
+efficiency, all the methods hadn&#8217;t been made <B>final</B>. It&#8217;s
+easily conceivable that you might want to inherit and override with such a
+fundamentally useful class, but the designers somehow decided this wasn&#8217;t
+appropriate. This is ironic for two reasons. First, <B>Stack </B>is inherited
+from <B>Vector</B>, which says that a <B>Stack </B><I>is</I> a <B>Vector</B>,
+which isn&#8217;t really true from a logical standpoint. Second, many of the
+most important methods of <B>Vector</B>, such as <B>addElement(&#160;) </B>and
+<B>elementAt(&#160;)</B> are <B>synchronized</B>. As you will see in Chapter 14,
+this incurs a significant performance overhead that probably wipes out any gains
+provided by <B>final</B>. This lends credence to the theory that programmers are
+consistently bad at guessing where optimizations should occur. It&#8217;s just
+too bad that such a clumsy design made it into the standard library where we
+must all cope with it. (Fortunately, the Java 2 container library replaces
+<B>Vector</B> with <B>ArrayList</B>, which behaves much more civilly.
+Unfortunately, there&#8217;s still plenty of new code being written that uses
+the old container library.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I74' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I75>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It&#8217;s also interesting to note that
+<B>Hashtable</B>, another important standard library class, does <I>not</I> have
+any <B>final</B> methods. As mentioned elsewhere in this book, it&#8217;s quite
+obvious that some classes were designed by completely different people than
+others. (You&#8217;ll see that the method names in <B>Hashtable</B> are much
+briefer compared to those in <B>Vector</B>, another piece of evidence.) This is
+precisely the sort of thing that should <I>not</I> be obvious to consumers of a
+class library. When things are inconsistent it just makes more work for the
+user. Yet another paean to the value of design and code walkthroughs. (Note that
+the Java 2 container library replaces <B>Hashtable</B> with <B>HashMap</B>.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I75' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I76>
+</FONT><A NAME="_Toc375545322"></A><A NAME="_Toc481064620"></A><BR></P></DIV>
+<A NAME="Heading230"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Initialization and <BR>class
+loading<BR><A NAME="Index655"></A><A NAME="Index656"></A><A NAME="Index657"></A></H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In more traditional languages, programs
+are loaded all at once as part of the startup process. This is followed by
+initialization, and then the program begins. The process of initialization in
+these languages must be carefully controlled so that the order of initialization
+of <B>static</B>s doesn&#8217;t cause trouble. C++, for example, has problems if
+one <B>static</B> expects another <B>static </B>to be valid before the second
+one has been initialized. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I76' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I77>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java doesn&#8217;t have this problem
+because it takes a different approach to loading. Because everything in Java is
+an object, many activities become easier, and this is one of them. As you will
+learn more fully in the next chapter, the compiled code for each class exists in
+its own separate file. That file isn&#8217;t loaded until the code is needed. In
+general, you can say that &#8220;Class code is loaded at the point of first
+use.&#8221; This is often not until the first object of that class is
+constructed, but loading also occurs when a <B>static </B>field or <B>static</B>
+method is accessed. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I77' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I78>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The point of first use is also where the
+<B>static</B> initialization takes place. All the <B>static</B> objects and the
+<B>static</B> code block will be initialized in textual
+<A NAME="Index658"></A>order (that is, the order that you write them down in the
+class definition) at the point of loading. The <B>static</B>s, of course, are
+initialized only once.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I78' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I79>
+</FONT><A NAME="_Toc375545323"></A><A NAME="_Toc481064621"></A><BR></P></DIV>
+<A NAME="Heading231"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Initialization with inheritance</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It&#8217;s helpful to look at the whole
+<A NAME="Index659"></A><A NAME="Index660"></A>initialization process, including
+inheritance, to get a full picture of what happens. Consider the following
+code:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c06:Beetle.java</font>
+<font color=#009900>// The full process of initialization.</font>
+
+<font color=#0000ff>class</font> Insect {
+  <font color=#0000ff>int</font> i = 9;
+  <font color=#0000ff>int</font> j;
+  Insect() {
+    prt(<font color=#004488>"i = "</font> + i + <font color=#004488>", j = "</font> + j);
+    j = 39;
+  }
+  <font color=#0000ff>static</font> <font color=#0000ff>int</font> x1 = 
+    prt(<font color=#004488>"static Insect.x1 initialized"</font>);
+  <font color=#0000ff>static</font> <font color=#0000ff>int</font> prt(String s) {
+    System.out.println(s);
+    <font color=#0000ff>return</font> 47;
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Beetle <font color=#0000ff>extends</font> Insect {
+  <font color=#0000ff>int</font> k = prt(<font color=#004488>"Beetle.k initialized"</font>);
+  Beetle() {
+    prt(<font color=#004488>"k = "</font> + k);
+    prt(<font color=#004488>"j = "</font> + j);
+  }
+  <font color=#0000ff>static</font> <font color=#0000ff>int</font> x2 =
+    prt(<font color=#004488>"static Beetle.x2 initialized"</font>);
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    prt(<font color=#004488>"Beetle constructor"</font>);
+    Beetle b = <font color=#0000ff>new</font> Beetle();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The output for this program
+is:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>static</font> Insect.x1 initialized
+<font color=#0000ff>static</font> Beetle.x2 initialized
+Beetle constructor
+i = 9, j = 0
+Beetle.k initialized
+k = 47
+j = 39</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The first thing that happens when you run
+Java on <B>Beetle</B> is that you try to access <B>Beetle.main(&#160;) </B>(a
+<B>static </B>method), so the loader goes out and finds the compiled code for
+the <B>Beetle</B> <A NAME="Index661"></A><A NAME="Index662"></A>class (this
+happens to be in a file called <B>Beetle.class</B>). In the process of loading
+it, the loader notices that it has a base class (that&#8217;s what the
+<B>extends </B>keyword says), which it then loads. This will happen whether or
+not you&#8217;re going to make an object of that base class. (Try commenting out
+the object creation to prove it to yourself.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I79' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I80>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If the base class has a base class, that
+second base class would then be loaded, and so on. Next, the
+<A NAME="Index663"></A><A NAME="Index664"></A><B>static</B> initialization in
+the root base class (in this case, <B>Insect</B>) is performed, and then the
+next derived class, and so on. This is important because the derived-class
+static initialization might depend on the base class member being initialized
+properly. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I80' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I81>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">At this point, the necessary classes have
+all been loaded so the object can be created. First, all the primitives in this
+object are set to their default values and the object references are set to
+<B>null</B>&#8212;this happens in one fell swoop by setting the memory in the
+object to binary zero.<B> </B>Then the base-class constructor will be called. In
+this case the call is automatic, but you can also specify the base-class
+constructor call (as the first operation in the <B>Beetle(&#160;)</B>
+constructor) using <B>super</B>. The base class construction goes through the
+same process in the same order as the derived-class constructor. After the
+base-class constructor completes, the instance variables are initialized in
+textual order. Finally, the rest of the body of the constructor is executed.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I81' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I82>
+</FONT><A NAME="_Toc375545324"></A><A NAME="_Toc481064622"></A><BR></P></DIV>
+<A NAME="Heading232"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Summary</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Both inheritance and composition allow
+you to create a new type from existing types. Typically, however, you use
+composition to reuse existing types as part of the underlying implementation of
+the new type, and inheritance when you want to reuse the interface. Since the
+derived class has the base-class interface, it can be <I>upcast</I> to the base,
+which is critical for polymorphism, as you&#8217;ll see in the next chapter. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I82' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I83>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Despite the strong emphasis on
+inheritance in object-oriented programming, when you start a design you should
+generally prefer composition during the first cut and use inheritance only when
+it is clearly necessary. Composition tends to be more flexible. In addition, by
+using the added artifice of inheritance with your member type, you can change
+the exact type, and thus the behavior, of those member objects at run-time.
+Therefore, you can change the behavior of the composed object at run-time.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I83' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I84>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Although code reuse through composition
+and inheritance is helpful for rapid project development, you&#8217;ll generally
+want to <A NAME="Index665"></A>redesign your class hierarchy before allowing
+other programmers to become dependent on it. Your goal is a hierarchy in which
+each class has a specific use and is neither too big (encompassing so much
+functionality that it&#8217;s unwieldy to reuse) nor annoyingly small (you
+can&#8217;t use it by itself or without adding functionality).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I84' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I85>
+</FONT><A NAME="_Toc375545325"></A><A NAME="_Toc481064623"></A><BR></P></DIV>
+<A NAME="Heading233"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Exercises</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=2>Solutions to selected exercises
+can be found in the electronic document <I>The Thinking in Java Annotated
+Solution Guide</I>, available for a small fee from
+<I>www.BruceEckel.com</I>.</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create two classes,
+<B>A</B> and <B>B</B>, with default constructors (empty argument lists) that
+announce themselves. Inherit a new class called <B>C</B> from <B>A</B>, and
+create a member of class <B>B</B> inside <B>C</B>. Do not create a constructor
+for <B>C</B>. Create an object of class <B>C</B> and observe the results.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I85' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I86>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Modify
+Exercise 1 so that <B>A</B> and <B>B</B> have constructors with arguments
+instead of default constructors. Write a constructor for <B>C</B> and perform
+all initialization within <B>C</B>&#8217;s constructor. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I86' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I87>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a simple class. Inside a second class, define a field for an object of the first
+class. Use lazy initialization to instantiate this object.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I87' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I88>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Inherit
+a new class from class <B>Detergent</B>. Override <B>scrub(&#160;)</B> and add a
+new method called <B>sterilize(&#160;)</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I88' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I89>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Take
+the file <B>Cartoon.java</B> and comment out the constructor for the
+<B>Cartoon</B> class. Explain what happens.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I89' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I90>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Take
+the file <B>Chess.java</B> and comment out the constructor for the <B>Chess</B>
+class. Explain what happens.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I90' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I91>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Prove
+that default constructors are created for you by the compiler.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I91' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I92>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Prove
+that the base-class constructors are (a) always called, and (b) called before
+derived-class constructors.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I92' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I93>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a base class with only a nondefault constructor, and a derived class with both a
+default and nondefault constructor. In the derived-class constructors, call the
+base-class constructor.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I93' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I94>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class called <B>Root</B> that contains an instance of each of classes (that
+you also create) named <B>Component1</B>, <B>Component2</B>,<B> </B>and
+<B>Component3</B>. Derive a class <B>Stem</B> from <B>Root</B> that also
+contains an instance of each &#8220;component.&#8221; All classes should have
+default constructors that print a message about that class.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I94' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I95>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Modify
+Exercise 10 so that each class only has nondefault constructors.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I95' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I96>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Add
+a proper hierarchy of <B>cleanup(&#160;)</B> methods to all the classes in
+Exercise 11.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I96' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I97>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class with a method that is overloaded three times. Inherit a new class, add a
+new overloading of the method, and show that all four methods are available in
+the derived class.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I97' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I98>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">In
+<B>Car.java</B> add a <B>service(&#160;)</B> method to <B>Engine</B> and call
+this method in <B>main(&#160;)</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I98' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I99>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class inside a package. Your class should contain a <B>protected</B> method.
+Outside of the package, try to call the <B>protected</B> method and explain the
+results. Now inherit from your class and call the <B>protected</B> method from
+inside a method of your derived class.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I99' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I100>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class called <B>Amphibian</B>. From this, inherit a class called <B>Frog</B>.
+Put appropriate methods in the base class. In <B>main(&#160;)</B>, create a
+<B>Frog</B> and upcast it to <B>Amphibian</B>, and demonstrate that all the
+methods still work.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I100' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I101>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Modify
+Exercise 16 so that <B>Frog</B> overrides the method definitions from the base
+class (provides new definitions using the same method signatures). Note what
+happens in <B>main(&#160;)</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I101' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I102>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class with a <B>static final</B> field and a <B>final</B> field and
+demonstrate the difference between the two.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I102' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I103>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class with a blank <B>final</B> reference to an object. Perform the
+initialization of the blank <B>final</B> inside a method (not the constructor)
+right before you use it. Demonstrate the guarantee that the <B>final</B> must be
+initialized before use, and that it cannot be changed once initialized.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I103' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I104>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class with a <B>final</B> method. Inherit from that class and attempt to
+override that method.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I104' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I105>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a <B>final</B> class and attempt to inherit from it.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I105' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I106>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Prove
+that class loading takes place only once. Prove that loading may be caused by
+either the creation of the first instance of that class, or the access of a
+<B>static</B> member.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I106' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER6_I107>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">In
+<B>Beetle.java</B>, inherit a specific type of  beetle from class <B>Beetle</B>,
+following the same format as the existing classes. Trace and explain the output.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER6_I107' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+</FONT></OL>
+<DIV ALIGN="CENTER">
+    <FONT FACE="Verdana" size = "-1">
+     [ <a href="Chap05.htm">Previous Chapter</a> ] 
+    [ <a href="SimpCont.htm">Short TOC</a> ] 
+    [ <a href="Contents.htm">Table of Contents</a> ] 
+    [ <a href="DocIdx.htm">Index</a> ]
+     [ <a href="Chap07.htm">Next Chapter</a> ] 
+    </FONT>
+    <BR>
+ Last Update:05/21/2001</P></DIV>
+
+</BODY>
+
+</HTML>

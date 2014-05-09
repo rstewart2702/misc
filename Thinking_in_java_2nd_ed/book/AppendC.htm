@@ -1,0 +1,963 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<!--
+This document was converted from RTF source: 
+By rtftohtml 4.19
+See http://www.sunpack.com/RTF
+Filename:TIJ2.rtf
+Application Directory:C:\TOOLS\RTF2HTML\
+Subject:
+Author:Bruce Eckel
+Operator:Bruce Eckel
+Document Comments:
+Version Comments:
+Comments:
+Keywords:
+Translation Date:05/21/2001
+Translation Time:10:39:35
+Translation Platform:Win32
+Number of Output files:23
+This File:AppendC.htm
+SplitDepth=1
+SkipNavPanel=1
+SkipLeadingToc=1
+SkipTrailingToc=1
+GenContents=1
+GenFrames=1
+GenIndex=1
+-->
+<HEAD lang="en"><META http-equiv="Content-Type" content="text/html">
+<TITLE>C: Java Programming Guidelines</TITLE>
+</HEAD>
+
+<BODY  BGCOLOR="#FFFFFF"><DIV ALIGN="CENTER">
+  <a href="http://www.MindView.net">
+  <img src="mindview.gif" alt="MindView Inc." BORDER = "0"></a>
+  <CENTER>
+    <FONT FACE="Verdana" size = "-1">
+    [ <a href="README.txt">Viewing Hints</a> ]
+    [ <a href="RevHist.htm">Revision History</a> ]
+    [ <a href="http://www.mindview.net/Books/TIJ/">Book Home Page</a> ]
+    [ <a href="http://www.mindview.net/Etc/MailingList.html">Free Newsletter</a> ] <br>
+    [ <a href="http://www.mindview.net/Seminars">Seminars</a> ]
+    [ <a href="http://www.mindview.net/CDs">Seminars on CD ROM</a> ]
+    [ <a href="http://www.mindview.net/Services">Consulting</a> ]
+    </FONT>
+  <H2><FONT FACE="Verdana">
+  Thinking in Java, 2nd edition, Revision 12</FONT></H2>
+  <H3><FONT FACE="Verdana">&copy;2000 by Bruce Eckel</FONT></H3>
+  
+    <FONT FACE="Verdana" size = "-1">
+     [ <a href="AppendB.htm">Previous Chapter</a> ] 
+    [ <a href="SimpCont.htm">Short TOC</a> ] 
+    [ <a href="Contents.htm">Table of Contents</a> ] 
+    [ <a href="DocIdx.htm">Index</a> ]
+     [ <a href="AppendD.htm">Next Chapter</a> ] 
+    </FONT>
+    
+  </CENTER>
+  </P></DIV><A NAME="Appendix_B"></A><A NAME="Appendix_C"></A><A NAME="_Toc375545509"></A><A NAME="_Toc477690738"></A><A NAME="_Toc481064959"></A><A NAME="Heading640"></A><FONT FACE = "Verdana"><H1 ALIGN="LEFT">
+C: Java Programming Guidelines</H1></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=4><backtalk:display ID=TIJ3_APPENDIXC_I0>
+This
+appendix contains suggestions to help guide you in performing low-level program
+design, and in writing
+<A NAME="Index2294"></A><A NAME="Index2295"></A><A NAME="Index2296"></A><A NAME="Index2297"></A>code.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Naturally, these are guidelines and not
+rules. The idea is to use them as inspirations, and to remember that there are
+occasional situations where you need to bend or break a rule.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I0' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I1>
+</FONT><A NAME="_Toc481064960"></A><BR></P></DIV>
+<A NAME="Heading641"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Design</H2></FONT>
+<OL>
+<LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Elegance always
+pays off</B>. In the short term it might seem like it takes much longer to come
+up with a truly graceful solution to a problem, but when it works the first time
+and easily adapts to new situations instead of requiring hours, days, or months
+of struggle, you&#8217;ll see the rewards (even if no one can measure them). Not
+only does it give you a program that&#8217;s easier to build and debug, but
+it&#8217;s also easier to understand and maintain, and that&#8217;s where the
+financial value lies. This point can take some experience to understand, because
+it can appear that you&#8217;re not being productive while you&#8217;re making a
+piece of code elegant. Resist the urge to hurry; it will only slow you down.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I1' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I2>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>First
+make it work, then make it fast</B>. This is true even if you are certain that a
+piece of code is really important and that it will be a principal bottleneck in
+your system. Don&#8217;t do it. Get the system going first with as simple a
+design as possible. Then if it isn&#8217;t going fast enough, profile it.
+You&#8217;ll almost always discover that &#8220;your&#8221; bottleneck
+isn&#8217;t the problem. Save your time for the really important stuff.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I2' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I3>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Remember
+the &#8220;divide and conquer&#8221; principle</B>. If the problem you&#8217;re
+looking at is too confusing, try to imagine what the basic operation of the
+program would be, given the existence of a magic &#8220;piece&#8221; that
+handles the hard parts. That &#8220;piece&#8221; is an object&#8212;write the
+code that uses the object, then look at the object and encapsulate <I>its</I>
+hard parts into other objects, etc.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I3' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I4>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Separate
+the class creator from the class user (<I>client programmer</I>)</B>. The class
+user is the &#8220;customer&#8221; and doesn&#8217;t need or want to know
+what&#8217;s going on behind the scenes of the class. The class creator must be
+the expert in class design and write the class so that it can be used by the
+most novice programmer possible, yet still work robustly in the application.
+Library use will be easy only if it&#8217;s transparent.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I4' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I5>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>When
+you create a class, attempt to make your names so clear that comments are
+unnecessary</B>. Your goal should be to make the client programmer&#8217;s
+interface conceptually simple. To this end, use method overloading when
+appropriate to create an intuitive, easy-to-use interface.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I5' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I6>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Your
+analysis and design must produce, at minimum, the classes in your system, their
+public interfaces, and their relationships to other classes, especially base
+classes</B>. If your design methodology produces more than that, ask yourself if
+all the pieces produced by that methodology have value over the lifetime of the
+program. If they do not, maintaining them will cost you. Members of development
+teams tend not to maintain anything that does not contribute to their
+productivity; this is a fact of life that many design methods don&#8217;t
+account for.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I6' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I7>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Automate
+everything</B>.<B> </B>Write the test code first (before you write the class),
+and keep it with the class. Automate the running of your tests through a
+makefile or similar tool. This way, any changes can be automatically verified by
+running the test code, and you&#8217;ll immediately discover errors. Because you
+know that you have the safety net of your test framework, you will be bolder
+about making sweeping changes when you discover the need. Remember that the
+greatest improvements in languages come from the built-in testing provided by
+type checking, exception handling, etc., but those features take you only so
+far. You must go the rest of the way in creating a robust system by filling in
+the tests that verify features that are specific to your class or program.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I7' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I8>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Write
+the test code first (before you write the class) in order to verify that your
+class design is complete</B>. If you can&#8217;t write test code, you
+don&#8217;t know what your class looks like. In addition, the act of writing the
+test code will often flush out additional features or constraints that you need
+in the class&#8212;these features or constraints don&#8217;t always appear
+during analysis and design. Tests also provide example code showing how your
+class can be used.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I8' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I9>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>All
+software design problems can be simplified by introducing an extra level of
+conceptual indirection</B><I>.</I> This fundamental rule of software
+engineering</FONT><A NAME="fnB85" HREF="#fn85">[85]</A><A NAME="Index2298"></A><FONT FACE="Georgia">
+is the basis of abstraction, the primary feature of object-oriented programming.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I9' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I10>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>An
+indirection should have a meaning </B>(in concert with guideline 9). This
+meaning can be something as simple as &#8220;putting commonly used code in a
+single method.&#8221; If you add levels of indirection (abstraction,
+encapsulation, etc.) that don&#8217;t have meaning, it can be as bad as not
+having adequate indirection.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I10' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I11>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Make
+classes as atomic as possible</B>. Give each class a single, clear purpose. If
+your classes or your system design grows too complicated, break complex classes
+into simpler ones. The most obvious indicator of this is sheer size: if a class
+is big, chances are it&#8217;s doing too much and should be broken
+up.</FONT><BR><FONT FACE="Georgia">Clues to suggest redesign of a class
+are:</FONT><BR><FONT FACE="Georgia">1) A complicated switch statement: consider
+using polymorphism. </FONT><BR><FONT FACE="Georgia">2) A large number of methods
+that cover broadly different types of operations: consider using several
+classes.</FONT><BR><FONT FACE="Georgia">3) A large number of member variables
+that concern broadly different characteristics: consider using several classes.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I11' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I12>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Watch
+for long argument lists</B>. Method calls then become difficult to write, read,
+and maintain. Instead, try to move the method to a class where it is (more)
+appropriate, and/or pass objects in as arguments.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I12' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I13>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Don&#8217;t
+repeat yourself</B>. If a piece of code is recurring in many methods in derived
+classes, put that code into a single method in the base class and call it from
+the derived-class methods. Not only do you save code space, you provide for easy
+propagation of changes. Sometimes the discovery of this common code will add
+valuable functionality to your interface.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I13' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I14>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Watch
+for <I>switch</I> statements or chained <I>if-else</I> clauses</B>. This is
+typically an indicator of <I>type-check coding</I>, which means you are choosing
+what code to execute based on some kind of type information (the exact type may
+not be obvious at first). You can usually replace this kind of code with
+inheritance and polymorphism; a polymorphic method call will perform the type
+checking for you, and allow for more reliable and easier extensibility.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I14' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I15>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>From
+a design standpoint, look for and separate things that change from things that
+stay the same</B>. That is, search for the elements in a system that you might
+want to change without forcing a redesign, then encapsulate those elements in
+classes. You can learn significantly more about this concept in <I>Thinking in
+Patterns with Java</I>, downloadable at <I>www.BruceEckel.com</I>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I15' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I16>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Don&#8217;t
+extend fundamental functionality by subclassing</B>. If an interface element is
+essential to a class it should be in the base class, not added during
+derivation. If you&#8217;re adding methods by inheriting, perhaps you should
+rethink the design.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I16' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I17>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Less
+is more</B>. Start with a minimal interface to a class, as small and simple as
+you need to solve the problem at hand, but don&#8217;t try to anticipate all the
+ways that your class <I>might</I> be used. As the class is used, you&#8217;ll
+discover ways you must expand the interface. However, once a class is in use you
+cannot shrink the interface without disturbing client code. If you need to add
+more methods, that&#8217;s fine; it won&#8217;t disturb code, other than forcing
+recompiles. But even if new methods replace the functionality of old ones, leave
+the existing interface alone (you can combine the functionality in the
+underlying implementation if you want). If you need to expand the interface of
+an existing method by adding more arguments, create an overloaded method with
+the new arguments; this way you won&#8217;t disturb any existing calls to the
+existing method.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I17' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I18>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Read
+your classes aloud to make sure they&#8217;re logical</B>. Refer to the
+relationship between a base class and derived class as &#8220;is-a&#8221; and
+member objects as &#8220;has-a.&#8221;
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I18' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I19>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>When
+deciding between inheritance and composition, ask if you need to upcast to the
+base type</B>. If not, prefer composition (member objects) to inheritance. This
+can eliminate the perceived need for multiple base types. If you inherit, users
+will think they are supposed to upcast.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I19' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I20>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Use
+data members for variation in value and method overriding for variation in
+behavior</B>. That is, if you find a class that uses state variables along with
+methods that switch behavior based on those variables, you should probably
+redesign it to express the differences in behavior within subclasses and
+overridden methods.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I20' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I21>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Watch
+for overloading</B>. A method should not conditionally execute code based on the
+value of an argument. In this case, you should create two or more overloaded
+methods instead.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I21' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I22>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Use
+exception hierarchies</B>&#8212;preferably derived from specific appropriate
+classes in the standard Java exception hierarchy. The person catching the
+exceptions can then catch the specific types of exceptions, followed by the base
+type. If you add new derived exceptions, existing client code will still catch
+the exception through the base type.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I22' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I23>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Sometimes
+simple aggregation does the job</B>. A &#8220;passenger comfort system&#8221; on
+an airline consists of disconnected elements: seat, air conditioning, video,
+etc., and yet you need to create many of these in a plane. Do you make private
+members and build a whole new interface? No&#8212;in this case, the components
+are also part of the public interface, so you should create public member
+objects. Those objects have their own private implementations, which are still
+safe. Be aware that simple aggregation is not a solution to be used often, but
+it does happen.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I23' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I24>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Consider
+the perspective of the client programmer and the person maintaining the
+code</B>. Design your class to be as obvious as possible to use. Anticipate the
+kind of changes that will be made, and design your class so that those changes
+will be easy.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I24' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I25>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Watch
+out for &#8220;giant object syndrome.&#8221;</B> This is often an affliction of
+procedural programmers who are new to OOP and who end up writing a procedural
+program and sticking it inside one or two giant objects. With the exception of
+application frameworks, objects represent concepts in your application, not the
+application.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I25' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I26>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>If
+you must do something ugly, at least localize the ugliness inside a class</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I26' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I27>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>If
+you must do something nonportable, make an abstraction for that service and
+localize it within a class</B>. This extra level of indirection prevents the
+nonportability from being distributed throughout your program. (This idiom is
+embodied in the <I>Bridge </I>Pattern).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I27' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I28>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Objects
+should not simply hold some data</B>. They should also have well-defined
+behaviors. (Occasionally, &#8220;data objects&#8221; are appropriate, but only
+when used expressly to package and transport a group of items when a generalized
+container is innappropriate.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I28' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I29>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Choose
+composition first when creating new classes from existing classes</B>. You
+should only used inheritance if it is required by your design. If you use
+inheritance where composition will work, your designs will become needlessly
+complicated.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I29' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I30>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Use
+inheritance and method overriding to express differences in behavior, and fields
+to express variations in state</B>. An extreme example of what not to do is
+inheriting different classes to represent colors instead of using a
+&#8220;color&#8221; field.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I30' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I31>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Watch
+out for <I>variance</I></B>. Two semantically different objects may have
+identical actions, or responsibilities, and there is a natural temptation to try
+to make one a subclass of the other just to benefit from inheritance. This is
+called variance, but there&#8217;s no real justification to force a
+superclass/subclass relationship where it doesn&#8217;t exist. A better solution
+is to create a general base class that produces an interface for both as derived
+classes&#8212;it requires a bit more space, but you still benefit from
+inheritance, and will probably make an important discovery about the design.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I31' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I32>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Watch
+out for <I>limitation</I> during inheritance</B>. The clearest designs add new
+capabilities to inherited ones. A suspicious design removes old capabilities
+during inheritance without adding new ones. But rules are made to be broken, and
+if you are working from an old class library, it may be more efficient to
+restrict an existing class in its subclass than it would be to restructure the
+hierarchy so your new class fits in where it should, above the old class.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I32' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I33>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Use
+design patterns to eliminate &#8220;naked functionality.&#8221;</B> That is, if
+only one object of your class should be created, don&#8217;t bolt ahead to the
+application and write a comment &#8220;Make only one of these.&#8221; Wrap it in
+a singleton. If you have a lot of messy code in your main program that creates
+your objects, look for a creational pattern like a factory method in which you
+can encapsulate that creation. Eliminating &#8220;naked functionality&#8221;
+will not only make your code much easier to understand and maintain, it will
+also make it more bulletproof against the well-intentioned maintainers that come
+after you.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I33' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I34>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Watch
+out for &#8220;analysis paralysis.&#8221;</B> Remember that you must usually
+move forward in a project before you know everything, and that often the best
+and fastest way to learn about some of your unknown factors is to go to the next
+step rather than trying to figure it out in your head. You can&#8217;t know the
+solution until you <I>have</I> the solution. Java has built-in firewalls; let
+them work for you. Your mistakes in a class or set of classes won&#8217;t
+destroy the integrity of the whole system.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I34' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I35>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>When
+you think you&#8217;ve got a good analysis, design, or implementation, do a
+walkthrough</B>. Bring someone in from outside your group&#8212;this
+doesn&#8217;t have to be a consultant, but can be someone from another group
+within your company. Reviewing your work with a fresh pair of eyes can reveal
+problems at a stage when it&#8217;s much easier to fix them, and more than pays
+for the time and money &#8220;lost&#8221; to the walkthrough process.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I35' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I36>
+</FONT><A NAME="_Toc481064961"></A></OL><A NAME="Heading642"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Implementation</H2></FONT>
+<OL>
+<LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>In general,
+follow the Sun coding conventions</B>. These are available
+at</FONT><BR><FONT FACE="Georgia"><I>java.sun.com/docs/codeconv/index.html</I>
+(the code in this book follows these conventions as much as I was able). These
+are used for what constitutes arguably the largest body of code that the largest
+number of Java programmers will be exposed to. If you doggedly stick to the
+coding style you&#8217;ve always used, you will make it harder for your reader.
+Whatever coding conventions you decide on, ensure they are consistent throughout
+the project. There is a free tool to automatically reformat Java code at:
+<I>home.wtal.de/software-solutions/jindent.</I>
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I36' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I37>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Whatever
+coding style you use, it really does make a difference if your team (and even
+better, your company) standardizes on it</B>. This means to the point that
+everyone considers it fair game to fix someone else&#8217;s coding style if it
+doesn&#8217;t conform. The value of standardization is that it takes less brain
+cycles to parse the code, so that you can focus more on what the code means.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I37' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I38>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Follow
+standard capitalization rules</B>. Capitalize the first letter of class names.
+The first letter of fields, methods, and objects (references) should be
+lowercase. All identifiers should run their words together, and capitalize the
+first letter of all intermediate words. For
+example:</FONT><BR><FONT FACE="Georgia"><B>ThisIsAClassName</B></FONT><BR><FONT FACE="Georgia"><B>thisIsAMethodOrFieldName</B></FONT><BR><FONT FACE="Georgia">Capitalize
+<I>all</I> the letters of <B>static</B> <B>final</B> primitive identifiers that
+have constant initializers in their definitions. This indicates they are
+compile-time constants.</FONT><BR><FONT FACE="Georgia"><B>Packages are a special
+case</B>&#8212;they are all lowercase letters, even for intermediate words. The
+domain extension (com, org, net, edu, etc.) should also be lowercase. (This was
+a change between Java 1.1 and Java 2.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I38' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I39>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Don&#8217;t
+create your own &#8220;decorated&#8221; private data member names</B>. This is
+usually seen in the form of prepended underscores and characters. Hungarian
+notation is the worst example of this, where you attach extra characters that
+indicate data type, use, location, etc., as if you were writing assembly
+language and the compiler provided no extra assistance at all. These notations
+are confusing, difficult to read, and unpleasant to enforce and maintain. Let
+classes and packages do the name scoping for you.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I39' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I40>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Follow
+a &#8220;canonical form&#8221; </B>when creating a class for general-purpose
+use. Include definitions for <B>equals(&#160;)</B>, <B>hashCode(&#160;)</B>,
+<B>toString(&#160;)</B>, <B>clone(&#160;)</B> (implement <B>Cloneable</B>), and
+implement <B>Comparable </B>and <B>Serializable</B>. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I40' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I41>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Use
+the JavaBeans &#8220;get,&#8221; &#8220;set,&#8221; and &#8220;is&#8221; naming
+conventions</B> for methods that read and change <B>private</B> fields, even if
+you don&#8217;t think you&#8217;re making a JavaBean at the time. Not only does
+it make it easy to use your class as a Bean, but it&#8217;s a standard way to
+name these kinds of methods and so will be more easily understood by the reader.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I41' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I42>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>For
+each class you create, consider including a <I>static public test(&#160;)</I>
+that contains code to test that class</B>. You don&#8217;t need to remove the
+test code to use the class in a project, and if you make any changes you can
+easily rerun the tests. This code also provides examples of how to use your
+class.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I42' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I43>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Sometimes
+you need to inherit in order to access <I>protected</I> members of the base
+class</B>. This can lead to a perceived need for multiple base types. If you
+don&#8217;t need to upcast, first derive a new class to perform the protected
+access. Then make that new class a member object inside any class that needs to
+use it, rather than inheriting.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I43' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I44>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Avoid
+the use of <I>final</I> methods for efficiency purposes</B>. Use <B>final
+</B>only when the program is running, but not fast enough, and your profiler has
+shown you that a method invocation is the bottleneck.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I44' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I45>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>If
+two classes are associated with each other in some functional way (such as
+containers and iterators), try to make one an inner class of the other</B>. This
+not only emphasizes the association between the classes, but it allows the class
+name to be reused within a single package by nesting it within another class.
+The Java containers library does this by defining an inner <B>Iterator</B> class
+inside each container class, thereby providing the containers with a common
+interface. The other reason you&#8217;ll want to use an inner class is as part
+of the <B>private </B>implementation. Here, the inner class beneficial for
+implementation hiding rather than the class association and prevention of
+namespace pollution noted above.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I45' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I46>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Anytime
+you notice classes that appear to have high coupling with each other, consider
+the coding and maintenance improvements you might get by using inner
+classes</B>. The use of inner classes will not uncouple the classes, but rather
+make the coupling explicit and more convenient.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I46' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I47>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Don&#8217;t
+fall prey to premature optimization</B>. This way lies madness. In particular,
+don&#8217;t worry about writing (or avoiding) native methods, making some
+methods <B>final</B>, or tweaking code to be efficient when you are first
+constructing the system. Your primary goal should be to prove the design, unless
+the design requires a certain efficiency.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I47' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I48>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Keep
+scopes as small as possible so the visibility and lifetime of your objects are
+as small as possible</B>. This reduces the chance of using an object in the
+wrong context and hiding a difficult-to-find bug. For example, suppose you have
+a container and a piece of code that iterates through it. If you copy that code
+to use with a new container, you may accidentally end up using the size of the
+old container as the upper bound of the new one. If, however, the old container
+is out of scope, the error will be caught at compile-time.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I48' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I49>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Use
+the containers in the standard Java library</B>. Become proficient with their
+use and you&#8217;ll greatly increase your productivity. Prefer <B>ArrayList</B>
+for sequences, <B>HashSet</B> for sets, <B>HashMap</B> for associative arrays,
+and <B>LinkedList</B> for stacks (rather than <B>Stack</B>) and queues.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I49' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I50>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>For
+a program to be robust, each component must be robust</B>. Use all the tools
+provided by Java: access control, exceptions, type checking, and so on, in each
+class you create. That way you can safely move to the next level of abstraction
+when building your system.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I50' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I51>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Prefer
+compile-time errors to run-time errors</B>. Try to handle an error as close to
+the point of its occurrence as possible. Prefer dealing with the error at that
+point to throwing an exception. Catch any exceptions in the nearest handler that
+has enough information to deal with them. Do what you can with the exception at
+the current level; if that doesn&#8217;t solve the problem, rethrow the
+exception.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I51' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I52>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Watch
+for long method definitions</B>. Methods should be brief, functional units that
+describe and implement a discrete part of a class interface. A method that is
+long and complicated is difficult and expensive to maintain, and is probably
+trying to do too much all by itself. If you see such a method, it indicates
+that, at the least, it should be broken up into multiple methods. It may also
+suggest the creation of a new class. Small methods will also foster reuse within
+your class. (Sometimes methods must be large, but they should still do just one
+thing.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I52' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I53>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Keep
+things as &#8220;<I>private</I> as possible.&#8221;</B> Once you publicize an
+aspect of your library (a method, a class, a field), you can never take it out.
+If you do, you&#8217;ll wreck somebody&#8217;s existing code, forcing them to
+rewrite and redesign. If you publicize only what you must, you can change
+everything else with impunity, and since designs tend to evolve this is an
+important freedom. In this way, implementation changes will have minimal impact
+on derived classes. Privacy is especially important when dealing with
+multithreading&#8212;only <B>private</B> fields can be protected against
+un-<B>synchronized</B> use.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I53' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I54>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Use
+comments liberally, and use the <I>javadoc</I> comment-documentation syntax to
+produce your program documentation</B>. However, the comments should add geniune
+meaning to the code; comments that only reiterate what the code is clearly
+expressing are annoying. Note that the typical verbose detail of Java class and
+method names reduce the need for as many comments.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I54' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I55>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Avoid
+using &#8220;magic numbers&#8221;</B>&#8212;which are numbers hard-wired into
+code. These are a nightmare if you need to change them, since you never know if
+&#8220;100&#8221; means &#8220;the array size&#8221; or &#8220;something else
+entirely.&#8221; Instead, create a constant with a descriptive name and use the
+constant identifier throughout your program. This makes the program easier to
+understand and much easier to maintain.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I55' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I56>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>When
+creating constructors, consider exceptions</B>. In the best case, the
+constructor won&#8217;t do anything that throws an exception. In the next-best
+scenario, the class will be composed and inherited from robust classes only, so
+they will need no cleanup if an exception is thrown. Otherwise, you must clean
+up composed classes inside a <B>finally</B> clause. If a constructor must fail,
+the appropriate action is to throw an exception, so the caller doesn&#8217;t
+continue blindly, thinking that the object was created correctly.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I56' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I57>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>If
+your class requires any cleanup when the client programmer is finished with the
+object, place the cleanup code in a single, well-defined method</B>&#8212;with a
+name like <B>cleanup(&#160;)</B> that clearly suggests its purpose. In addition,
+place a <B>boolean</B> flag in the class to indicate whether the object has been
+cleaned up so that <B>finalize(&#160;)</B> can check for &#8220;the death
+condition&#8221; (see Chapter 4).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I57' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I58>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>The
+responsibility of <I>finalize(&#160;)</I> can only be to verify &#8220;the death
+condition&#8221; of an object for debugging.</B> (See Chapter 4.) In special
+cases, it might be needed to release memory that would not otherwise be released
+by the garbage collector. Since the garbage collector might not get called for
+your object, you cannot use <B>finalize(&#160;) </B>to perform necessary
+cleanup. For that you must create your own &#8220;cleanup&#8221; method. In the
+<B>finalize(&#160;)</B> method for the class, check to make sure that the object
+has been cleaned up and throw a class derived from <B>RuntimeException</B> if it
+hasn&#8217;t, to indicate a programming error. Before relying on such a scheme,
+ensure that <B>finalize(&#160;) </B>works on your system. (You might need to
+call <B>System.gc(&#160;)</B> to ensure this behavior.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I58' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I59>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>If
+an object must be cleaned up (other than by garbage collection) within a
+particular scope, use the following approach:</B> Initialize the object and, if
+successful, immediately enter a <B>try</B> block with a <B>finally</B> clause
+that performs the cleanup.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I59' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I60>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>When
+overriding <I>finalize(&#160;)</I> during inheritance, remember to call
+<I>super.finalize(&#160;)</I>.</B> (This is not necessary if <B>Object</B> is
+your immediate superclass.) You should call <B>super.finalize(&#160;)</B> as the
+<I>final</I> act of your overridden <B>finalize(&#160;)</B> rather than the
+first, to ensure that base-class components are still valid if you need them.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I60' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I61>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>When
+you are creating a fixed-size container of objects, transfer them to an
+array</B>&#8212;especially if you&#8217;re returning this container from a
+method. This way you get the benefit of the array&#8217;s compile-time type
+checking, and the recipient of the array might not need to cast the objects in
+the array in order to use them. Note that the base-class of the containers
+library, <B>java.util.Collection</B>, has two <B>toArray(&#160;)</B> methods to
+accomplish this.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I61' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I62>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Choose
+<I>interfaces</I> over <I>abstract</I> classes</B>. If you know something is
+going to be a base class, your first choice should be to make it an
+<B>interface</B>, and only if you&#8217;re forced to have method definitions or
+member variables should you change it to an <B>abstract</B> class. An
+<B>interface </B>talks about what the client wants to do, while a class tends to
+focus on (or allow) implementation details.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I62' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I63>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Inside
+constructors, do only what is necessary to set the object into the proper
+state</B>. Actively avoid calling other methods (except for <B>final</B>
+methods) since those methods can be overridden by someone else to produce
+unexpected results during construction. (See Chapter 7 for details.) Smaller,
+simpler constructors are less likely to throw exceptions or cause problems.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I63' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I64>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>To
+avoid a highly frustrating experience, make sure that there is only one
+unpackaged class of each name anywhere in your classpath</B>. Otherwise, the
+compiler can find the identically-named other class first, and report error
+messages that make no sense. If you suspect that you are having a classpath
+problem, try looking for <B>.class</B> files with the same names at each of the
+starting points in your classpath. Ideally, put all your classes within
+packages.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I64' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I65>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Watch
+out for accidental overloading</B>. If you attempt to override a base-class
+method and you don&#8217;t quite get the spelling right, you&#8217;ll end up
+adding a new method rather than overriding an existing method. However, this is
+perfectly legal, so you won&#8217;t get any error message from the compiler or
+run-time system&#8212;your code simply won&#8217;t work correctly.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I65' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I66>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Watch
+out for premature optimization</B>. First make it work, then make it
+fast&#8212;but only if you must, and only if it&#8217;s proven that there is a
+performance bottleneck in a particular section of your code. Unless you have
+used a profiler to discover a bottleneck, you will probably be wasting your
+time. The hidden cost of performance tweaks is that your code becomes less
+understandable and maintainable. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I66' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXC_I67>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Remember
+that code is read much more than it is written</B>. Clean designs make for
+easy-to-understand programs, but comments, detailed explanations, and examples
+are invaluable. They will help both you and everyone who comes after you. If
+nothing else, the frustration of trying to ferret out useful information from
+the online Java documentation should convince you.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXC_I67' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+</FONT></OL>
+<HR><DIV ALIGN="LEFT"><P><A NAME="fn85" HREF="#fnB85">[85]</A><FONT FACE="Georgia" SIZE=2>
+Explained to me by Andrew Koenig.</FONT><BR></P></DIV>
+
+<DIV ALIGN="CENTER">
+    <FONT FACE="Verdana" size = "-1">
+     [ <a href="AppendB.htm">Previous Chapter</a> ] 
+    [ <a href="SimpCont.htm">Short TOC</a> ] 
+    [ <a href="Contents.htm">Table of Contents</a> ] 
+    [ <a href="DocIdx.htm">Index</a> ]
+     [ <a href="AppendD.htm">Next Chapter</a> ] 
+    </FONT>
+    <BR>
+ Last Update:05/21/2001</P></DIV>
+
+</BODY>
+
+</HTML>

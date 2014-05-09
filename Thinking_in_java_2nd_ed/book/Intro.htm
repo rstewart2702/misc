@@ -1,0 +1,1291 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<!--
+This document was converted from RTF source: 
+By rtftohtml 4.19
+See http://www.sunpack.com/RTF
+Filename:TIJ2.rtf
+Application Directory:C:\TOOLS\RTF2HTML\
+Subject:
+Author:Bruce Eckel
+Operator:Bruce Eckel
+Document Comments:
+Version Comments:
+Comments:
+Keywords:
+Translation Date:05/21/2001
+Translation Time:10:39:02
+Translation Platform:Win32
+Number of Output files:23
+This File:Intro.htm
+SplitDepth=1
+SkipNavPanel=1
+SkipLeadingToc=1
+SkipTrailingToc=1
+GenContents=1
+GenFrames=1
+GenIndex=1
+-->
+<HEAD lang="en"><META http-equiv="Content-Type" content="text/html">
+<TITLE>Introduction</TITLE>
+</HEAD>
+
+<BODY  BGCOLOR="#FFFFFF"><DIV ALIGN="CENTER">
+  <a href="http://www.MindView.net">
+  <img src="mindview.gif" alt="MindView Inc." BORDER = "0"></a>
+  <CENTER>
+    <FONT FACE="Verdana" size = "-1">
+    [ <a href="README.txt">Viewing Hints</a> ]
+    [ <a href="RevHist.htm">Revision History</a> ]
+    [ <a href="http://www.mindview.net/Books/TIJ/">Book Home Page</a> ]
+    [ <a href="http://www.mindview.net/Etc/MailingList.html">Free Newsletter</a> ] <br>
+    [ <a href="http://www.mindview.net/Seminars">Seminars</a> ]
+    [ <a href="http://www.mindview.net/CDs">Seminars on CD ROM</a> ]
+    [ <a href="http://www.mindview.net/Services">Consulting</a> ]
+    </FONT>
+  <H2><FONT FACE="Verdana">
+  Thinking in Java, 2nd edition, Revision 12</FONT></H2>
+  <H3><FONT FACE="Verdana">&copy;2000 by Bruce Eckel</FONT></H3>
+  
+    <FONT FACE="Verdana" size = "-1">
+     [ <a href="Preface.htm">Previous Chapter</a> ] 
+    [ <a href="SimpCont.htm">Short TOC</a> ] 
+    [ <a href="Contents.htm">Table of Contents</a> ] 
+    [ <a href="DocIdx.htm">Index</a> ]
+     [ <a href="Chap01.htm">Next Chapter</a> ] 
+    </FONT>
+    
+  </CENTER>
+  </P></DIV><A NAME="_Toc477690720"></A><A NAME="_Toc481064450"></A><A NAME="Heading5"></A><FONT FACE = "Verdana"><H1 ALIGN="LEFT">
+Introduction</H1></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=4><backtalk:display ID=TIJ3_INTRO_I0>
+Like any
+human language, Java provides a way to express concepts. If successful, this
+medium of expression will be significantly easier and more flexible than the
+alternatives as problems grow larger and more complex.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can&#8217;t look at Java as just a
+collection of features&#8212;some of the features make no sense in isolation.
+You can use the sum of the parts only if you are thinking about <I>design</I>,
+not simply coding. And to understand Java in this way, you must understand the
+problems with it and with programming in general. This book discusses
+programming problems, why they are problems, and the approach Java has taken to
+solve them. Thus, the set of features I explain in each chapter are based on the
+way I see a particular type of problem being solved with the language. In this
+way I hope to move you, a little at a time, to the point where the Java mindset
+becomes your native tongue.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I0' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I23>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Throughout, I&#8217;ll be taking the
+attitude that you want to build a model in your head that allows you to develop
+a deep understanding of the language; if you encounter a puzzle you&#8217;ll be
+able to feed it to your model and deduce the
+answer.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I23' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I24>
+</FONT><A NAME="_Toc312373769"></A><A NAME="_Toc375545177"></A><A NAME="_Toc481064451"></A><BR></P></DIV>
+<A NAME="Heading6"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Prerequisites</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This book assumes that you have some
+programming familiarity: you understand that a program is a collection of
+statements, the idea of a subroutine/function/macro, control statements such as
+&#8220;if&#8221; and looping constructs such as &#8220;while,&#8221; etc.
+However, you might have learned this in many places, such as programming with a
+macro language or working with a tool like Perl. As long as you&#8217;ve
+programmed to the point where you feel comfortable with the basic ideas of
+programming, you&#8217;ll be able to work through this book. Of course, the book
+will be <I>easier</I> for the C programmers and more so for the C++ programmers,
+but don&#8217;t count yourself out if you&#8217;re not experienced with those
+languages (but come willing to work hard; also, the multimedia CD that
+accompanies this book will bring you up to speed on the basic C syntax necessary
+to learn Java). I&#8217;ll be introducing the concepts of object-oriented
+programming (OOP) and Java&#8217;s basic control mechanisms, so you&#8217;ll be
+exposed to those, and the first exercises will involve the basic control-flow
+statements.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I24' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I25>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Although references will often be made to
+C and C++ language features, these are not intended to be insider comments, but
+instead to help all programmers put Java in perspective with those languages,
+from which, after all, Java is descended. I will attempt to make these
+references simple and to explain anything that I think a non- C/C++ programmer
+would not be familiar
+with.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I25' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I26>
+</FONT><A NAME="_Toc312373770"></A><A NAME="_Toc375545178"></A><A NAME="_Toc481064452"></A><BR></P></DIV>
+<A NAME="Heading7"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Learning Java</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">At about the same time that my first book
+<I>Using C++</I> (Osborne/McGraw-Hill, 1989) came out, I began teaching that
+language. Teaching programming languages has become my profession; I&#8217;ve
+seen nodding heads, blank faces, and puzzled expressions in audiences all over
+the world since 1989. As I began giving in-house training with smaller groups of
+people, I discovered something during the exercises. Even those people who were
+smiling and nodding were confused about many issues. I found out, by chairing
+the C++ track at the <A NAME="Index1"></A><A NAME="Index2"></A>Software
+Development Conference for a number of years (and later the Java track), that I
+and other speakers tended to give the typical audience too many topics too fast.
+So eventually, through both variety in the audience level and the way that I
+presented the material, I would end up losing some portion of the audience.
+Maybe it&#8217;s asking too much, but because I am one of those people resistant
+to traditional lecturing (and for most people, I believe, such resistance
+results from boredom), I wanted to try to keep everyone up to
+speed.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I26' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I27>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">For a time, I was creating a number of
+different presentations in fairly short order. Thus, I ended up learning by
+experiment and iteration (a technique that also works well in Java program
+design). Eventually I developed a course using everything I had learned from my
+teaching experience&#8212;one that I would be happy giving for a long time. It
+tackles the learning problem in discrete, easy-to-digest steps, and in a
+hands-on seminar (the ideal learning situation) there are exercises following
+each of the short lessons. I now give this course in
+<A NAME="Index3"></A><A NAME="Index4"></A>public Java seminars, which you can
+find out about at <I>www.BruceEckel.com</I>. (The introductory seminar is also
+available as a CD ROM. Information is available at the same Web
+site.)
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I27' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I28>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The feedback that I get from each seminar
+helps me change and refocus the material until I think it works well as a
+teaching medium. But this book isn&#8217;t just seminar notes&#8212;I tried to
+pack as much information as I could within these pages, and structured it to
+draw you through onto the next subject. More than anything, the book is designed
+to serve the solitary reader who is struggling with a new programming
+language.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I28' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I29>
+</FONT><A NAME="_Toc312373771"></A><A NAME="_Toc375545179"></A><A NAME="_Toc481064453"></A><BR></P></DIV>
+<A NAME="Heading8"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Goals</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Like my previous book <I>Thinking in
+C++</I>, this book has come to be structured around the process of teaching the
+language. In particular, my motivation is to create something that provides me
+with a way to teach the language in my own seminars. When I think of a chapter
+in the book, I think in terms of what makes a good lesson during a seminar. My
+goal is to get bite-sized pieces that can be taught in a reasonable amount of
+time, followed by exercises that are feasible to accomplish in a classroom
+situation.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I29' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I30>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">My goals in this book are
+to:
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I30' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I31>
+</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Present the material one
+simple step at a time so that you can easily digest each concept before moving
+on.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I31' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I32>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Use
+examples that are as simple and short as possible. This sometimes prevents me
+from tackling &#8220;real world&#8221; problems, but I&#8217;ve found that
+beginners are usually happier when they can understand every detail of an
+example rather than being impressed by the scope of the problem it solves. Also,
+there&#8217;s a severe limit to the amount of code that can be absorbed in a
+classroom situation. For this I will no doubt receive criticism for using
+&#8220;toy examples,&#8221; but I&#8217;m willing to accept that in favor of
+producing something pedagogically useful.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I32' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I33>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Carefully
+sequence the presentation of features so that you aren&#8217;t seeing something
+that you haven&#8217;t been exposed to. Of course, this isn&#8217;t always
+possible; in those situations, a brief introductory description is given.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I33' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I34>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Give
+you what I think is important for you to understand about the language, rather
+than everything I know. I believe there is an information importance hierarchy,
+and that there are some facts that 95 percent of programmers will never need to
+know and that just confuse people and adds to their perception of the complexity
+of the language. To take an example from C, if you memorize the operator
+precedence table (I never did), you can write clever code. But if you need to
+think about it, it will also confuse the reader/maintainer of that code. So
+forget about precedence, and use parentheses when things aren&#8217;t clear. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I34' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I35>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Keep
+each section focused enough so that the lecture time&#8212;and the time between
+exercise periods&#8212;is small. Not only does this keep the audience&#8217;s
+minds more active and involved during a hands-on seminar, but it gives the
+reader a greater sense of accomplishment.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I35' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I36>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Provide
+you with a solid foundation so that you can understand the issues well enough to
+move on to more difficult coursework and books.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I36' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I37>
+</FONT><A NAME="_Toc312373772"></A><A NAME="_Toc375545180"></A><A NAME="_Toc481064454"></A></OL><A NAME="Heading9"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Online documentation</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The Java language and libraries from Sun
+Microsystems (a free download) come with documentation in electronic form,
+readable using a Web browser, and virtually every third party implementation of
+Java has this or an equivalent documentation system. Almost all the books
+published on Java have duplicated this documentation. So you either already have
+it or you can download it, and unless necessary, this book will not repeat that
+documentation because it&#8217;s usually much faster if you find the class
+descriptions with your Web browser than if you look them up in a book (and the
+on-line documentation is probably more up-to-date). This book will provide extra
+descriptions of the classes only when it&#8217;s necessary to supplement the
+documentation so you can understand a particular
+example.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I37' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I38>
+</FONT><A NAME="_Toc481064455"></A><BR></P></DIV>
+<A NAME="Heading10"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Chapters</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This book was designed with one thing in
+mind: the way people learn the Java language. Seminar audience feedback helped
+me understand the difficult parts that needed illumination. In the areas where I
+got ambitious and included too many features all at once, I came to
+know&#8212;through the process of presenting the material&#8212;that if you
+include a lot of new features, you need to explain them all, and this easily
+compounds the student&#8217;s confusion. As a result, I&#8217;ve taken a great
+deal of trouble to introduce the features as few at a time as
+possible.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I38' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I39>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The goal, then, is for each chapter to
+teach a single feature, or a small group of associated features, without relying
+on additional features. That way you can digest each piece in the context of
+your current knowledge before moving
+on.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I39' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I40>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here is a brief description of the
+chapters contained in the book, which correspond to lectures and exercise
+periods in my hands-on
+seminars.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I40' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I41>
+</FONT><A NAME="OLE_LINK10"></A><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B><I>Chapter 1:	Introduction to
+Objects</I></B></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This chapter is an overview of what
+object-oriented programming is all about, including the answer to the basic
+question &#8220;What&#8217;s an object?&#8221;, interface vs. implementation,
+abstraction and encapsulation, messages and functions, inheritance and
+composition, and the all-important polymorphism. You&#8217;ll also get an
+overview of issues of object creation such as constructors, where the objects
+live, where to put them once they&#8217;re created, and the magical garbage
+collector that cleans up the objects that are no longer needed. Other issues
+will be introduced, including error handling with exceptions, multithreading for
+responsive user interfaces, and networking and the Internet. You&#8217;ll learn
+what makes Java special, why it&#8217;s been so successful, and about
+object-oriented analysis and design. </FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B><I>Chapter 2:	Everything is an
+Object</I></B></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This chapter moves you to the point where
+you can write your first Java program, so it must give an overview of the
+essentials, including the concept of a <I>reference</I> to an object; how to
+create an object; an introduction to primitive types and arrays; scoping and the
+way objects are destroyed by the garbage collector; how everything in Java is a
+new data type (class) and how to create your own classes; functions, arguments,
+and return values; name visibility and using components from other libraries;
+the <B>static</B> keyword; and comments and embedded
+documentation.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I41' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I42>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B><I>Chapter 3:	Controlling Program
+Flow</I></B></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This chapter begins with all of the
+operators that come to Java from C and C++. In addition, you&#8217;ll discover
+common operator pitfalls, casting, promotion, and precedence. This is followed
+by the basic control-flow and selection operations that you get with virtually
+any programming language: choice with if-else; looping with for and while;
+quitting a loop with break and continue as well as Java&#8217;s labeled break
+and labeled continue (which account for the &#8220;missing goto&#8221; in Java);
+and selection using switch. Although much of this material has common threads
+with C and C++ code, there are some differences. In addition, all the examples
+will be full Java examples so you&#8217;ll get more comfortable with what Java
+looks like. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I42' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I43>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B><I>Chapter 4:	Initialization &amp;
+Cleanup</I></B></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This chapter begins by introducing the
+constructor, which guarantees proper initialization. The definition of the
+constructor leads into the concept of function overloading (since you might want
+several constructors). This is followed by a discussion of the process of
+cleanup, which is not always as simple as it seems. Normally, you just drop an
+object when you&#8217;re done with it and the garbage collector eventually comes
+along and releases the memory. This portion explores the garbage collector and
+some of its idiosyncrasies. The chapter concludes with a closer look at how
+things are initialized: automatic member initialization, specifying member
+initialization, the order of initialization, <B>static</B> initialization and
+array initialization. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I43' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I44>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B><I>Chapter 5:	Hiding the
+Implementation</I></B></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This chapter covers the way that code is
+packaged together, and why some parts of a library are exposed while other parts
+are hidden. It begins by looking at the <B>package</B> and <B>import</B>
+keywords, which perform file-level packaging and allow you to build libraries of
+classes. It then examines subject of directory paths and file names. The
+remainder of the chapter looks at the <B>public</B>, <B>private,</B> and
+<B>protected</B> keywords, the concept of &#8220;friendly&#8221; access, and
+what the different levels of access control mean when used in various contexts.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I44' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I45>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B><I>Chapter 6:	Reusing Classes
+</I></B></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The concept of inheritance is standard in
+virtually all OOP languages. It&#8217;s a way to take an existing class and add
+to its functionality (as well as change it, the subject of Chapter 7).
+Inheritance is often a way to reuse code by leaving the &#8220;base class&#8221;
+the same, and just patching things here and there to produce what you want.
+However, inheritance isn&#8217;t the only way to make new classes from existing
+ones. You can also embed an object inside your new class with
+<I>composition</I>. In this chapter you&#8217;ll learn about these two ways to
+reuse code in Java, and how to apply them.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I45' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I46>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B><I>Chapter
+7:	Polymorphism</I></B></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">On your own, you might take nine months
+to discover and understand polymorphism, a cornerstone of OOP. Through small,
+simple examples you&#8217;ll see how to create a family of types with
+inheritance and manipulate objects in that family through their common base
+class. Java&#8217;s polymorphism allows you to treat all objects in this family
+generically, which means the bulk of your code doesn&#8217;t rely on specific
+type information. This makes your programs extensible, so building programs and
+code maintenance is easier and
+cheaper.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I46' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I47>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B><I>Chapter 8:	Interfaces &amp; Inner
+Classes</I></B></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java provides a third way to set up a
+reuse relationship, through the <I>interface</I>, which is a pure abstraction of
+the interface of an object. The <B>interface </B>is more than just an abstract
+class taken to the extreme, since it allows you to perform a variation on
+C++&#8217;s &#8220;multiple inheritance,&#8221; by creating a class that can be
+upcast to more than one base
+type.<A NAME="Intro"></A>
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I47' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I48>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">At first, inner classes look like a
+simple code hiding mechanism: you place classes inside other classes.
+You&#8217;ll learn, however, that the inner class does more than that&#8212;it
+knows about and can communicate with the surrounding class&#8212;and that the
+kind of code you can write with inner classes is more elegant and clear,
+although it is a new concept to most and takes some time to become comfortable
+with design using inner
+classes.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I48' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I49>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B><I>Chapter 9:	Holding your Objects
+</I></B></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It&#8217;s a fairly simple program that
+has only a fixed quantity of objects with known lifetimes. In general, your
+programs will always be creating new objects at a variety of times that will be
+known only while the program is running. In addition, you won&#8217;t know until
+run-time the quantity or even the exact type of the objects you need. To solve
+the general programming problem, you need to create any number of objects,
+anytime, anywhere. This chapter explores in depth the container library that
+Java 2 supplies to hold objects while you&#8217;re working with them: the simple
+arrays and more sophisticated containers (data structures) such as <B>ArrayList
+</B>and <B>HashMap</B>.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I49' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I50>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B><I>Chapter 10:	Error Handling with
+Exceptions</I></B></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The basic philosophy of Java is that
+badly-formed code will not be run. As much as possible, the compiler catches
+problems, but sometimes the problems&#8212;either programmer error or a natural
+error condition that occurs as part of the normal execution of the
+program&#8212;can be detected and dealt with only at run-time. Java has
+<I>exception handling</I> to deal with any problems that arise while the program
+is running. This chapter examines how the keywords <B>try</B>, <B>catch</B>,
+<B>throw</B>, <B>throws</B>, and <B>finally</B> work in Java; when you should
+throw exceptions and what to do when you catch them. In addition, you&#8217;ll
+see Java&#8217;s standard exceptions, how to create your own, what happens with
+exceptions in constructors, and how exception handlers are located.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I50' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I51>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B><I>Chapter 11:	The Java I/O System
+</I></B></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Theoretically, you can divide any program
+into three parts: input, process, and output. This implies that I/O
+(input/output) is an important part of the equation. In this chapter
+you&#8217;ll learn about the different classes that Java provides for reading
+and writing files, blocks of memory, and the console. The distinction between
+&#8220;old&#8221; I/O and &#8220;new&#8221; Java I/O will be shown. In addition,
+this chapter examines the process of taking an object, &#8220;streaming&#8221;
+it (so that it can be placed on disk or sent across a network) and
+reconstructing it, which is handled for you with Java&#8217;s <I>object
+serialization</I>. Also, Java&#8217;s compression libraries, which are used in
+the Java ARchive file format (JAR), are
+examined.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I51' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I52>
+</FONT><A NAME="OLE_LINK9"></A><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B><I>Chapter 12:	Run-Time Type
+Identification</I></B></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java run-time type identification (RTTI)
+lets you find the exact type of an object when you have a reference to only the
+base type. Normally, you&#8217;ll want to intentionally ignore the exact type of
+an object and let Java&#8217;s dynamic binding mechanism (polymorphism)
+implement the correct behavior for that type. But occasionally it is very
+helpful to know the exact type of an object for which you have only a base
+reference. Often this information allows you to perform a special-case operation
+more efficiently. This chapter explains what RTTI is for, how to use it, and how
+to get rid of it when it doesn&#8217;t belong there. In addition, this chapter
+introduces the Java <I>reflection</I>
+mechanism.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I52' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I53>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B><I>Chapter 13:	Creating Windows and
+Applets</I></B></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java comes with the &#8220;Swing&#8221;
+GUI library, which is a set of classes that handle windowing in a portable
+fashion. These windowed programs can either be applets or stand-alone
+applications. This chapter is an introduction to Swing and the creation of World
+Wide Web applets. The important &#8220;JavaBeans&#8221; technology is
+introduced. This is fundamental for the creation of Rapid-Application
+Development (RAD) program-building
+tools.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I53' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I54>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B><I>Chapter 14:	Multiple Threads
+</I></B></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java provides a built-in facility to
+support multiple concurrent subtasks, called <I>threads</I>, running within a
+single program. (Unless you have multiple processors on your machine, this is
+only the <I>appearance</I> of multiple subtasks.) Although these can be used
+anywhere, threads are most apparent when trying to create a responsive user
+interface so, for example, a user isn&#8217;t prevented from pressing a button
+or entering data while some processing is going on. This chapter looks at the
+syntax and semantics of multithreading in Java.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I54' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I55>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B><I>Chapter 15:	Distributed Computing
+</I></B></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">All the Java features and libraries seem
+to really come together when you start writing programs to work across networks.
+This chapter explores communication across networks and the Internet, and the
+classes that Java provides to make this easier. It introduces the very important
+concepts of <I>Servlets </I>and <I>JSPs</I> (for server-side programming),
+along<I> with Java DataBase Connectivity</I> (JDBC), and <I>Remote Method
+Invocation</I> (RMI). Finally, there&#8217;s an introduction to the new
+technologies of <I>JINI</I>, <I>JavaSpaces</I>, and <I>Enterprise JavaBeans</I>
+(EJBs).
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I55' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I56>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B><I>Appendix A:	Passing &amp; Returning
+Objects</I></B></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Since the only way you talk to objects in
+Java is through references, the concepts of passing an object into a function
+and returning an object from a function have some interesting consequences. This
+appendix explains what you need to know to manage objects when you&#8217;re
+moving in and out of functions, and also shows the <B>String</B> class, which
+uses a different approach to the
+problem.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I56' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I57>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B><I>Appendix B:	The Java Native
+Interface (JNI)</I></B></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A totally portable Java program has
+serious drawbacks: speed and the inability to access platform-specific services.
+When you know the platform that you&#8217;re running on, it&#8217;s possible to
+dramatically speed up certain operations by making them <I>native methods</I>,
+which are functions that are written in another programming language (currently,
+only C/C++ is supported). This appendix gives you enough of an introduction to
+this feature that you should be able to create simple examples that interface
+with non-Java code.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I57' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I58>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B><I>Appendix C:	Java Programming
+Guidelines</I></B></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This appendix contains suggestions to
+help guide you while performing low-level program design and writing
+code.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I58' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I59>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B><I>Appendix D:	Recommended
+Reading</I></B></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A list of some of the Java books
+I&#8217;ve found particularly
+useful.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I59' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I60>
+</FONT><A NAME="_Toc312373773"></A><A NAME="_Toc375545181"></A><A NAME="_Toc481064456"></A><BR></P></DIV>
+<A NAME="Heading11"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Exercises</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">I&#8217;ve discovered that simple
+exercises are exceptionally useful to complete a student&#8217;s understanding
+during a seminar, so you&#8217;ll find a set at the end of each
+chapter.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I60' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I61>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Most exercises are designed to be easy
+enough that they can be finished in a reasonable amount of time in a classroom
+situation while the instructor observes, making sure that all the students are
+absorbing the material. Some exercises are more advanced to prevent boredom for
+experienced students. The majority are designed to be solved in a short time and
+test and polish your knowledge. Some are more challenging, but none present
+major challenges. (Presumably, you&#8217;ll find those on your own&#8212;or more
+likely they&#8217;ll find
+you).
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I61' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I62>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Solutions to selected exercises can be
+found in the electronic document <I>The Thinking in Java Annotated Solution
+Guide</I>, available for a small fee from
+www.BruceEckel.com.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I62' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I63>
+</FONT><A NAME="_Ref310733137"></A><A NAME="_Toc312373774"></A><A NAME="_Toc375545182"></A><A NAME="_Toc481064457"></A><BR></P></DIV>
+<A NAME="Heading12"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Multimedia CD ROM</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There are two multimedia CDs associated
+with this book. The first is bound into the book itself: <I>Thinking in C</I>,
+described at the end of the preface, which prepares you for the book by bringing
+you up to speed on the necessary C syntax you need to be able to understand
+Java.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I63' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I64>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A second<I>
+<A NAME="Index5"></A><A NAME="Index6"></A></I>Multimedia CD ROM is available,
+which is based on the contents of the book. This CD ROM is a separate product
+and contains the <B>entire</B> contents of the week-long &#8220;Hands-On
+Java&#8221; training seminar. This is more than 15 hours of lectures that I have
+recorded, synchronized with hundreds of slides of information. Because the
+seminar is based on this book, it is an ideal
+accompaniment.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I64' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I65>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The CD ROM contains all the lectures
+(with the important exception of personalized attention!) from the five-day
+full-immersion training seminars. We believe that it sets a new standard for
+quality.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I65' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I66>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The Hands-On Java CD ROM is available
+only by ordering directly from the Web site
+<I>www.BruceEckel.com</I>.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I66' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I67>
+</FONT><A NAME="_Toc481064458"></A><BR></P></DIV>
+<A NAME="Heading13"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Source code</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">All the source code for this book is
+available as copyrighted freeware, distributed as a single package, by visiting
+the Web site <I>www.BruceEckel.com</I>. To make sure that you get the most
+current version, this is the official site for distribution of the code and the
+electronic version of the book. You can find mirrored versions of the electronic
+book and the code on other sites (some of these sites are found at
+<I>www.BruceEckel.com</I>), but you should check the official site to ensure
+that the mirrored version is actually the most recent edition. You may
+distribute the code in classroom and other educational
+situations.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I67' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I68>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The primary goal of the copyright is to
+ensure that the source of the code is properly cited, and to prevent you from
+republishing the code in print media without permission. (As long as the source
+is cited, using examples from the book in most media is generally not a
+problem.)
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I68' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I69>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In each <A NAME="Index7"></A>source code
+file you will find a reference to the following copyright
+notice:
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I69' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I70>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>//:! :CopyRight.txt
+Copyright &#169;2000 Bruce Eckel 
+Source code file from the 2nd edition of the book
+"Thinking in Java." All rights reserved EXCEPT as
+allowed by the following statements: 
+You can freely use this file
+for your own work (personal or commercial),
+including modifications and distribution in
+executable form only. Permission is granted to use
+this file in classroom situations, including its
+use in presentation materials, as long as the book
+"Thinking in Java" is cited as the source. 
+Except in classroom situations, you cannot copy
+and distribute this code; instead, the sole
+distribution point is http://www.BruceEckel.com 
+(and official mirror sites) where it is
+freely available. You cannot remove this
+copyright and notice. You cannot distribute
+modified versions of the source code in this
+package. You cannot use this file in printed
+media without the express permission of the
+author. Bruce Eckel makes no representation about
+the suitability of this software for any purpose.
+It is provided "as is" without express or implied
+warranty of any kind, including any implied
+warranty of merchantability, fitness for a
+particular purpose or non-infringement. The entire
+risk as to the quality and performance of the
+software is with you. Bruce Eckel and the
+publisher shall not be liable for any damages
+suffered by you or any third party as a result of
+using or distributing software. In no event will
+Bruce Eckel or the publisher be liable for any
+lost revenue, profit, or data, or for direct,
+indirect, special, consequential, incidental, or
+punitive damages, however caused and regardless of
+the theory of liability, arising out of the use of
+or inability to use software, even if Bruce Eckel
+and the publisher have been advised of the
+possibility of such damages. Should the software
+prove defective, you assume the cost of all
+necessary servicing, repair, or correction. If you
+think you've found an error, please submit the
+correction using the form you will find at
+www.BruceEckel.com. (Please use the same
+form for non-code errors found in the book.)
+///:~</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You may use the code in your projects and
+in the classroom (including your presentation materials) as long as the
+copyright notice that appears in each source file is
+retained.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I70' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I71>
+</FONT><A NAME="_Toc312373775"></A><A NAME="_Toc375545183"></A><A NAME="_Toc481064459"></A><BR></P></DIV>
+<A NAME="Heading14"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Coding standards<BR><A NAME="Index8"></A><A NAME="Index9"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In the text of this book, identifiers
+(function, variable, and class names) are set in <B>bold</B>. Most keywords are
+also set in bold, except for those keywords that are used so much that the
+bolding can become tedious, such as
+&#8220;class.&#8221;
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I71' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I72>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">I use a particular coding style for the
+examples in this book. This style follows the style that Sun itself uses in
+virtually all of the code you will find at its site (see
+<I>java.sun.com/docs/codeconv/index.html</I>), and seems to be supported by most
+Java development environments. If you&#8217;ve read my other works, you&#8217;ll
+also notice that Sun&#8217;s coding style coincides with mine&#8212;this pleases
+me, although I had nothing to do with it. The subject of formatting style is
+good for hours of hot debate, so I&#8217;ll just say I&#8217;m not trying to
+dictate correct style via my examples; I have my own motivation for using the
+style that I do. Because Java is a free-form programming language, you can
+continue to use whatever style you&#8217;re comfortable
+with.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I72' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I73>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The programs in this book are files that
+are included by the word processor in the text, directly from compiled files.
+Thus, the code files printed in the book should all work without compiler
+errors. The errors that <I>should</I> cause compile-time error messages are
+commented out with the comment <B>//! </B>so they can be easily discovered and
+tested using automatic means. Errors discovered and reported to the author will
+appear first in the distributed source code and later in
+<A NAME="Index10"></A><A NAME="Index11"></A>updates of the book (which will also
+appear on the Web site
+<I>www.BruceEckel.com</I>).
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I73' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I74>
+</FONT><A NAME="_Toc312373778"></A><A NAME="_Toc375545184"></A><A NAME="_Toc481064460"></A><BR></P></DIV>
+<A NAME="Heading15"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Java versions<BR><A NAME="Index12"></A><A NAME="Index13"></A></H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">I generally rely on the Sun
+implementation of Java as a reference when determining whether behavior is
+correct.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I74' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I75>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Over time, Sun has released three major
+versions of Java: 1.0, 1.1 and 2 (which is called version 2 even though the
+releases of the JDK from Sun continue to use the numbering scheme of 1.2, 1.3,
+1.4, etc.). Version 2 seems to finally bring Java into the prime time, in
+particular where user interface tools are concerned. This book focuses on and is
+tested with Java 2, although I do sometimes make concessions to earlier features
+of Java 2 so that the code will compile under Linux (via the Linux JDK that was
+available at this writing).
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I75' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I76>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you need to learn about earlier
+releases of the language that are not covered in this edition, the first edition
+of the book is freely downloadable at <I>www.BruceEckel.com</I> and is also
+contained on the CD that is bound in with this
+book.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I76' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I77>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">One thing you&#8217;ll notice is that,
+when I do need to mention earlier versions of the language, I don&#8217;t use
+the sub-revision numbers. In this book I will refer to Java 1.0, Java 1.1, and
+Java 2 only, to guard against typographical errors produced by further
+sub-revisioning of these
+products.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I77' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I78>
+</FONT><A NAME="_Toc481064461"></A><BR></P></DIV>
+<A NAME="Heading16"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Seminars and mentoring</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">My company provides five-day, hands-on,
+public and in-house
+<A NAME="Index14"></A><A NAME="Index15"></A><A NAME="Index16"></A>training
+seminars based on the material in this book. Selected material from each chapter
+represents a lesson, which is followed by a monitored exercise period so each
+student receives personal attention. The audio lectures and slides for the
+introductory seminar are also captured on CD ROM to provide at least some of the
+experience of the seminar without the travel and expense. For more information,
+go to
+<I>www.BruceEckel.com</I>.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I78' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I79>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">My company also provides consulting,
+mentoring and walkthrough services to help guide your project through its
+development cycle&#8212;especially your company&#8217;s first Java project.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I79' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I80>
+</FONT><A NAME="_Toc312373779"></A><A NAME="_Toc375545185"></A><A NAME="_Toc481064462"></A><BR></P></DIV>
+<A NAME="Heading17"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Errors<BR><A NAME="Index17"></A><A NAME="Index18"></A><A NAME="Index19"></A></H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">No matter how many tricks a writer uses
+to detect errors, some always creep in and these often leap off the page for a
+fresh reader. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I80' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I81>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There is an error submission form linked
+from the beginning of each chapter in the HTML version of this book (and on the
+CD ROM bound into the back of this book, and downloadable from
+<I>www.BruceEckel.com</I>) and also on the Web site itself, on the page for this
+book.<I> </I>If you discover anything you believe to be an error, please use
+this form to submit the error along with your suggested correction. If
+necessary, include the original source file and note any suggested
+modifications. Your help is
+appreciated.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I81' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I82>
+</FONT><A NAME="_Toc312373780"></A><A NAME="_Toc375545186"></A><A NAME="Acknowledgements"></A><A NAME="_Toc481064463"></A><BR></P></DIV>
+<A NAME="Heading18"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Note on the cover design</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The cover of <I>Thinking in Java</I> is
+inspired by the American Arts &amp; Crafts Movement, which began near the turn
+of the century and reached its zenith between 1900 and 1920. It began in England
+as a reaction to both the machine production of the Industrial Revolution and
+the highly ornamental style of the Victorian era. Arts &amp; Crafts emphasized
+spare design, the forms of nature as seen in the art nouveau movement,
+hand-crafting, and the importance of the individual craftsperson, and yet it did
+not eschew the use of modern tools. There are many echoes with the situation we
+have today: the turn of the century, the evolution from the raw beginnings of
+the computer revolution to something more refined and meaningful to individual
+persons, and the emphasis on software craftsmanship rather than just
+manufacturing code. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I82' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I83>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">I see Java in this same way: as an
+attempt to elevate the programmer away from an operating-system mechanic and
+toward being a &#8220;software
+craftsman.&#8221;
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I83' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I84>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Both the author and the book/cover
+designer (who have been friends since childhood) find inspiration in this
+movement, and both own furniture, lamps, and other pieces that are either
+original or inspired by this period.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I84' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I85>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The other theme in this cover suggests a
+collection box that a naturalist might use to display the insect specimens that
+he or she has preserved. These insects are objects, which are placed within the
+box objects. The box objects are themselves placed within the &#8220;cover
+object,&#8221; which illustrates the fundamental concept of aggregation in
+object-oriented programming. Of course, a programmer cannot help but make the
+association with &#8220;bugs,&#8221; and here the bugs have been captured and
+presumably killed in a specimen jar, and finally confined within a small display
+box, as if to imply Java&#8217;s ability to find, display, and subdue bugs
+(which is truly one of its most powerful
+attributes).
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I85' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I86>
+</FONT><A NAME="_Toc481064464"></A><BR></P></DIV>
+<A NAME="Heading19"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Acknowledgements</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">First, thanks to associates who have
+worked with me to give seminars, provide consulting, and develop teaching
+projects: Andrea Provaglio, Dave Bartlett (who also contributed significantly to
+Chapter 15), Bill Venners, and Larry O&#8217;Brien. I appreciate your patience
+as I continue to try to develop the best model for independent folks like us to
+work together. Thanks to Rolf Andr&eacute; Klaedtke (Switzerland); Martin Vlcek,
+Martin Byer, Vlada &amp; Pavel Lahoda, Martin the Bear, and Hanka (Prague); and
+Marco Cantu (Italy) for hosting me on my first self-organized European seminar
+tour.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I86' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I87>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Thanks to the Doyle Street Cohousing
+Community for putting up with me for the two years that it took me to write the
+first edition of this book (and for putting up with me at all). Thanks very much
+to Kevin and Sonda Donovan for subletting their great place in gorgeous Crested
+Butte, Colorado for the summer while I worked on the first edition of the book.
+Also thanks to the friendly residents of Crested Butte and the Rocky Mountain
+Biological Laboratory who make me feel so
+welcome.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I87' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I88>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Thanks to Claudette Moore at Moore
+Literary Agency for her tremendous patience and perseverance in getting me
+exactly what I wanted.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I88' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I89>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">My first two books were published with
+Jeff Pepper as editor at Osborne/McGraw-Hill. Jeff appeared at the right place
+and the right time at Prentice-Hall and has cleared the path and made all the
+right things happen to make this a very pleasant publishing experience. Thanks,
+Jeff&#8212;it means a lot to
+me.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I89' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I90>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">I&#8217;m especially indebted to Gen
+Kiyooka and his company Digigami, who graciously provided my Web server for the
+first several years of my presence on the Web. This was an invaluable learning
+aid.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I90' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I91>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Thanks to Cay Horstmann (co-author of
+<I>Core Java</I>, Prentice-Hall, 2000<I>)</I>, D&#8217;Arcy Smith (Symantec),
+and Paul Tyma (co-author of <I>Java Primer Plus</I>, The Waite Group, 1996), for
+helping me clarify concepts in the
+language.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I91' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I92>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Thanks to people who have spoken in my
+Java track at the Software Development Conference, and students in my seminars,
+who ask the questions I need to hear in order to make the material more
+clear.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I92' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I93>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Special thanks to Larry and Tina
+O&#8217;Brien, who helped turn my seminar into the original <I>Hands-On Java
+</I>CD ROM. (You can find out more at
+<I>www.BruceEckel.com</I>.)
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I93' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I94>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Lots of people sent in corrections and I
+am indebted to them all, but particular thanks go to (for the first edition):
+Kevin Raulerson (found tons of great bugs), Bob Resendes (simply incredible),
+John Pinto, Joe Dante, Joe Sharp (all three were fabulous), David Combs (many
+grammar and clarification corrections), Dr. Robert Stephenson, John Cook,
+Franklin Chen, Zev Griner, David Karr, Leander A. Stroschein, Steve Clark,
+Charles A. Lee, Austin Maher, Dennis P. Roth, Roque Oliveira, Douglas Dunn,
+Dejan Ristic, Neil Galarneau, David B. Malkovsky, Steve Wilkinson, and a host of
+others. Prof. Ir. Marc Meurrens put in a great deal of effort to publicize and
+make the electronic version of the first edition of the book available in
+Europe.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I94' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I95>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There have been a spate of smart
+technical people in my life who have become friends and have also been both
+influential and unusual in that they do yoga and practice other forms of
+spiritual enhancement, which I find quite inspirational and instructional. They
+are Kraig Brockschmidt, Gen Kiyooka, and Andrea Provaglio, (who helps in the
+understanding of Java and programming in general in Italy, and now in the United
+States as an associate of the MindView
+team).
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I95' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I96>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It&#8217;s not that much of a surprise to
+me that understanding Delphi helped me understand Java, since there are many
+concepts and language design decisions in common. My Delphi friends provided
+assistance by helping me gain insight into that marvelous programming
+environment. They are Marco Cantu (another Italian&#8212;perhaps being steeped
+in Latin gives one aptitude for programming languages?), Neil Rubenking (who
+used to do the yoga/vegetarian/Zen thing until he discovered computers), and of
+course Zack Urlocker, a long-time pal whom I&#8217;ve traveled the world
+with.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I96' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I97>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">My friend Richard Hale Shaw&#8217;s
+insights and support have been very helpful (and Kim&#8217;s, too). Richard and
+I spent many months giving seminars together and trying to work out the perfect
+learning experience for the attendees. Thanks also to KoAnn Vikoren, Eric
+Faurot, Marco Pardi, and the rest of the cast and crew at MFI. Thanks especially
+to Tara Arrowood, who re-inspired me about the possibilities of
+conferences.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I97' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I98>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The book design, cover design, and cover
+photo were created by my friend Daniel Will-Harris, noted author and designer
+(<I>www.Will-Harris.com</I>), who used to play with rub-on letters in junior
+high school while he awaited the invention of computers and desktop publishing,
+and complained of me mumbling over my algebra problems. However, I produced the
+camera-ready pages myself, so the typesetting errors are mine.
+Microsoft<SUP>&reg;</SUP> Word 97 for Windows was used to write the book and to
+create camera-ready pages in Adobe Acrobat; the book was created directly from
+the Acrobat PDF files. (As a tribute to the electronic age, I happened to be
+overseas both times the final version of the book was produced&#8212;the first
+edition was sent from Capetown, South Africa and the second edition was posted
+from Prague). The body typeface is <I>Georgia </I>and the headlines are in
+<I>Verdana</I>. The cover typeface is <I>ITC Rennie
+Mackintosh.</I>
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I98' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I99>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Thanks to the vendors who created the
+compilers: Borland, the Blackdown group (for Linux), and of course,
+Sun.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I99' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I100>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A special thanks to all my teachers and
+all my students (who are my teachers as well). The most fun writing teacher was
+Gabrielle Rico (author of <I>Writing the Natural Way</I>, Putnam, 1983).
+I&#8217;ll always treasure the terrific week at
+Esalen.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I100' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I101>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The supporting cast of friends includes,
+but is not limited to: Andrew Binstock, Steve Sinofsky, JD Hildebrandt, Tom
+Keffer, Brian McElhinney, Brinkley Barr, Bill Gates at <I>Midnight Engineering
+Magazine</I>, Larry Constantine and Lucy Lockwood, Greg Perry, Dan Putterman,
+Christi Westphal, Gene Wang, Dave Mayer, David Intersimone, Andrea Rosenfield,
+Claire Sawyers, more Italians (Laura Fallai, Corrado, Ilsa, and Cristina
+Giustozzi), Chris and Laura Strand, the Almquists, Brad Jerbic, Marilyn
+Cvitanic, the Mabrys, the Haflingers, the Pollocks, Peter Vinci, the Robbins
+Families, the Moelter Families (and the McMillans), Michael Wilk, Dave Stoner,
+Laurie Adams, the Cranstons, Larry Fogg, Mike and Karen Sequeira, Gary
+Entsminger and Allison Brody, Kevin Donovan and Sonda Eastlack, Chester and
+Shannon Andersen, Joe Lordi, Dave and Brenda Bartlett, David Lee, the
+Rentschlers, the Sudeks, Dick, Patty, and Lee Eckel, Lynn and Todd, and their
+families. And of course, Mom and
+Dad.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I101' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_INTRO_I102>
+</FONT><A NAME="_Toc481064465"></A><BR></P></DIV>
+<A NAME="Heading20"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Internet contributors<A NAME="InternetContributors"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Thanks to those who helped me rewrite the
+examples to use the Swing library, and for other assistance: Jon Shvarts, Thomas
+Kirsch, Rahim Adatia, Rajesh Jain, Ravi Manthena, Banu Rajamani, Jens Brandt,
+Nitin Shivaram, Malcolm Davis, and everyone who expressed support. This really
+helped me jump-start the project.
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_INTRO_I102' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+</FONT><BR></P></DIV>
+<DIV ALIGN="CENTER">
+    <FONT FACE="Verdana" size = "-1">
+     [ <a href="Preface.htm">Previous Chapter</a> ] 
+    [ <a href="SimpCont.htm">Short TOC</a> ] 
+    [ <a href="Contents.htm">Table of Contents</a> ] 
+    [ <a href="DocIdx.htm">Index</a> ]
+     [ <a href="Chap01.htm">Next Chapter</a> ] 
+    </FONT>
+    <BR>
+ Last Update:05/21/2001</P></DIV>
+
+</BODY>
+
+</HTML>

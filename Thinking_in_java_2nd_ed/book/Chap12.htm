@@ -1,0 +1,1773 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<!--
+This document was converted from RTF source: 
+By rtftohtml 4.19
+See http://www.sunpack.com/RTF
+Filename:TIJ2.rtf
+Application Directory:C:\TOOLS\RTF2HTML\
+Subject:
+Author:Bruce Eckel
+Operator:Bruce Eckel
+Document Comments:
+Version Comments:
+Comments:
+Keywords:
+Translation Date:05/21/2001
+Translation Time:10:39:21
+Translation Platform:Win32
+Number of Output files:23
+This File:Chap12.htm
+SplitDepth=1
+SkipNavPanel=1
+SkipLeadingToc=1
+SkipTrailingToc=1
+GenContents=1
+GenFrames=1
+GenIndex=1
+-->
+<HEAD lang="en"><META http-equiv="Content-Type" content="text/html">
+<TITLE>12: Run-time Type Identification</TITLE>
+</HEAD>
+
+<BODY  BGCOLOR="#FFFFFF"><DIV ALIGN="CENTER">
+  <a href="http://www.MindView.net">
+  <img src="mindview.gif" alt="MindView Inc." BORDER = "0"></a>
+  <CENTER>
+    <FONT FACE="Verdana" size = "-1">
+    [ <a href="README.txt">Viewing Hints</a> ]
+    [ <a href="RevHist.htm">Revision History</a> ]
+    [ <a href="http://www.mindview.net/Books/TIJ/">Book Home Page</a> ]
+    [ <a href="http://www.mindview.net/Etc/MailingList.html">Free Newsletter</a> ] <br>
+    [ <a href="http://www.mindview.net/Seminars">Seminars</a> ]
+    [ <a href="http://www.mindview.net/CDs">Seminars on CD ROM</a> ]
+    [ <a href="http://www.mindview.net/Services">Consulting</a> ]
+    </FONT>
+  <H2><FONT FACE="Verdana">
+  Thinking in Java, 2nd edition, Revision 12</FONT></H2>
+  <H3><FONT FACE="Verdana">&copy;2000 by Bruce Eckel</FONT></H3>
+  
+    <FONT FACE="Verdana" size = "-1">
+     [ <a href="Chap11.htm">Previous Chapter</a> ] 
+    [ <a href="SimpCont.htm">Short TOC</a> ] 
+    [ <a href="Contents.htm">Table of Contents</a> ] 
+    [ <a href="DocIdx.htm">Index</a> ]
+     [ <a href="Chap13.htm">Next Chapter</a> ] 
+    </FONT>
+    
+  </CENTER>
+  </P></DIV><A NAME="Chapter_11"></A><A NAME="Chapter_12"></A><A NAME="_Toc375545404"></A><A NAME="_Toc477690732"></A><A NAME="_Toc481064772"></A><A NAME="Heading401"></A><FONT FACE = "Verdana"><H1 ALIGN="LEFT">
+12: Run-time Type Identification</H1></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=4><backtalk:display ID=TIJ3_CHAPTER12_I0>
+The idea
+of run-time type identification (RTTI) seems fairly simple at first: it lets you
+find the exact type of an object when you only have a reference to the base
+type. </FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">However, the <I>need</I> for RTTI
+uncovers a whole plethora of interesting (and often perplexing) OO design
+issues, and raises fundamental questions of how you should structure your
+programs.  
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I0' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I1>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This chapter looks at the ways that Java
+allows you to discover information about objects and classes at run-time. This
+takes two forms: &#8220;traditional&#8221; RTTI, which assumes that you have all
+the types available at compile-time and run-time, and the
+&#8220;reflection&#8221; mechanism, which allows you to discover class
+information solely at run-time. The &#8220;traditional&#8221; RTTI will be
+covered first, followed by a discussion of reflection.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I1' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I2>
+</FONT><A NAME="_Toc375545405"></A><A NAME="_Toc481064773"></A><BR></P></DIV>
+<A NAME="Heading402"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+The need for RTTI</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Consider the now familiar example of a
+class hierarchy that uses polymorphism. The generic type is the base class
+<B>Shape<A NAME="Index1466"></A><A NAME="Index1467"></A></B>, and the specific
+derived types are <B>Circle</B>, <B>Square</B>, and
+<B>Triangle</B>:</FONT><BR></P></DIV>
+<DIV ALIGN="CENTER"><FONT FACE="Georgia"><IMG SRC="TIJ227.gif"></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This is a typical class hierarchy
+diagram, with the base class at the top and the derived classes growing
+downward. The normal goal in object-oriented
+programming<A NAME="Index1468"></A><A NAME="Index1469"></A> is for the bulk of
+your code to manipulate references to the base type (<B>Shape</B>, in this
+case), so if you decide to extend the program by adding a new class
+(<B>Rhomboid</B>, derived from <B>Shape</B>, for example), the bulk of the code
+is not affected. In this example, the dynamically bound method in the
+<B>Shape</B> interface is <B>draw(&#160;)</B>, so the intent is for the client
+programmer to call <B>draw(&#160;)</B> through a generic <B>Shape</B> reference.
+<B>draw(&#160;)</B> is overridden in all of the derived classes, and because it
+is a dynamically bound method, the proper behavior will occur even though it is
+called through a generic <B>Shape</B> reference. That&#8217;s
+<A NAME="Index1470"></A>polymorphism.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I2' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I3>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Thus, you generally create a specific
+object (<B>Circle</B>, <B>Square</B>, or <B>Triangle</B>), upcast it to a
+<B>Shape</B> (forgetting the specific type of the object), and use that
+anonymous <B>Shape </B>reference in the rest of the program.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I3' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I4>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">As a brief review of polymorphism and
+<A NAME="Index1471"></A>upcasting, you might code the above example as
+follows:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c12:Shapes.java</font>
+<font color=#0000ff>import</font> java.util.*;
+
+<font color=#0000ff>class</font> Shape {
+  <font color=#0000ff>void</font> draw() {
+    System.out.println(<font color=#0000ff>this</font> + <font color=#004488>".draw()"</font>);
+  }
+}
+
+<font color=#0000ff>class</font> Circle <font color=#0000ff>extends</font> Shape {
+  <font color=#0000ff>public</font> String toString() { <font color=#0000ff>return</font> <font color=#004488>"Circle"</font>; }
+}
+
+<font color=#0000ff>class</font> Square <font color=#0000ff>extends</font> Shape {
+  <font color=#0000ff>public</font> String toString() { <font color=#0000ff>return</font> <font color=#004488>"Square"</font>; }
+}
+
+<font color=#0000ff>class</font> Triangle <font color=#0000ff>extends</font> Shape {
+  <font color=#0000ff>public</font> String toString() { <font color=#0000ff>return</font> <font color=#004488>"Triangle"</font>; }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Shapes {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    ArrayList s = <font color=#0000ff>new</font> ArrayList();
+    s.add(<font color=#0000ff>new</font> Circle());
+    s.add(<font color=#0000ff>new</font> Square());
+    s.add(<font color=#0000ff>new</font> Triangle());
+    Iterator e = s.iterator();
+    <font color=#0000ff>while</font>(e.hasNext())
+      ((Shape)e.next()).draw();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The base class contains a
+<B>draw(&#160;)</B> method that indirectly uses <B>toString(&#160;) </B>to print
+an identifier for the class by passing <B>this</B> to
+<B>System.out.println(&#160;)</B>. If that function sees an object, it
+automatically calls the <B>toString(&#160;)</B> method to produce a
+<B>String</B> representation.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I4' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I5>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Each of the derived classes overrides the
+<B>toString(&#160;)</B> method (from <B>Object</B>) so that <B>draw(&#160;)</B>
+ends up printing something different in each case. In <B>main(&#160;)</B>,
+specific types of <B>Shape</B> are created and then added to a<STRIKE>n</STRIKE>
+<B><STRIKE>Array</STRIKE>List</B>. This is the point at which the upcast occurs
+because the <B><STRIKE>Array</STRIKE>List</B> holds only <B>Object</B>s. Since
+everything in Java (with the exception of primitives) is an <B>Object</B>,
+a<STRIKE>n</STRIKE> <B><STRIKE>Array</STRIKE>List</B> can also hold <B>Shape</B>
+objects. But during an upcast to <B>Object</B>,<B> </B>it also loses any
+specific information, including the fact that the objects are <B>Shape</B>s. To
+the <B>ArrayList</B>, they are just <B>Object</B>s.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I5' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I6>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">At the point you fetch an element out of
+the <B><STRIKE>Array</STRIKE>List</B> with <B>next(&#160;)</B>, things get a
+little busy. Since <U>the </U><B><STRIKE>Array</STRIKE>List</B> holds only
+<B>Object</B>s, <B>next(&#160;)</B> naturally produces an <B>Object
+reference</B>. But we know it&#8217;s really a <B>Shape</B> reference, and we
+want to send <B>Shape</B> messages to that object. So a
+<A NAME="Index1472"></A><A NAME="Index1473"></A>cast to <B>Shape </B>is
+necessary using the traditional &#8220;<B>(Shape)</B>&#8221; cast. This is the
+most basic form of RTTI, since in Java all casts are checked at run-time for
+correctness. That&#8217;s exactly what RTTI means: at run-time, the type of an
+object is identified. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I6' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I7>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In this case, the RTTI cast is only
+partial: the <B>Object</B> is cast to a <B>Shape</B>, and not all the way to a
+<B>Circle</B>, <B>Square</B>, or <B>Triangle</B>. That&#8217;s because the only
+thing we <I>know</I> at this point is that the <B><STRIKE>Array</STRIKE>List</B>
+is full of <B>Shape</B>s. At compile-time, this is enforced only by your own
+self-imposed rules, but at run-time the cast ensures it.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I7' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I8>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Now polymorphism takes over and the exact
+method that&#8217;s called for the <B>Shape</B> is determined by whether the
+reference is for a <B>Circle</B>, <B>Square</B>, or <B>Triangle</B>. And in
+general, this is how it should be; you want the bulk of your code to know as
+little as possible about <I>specific</I> types of objects, and to just deal with
+the general representation of a family of objects (in this case, <B>Shape</B>).
+As a result, your code will be easier to write, read, and maintain, and your
+designs will be easier to implement, understand, and change. So polymorphism is
+the general goal in object-oriented programming.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I8' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I9>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">But what if you have a special
+programming problem that&#8217;s easiest to solve if you know the exact type of
+a generic reference<A NAME="Index1474"></A><A NAME="Index1475"></A>? For
+example, suppose you want to allow your users to highlight all the shapes of any
+particular type by turning them purple. This way, they can find all the
+triangles on the screen by highlighting them. This is what RTTI accomplishes:
+you can ask a <B>Shape</B> reference the exact type that it&#8217;s referring
+to.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I9' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I10>
+</FONT><A NAME="_Toc312374135"></A><A NAME="_Toc375545406"></A><A NAME="_Toc481064774"></A><BR></P></DIV>
+<A NAME="Heading403"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+The Class object</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To understand how RTTI works in Java, you
+must first know how type information is represented at run-time. This is
+accomplished through a special kind of object called the
+<A NAME="Index1476"></A><A NAME="Index1477"></A><A NAME="Index1478"></A><I>Class
+object,</I> which contains information about the class. (This is sometimes
+called a <A NAME="Index1479"></A><A NAME="Index1480"></A><I>meta-class.</I>) In
+fact, the <B>Class</B> object is used to create all of the &#8220;regular&#8221;
+objects of your class. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I10' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I11>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There&#8217;s a <B>Class</B> object for
+each class that is part of your program. That is, each time you write and
+compile a new class, a single <B>Class</B> object is also created (and stored,
+appropriately enough, in an identically named <B>.class </B>file). At run-time,
+when you want to make an object of that class, the
+<A NAME="Index1481"></A><A NAME="Index1482"></A>Java Virtual Machine (JVM)
+that&#8217;s executing your program first checks to see if the <B>Class</B>
+object for that type is loaded. If not, the JVM loads it by finding the
+<B>.class </B>file with that name. Thus, a Java program isn&#8217;t completely
+loaded before it begins, which is different from many traditional languages.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I11' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I12>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Once the <B>Class</B> object for that
+type is in memory, it is used to create all objects of that type.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I12' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I13>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If this seems shadowy or if you
+don&#8217;t really believe it, here&#8217;s a demonstration program to prove
+it:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c12:SweetShop.java</font>
+<font color=#009900>// Examination of the way the class loader works.</font>
+
+<font color=#0000ff>class</font> Candy {
+  <font color=#0000ff>static</font> {
+    System.out.println(<font color=#004488>"Loading Candy"</font>);
+  }
+}
+
+<font color=#0000ff>class</font> Gum {
+  <font color=#0000ff>static</font> {
+    System.out.println(<font color=#004488>"Loading Gum"</font>);
+  }
+}
+
+<font color=#0000ff>class</font> Cookie {
+  <font color=#0000ff>static</font> {
+    System.out.println(<font color=#004488>"Loading Cookie"</font>);
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> SweetShop {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    System.out.println(<font color=#004488>"inside main"</font>);
+    <font color=#0000ff>new</font> Candy();
+    System.out.println(<font color=#004488>"After creating Candy"</font>);
+    <font color=#0000ff>try</font> {
+      Class.forName(<font color=#004488>"Gum"</font>);
+    } <font color=#0000ff>catch</font>(ClassNotFoundException e) {
+      e.printStackTrace(System.err);
+    }
+    System.out.println(
+      <font color=#004488>"After Class.forName(\"</font>Gum\<font color=#004488>")"</font>);
+    <font color=#0000ff>new</font> Cookie();
+    System.out.println(<font color=#004488>"After creating Cookie"</font>);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Each of the classes <B>Candy</B>,
+<B>Gum</B>, and <B>Cookie</B> have a <A NAME="Index1483"></A><B>static</B>
+clause that is executed as the class is loaded for the first time. Information
+will be printed to tell you when loading occurs for that class. In
+<B>main(&#160;)</B>, the object creations are spread out between print
+statements to help detect the time of loading.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I13' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I14>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A particularly interesting line
+is:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Class.forName(<font color=#004488>"Gum"</font>);</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This method is a <B>static</B> member of
+<B>Class</B> (to which all <B>Class</B> objects belong). A <B>Class</B> object
+is like any other object and so you can get and manipulate a reference to it.
+(That&#8217;s what the loader does.) One of the ways to get a reference to the
+<B>Class</B> object is
+<A NAME="Index1484"></A><A NAME="Index1485"></A><B>forName(&#160;)</B>, which
+takes a <B>String</B> containing the textual name (watch the spelling and
+capitalization!) of the particular class you want a reference for. It returns a
+<B>Class</B> reference. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I14' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I15>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The output of this program for one JVM
+is:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>inside main
+Loading Candy
+After creating Candy
+Loading Gum
+After Class.forName(<font color=#004488>"Gum"</font>)
+Loading Cookie
+After creating Cookie</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can see that each <B>Class</B> object
+is loaded only when it&#8217;s needed, and the <B>static</B> initialization is
+performed upon class loading.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I15' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I16>
+</FONT><BR></P></DIV>
+<A NAME="Heading404"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Class literals</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java provides a second way to produce the
+reference to the <B>Class</B> object, using a
+<A NAME="Index1486"></A><A NAME="Index1487"></A><I>class literal</I>. In the
+above program this would look like:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Gum.<font color=#0000ff>class</font>;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">which is not only simpler, but also safer
+since it&#8217;s checked at compile-time. Because it eliminates the method call,
+it&#8217;s also more efficient.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I16' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I17>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Class literals work with regular classes
+as well as interfaces, arrays, and primitive types. In addition, there&#8217;s a
+standard field called <A NAME="Index1488"></A><B>TYPE</B> that exists for each
+of the primitive wrapper classes. The <B>TYPE</B> field produces a reference to
+the <B>Class</B> object for the associated primitive type, such
+that:</FONT><BR></P></DIV>
+<DIV ALIGN="CENTER"><TABLE BORDER>
+<TR VALIGN="TOP">
+<TH WIDTH=234 COLSPAN=2 ROWSPAN=1 VALIGN="TOP">
+<DIV ALIGN="CENTER"><FONT FACE="Georgia"><B>... is equivalent to
+...</B></FONT><BR></P></DIV>
+</TH>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="CENTER"><FONT FACE="Georgia"><B>boolean.class</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="CENTER"><FONT FACE="Georgia"><B>Boolean.TYPE</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="CENTER"><FONT FACE="Georgia"><B>char.class</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="CENTER"><FONT FACE="Georgia"><B>Character.TYPE</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="CENTER"><FONT FACE="Georgia"><B>byte.class</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="CENTER"><FONT FACE="Georgia"><B>Byte.TYPE</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="CENTER"><FONT FACE="Georgia"><B>short.class</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="CENTER"><FONT FACE="Georgia"><B>Short.TYPE</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="CENTER"><FONT FACE="Georgia"><B>int.class</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="CENTER"><FONT FACE="Georgia"><B>Integer.TYPE</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="CENTER"><FONT FACE="Georgia"><B>long.class</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="CENTER"><FONT FACE="Georgia"><B>Long.TYPE</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="CENTER"><FONT FACE="Georgia"><B>float.class</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="CENTER"><FONT FACE="Georgia"><B>Float.TYPE</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="CENTER"><FONT FACE="Georgia"><B>double.class</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="CENTER"><FONT FACE="Georgia"><B>Double.TYPE</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="CENTER"><FONT FACE="Georgia"><B>void.class</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="CENTER"><FONT FACE="Georgia"><B>Void.TYPE</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<A NAME="_Toc375545408"></A></TABLE></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">My preference is to use the
+&#8220;<B>.class</B>&#8221; versions if you can, since they&#8217;re more
+consistent with regular classes.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I17' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I18>
+</FONT><A NAME="_Toc481064775"></A><BR></P></DIV>
+<A NAME="Heading405"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Checking before a cast</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">So far, you&#8217;ve seen RTTI forms
+including:</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">The classic cast; e.g.,
+&#8220;<B>(Shape),</B>&#8221; which uses RTTI to make sure the cast is correct
+and throws a <B>ClassCastException</B> if you&#8217;ve performed a bad
+cast.</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">The
+<B>Class</B> object representing the type of your object. The <B>Class</B>
+object can be queried for useful run-time information.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I18' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I19>
+</FONT></OL><DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In
+C++, the classic cast &#8220;<B>(Shape)</B>&#8221; does <I>not </I>perform RTTI.
+It simply tells the compiler to treat the object as the new type. In Java, which
+does perform the type check, this cast is often called a &#8220;type safe
+downcast<A NAME="Index1489"></A><A NAME="Index1490"></A><A NAME="Index1491"></A>.&#8221;
+The reason for the term &#8220;downcast&#8221; is the historical arrangement of
+the class hierarchy diagram. If casting a <B>Circle</B> to a <B>Shape</B> is an
+upcast, then casting a <B>Shape</B> to a <B>Circle</B> is a downcast. However,
+you know a <B>Circle</B> is also a <B>Shape</B>, and the compiler freely allows
+an upcast assignment, but you <I>don&#8217;t</I> know that a <B>Shape</B> is
+necessarily a <B>Circle</B>, so the compiler doesn&#8217;t allow you to perform
+a <A NAME="Index1492"></A><A NAME="Index1493"></A>downcast assignment without
+using an explicit cast.  
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I19' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I20>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There&#8217;s a third form of RTTI in
+Java. This is the <A NAME="Index1494"></A><A NAME="Index1495"></A>keyword
+<B>instanceof</B> that tells you if an object is an instance of a particular
+type. It returns a <B>boolean </B>so you use it in the form of a question, like
+this:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>if</font>(x <font color=#0000ff>instanceof</font> Dog)
+  ((Dog)x).bark();</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The above <B>if</B> statement checks to
+see if the object <B>x</B> belongs to the class <B>Dog</B> <I>before</I> casting
+<B>x</B> to a <B>Dog</B>. It&#8217;s important to use <B>instanceof</B> before a
+downcast when you don&#8217;t have other information that tells you the type of
+the object; otherwise you&#8217;ll end up with a
+<A NAME="Index1496"></A><A NAME="Index1497"></A><B>ClassCastException</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I20' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I21>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Ordinarily, you might be hunting for one
+type (triangles to turn purple, for example), but you can easily tally
+<I>all</I> of the objects using <B>instanceof</B>. Suppose you have a family of
+<B>Pet</B> classes:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c12:Pets.java</font>
+<font color=#0000ff>class</font> Pet {}
+<font color=#0000ff>class</font> Dog <font color=#0000ff>extends</font> Pet {}
+<font color=#0000ff>class</font> Pug <font color=#0000ff>extends</font> Dog {}
+<font color=#0000ff>class</font> Cat <font color=#0000ff>extends</font> Pet {}
+<font color=#0000ff>class</font> Rodent <font color=#0000ff>extends</font> Pet {}
+<font color=#0000ff>class</font> Gerbil <font color=#0000ff>extends</font> Rodent {}
+<font color=#0000ff>class</font> Hamster <font color=#0000ff>extends</font> Rodent {}
+
+<font color=#0000ff>class</font> Counter { <font color=#0000ff>int</font> i; } <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>Counter</B> class is used to keep
+track of the number of any particular type of <B>Pet</B>. You could think of it
+as an <B>Integer</B> that can be modified.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I21' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I22>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Using <B>instanceof</B>, all the pets can
+be counted:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c12:PetCount.java</font>
+<font color=#009900>// Using instanceof.</font>
+<font color=#0000ff>import</font> java.util.*;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> PetCount {
+  <font color=#0000ff>static</font> String[] typenames = {
+    <font color=#004488>"Pet"</font>, <font color=#004488>"Dog"</font>, <font color=#004488>"Pug"</font>, <font color=#004488>"Cat"</font>,
+    <font color=#004488>"Rodent"</font>, <font color=#004488>"Gerbil"</font>, <font color=#004488>"Hamster"</font>,
+  };
+  <font color=#009900>// Exceptions thrown out to console:</font>
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) 
+  <font color=#0000ff>throws</font> Exception {
+    ArrayList pets = <font color=#0000ff>new</font> ArrayList();
+    <font color=#0000ff>try</font> {
+      Class[] petTypes = {
+        Class.forName(<font color=#004488>"Dog"</font>),
+        Class.forName(<font color=#004488>"Pug"</font>),
+        Class.forName(<font color=#004488>"Cat"</font>),
+        Class.forName(<font color=#004488>"Rodent"</font>),
+        Class.forName(<font color=#004488>"Gerbil"</font>),
+        Class.forName(<font color=#004488>"Hamster"</font>),
+      };
+      <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; 15; i++)
+        pets.add(
+          petTypes[
+            (<font color=#0000ff>int</font>)(Math.random()*petTypes.length)]
+            .newInstance());
+    } <font color=#0000ff>catch</font>(InstantiationException e) {
+      System.err.println(<font color=#004488>"Cannot instantiate"</font>);
+      <font color=#0000ff>throw</font> e;
+    } <font color=#0000ff>catch</font>(IllegalAccessException e) {
+      System.err.println(<font color=#004488>"Cannot access"</font>);
+      <font color=#0000ff>throw</font> e;
+    } <font color=#0000ff>catch</font>(ClassNotFoundException e) {
+      System.err.println(<font color=#004488>"Cannot find class"</font>);
+      <font color=#0000ff>throw</font> e;
+    }
+    HashMap h = <font color=#0000ff>new</font> HashMap();
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; typenames.length; i++)
+      h.put(typenames[i], <font color=#0000ff>new</font> Counter());
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; pets.size(); i++) {
+      Object o = pets.get(i);
+      <font color=#0000ff>if</font>(o <font color=#0000ff>instanceof</font> Pet)
+        ((Counter)h.get(<font color=#004488>"Pet"</font>)).i++;
+      <font color=#0000ff>if</font>(o <font color=#0000ff>instanceof</font> Dog)
+        ((Counter)h.get(<font color=#004488>"Dog"</font>)).i++;
+      <font color=#0000ff>if</font>(o <font color=#0000ff>instanceof</font> Pug)
+        ((Counter)h.get(<font color=#004488>"Pug"</font>)).i++;
+      <font color=#0000ff>if</font>(o <font color=#0000ff>instanceof</font> Cat)
+        ((Counter)h.get(<font color=#004488>"Cat"</font>)).i++;
+      <font color=#0000ff>if</font>(o <font color=#0000ff>instanceof</font> Rodent)
+        ((Counter)h.get(<font color=#004488>"Rodent"</font>)).i++;
+      <font color=#0000ff>if</font>(o <font color=#0000ff>instanceof</font> Gerbil)
+        ((Counter)h.get(<font color=#004488>"Gerbil"</font>)).i++;
+      <font color=#0000ff>if</font>(o <font color=#0000ff>instanceof</font> Hamster)
+        ((Counter)h.get(<font color=#004488>"Hamster"</font>)).i++;
+    }
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; pets.size(); i++)
+      System.out.println(pets.get(i).getClass());
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; typenames.length; i++)
+      System.out.println(
+        typenames[i] + <font color=#004488>" quantity: "</font> +
+        ((Counter)h.get(typenames[i])).i);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE><DIV ALIGN="LEFT"><P><A NAME="_Toc305593310"></A><A NAME="_Toc305628782"></A><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There&#8217;s a rather narrow restriction
+on <B>instanceof</B>: you can compare it to a named type only, and not to a
+<B>Class</B> object. In the example above you might feel that it&#8217;s tedious
+to write out all of those <B>instanceof</B> expressions, and you&#8217;re right.
+But there is no way to cleverly automate <B>instanceof </B>by creating an
+<B>ArrayList</B> of <B>Class</B> objects and comparing it to those instead (stay
+tuned&#8212;you&#8217;ll see an alternative). This isn&#8217;t as great a
+restriction as you might think, because you&#8217;ll eventually understand that
+your design is probably flawed if you end up writing a lot of <B>instanceof</B>
+expressions. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I22' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I23>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Of course this example is
+contrived&#8212;you&#8217;d probably put a <B>static</B> data member in each
+type and increment it in the constructor to keep track of the counts. You would
+do something like that <I>if</I> you had control of the source code for the
+class and could change it. Since this is not always the case, RTTI can come in
+handy. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I23' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I24>
+</FONT><BR></P></DIV>
+<A NAME="Heading406"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Using class literals</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It&#8217;s interesting to see how the
+<B>PetCount.java</B> example can be rewritten using class
+literals<A NAME="Index1498"></A><A NAME="Index1499"></A>. The result is cleaner
+in many ways:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c12:PetCount2.java</font>
+<font color=#009900>// Using class literals.</font>
+<font color=#0000ff>import</font> java.util.*;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> PetCount2 {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) 
+  <font color=#0000ff>throws</font> Exception {
+    ArrayList pets = <font color=#0000ff>new</font> ArrayList();
+    Class[] petTypes = {
+      <font color=#009900>// Class literals:</font>
+      Pet.<font color=#0000ff>class</font>,
+      Dog.<font color=#0000ff>class</font>,
+      Pug.<font color=#0000ff>class</font>,
+      Cat.<font color=#0000ff>class</font>,
+      Rodent.<font color=#0000ff>class</font>,
+      Gerbil.<font color=#0000ff>class</font>,
+      Hamster.<font color=#0000ff>class</font>,
+    };
+    <font color=#0000ff>try</font> {
+      <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; 15; i++) {
+        <font color=#009900>// Offset by one to eliminate Pet.class:</font>
+        <font color=#0000ff>int</font> rnd = 1 + (<font color=#0000ff>int</font>)(
+          Math.random() * (petTypes.length - 1));
+        pets.add(
+          petTypes[rnd].newInstance());
+      }
+    } <font color=#0000ff>catch</font>(InstantiationException e) {
+      System.err.println(<font color=#004488>"Cannot instantiate"</font>);
+      <font color=#0000ff>throw</font> e;
+    } <font color=#0000ff>catch</font>(IllegalAccessException e) {
+      System.err.println(<font color=#004488>"Cannot access"</font>);
+      <font color=#0000ff>throw</font> e;
+    }
+    HashMap h = <font color=#0000ff>new</font> HashMap();
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; petTypes.length; i++)
+      h.put(petTypes[i].toString(),
+        <font color=#0000ff>new</font> Counter());
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; pets.size(); i++) {
+      Object o = pets.get(i);
+      <font color=#0000ff>if</font>(o <font color=#0000ff>instanceof</font> Pet)
+        ((Counter)h.get(<font color=#004488>"class Pet"</font>)).i++;
+      <font color=#0000ff>if</font>(o <font color=#0000ff>instanceof</font> Dog)
+        ((Counter)h.get(<font color=#004488>"class Dog"</font>)).i++;
+      <font color=#0000ff>if</font>(o <font color=#0000ff>instanceof</font> Pug)
+        ((Counter)h.get(<font color=#004488>"class Pug"</font>)).i++;
+      <font color=#0000ff>if</font>(o <font color=#0000ff>instanceof</font> Cat)
+        ((Counter)h.get(<font color=#004488>"class Cat"</font>)).i++;
+      <font color=#0000ff>if</font>(o <font color=#0000ff>instanceof</font> Rodent)
+        ((Counter)h.get(<font color=#004488>"class Rodent"</font>)).i++;
+      <font color=#0000ff>if</font>(o <font color=#0000ff>instanceof</font> Gerbil)
+        ((Counter)h.get(<font color=#004488>"class Gerbil"</font>)).i++;
+      <font color=#0000ff>if</font>(o <font color=#0000ff>instanceof</font> Hamster)
+        ((Counter)h.get(<font color=#004488>"class Hamster"</font>)).i++;
+    }
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; pets.size(); i++)
+      System.out.println(pets.get(i).getClass());
+    Iterator keys = h.keySet().iterator();
+    <font color=#0000ff>while</font>(keys.hasNext()) {
+      String nm = (String)keys.next();
+      Counter cnt = (Counter)h.get(nm);
+      System.out.println(
+        nm.substring(nm.lastIndexOf('.') + 1) + 
+        <font color=#004488>" quantity: "</font> + cnt.i);
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here, the <B>typenames</B> array has been
+removed in favor of getting the type name strings from the <B>Class</B> object.
+Notice that the system can distinguish between classes and interfaces.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I24' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I25>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can also see that the creation of
+<B>petTypes</B> does not need to be surrounded by a <B>try</B> block since
+it&#8217;s evaluated at compile-time and thus won&#8217;t throw any exceptions,
+unlike <B>Class.forName(&#160;)</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I25' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I26>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When the <B>Pet</B> objects are
+dynamically created, you can see that the random number is restricted so it is
+between one and <B>petTypes.length</B> and does not include zero. That&#8217;s
+because zero refers to <B>Pet.class</B>, and presumably a generic <B>Pet</B>
+object is not interesting. However, since <B>Pet.class</B> is part of
+<B>petTypes</B> the result is that all of the pets get counted.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I26' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I27>
+</FONT><BR></P></DIV>
+<A NAME="Heading407"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+A dynamic instanceof<BR><A NAME="Index1500"></A></H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>Class</B>
+<A NAME="Index1501"></A><A NAME="Index1502"></A><A NAME="Index1503"></A><B>isInstance</B>
+method provides a way to dynamically call the <B>instanceof</B> operator. Thus,
+all those tedious <B>instanceof</B> statements can be removed in the
+<B>PetCount</B> example:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c12:PetCount3.java</font>
+<font color=#009900>// Using isInstance().</font>
+<font color=#0000ff>import</font> java.util.*;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> PetCount3 {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) 
+  <font color=#0000ff>throws</font> Exception {
+    ArrayList pets = <font color=#0000ff>new</font> ArrayList();
+    Class[] petTypes = {
+      Pet.<font color=#0000ff>class</font>,
+      Dog.<font color=#0000ff>class</font>,
+      Pug.<font color=#0000ff>class</font>,
+      Cat.<font color=#0000ff>class</font>,
+      Rodent.<font color=#0000ff>class</font>,
+      Gerbil.<font color=#0000ff>class</font>,
+      Hamster.<font color=#0000ff>class</font>,
+    };
+    <font color=#0000ff>try</font> {
+      <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; 15; i++) {
+        <font color=#009900>// Offset by one to eliminate Pet.class:</font>
+        <font color=#0000ff>int</font> rnd = 1 + (<font color=#0000ff>int</font>)(
+          Math.random() * (petTypes.length - 1));
+        pets.add(
+          petTypes[rnd].newInstance());
+      }
+    } <font color=#0000ff>catch</font>(InstantiationException e) {
+      System.err.println(<font color=#004488>"Cannot instantiate"</font>);
+      <font color=#0000ff>throw</font> e;
+    } <font color=#0000ff>catch</font>(IllegalAccessException e) {
+      System.err.println(<font color=#004488>"Cannot access"</font>);
+      <font color=#0000ff>throw</font> e;
+    }
+    HashMap h = <font color=#0000ff>new</font> HashMap();
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; petTypes.length; i++)
+      h.put(petTypes[i].toString(),
+        <font color=#0000ff>new</font> Counter());
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; pets.size(); i++) {
+      Object o = pets.get(i);
+      <font color=#009900>// Using isInstance to eliminate individual</font>
+      <font color=#009900>// instanceof expressions:</font>
+      <font color=#0000ff>for</font> (<font color=#0000ff>int</font> j = 0; j &lt; petTypes.length; ++j)
+        <font color=#0000ff>if</font> (petTypes[j].isInstance(o)) {
+          String key = petTypes[j].toString();
+          ((Counter)h.get(key)).i++;
+        }
+    }
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; pets.size(); i++)
+      System.out.println(pets.get(i).getClass());
+    Iterator keys = h.keySet().iterator();
+    <font color=#0000ff>while</font>(keys.hasNext()) {
+      String nm = (String)keys.next();
+      Counter cnt = (Counter)h.get(nm);
+      System.out.println(
+        nm.substring(nm.lastIndexOf('.') + 1) + 
+        <font color=#004488>" quantity: "</font> + cnt.i);
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can see that the
+<B>isInstance(&#160;)</B> method has eliminated the need for the
+<B>instanceof</B> expressions. In addition, this means that you can add new
+types of pets simply by changing the <B>petTypes</B> array; the rest of the
+program does not need modification (as it did when using the <B>instanceof</B>
+expressions). 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I27' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I28>
+</FONT><BR></P></DIV>
+<A NAME="Heading408"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+instanceof vs. Class equivalence<BR><A NAME="Index1504"></A></H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When querying for type information,
+there&#8217;s an important difference between either form of <B>instanceof</B>
+(that is, <B>instanceof</B> or <B>isInstance(&#160;)</B>, which produce
+equivalent results) and the direct comparison of the <B>Class</B> objects.
+Here&#8217;s an example that demonstrates the difference:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c12:FamilyVsExactType.java</font>
+<font color=#009900>// The difference between instanceof and class</font>
+
+<font color=#0000ff>class</font> Base {}
+<font color=#0000ff>class</font> Derived <font color=#0000ff>extends</font> Base {}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> FamilyVsExactType {
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> test(Object x) {
+    System.out.println(<font color=#004488>"Testing x of type "</font> +
+      x.getClass());
+    System.out.println(<font color=#004488>"x instanceof Base "</font> +
+      (x <font color=#0000ff>instanceof</font> Base));
+    System.out.println(<font color=#004488>"x instanceof Derived "</font> +
+      (x <font color=#0000ff>instanceof</font> Derived));
+    System.out.println(<font color=#004488>"Base.isInstance(x) "</font> +
+      Base.<font color=#0000ff>class</font>.isInstance(x));
+    System.out.println(<font color=#004488>"Derived.isInstance(x) "</font> +
+      Derived.<font color=#0000ff>class</font>.isInstance(x));
+    System.out.println(
+      <font color=#004488>"x.getClass() == Base.class "</font> +
+      (x.getClass() == Base.<font color=#0000ff>class</font>));
+    System.out.println(
+      <font color=#004488>"x.getClass() == Derived.class "</font> +
+      (x.getClass() == Derived.<font color=#0000ff>class</font>));
+    System.out.println(
+      <font color=#004488>"x.getClass().equals(Base.class)) "</font> +
+      (x.getClass().equals(Base.<font color=#0000ff>class</font>)));
+    System.out.println(
+      <font color=#004488>"x.getClass().equals(Derived.class)) "</font> +
+      (x.getClass().equals(Derived.<font color=#0000ff>class</font>)));
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    test(<font color=#0000ff>new</font> Base());
+    test(<font color=#0000ff>new</font> Derived());
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>test(&#160;)</B> method performs
+type checking with its argument using both forms of <B>instanceof</B>. It then
+gets the <B>Class</B> reference and uses <B>==</B> and <B>equals(&#160;) </B>to
+test for equality of the <B>Class</B> objects. Here is the
+output:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Testing x of type <font color=#0000ff>class</font> Base
+x <font color=#0000ff>instanceof</font> Base <font color=#0000ff>true</font>
+x <font color=#0000ff>instanceof</font> Derived <font color=#0000ff>false</font>
+Base.isInstance(x) <font color=#0000ff>true</font>
+Derived.isInstance(x) <font color=#0000ff>false</font>
+x.getClass() == Base.<font color=#0000ff>class</font> <font color=#0000ff>true</font>
+x.getClass() == Derived.<font color=#0000ff>class</font> <font color=#0000ff>false</font>
+x.getClass().equals(Base.<font color=#0000ff>class</font>)) <font color=#0000ff>true</font>
+x.getClass().equals(Derived.<font color=#0000ff>class</font>)) <font color=#0000ff>false</font>
+Testing x of type <font color=#0000ff>class</font> Derived
+x <font color=#0000ff>instanceof</font> Base <font color=#0000ff>true</font>
+x <font color=#0000ff>instanceof</font> Derived <font color=#0000ff>true</font>
+Base.isInstance(x) <font color=#0000ff>true</font>
+Derived.isInstance(x) <font color=#0000ff>true</font>
+x.getClass() == Base.<font color=#0000ff>class</font> <font color=#0000ff>false</font>
+x.getClass() == Derived.<font color=#0000ff>class</font> <font color=#0000ff>true</font>
+x.getClass().equals(Base.<font color=#0000ff>class</font>)) <font color=#0000ff>false</font>
+x.getClass().equals(Derived.<font color=#0000ff>class</font>)) <font color=#0000ff>true</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Reassuringly, <B>instanceof </B>and
+<B>isInstance(&#160;)</B> produce exactly the same results, as do
+<B>equals(&#160;)</B> and <B>==</B>. But the tests themselves draw different
+conclusions. In keeping with the concept of type, <B>instanceof</B> says
+&#8220;are you this class, or a class derived from this class?&#8221; On the
+other hand, if you compare the actual <B>Class</B> objects using <B>==</B>,
+there is no concern with inheritance&#8212;it&#8217;s either the exact type or
+it isn&#8217;t.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I28' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I29>
+</FONT><A NAME="_Toc305593313"></A><A NAME="_Toc305628785"></A><A NAME="_Toc312374146"></A><A NAME="_Toc375545409"></A><A NAME="_Toc375545407"></A><A NAME="_Toc481064776"></A><BR></P></DIV>
+<A NAME="Heading409"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+RTTI syntax</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java performs its
+<A NAME="Index1505"></A><A NAME="Index1506"></A>RTTI using the <B>Class</B>
+object, even if you&#8217;re doing something like a cast. The class <B>Class</B>
+also has a number of other ways you can use RTTI.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I29' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I30>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">First, you must get a reference to the
+appropriate <B>Class</B> object. One way to do this, as shown in the previous
+example, is to use a string and the <B>Class.forName(&#160;)</B> method. This is
+convenient because you don&#8217;t need an object of that type in order to get
+the <B>Class</B> reference. However, if you do already have an object of the
+type you&#8217;re interested in, you can fetch the <B>Class</B> reference by
+calling a method that&#8217;s part of the <B>Object</B> root class:<B>
+<A NAME="Index1507"></A><A NAME="Index1508"></A>getClass(&#160;)</B>. This
+returns the <B>Class</B> reference representing the actual type of the object.
+<B>Class</B> has many interesting methods, demonstrated in the following
+example:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c12:ToyTest.java</font>
+<font color=#009900>// Testing class Class.</font>
+
+<font color=#0000ff>interface</font> HasBatteries {}
+<font color=#0000ff>interface</font> Waterproof {}
+<font color=#0000ff>interface</font> ShootsThings {}
+<font color=#0000ff>class</font> Toy {
+  <font color=#009900>// Comment out the following default</font>
+  <font color=#009900>// constructor to see </font>
+  <font color=#009900>// NoSuchMethodError from (*1*)</font>
+  Toy() {} 
+  Toy(<font color=#0000ff>int</font> i) {} 
+}
+
+<font color=#0000ff>class</font> FancyToy <font color=#0000ff>extends</font> Toy 
+    <font color=#0000ff>implements</font> HasBatteries, 
+      Waterproof, ShootsThings {
+  FancyToy() { <font color=#0000ff>super</font>(1); }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> ToyTest {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) 
+  <font color=#0000ff>throws</font> Exception {
+    Class c = <font color=#0000ff>null</font>;
+    <font color=#0000ff>try</font> {
+      c = Class.forName(<font color=#004488>"FancyToy"</font>);
+    } <font color=#0000ff>catch</font>(ClassNotFoundException e) {
+      System.err.println(<font color=#004488>"Can't find FancyToy"</font>);
+      <font color=#0000ff>throw</font> e;
+    }
+    printInfo(c);
+    Class[] faces = c.getInterfaces();
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; faces.length; i++)
+      printInfo(faces[i]);
+    Class cy = c.getSuperclass();
+    Object o = <font color=#0000ff>null</font>;
+    <font color=#0000ff>try</font> {
+      <font color=#009900>// Requires default constructor:</font>
+      o = cy.newInstance(); <font color=#009900>// (*1*)</font>
+    } <font color=#0000ff>catch</font>(InstantiationException e) {
+      System.err.println(<font color=#004488>"Cannot instantiate"</font>);
+      <font color=#0000ff>throw</font> e;
+    } <font color=#0000ff>catch</font>(IllegalAccessException e) {
+      System.err.println(<font color=#004488>"Cannot access"</font>);
+      <font color=#0000ff>throw</font> e;
+    }
+    printInfo(o.getClass());
+  }
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> printInfo(Class cc) {
+    System.out.println(
+      <font color=#004488>"Class name: "</font> + cc.getName() +
+      <font color=#004488>" is interface? ["</font> +
+      cc.isInterface() + <font color=#004488>"]"</font>);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can see that <B>class FancyToy</B> is
+quite complicated, since it inherits from <B>Toy</B> and <B>implements</B> the
+<B>interface</B>s of <B>HasBatteries</B>, <B>Waterproof</B>, and
+<B>ShootsThings</B>. In <B>main(&#160;)</B>, a <B>Class</B> reference is created
+and initialized to the <B>FancyToy</B> <B>Class</B> using <B>forName(&#160;)</B>
+inside an appropriate <B>try</B> block.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I30' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I31>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>Class.getInterfaces(&#160;)</B>
+<A NAME="Index1509"></A><A NAME="Index1510"></A>method returns an array of
+<B>Class</B> objects representing the interfaces that are contained in the
+<B>Class</B> object of interest.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I31' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I32>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you have a <B>Class</B> object you can
+also ask it for its direct base class using
+<A NAME="Index1511"></A><A NAME="Index1512"></A><B>getSuperclass(&#160;)</B>.
+This, of course, returns a <B>Class</B> reference that you can further query.
+This means that, at run-time, you can discover an object&#8217;s entire class
+hierarchy. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I32' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I33>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The
+<A NAME="Index1513"></A><A NAME="Index1514"></A><B>newInstance(&#160;)</B>
+method of <B>Class</B> can, at first, seem like just another way to
+<B>clone(&#160;)</B> an object. However, you can create a new object with
+<B>newInstance(&#160;)</B> <I>without</I> an existing object, as seen here,
+because there is no <B>Toy</B> object&#8212;only <B>cy</B>, which is a reference
+to <B>y</B>&#8217;s <B>Class</B> object. This is a way to implement a
+&#8220;virtual constructor,&#8221; which allows you to say &#8220;I don&#8217;t
+know exactly what type you are, but create yourself properly anyway.&#8221; In
+the example above, <B>cy</B> is just a <B>Class</B> reference with no further
+type information known at compile-time. And when you create a new instance, you
+get back an <B>Object reference</B>. But that reference is pointing to a
+<B>Toy</B> object. Of course, before you can send any messages other than those
+accepted by <B>Object</B>, you have to investigate it a bit and do some casting.
+In addition, the class that&#8217;s being created with
+<B>newInstance(&#160;)</B> must have a default constructor. In the next section,
+you&#8217;ll see how<B> </B>to dynamically create objects of classes using any
+constructor, with the Java <I>reflection</I> API.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I33' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I34>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The final method in the listing is
+<A NAME="Index1515"></A><A NAME="Index1516"></A><B>printInfo(&#160;),</B> which
+takes a <B>Class</B> reference and gets its name with
+<A NAME="Index1517"></A><A NAME="Index1518"></A><B>getName(&#160;),</B> and
+finds out whether it&#8217;s an interface with
+<A NAME="Index1519"></A><A NAME="Index1520"></A><B>isInterface(&#160;)</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I34' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I35>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The output from this program
+is:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Class name: FancyToy is <font color=#0000ff>interface</font>? [<font color=#0000ff>false</font>]
+Class name: HasBatteries is <font color=#0000ff>interface</font>? [<font color=#0000ff>true</font>]
+Class name: Waterproof is <font color=#0000ff>interface</font>? [<font color=#0000ff>true</font>]
+Class name: ShootsThings is <font color=#0000ff>interface</font>? [<font color=#0000ff>true</font>]
+Class name: Toy is <font color=#0000ff>interface</font>? [<font color=#0000ff>false</font>]</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Thus, with the <B>Class</B> object you
+can find out just about everything you want to know about an object.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I35' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I36>
+</FONT><A NAME="_Toc312374147"></A><A NAME="_Toc375545410"></A><A NAME="_Toc481064777"></A><BR></P></DIV>
+<A NAME="Heading410"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Reflection: run-time <BR>class
+information<BR><A NAME="Index1521"></A><A NAME="Index1522"></A></H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you don&#8217;t know the precise type
+of an object, RTTI will tell you. However, there&#8217;s a limitation: the type
+must be known at compile-time in order for you to be able to detect it using
+RTTI and do something useful with the information. Put another way, the compiler
+must know about all the classes you&#8217;re working with for RTTI.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I36' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I37>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This doesn&#8217;t seem like that much of
+a limitation at first, but suppose you&#8217;re given a reference to an object
+that&#8217;s not in your program space. In fact, the class of the object
+isn&#8217;t even available to your program at compile-time. For example, suppose
+you get a bunch of bytes from a disk file or from a network connection and
+you&#8217;re told that those bytes represent a class. Since the compiler
+can&#8217;t know about the class while it&#8217;s compiling the code, how can
+you possibly use such a class?
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I37' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I38>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In a traditional programming environment
+this seems like a far-fetched scenario. But as we move into a larger programming
+world there are important cases in which this happens. The first is
+component-based programming, in which you build projects using
+<A NAME="Index1523"></A><I>Rapid Application Development</I> (RAD) in an
+application builder tool. This is a visual approach to creating a program (which
+you see on the screen as a &#8220;form&#8221;) by moving icons that represent
+components onto the form. These components are then configured by setting some
+of their values at program time. This design-time configuration requires that
+any component be instantiable, that it exposes parts of itself, and that it
+allows its values to be read and set. In addition, components that handle GUI
+events must expose information about appropriate methods so that the RAD
+environment can assist the programmer in overriding these event-handling
+methods. Reflection provides the mechanism to detect the available methods and
+produce the method names. <A NAME="Index1524"></A>Java provides a structure for
+component-based programming through JavaBeans (described in Chapter 13).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I38' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I39>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Another compelling motivation for
+discovering class information at run-time is to provide the ability to create
+and execute objects on remote platforms across a network. This is called
+<I>Remote Method Invocation</I> (RMI) and it allows a Java program to have
+objects distributed across many machines. This distribution can happen for a
+number of reasons: for example, perhaps you&#8217;re doing a
+computation-intensive task and you want to break it up and put pieces on
+machines that are idle in order to speed things up. In some situations you might
+want to place code that handles particular types of tasks (e.g., &#8220;Business
+Rules&#8221; in a multitier client/server architecture) on a particular machine,
+so that machine becomes a common repository describing those actions and it can
+be easily changed to affect everyone in the system. (This is an interesting
+development, since the machine exists solely to make software changes easy!)
+Along these lines, distributed computing also supports specialized hardware that
+might be good at a particular task&#8212;matrix inversions, for
+example&#8212;but inappropriate or too expensive for general purpose
+programming. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I39' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I40>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The class <B>Class</B> (described
+previously in this chapter) supports the concept of <I>reflection</I>, and
+there&#8217;s an additional library, <B>java.lang.reflect, </B>with classes
+<A NAME="Index1525"></A><A NAME="Index1526"></A><B>Field</B>,
+<A NAME="Index1527"></A><A NAME="Index1528"></A><B>Method</B>, and
+<A NAME="Index1529"></A><A NAME="Index1530"></A><B>Constructor </B>(each of
+which implement the <B>Member interface</B>). Objects of these types are created
+by the JVM at run-time to represent the corresponding member in the unknown
+class. You can then use the <B>Constructor</B>s to create new objects, the
+<B>get(&#160;)</B> and <B>set(&#160;)</B> methods to read and modify the fields
+associated with <B>Field</B> objects, and the <B>invoke(&#160;)</B> method to
+call a method associated with a <B>Method</B> object. In addition, you can call
+the convenience methods <B>getFields(&#160;)</B>, <B>getMethods(&#160;)</B>,
+<B>getConstructors(&#160;)</B>, etc., to return arrays of the objects
+representing the fields, methods, and constructors. (You can find out more by
+looking up the class <B>Class</B> in your online documentation.)<B> </B>Thus,
+the class information for anonymous objects can be completely determined at
+run-time, and nothing need be known at compile-time.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I40' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I41>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It&#8217;s important to realize that
+there&#8217;s nothing magic about reflection. When you&#8217;re using reflection
+to interact with an object of an unknown type, the JVM will simply look at the
+object and see that it belongs to a particular class (just like ordinary RTTI)
+but then, before it can do anything else, the <B>Class</B> object must be
+loaded. Thus, the <B>.class</B> file for that particular type must still be
+available to the JVM, either on the local machine or across the network. So the
+true <A NAME="Index1531"></A><A NAME="Index1532"></A>difference between RTTI and
+reflection is that with RTTI, the compiler opens and examines the <B>.class</B>
+file at compile-time. Put another way, you can call all the methods of an object
+in the &#8220;normal&#8221; way. With reflection, the <B>.class</B> file is
+unavailable at compile-time; it is opened and examined by the run-time
+environment.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I41' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I42>
+</FONT><A NAME="_Toc481064778"></A><BR></P></DIV>
+<A NAME="Heading411"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+A class method extractor</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You&#8217;ll rarely need to use the
+reflection tools directly; they&#8217;re in the language to support other Java
+features, such as object serialization (Chapter 11), JavaBeans (Chapter 13), and
+RMI (Chapter 15). However, there are times when it&#8217;s quite useful to be
+able to dynamically extract information about a class. One extremely useful tool
+is a class method extractor. As mentioned before, looking at a class definition
+source code or online documentation shows only the methods that are defined or
+overridden <I>within that class definition</I>. But there could be dozens more
+available to you that have come from base classes. To locate these is both
+tedious and time
+consuming</FONT><A NAME="fnB60" HREF="#fn60">[60]</A><FONT FACE="Georgia">.
+Fortunately, reflection provides a way to write a simple tool that will
+automatically show you the entire interface. Here&#8217;s the way it
+works:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c12:ShowMethods.java</font>
+<font color=#009900>// Using reflection to show all the methods of </font>
+<font color=#009900>// a class, even if the methods are defined in </font>
+<font color=#009900>// the base class.</font>
+<font color=#0000ff>import</font> java.lang.reflect.*;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> ShowMethods {
+  <font color=#0000ff>static</font> <font color=#0000ff>final</font> String usage =
+    <font color=#004488>"usage: \n"</font> +
+    <font color=#004488>"ShowMethods qualified.class.name\n"</font> +
+    <font color=#004488>"To show all methods in class or: \n"</font> +
+    <font color=#004488>"ShowMethods qualified.class.name word\n"</font> +
+    <font color=#004488>"To search for methods involving 'word'"</font>;
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>if</font>(args.length &lt; 1) {
+      System.out.println(usage);
+      System.exit(0);
+    }
+    <font color=#0000ff>try</font> {
+      Class c = Class.forName(args[0]);
+      Method[] m = c.getMethods();
+      Constructor[] ctor = c.getConstructors();
+      <font color=#0000ff>if</font>(args.length == 1) {
+        <font color=#0000ff>for</font> (<font color=#0000ff>int</font> i = 0; i &lt; m.length; i++)
+          System.out.println(m[i]);
+        <font color=#0000ff>for</font> (<font color=#0000ff>int</font> i = 0; i &lt; ctor.length; i++)
+          System.out.println(ctor[i]);
+      } <font color=#0000ff>else</font> {
+        <font color=#0000ff>for</font> (<font color=#0000ff>int</font> i = 0; i &lt; m.length; i++)
+          <font color=#0000ff>if</font>(m[i].toString()
+             .indexOf(args[1])!= -1)
+            System.out.println(m[i]);
+        <font color=#0000ff>for</font> (<font color=#0000ff>int</font> i = 0; i &lt; ctor.length; i++)
+          <font color=#0000ff>if</font>(ctor[i].toString()
+             .indexOf(args[1])!= -1)
+          System.out.println(ctor[i]);
+      }
+    } <font color=#0000ff>catch</font>(ClassNotFoundException e) {
+      System.err.println(<font color=#004488>"No such class: "</font> + e);
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>Class</B> methods
+<A NAME="Index1533"></A><A NAME="Index1534"></A><B>getMethods(&#160;)</B> and
+<A NAME="Index1535"></A><A NAME="Index1536"></A><B>getConstructors(&#160;)</B>
+return an array of <B>Method</B> and <B>Constructor</B>, respectively. Each of
+these classes has further methods to dissect the names, arguments, and return
+values of the methods they represent. But you can also just use
+<B>toString(&#160;)</B>, as is done here, to produce a <B>String</B> with the
+entire method signature. The rest of the code is just for extracting command
+line information, determining if a particular signature matches with your target
+string (using
+<A NAME="Index1537"></A><A NAME="Index1538"></A><B>indexOf(&#160;)</B>), and
+printing the results. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I42' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I43>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This shows reflection in action, since
+the result produced by <B>Class.forName(&#160;)</B> cannot be known at
+compile-time, and therefore all the method signature information is being
+extracted at run-time. If you investigate your online documentation on
+reflection, you&#8217;ll see that there is enough support to actually set up and
+make a method call on an object that&#8217;s totally unknown at compile-time
+(there will be examples of this later in this book). Again, this is something
+you may never need to do yourself&#8212;the support is there for RMI and so a
+programming environment can manipulate JavaBeans&#8212;but it&#8217;s
+interesting. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I43' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I44>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">An enlightening experiment is to run
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>java ShowMethods ShowMethods</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This produces a listing that includes a
+<B>public</B> default constructor, even though you can see from the code that no
+constructor was defined. The constructor you see is the one that&#8217;s
+automatically synthesized by the compiler. If you then make <B>ShowMethods</B> a
+non-<B>public</B> class (that is, friendly), the synthesized default constructor
+no longer shows up in the output. The
+<A NAME="Index1539"></A><A NAME="Index1540"></A>synthesized default constructor
+is automatically given the same access as the class.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I44' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I45>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The output for <B>ShowMethods</B> is
+still a little tedious. For example, here&#8217;s a portion of the output
+produced by invoking <B>java ShowMethods java.lang.String</B>:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>public</font> <font color=#0000ff>boolean</font> 
+  java.lang.String.startsWith(java.lang.String,<font color=#0000ff>int</font>)
+<font color=#0000ff>public</font> <font color=#0000ff>boolean</font> 
+  java.lang.String.startsWith(java.lang.String)
+<font color=#0000ff>public</font> <font color=#0000ff>boolean</font>
+  java.lang.String.endsWith(java.lang.String)</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It would be even nicer if the qualifiers
+like <B>java.lang</B> could be stripped off. The
+<A NAME="Index1541"></A><A NAME="Index1542"></A><B>StreamTokenizer</B> class
+introduced in the previous chapter can help create a tool to solve this
+problem:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: com:bruceeckel:util:StripQualifiers.java</font>
+<font color=#0000ff>package</font> com.bruceeckel.util;
+<font color=#0000ff>import</font> java.io.*;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> StripQualifiers {
+  <font color=#0000ff>private</font> StreamTokenizer st;
+  <font color=#0000ff>public</font> StripQualifiers(String qualified) {
+    st = <font color=#0000ff>new</font> StreamTokenizer(
+      <font color=#0000ff>new</font> StringReader(qualified));
+    st.ordinaryChar(' '); <font color=#009900>// Keep the spaces</font>
+  }
+  <font color=#0000ff>public</font> String getNext() {
+    String s = <font color=#0000ff>null</font>;
+    <font color=#0000ff>try</font> {
+      <font color=#0000ff>int</font> token = st.nextToken();
+      <font color=#0000ff>if</font>(token != StreamTokenizer.TT_EOF) {
+        <font color=#0000ff>switch</font>(st.ttype) {
+          <font color=#0000ff>case</font> StreamTokenizer.TT_EOL:
+            s = <font color=#0000ff>null</font>;
+            <font color=#0000ff>break</font>;
+          <font color=#0000ff>case</font> StreamTokenizer.TT_NUMBER:
+            s = Double.toString(st.nval);
+            <font color=#0000ff>break</font>;
+          <font color=#0000ff>case</font> StreamTokenizer.TT_WORD:
+            s = <font color=#0000ff>new</font> String(st.sval);
+            <font color=#0000ff>break</font>;
+          <font color=#0000ff>default</font>: <font color=#009900>// single character in ttype</font>
+            s = String.valueOf((<font color=#0000ff>char</font>)st.ttype);
+        }
+      }
+    } <font color=#0000ff>catch</font>(IOException e) {
+      System.err.println(<font color=#004488>"Error fetching token"</font>);
+    }
+    <font color=#0000ff>return</font> s;
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> String strip(String qualified) {
+    StripQualifiers sq = 
+      <font color=#0000ff>new</font> StripQualifiers(qualified);
+    String s = <font color=#004488>""</font>, si;
+    <font color=#0000ff>while</font>((si = sq.getNext()) != <font color=#0000ff>null</font>) {
+      <font color=#0000ff>int</font> lastDot = si.lastIndexOf('.');
+      <font color=#0000ff>if</font>(lastDot != -1)
+        si = si.substring(lastDot + 1);
+      s += si;
+    }
+    <font color=#0000ff>return</font> s;
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To facilitate reuse, this class is placed
+in <B>com.bruceeckel.util</B>. As you can see, this uses the
+<B>StreamTokenizer</B> and <B>String</B> manipulation to do its work.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I45' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I46>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The new version of the program uses the
+above class to clean up the output:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c12:ShowMethodsClean.java</font>
+<font color=#009900>// ShowMethods with the qualifiers stripped</font>
+<font color=#009900>// to make the results easier to read.</font>
+<font color=#0000ff>import</font> java.lang.reflect.*;
+<font color=#0000ff>import</font> com.bruceeckel.util.*;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> ShowMethodsClean {
+  <font color=#0000ff>static</font> <font color=#0000ff>final</font> String usage =
+    <font color=#004488>"usage: \n"</font> +
+    <font color=#004488>"ShowMethodsClean qualified.class.name\n"</font> +
+    <font color=#004488>"To show all methods in class or: \n"</font> +
+    <font color=#004488>"ShowMethodsClean qualif.class.name word\n"</font> +
+    <font color=#004488>"To search for methods involving 'word'"</font>;
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#0000ff>if</font>(args.length &lt; 1) {
+      System.out.println(usage);
+      System.exit(0);
+    }
+    <font color=#0000ff>try</font> {
+      Class c = Class.forName(args[0]);
+      Method[] m = c.getMethods();
+      Constructor[] ctor = c.getConstructors();
+      <font color=#009900>// Convert to an array of cleaned Strings:</font>
+      String[] n = 
+        <font color=#0000ff>new</font> String[m.length + ctor.length];
+      <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; m.length; i++) {
+        String s = m[i].toString();
+        n[i] = StripQualifiers.strip(s);
+      }
+      <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; ctor.length; i++) {
+        String s = ctor[i].toString();
+        n[i + m.length] = 
+          StripQualifiers.strip(s);
+      }
+      <font color=#0000ff>if</font>(args.length == 1)
+        <font color=#0000ff>for</font> (<font color=#0000ff>int</font> i = 0; i &lt; n.length; i++)
+          System.out.println(n[i]);
+      <font color=#0000ff>else</font>
+        <font color=#0000ff>for</font> (<font color=#0000ff>int</font> i = 0; i &lt; n.length; i++)
+          <font color=#0000ff>if</font>(n[i].indexOf(args[1])!= -1)
+            System.out.println(n[i]);
+    } <font color=#0000ff>catch</font>(ClassNotFoundException e) {
+      System.err.println(<font color=#004488>"No such class: "</font> + e);
+    }
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The class <B>ShowMethodsClean</B> is
+quite similar to the previous <B>ShowMethods</B>, except that it takes the
+arrays of <B>Method</B> and <B>Constructor</B> and converts them into a single
+array of <B>String</B>. Each of these <B>String</B> objects is then passed
+through<B> StripQualifiers.Strip(&#160;)</B> to remove all the method
+qualification. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I46' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I47>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This tool can be a real time-saver while
+you&#8217;re programming, when you can&#8217;t remember if a class has a
+particular method and you don&#8217;t want to go walking through the class
+hierarchy in the online documentation, or if you don&#8217;t know whether that
+class can do anything with, for example, <B>Color</B> objects.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I47' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I48>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Chapter 13 contains a GUI version of this
+program (customized to extract information for Swing components) so you can
+leave it running while you&#8217;re writing code, to allow quick lookups.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I48' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I49>
+</FONT><A NAME="_Toc375545411"></A><A NAME="_Toc481064779"></A><BR></P></DIV>
+<A NAME="Heading412"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Summary<BR><A NAME="Index1543"></A></H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">RTTI allows you to discover type
+information from an anonymous base-class reference. Thus, it&#8217;s ripe for
+misuse <A NAME="Index1544"></A>by the novice since it might make sense before
+polymorphic method calls do. For many people coming from a procedural
+background, it&#8217;s difficult not to organize their programs into sets of
+<B>switch</B> statements. They could accomplish this with RTTI and thus lose the
+important value of polymorphism <A NAME="Index1545"></A>in code development and
+maintenance. The intent of Java is that you use polymorphic method calls
+throughout your code, and you use RTTI only when you must.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I49' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I50>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">However, using polymorphic method calls
+as they are intended requires that you have control of the base-class definition
+because at some point in the extension of your program you might discover that
+the base class doesn&#8217;t include the method you need. If the base class
+comes from a library or is otherwise controlled by someone else, a solution to
+the problem is RTTI: You can inherit a new type and add your extra method.
+Elsewhere in the code you can detect your particular type and call that special
+method. This doesn&#8217;t destroy the polymorphism and extensibility of the
+program because adding a new type will not require you to hunt for switch
+statements in your program. However, when you add new code in your main body
+that requires your new feature, you must use RTTI to detect your particular
+type. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I50' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I51>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Putting a feature in a base class might
+mean that, for the benefit of one particular class, all of the other classes
+derived from that base require some meaningless stub of a method. This makes the
+interface less clear and annoys those who must override abstract methods when
+they derive from that base class. For example, consider a class hierarchy
+representing musical instruments. Suppose you wanted to clear the spit valves of
+all the appropriate instruments in your orchestra. One option is to put a
+<B>clearSpitValve(&#160;) </B>method in the base class <B>Instrument</B>, but
+this is confusing because it implies that <B>Percussion</B> and
+<B>Electronic</B> instruments also have spit valves. RTTI provides a much more
+reasonable solution in this case because you can place the method in the
+specific class (<B>Wind </B>in this case), where it&#8217;s appropriate.
+However, a more appropriate solution is to put a
+<B>prepareInstrument(&#160;)</B> method in the base class, but you might not see
+this when you&#8217;re first solving the problem and could mistakenly assume
+that you must use RTTI. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I51' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I52>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Finally, RTTI will sometimes solve
+efficiency problems. If your code nicely uses polymorphism, but it turns out
+that one of your objects reacts to this general purpose code in a horribly
+inefficient way, you can pick out that type using RTTI and write case-specific
+code to improve the efficiency. Be wary, however, of programming for efficiency
+too soon. It&#8217;s a seductive trap. It&#8217;s best to get the program
+working <I>first</I>, then decide if it&#8217;s running fast enough, and only
+then should you attack efficiency issues&#8212;with a profiler.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I52' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I53>
+</FONT><A NAME="_Toc481064780"></A><BR></P></DIV>
+<A NAME="Heading413"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Exercises</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=2>Solutions to selected exercises
+can be found in the electronic document <I>The Thinking in Java Annotated
+Solution Guide</I>, available for a small fee from
+<I>www.BruceEckel.com</I>.</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Add <B>Rhomboid </B>to
+<B>Shapes.java</B>. Create a <B>Rhomboid</B>, upcast it to a <B>Shape</B>, then
+downcast it back to a <B>Rhomboid</B>. Try downcasting to a <B>Circle</B> and
+see what happens.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I53' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I54>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Modify
+Exercise 1 so that it uses <B>instanceof</B> to check the type before performing
+the downcast.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I54' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I55>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Modify
+<B>Shapes.java</B> so that it can &#8220;highlight&#8221; (set a flag) in all
+shapes of a particular type. The <B>toString(&#160;)</B> method for each derived
+<B>Shape</B> should indicate whether that <B>Shape </B>is
+&#8220;highlighted.&#8221;
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I55' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I56>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Modify
+<B>SweetShop.java</B> so that each type of object creation is controlled by a
+command-line argument. That is, if your command line is &#8220;<B>java SweetShop
+Candy</B>,&#8221; then only the <B>Candy</B> object is created. Notice how you
+can control which <B>Class</B> objects are loaded via the command-line argument.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I56' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I57>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Add
+a new type of <B>Pet</B> to <B>PetCount3.java</B>. Verify that it is created and
+counted correctly in <B>main(&#160;)</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I57' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I58>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Write
+a method that takes an object and recursively prints all the classes in that
+object&#8217;s hierarchy.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I58' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I59>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Modify
+Exercise 6 so that it uses
+<B>Class.</B><A HREF="C:#getDeclaredFields()">getDeclaredFields</A><B>(&#160;)</B>
+to also display information about the fields in a class.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I59' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I60>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">In
+<B>ToyTest.java</B>, comment out <B>Toy</B>&#8217;s default constructor and
+explain what happens.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I60' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I61>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Incorporate
+a new kind of <B>interface</B> into <B>ToyTest.java</B> and verify that it is
+detected and displayed properly.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I61' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I62>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a new type of container that uses a <B>private</B> <B>ArrayList</B> to hold the
+objects.<B> </B>Capture the type of the first object you put in it, and then
+allow the user to insert objects of only that type from then on.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I62' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I63>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Write
+a program to determine whether an array of <B>char</B> is a primitive type or a
+true object.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I63' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I64>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Implement
+<B>clearSpitValve(&#160;)</B> as described in the summary.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I64' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I65>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Implement
+the <B>rotate(Shape)</B> method described in this chapter, such that it checks
+to see if it is rotating a <B>Circle</B> (and, if so, doesn&#8217;t perform the
+operation).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I65' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I66>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Modify
+Exercise 6 so that it uses reflection instead of RTTI.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I66' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I67>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Modify
+Exercise 7 so that it uses reflection instead of RTTI.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I67' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I68>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">In
+<B>ToyTest.java</B>, use reflection to create a <B>Toy</B> object using the
+nondefault constructor.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I68' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER12_I69>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Look
+up the interface for <B>java.lang.Class</B> in the HTML Java documentation from
+<I>java.sun.com</I>. Write a program that takes the name of a class as a
+command-line argument, then uses the <B>Class</B> methods to dump all the
+information available for that class. Test your program with a standard library
+class and  a class you create.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER12_I69' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+</FONT></OL>
+<HR><DIV ALIGN="LEFT"><P><A NAME="fn60" HREF="#fnB60">[60]</A><FONT FACE="Georgia" SIZE=2>
+Especially in the past. However, Sun has greatly improved its HTML Java
+documentation so that it&#8217;s easier to see base-class
+methods.</FONT><BR></P></DIV>
+
+<DIV ALIGN="CENTER">
+    <FONT FACE="Verdana" size = "-1">
+     [ <a href="Chap11.htm">Previous Chapter</a> ] 
+    [ <a href="SimpCont.htm">Short TOC</a> ] 
+    [ <a href="Contents.htm">Table of Contents</a> ] 
+    [ <a href="DocIdx.htm">Index</a> ]
+     [ <a href="Chap13.htm">Next Chapter</a> ] 
+    </FONT>
+    <BR>
+ Last Update:05/21/2001</P></DIV>
+
+</BODY>
+
+</HTML>

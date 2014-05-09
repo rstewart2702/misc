@@ -1,0 +1,722 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<!--
+This document was converted from RTF source: 
+By rtftohtml 4.19
+See http://www.sunpack.com/RTF
+Filename:TIJ2.rtf
+Application Directory:C:\TOOLS\RTF2HTML\
+Subject:
+Author:Bruce Eckel
+Operator:Bruce Eckel
+Document Comments:
+Version Comments:
+Comments:
+Keywords:
+Translation Date:05/21/2001
+Translation Time:10:39:34
+Translation Platform:Win32
+Number of Output files:23
+This File:AppendB.htm
+SplitDepth=1
+SkipNavPanel=1
+SkipLeadingToc=1
+SkipTrailingToc=1
+GenContents=1
+GenFrames=1
+GenIndex=1
+-->
+<HEAD lang="en"><META http-equiv="Content-Type" content="text/html">
+<TITLE>B: The Java Native Interface (JNI)</TITLE>
+</HEAD>
+
+<BODY  BGCOLOR="#FFFFFF"><DIV ALIGN="CENTER">
+  <a href="http://www.MindView.net">
+  <img src="mindview.gif" alt="MindView Inc." BORDER = "0"></a>
+  <CENTER>
+    <FONT FACE="Verdana" size = "-1">
+    [ <a href="README.txt">Viewing Hints</a> ]
+    [ <a href="RevHist.htm">Revision History</a> ]
+    [ <a href="http://www.mindview.net/Books/TIJ/">Book Home Page</a> ]
+    [ <a href="http://www.mindview.net/Etc/MailingList.html">Free Newsletter</a> ] <br>
+    [ <a href="http://www.mindview.net/Seminars">Seminars</a> ]
+    [ <a href="http://www.mindview.net/CDs">Seminars on CD ROM</a> ]
+    [ <a href="http://www.mindview.net/Services">Consulting</a> ]
+    </FONT>
+  <H2><FONT FACE="Verdana">
+  Thinking in Java, 2nd edition, Revision 12</FONT></H2>
+  <H3><FONT FACE="Verdana">&copy;2000 by Bruce Eckel</FONT></H3>
+  
+    <FONT FACE="Verdana" size = "-1">
+     [ <a href="AppendA.htm">Previous Chapter</a> ] 
+    [ <a href="SimpCont.htm">Short TOC</a> ] 
+    [ <a href="Contents.htm">Table of Contents</a> ] 
+    [ <a href="DocIdx.htm">Index</a> ]
+     [ <a href="AppendC.htm">Next Chapter</a> ] 
+    </FONT>
+    
+  </CENTER>
+  </P></DIV><A NAME="_Toc477690737"></A><A NAME="_Toc481064947"></A><A NAME="Heading628"></A><FONT FACE = "Verdana"><H1 ALIGN="LEFT">
+B: The Java Native Interface (JNI)</H1></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=4><backtalk:display ID=TIJ3_APPENDIXB_I0>
+</FONT><FONT FACE="Georgia"><I>The
+material in this appendix was contributed by and used with the permission of
+Andrea Provaglio (www.AndreaProvaglio.com).</I></FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=4>The Java language and its standard
+API are rich enough to write full-fledged applications. But in some cases you
+must call <A NAME="Index2279"></A><A NAME="Index2280"></A>non-Java code; for
+example, if you want to access operating-system-specific features,
+<A NAME="Index2281"></A>interface with special <A NAME="Index2282"></A>hardware
+devices, reuse a preexisting, non-Java code base, or implement
+<A NAME="Index2283"></A>time-critical sections of code.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Interfacing with non-Java code requires
+dedicated support in the compiler and in the Virtual Machine, and additional
+tools to map the Java code to the non-Java code. The standard solution for
+calling non-Java code that is provided by JavaSoft is called the <I>Java Native
+Interface</I>, which will be introduced in this appendix. This is not an
+in-depth treatment, and in some cases you&#8217;re assumed to have partial
+knowledge of the related concepts and techniques.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I0' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I1>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">JNI is a fairly rich programming
+interface that allows you to call native methods from a Java application. It was
+added in Java 1.1, maintaining a certain degree of compatibility with its Java
+1.0 equivalent: the <A NAME="Index2284"></A><A NAME="Index2285"></A>native
+method interface (NMI). NMI has design characteristics that make it unsuitable
+for adoption across all virtual machines. For this reason, future versions of
+the language might no longer support NMI, and it will not be covered here.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I1' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I2>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Currently, JNI is designed to interface
+with native methods written only in <A NAME="Index2286"></A>C or C++. Using JNI,
+your native methods can:</FONT><BR></P></DIV>
+<UL>
+<LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia">Create, inspect, and update
+Java objects (including arrays and
+<B>String</B>s)</FONT><LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia">Call
+Java methods</FONT><LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia">Catch
+and throw
+exceptions</FONT><LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia">Load
+classes and obtain class
+information</FONT><LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia">Perform
+run-time type checking</FONT></UL><DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Thus,
+virtually everything you can do with classes and objects in ordinary Java you
+can also do in native methods. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I2' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I3>
+</FONT><A NAME="_Toc481064948"></A><BR></P></DIV>
+<A NAME="Heading629"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Calling a native method</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">We&#8217;ll start with a simple example:
+a Java program that calls a native method, which in turn calls the standard C
+library function <B>printf(&#160;)</B>. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I3' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I4>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The first step is to write the Java code
+declaring a native method and its arguments:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: appendixb:ShowMessage.java</font>
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> ShowMessage {
+  <font color=#0000ff>private</font> <font color=#0000ff>native</font> <font color=#0000ff>void</font> ShowMessage(String msg);
+  <font color=#0000ff>static</font> {
+    System.loadLibrary(<font color=#004488>"MsgImpl"</font>);
+    <font color=#009900>// Linux hack, if you can't get your library</font>
+    <font color=#009900>// path set in your environment:</font>
+    <font color=#009900>// System.load(</font>
+    <font color=#009900>//  "/home/bruce/tij2/appendixb/MsgImpl.so");</font>
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    ShowMessage app = <font color=#0000ff>new</font> ShowMessage();
+    app.ShowMessage(<font color=#004488>"Generated with JNI"</font>);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The native method declaration is followed
+by a <B>static</B> block that calls <B>System.loadLibrary(&#160;)</B> (which you
+could call at any time, but this style is more appropriate).
+<B>System.loadLibrary(&#160;)</B> loads a DLL in memory and links to it. The DLL
+must be in your system library path. The file name extension is automatically
+added by the JVM depending on the platform.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I4' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I5>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In the above code you can also see a call
+to the <B>System.load(&#160;)</B> method, which is commented out. The path
+specified here is an absolute path, rather than relying on an environment
+variable. Using an environment variable is naturally the better and more
+portable solution, but if you can&#8217;t figure that out you can comment out
+the <B>loadLibrary(&#160;)</B> call and uncomment this one, adjusting the path
+to your own directory.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I5' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I6>
+</FONT><A NAME="_Toc481064949"></A><BR></P></DIV>
+<A NAME="Heading630"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+The header file generator: javah</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Now compile your Java source file and run
+<A NAME="Index2287"></A><B>javah</B> on the resulting <B>.class</B> file,
+specifying the <B>&#8212;jni</B> switch (this is done automatically for you by
+the makefile in the source code distribution for this book):
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I6' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I7>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>javah &#8212;jni ShowMessage</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>javah</B> reads the Java class file
+and for each native method declaration it generates a function prototype in a C
+or C++ header file. Here&#8217;s the output: the <B>ShowMessage.h</B> source
+file (edited slightly to fit into this book):
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I7' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I8>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>/* DO NOT EDIT THIS FILE 
+   - it is machine generated */</font>
+#include &lt;jni.h&gt;
+<font color=#009900>/* Header for class ShowMessage */</font>
+
+#ifndef _Included_ShowMessage
+#define _Included_ShowMessage
+#ifdef __cplusplus
+extern <font color=#004488>"C"</font> {
+#endif
+<font color=#009900>/*
+ * Class:     ShowMessage
+ * Method:    ShowMessage
+ * Signature: (Ljava/lang/String;)V
+ */</font>
+JNIEXPORT <font color=#0000ff>void</font> JNICALL 
+Java_ShowMessage_ShowMessage
+  (JNIEnv *, jobject, jstring);
+
+#ifdef __cplusplus
+}
+#endif
+#endif</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">As you can see by the <B>#ifdef
+__cplusplus</B> preprocessor directive, this file can be compiled either by a C
+or a C++ compiler. The first <B>#include</B> directive includes <B>jni.h</B>, a
+header file that, among other things, defines the types that you can see used in
+the rest of the file. <A NAME="Index2288"></A><B>JNIEXPORT</B> and
+<A NAME="Index2289"></A><B>JNICALL</B> are macros that expand to match
+platform-specific directives. <B>JNIEnv</B>, <B>jobject</B> and <B>jstring</B>
+are JNI data type definitions, which will be explained shortly.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I8' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I9>
+</FONT><A NAME="_Toc481064950"></A><BR></P></DIV>
+<A NAME="Heading631"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Name mangling and function signatures</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">JNI imposes a naming convention (called
+<I>name mangling</I>) on native methods. This is important, since it&#8217;s
+part of the mechanism by which the virtual machine links Java calls to native
+methods. Basically, all native methods start with the word &#8220;Java,&#8221;
+followed by the name of the class in which the Java native declaration appears,
+followed by the name of the Java method. The underscore character is used as a
+separator. If the Java native method is overloaded, then the function signature
+is appended to the name as well; you can see the native signature in the
+comments preceding the prototype. For more information about name mangling and
+native method signatures, please refer to the JNI documentation.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I9' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I10>
+</FONT><A NAME="_Toc481064951"></A><BR></P></DIV>
+<A NAME="Heading632"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Implementing your DLL</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">At this point, all you have to do is
+write a C or C++ source code file that includes the <B>javah</B>-generated
+header file and implements the native method, then compile it and generate a
+dynamic link library. This part is platform-dependent. The code below is
+compiled and linked into a file called <B>MsgImpl.dll</B> for Windows or
+<B>MsgImpl.so</B> for Unix/Linux (the makefile packaged with the code listings
+contains the commands to do this&#8212;it is available on the CD ROM bound into
+this book, or as a free download from <I>www.BruceEckel.com</I>):
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I10' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I11>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: appendixb:MsgImpl.cpp</font>
+<font color=#009900>//# Tested with VC++ &amp; BC++. Include path must </font>
+<font color=#009900>//# be adjusted to find the JNI headers. See </font>
+<font color=#009900>//# the makefile for this chapter (in the </font>
+<font color=#009900>//# downloadable source code) for an example.</font>
+#include &lt;jni.h&gt;
+#include &lt;stdio.h&gt;
+#include <font color=#004488>"ShowMessage.h"</font>
+
+extern <font color=#004488>"C"</font> JNIEXPORT <font color=#0000ff>void</font> JNICALL 
+Java_ShowMessage_ShowMessage(JNIEnv* env, 
+jobject, jstring jMsg) {
+  <font color=#0000ff>const</font> <font color=#0000ff>char</font>* msg=env-&gt;GetStringUTFChars(jMsg,0);
+  printf(<font color=#004488>"Thinking in Java, JNI: %s\n"</font>, msg);
+  env-&gt;ReleaseStringUTFChars(jMsg, msg);
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The arguments that are passed into the
+native method are the gateway back into Java. The first, of type
+<B>JNIEnv</B>,<B> </B>contains all the hooks that allow you to call back into
+the JVM. (We&#8217;ll look at this in the next section.) The second argument has
+a different meaning depending on the type of method. For non-<B>static</B>
+methods like the example above, the second argument is the equivalent of the
+&#8220;this&#8221; pointer in C++ and similar to <B>this</B> in Java: it&#8217;s
+a reference to the object that called the native method. For <B>static</B>
+methods, it&#8217;s a reference to the <B>Class</B> object where the method is
+implemented. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I11' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I12>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The remaining arguments represent the
+Java objects passed into the native method call. Primitives are also passed in
+this way, but they come in by value.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I12' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I13>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In the following sections we&#8217;ll
+explain this code by looking at the ways that you access and control the JVM
+from inside a native method.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I13' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I14>
+</FONT><A NAME="_Toc481064952"></A><BR></P></DIV>
+<A NAME="Heading633"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Accessing JNI functions: <BR>the JNIEnv
+argument<BR><A NAME="Index2290"></A><A NAME="Index2291"></A></H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">JNI functions are those that the
+programmer uses to interact with the JVM from inside a native method. As you can
+see in the example above, every JNI native method receives a special argument as
+its first parameter: the <B>JNIEnv</B> argument, which is a pointer to a special
+JNI data structure of type <B>JNIEnv_</B>. One element of the JNI data structure
+is a pointer to an array generated by the JVM. Each element of this array is a
+pointer to a JNI function. The JNI functions can be called from the native
+method by dereferencing these pointers (it&#8217;s simpler than it sounds).
+Every JVM provides its own implementation of the JNI functions, but their
+addresses will always be at predefined offsets.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I14' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I15>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Through the <B>JNIEnv</B> argument, the
+programmer has access to a large set of functions. These functions can be
+grouped into the following categories:</FONT><BR></P></DIV>
+<UL>
+<LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia">Obtaining version
+information</FONT><LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia">Performing
+class and object
+operations</FONT><LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia">Handling
+global and local references to Java
+objects</FONT><LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia">Accessing
+instance fields and static
+fields</FONT><LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia">Calling
+instance methods and static
+methods</FONT><LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia">Performing
+string and array
+operations</FONT><LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia">Generating
+and handling Java
+exceptions</FONT></UL><DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The number of JNI
+functions is quite large and won&#8217;t be covered here. Instead, I&#8217;ll
+show the rationale behind the use of these functions. For more detailed
+information, consult your compiler&#8217;s JNI documentation.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I15' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I16>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you take a look at the <B>jni.h</B>
+header file, you&#8217;ll see that inside the <B>#ifdef __cplusplus</B>
+preprocessor conditional, the <B>JNIEnv_</B> structure is defined as a class
+when compiled by a C++ compiler. This class contains a number of inline
+functions that let you access the JNI functions with an easy and familiar
+syntax. For example, the line of C++ code in the preceding
+example:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>env-&gt;ReleaseStringUTFChars(jMsg, msg);</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">could also be called from C like this:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I16' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I17>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>(*env)-&gt;ReleaseStringUTFChars(env, jMsg, msg);</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You&#8217;ll notice that the C style is
+(naturally) more complicated&#8212;you need a double dereferencing of the
+<B>env</B> pointer, and you must also pass the same pointer as the first
+parameter to the JNI function call. The examples in this appendix use the C++
+style.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I17' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I18>
+</FONT><A NAME="_Toc481064953"></A><BR></P></DIV>
+<A NAME="Heading634"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Accessing Java Strings</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">As an example of accessing a JNI
+function, consider the code in <B>MsgImpl.cpp</B>. Here, the <B>JNIEnv</B>
+argument <B>env</B> is used to access a Java <B>String</B>. Java <B>String</B>s
+are in Unicode format, so if you receive one and want to pass it to a
+non-Unicode function (<B>printf(&#160;)</B>, for example), you must first
+convert it into ASCII characters with the JNI function
+<B>GetStringUTFChars(&#160;)</B>. This function takes a Java <B>String</B> and
+converts it to UTF-8 characters. (These are 8 bits wide to hold ASCII values or
+16 bits wide to hold Unicode. If the content of the original string was composed
+only of ASCII, the resulting string will be ASCII as well.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I18' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I19>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>GetStringUTFChars(&#160;)</B> is one
+of the member functions in <B>JNIEnv</B>. To access the JNI function, we use the
+typical C++ syntax for calling a member function though a pointer. You use the
+form above to access all of the JNI functions.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I19' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I20>
+</FONT><A NAME="_Toc481064954"></A><BR></P></DIV>
+<A NAME="Heading635"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Passing and using Java objects</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In the previous example we passed a
+<B>String</B> to the native method. You can also pass Java objects of your own
+creation to a native method. Inside your native method, you can access the
+fields and methods of the object that was received.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I20' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I21>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To pass objects, use the ordinary Java
+syntax when declaring the native method. In the example below,
+<B>MyJavaClass</B> has one <B>public</B> field and one <B>public</B> method. The
+class <B>UseObjects </B>declares a native method that takes an object of class
+<B>MyJavaClass</B>. To see if the native method manipulates its argument, the
+<B>public</B> field of the argument is set, the native method is called, and
+then the value of the <B>public</B> field is printed.</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: appendixb:UseObjects.java</font>
+<font color=#0000ff>class</font> MyJavaClass {
+  <font color=#0000ff>public</font> <font color=#0000ff>int</font> aValue;
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> divByTwo() { aValue /= 2; }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> UseObjects {
+  <font color=#0000ff>private</font> <font color=#0000ff>native</font> <font color=#0000ff>void</font> 
+    changeObject(MyJavaClass obj);
+  <font color=#0000ff>static</font> {
+    System.loadLibrary(<font color=#004488>"UseObjImpl"</font>);
+    <font color=#009900>// Linux hack, if you can't get your library</font>
+    <font color=#009900>// path set in your environment:</font>
+    <font color=#009900>// System.load(</font>
+    <font color=#009900>//"/home/bruce/tij2/appendixb/UseObjImpl.so");</font>
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    UseObjects app = <font color=#0000ff>new</font> UseObjects();
+    MyJavaClass anObj = <font color=#0000ff>new</font> MyJavaClass();
+    anObj.aValue = 2;
+    app.changeObject(anObj);
+    System.out.println(<font color=#004488>"Java: "</font> + anObj.aValue);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">After compiling the code and running
+<B>javah</B>, you can implement the native method. In the example below, once
+the field and method ID are obtained, they are accessed through JNI functions.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I21' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I22>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: appendixb:UseObjImpl.cpp</font>
+<font color=#009900>//# Tested with VC++ &amp; BC++. Include path must </font>
+<font color=#009900>//# be adjusted to find the JNI headers. See </font>
+<font color=#009900>//# the makefile for this chapter (in the </font>
+<font color=#009900>//# downloadable source code) for an example.</font>
+#include &lt;jni.h&gt;
+extern <font color=#004488>"C"</font> JNIEXPORT <font color=#0000ff>void</font> JNICALL
+Java_UseObjects_changeObject(
+JNIEnv* env, jobject, jobject obj) {
+  jclass cls = env-&gt;GetObjectClass(obj);
+  jfieldID fid = env-&gt;GetFieldID(
+    cls, <font color=#004488>"aValue"</font>, <font color=#004488>"I"</font>);
+  jmethodID mid = env-&gt;GetMethodID(
+    cls, <font color=#004488>"divByTwo"</font>, <font color=#004488>"()V"</font>);
+  <font color=#0000ff>int</font> value = env-&gt;GetIntField(obj, fid);
+  printf(<font color=#004488>"Native: %d\n"</font>, value);
+  env-&gt;SetIntField(obj, fid, 6);
+  env-&gt;CallVoidMethod(obj, mid);
+  value = env-&gt;GetIntField(obj, fid);
+  printf(<font color=#004488>"Native: %d\n"</font>, value);
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Ignoring the &#8220;this&#8221;
+equivalent, the C++ function receives a <B>jobject</B>, which is the native side
+of the Java object reference we pass from the Java code. We simply read
+<B>aValue</B>, print it out, change the value, call the object&#8217;s
+<B>divByTwo(&#160;)</B> method, and print the value out again. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I22' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I23>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To access a Java field or method, you
+must first obtain its identifier using <B>GetFieldID(&#160;)</B> for fields and
+<B>GetMethodID(&#160;)</B> for methods. These functions take the class object, a
+string containing the element name, and a string that gives type information:
+the data type of the field, or signature information for a method (details can
+be found in the JNI documentation). These functions return an identifier that
+you use to access the element. This approach might seem convoluted, but your
+native method has no knowledge of the internal layout of the Java object.
+Instead, it must access fields and methods through indexes returned by the JVM.
+This allows different JVMs to implement different internal object layouts with
+no impact on your native methods.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I23' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I24>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you run the Java program, you&#8217;ll
+see that the object that&#8217;s passed from the Java side is manipulated by
+your native method. But what exactly is passed? A pointer or a Java reference?
+And what is the garbage collector doing during native method calls?
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I24' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I25>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <A NAME="Index2292"></A>garbage
+collector continues to operate during native method execution, but it&#8217;s
+guaranteed that your objects will not be garbage-collected during a native
+method call. To ensure this, <I>local references</I> are created before, and
+destroyed right after, the native method call. Since their lifetime wraps the
+call, you know that the objects will be valid throughout the native method call.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I25' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I26>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Since these references are created and
+subsequently destroyed every time the function is called, you cannot make local
+copies in your native methods, in <B>static</B> variables. If you want a
+reference that lasts across function invocations, you need a global reference.
+Global references are not created by the JVM, but the programmer can make a
+global reference out of a local one by calling specific JNI functions. When you
+create a global reference, you become responsible for the lifetime of the
+referenced object. The global reference (and the object it refers to) will be in
+memory until the programmer explicitly frees the reference with the appropriate
+JNI function. It&#8217;s similar to <B>malloc(&#160;)</B> and
+<B>free(&#160;)</B> in C.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I26' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I27>
+</FONT><A NAME="_Toc481064955"></A><BR></P></DIV>
+<A NAME="Heading636"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+JNI and Java exceptions</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">With <A NAME="Index2293"></A>JNI, Java
+exceptions can be thrown, caught, printed, and rethrown just as they are inside
+a Java program. But it&#8217;s up to the programmer to call dedicated JNI
+functions to deal with exceptions. Here are the JNI functions for exception
+handling: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I27' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I28>
+</FONT><BR></P></DIV>
+<UL>
+<LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia"><B>Throw(&#160;)</B></FONT><BR><FONT FACE="Georgia">Throws
+an existing exception object. Used in native methods to rethrow an
+exception.</FONT><LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia"><B>ThrowNew(&#160;)</B></FONT><BR><FONT FACE="Georgia">Generates
+a new exception object and throws
+it.</FONT><LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia"><B>ExceptionOccurred(&#160;)</B></FONT><BR><FONT FACE="Georgia">Determines
+if an exception was thrown and not yet
+cleared.</FONT><LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia"><B>ExceptionDescribe(&#160;)</B></FONT><BR><FONT FACE="Georgia">Prints
+an exception and the stack
+trace.</FONT><LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia"><B>ExceptionClear(&#160;)</B></FONT><BR><FONT FACE="Georgia">Clears
+a pending
+exception.</FONT><LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia"><B>FatalError(&#160;)</B></FONT><BR><FONT FACE="Georgia">Raises
+a fatal error. Does not
+return.</FONT></UL><DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Among these, you
+can&#8217;t ignore <B>ExceptionOccurred(&#160;)</B> and
+<B>ExceptionClear(&#160;)</B>. Most JNI functions can generate exceptions, and
+there is no language feature that you can use in place of a Java try block, so
+you must call <B>ExceptionOccurred(&#160;) </B>after each JNI function call to
+see if an exception was thrown. If you detect an exception, you may choose to
+handle it (and possibly rethrow it). You must make certain, however, that the
+exception is eventually cleared. This can be done in your function using
+<B>ExceptionClear(&#160;)</B> or in some other function if the exception is
+rethrown, but it must be done.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I28' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I29>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You must ensure that the exception is
+cleared, because otherwise the results will be unpredictable if you call a JNI
+function while an exception is pending. There are few JNI functions that are
+safe to call during an exception; among these, of course, are all the exception
+handling functions.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I29' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I30>
+</FONT><A NAME="_Toc481064956"></A><BR></P></DIV>
+<A NAME="Heading637"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+JNI and threading</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Since Java is a multithreaded language,
+several threads can call a native method concurrently. (The native method might
+be suspended in the middle of its operation when a second thread calls it.)
+It&#8217;s entirely up to the programmer to guarantee that the native call is
+thread-safe; i.e., it does not modify shared data in an unmonitored way.
+Basically, you have two options: declare the native method as
+<B>synchronized</B>, or implement some other strategy within the native method
+to ensure correct, concurrent data manipulation.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I30' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I31>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Also, you should never pass the
+<B>JNIEnv</B> pointer across threads, since the internal structure it points to
+is allocated on a per-thread basis and contains information that makes sense
+only in that particular thread.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I31' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I32>
+</FONT><A NAME="_Toc481064957"></A><BR></P></DIV>
+<A NAME="Heading638"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Using a preexisting code base</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The easiest way to implement JNI native
+methods is to start writing native method prototypes in a Java class, compile
+that class, and run the <B>.class</B> file through <B>javah</B>. But what if you
+have a large, preexisting code base that you want to call from Java? Renaming
+all the functions in your DLLs to match the JNI name mangling convention is not
+a viable solution. The best approach is to write a wrapper DLL
+&#8220;outside&#8221; your original code base. The Java code calls functions in
+this new DLL, which in turn calls your original DLL functions. This solution is
+not just a work-around; in most cases you must do this anyway because you must
+call JNI functions on the object references before you can use them.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I32' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXB_I33>
+</FONT><A NAME="_Toc481064958"></A><BR></P></DIV>
+<A NAME="Heading639"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Additional information</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can find further introductory
+material, including a C (rather than C++) example and discussion of Microsoft
+issues, in Appendix A of the first edition of this book, which can be found on
+the CD ROM bound in with this book, or in a free download from
+<I>www.BruceEckel.com</I>. More extensive information is available at
+<I>java.sun.com</I> (in the search engine, select &#8220;training &amp;
+tutorials&#8221; for keywords &#8220;native methods&#8221;). Chapter 11 of
+<I>Core Java 2</I>, <I>Volume II</I>, by Horstmann &amp; Cornell (Prentice-Hall,
+2000) gives excellent coverage of native methods. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXB_I33' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+</FONT><BR></P></DIV>
+<DIV ALIGN="CENTER">
+    <FONT FACE="Verdana" size = "-1">
+     [ <a href="AppendA.htm">Previous Chapter</a> ] 
+    [ <a href="SimpCont.htm">Short TOC</a> ] 
+    [ <a href="Contents.htm">Table of Contents</a> ] 
+    [ <a href="DocIdx.htm">Index</a> ]
+     [ <a href="AppendC.htm">Next Chapter</a> ] 
+    </FONT>
+    <BR>
+ Last Update:05/21/2001</P></DIV>
+
+</BODY>
+
+</HTML>

@@ -1,0 +1,3049 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<!--
+This document was converted from RTF source: 
+By rtftohtml 4.19
+See http://www.sunpack.com/RTF
+Filename:TIJ2.rtf
+Application Directory:C:\TOOLS\RTF2HTML\
+Subject:
+Author:Bruce Eckel
+Operator:Bruce Eckel
+Document Comments:
+Version Comments:
+Comments:
+Keywords:
+Translation Date:05/21/2001
+Translation Time:10:39:33
+Translation Platform:Win32
+Number of Output files:23
+This File:AppendA.htm
+SplitDepth=1
+SkipNavPanel=1
+SkipLeadingToc=1
+SkipTrailingToc=1
+GenContents=1
+GenFrames=1
+GenIndex=1
+-->
+<HEAD lang="en"><META http-equiv="Content-Type" content="text/html">
+<TITLE>A: Passing &amp; Returning Objects</TITLE>
+</HEAD>
+
+<BODY  BGCOLOR="#FFFFFF"><DIV ALIGN="CENTER">
+  <a href="http://www.MindView.net">
+  <img src="mindview.gif" alt="MindView Inc." BORDER = "0"></a>
+  <CENTER>
+    <FONT FACE="Verdana" size = "-1">
+    [ <a href="README.txt">Viewing Hints</a> ]
+    [ <a href="RevHist.htm">Revision History</a> ]
+    [ <a href="http://www.mindview.net/Books/TIJ/">Book Home Page</a> ]
+    [ <a href="http://www.mindview.net/Etc/MailingList.html">Free Newsletter</a> ] <br>
+    [ <a href="http://www.mindview.net/Seminars">Seminars</a> ]
+    [ <a href="http://www.mindview.net/CDs">Seminars on CD ROM</a> ]
+    [ <a href="http://www.mindview.net/Services">Consulting</a> ]
+    </FONT>
+  <H2><FONT FACE="Verdana">
+  Thinking in Java, 2nd edition, Revision 12</FONT></H2>
+  <H3><FONT FACE="Verdana">&copy;2000 by Bruce Eckel</FONT></H3>
+  
+    <FONT FACE="Verdana" size = "-1">
+     [ <a href="Chap15.htm">Previous Chapter</a> ] 
+    [ <a href="SimpCont.htm">Short TOC</a> ] 
+    [ <a href="Contents.htm">Table of Contents</a> ] 
+    [ <a href="DocIdx.htm">Index</a> ]
+     [ <a href="AppendB.htm">Next Chapter</a> ] 
+    </FONT>
+    
+  </CENTER>
+  </P></DIV><A NAME="Appendix_A"></A><A NAME="_Toc375545505"></A><A NAME="_Toc375545421"></A><A NAME="_Toc477690736"></A><A NAME="_Toc481064923"></A><A NAME="Heading599"></A><FONT FACE = "Verdana"><H1 ALIGN="LEFT">
+A: Passing &amp; Returning Objects</H1></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=4><backtalk:display ID=TIJ3_APPENDIXA_I0>
+By now
+you should be reasonably comfortable with the idea that when you&#8217;re
+&#8220;passing&#8221; an object, you&#8217;re actually passing a
+reference.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In many programming languages you can use
+that language&#8217;s &#8220;regular&#8221; way to pass objects around, and most
+of the time everything works fine. But it always seems that there comes a point
+at which you must do something irregular and suddenly things get a bit more
+complicated (or in the case of C++, quite complicated). Java is no exception,
+and it&#8217;s important that you understand exactly what&#8217;s happening as
+you pass objects around and manipulate them. This appendix will provide that
+insight. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I0' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I1>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Another way to pose the question of this
+appendix, if you&#8217;re coming from a programming language so equipped, is
+&#8220;Does <A NAME="Index2214"></A><A NAME="Index2215"></A>Java have
+pointers?&#8221; Some have claimed that pointers are hard and dangerous and
+therefore bad, and since Java is all goodness and light and will lift your
+earthly programming burdens, it cannot possibly contain such things. However,
+it&#8217;s more accurate to say that Java has pointers; indeed, every object
+identifier in Java (except for primitives) is one of these pointers, but their
+use is restricted and guarded not only by the compiler but by the run-time
+system. Or to put it another way, Java has pointers, but no pointer arithmetic.
+These are what I&#8217;ve been calling &#8220;references,&#8221; and you can
+think of them as &#8220;safety pointers,&#8221; not unlike the safety scissors
+of elementary school&#8212;they aren&#8217;t sharp, so you cannot hurt yourself
+without great effort, but they can sometimes be slow and tedious.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I1' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I2>
+</FONT><A NAME="_Toc375545422"></A><A NAME="_Toc481064924"></A><BR></P></DIV>
+<A NAME="Heading600"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Passing references around</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When you pass a
+<A NAME="Index2216"></A><A NAME="Index2217"></A><A NAME="Index2218"></A>reference
+into a method, you&#8217;re still pointing to the same object. A simple
+experiment demonstrates this:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: appendixa:PassReferences.java</font>
+<font color=#009900>// Passing references around.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> PassReferences {
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> f(PassReferences h) {
+    System.out.println(<font color=#004488>"h inside f(): "</font> + h);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    PassReferences p = <font color=#0000ff>new</font> PassReferences();
+    System.out.println(<font color=#004488>"p inside main(): "</font> + p);
+    f(p);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The method <B>toString(&#160;)</B> is
+automatically invoked in the print statements, and <B>PassReferences</B>
+inherits directly from <B>Object</B> with no redefinition of
+<B>toString(&#160;)</B>. Thus, <B>Object</B>&#8217;s version of
+<B>toString(&#160;) </B>is used, which prints out the class of the object
+followed by the address where that object is located (not the reference, but the
+actual object storage). The output looks like this:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>p inside main(): PassReferences@1653748
+h inside f(): PassReferences@1653748</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can see that both <B>p</B> and
+<B>h</B> refer to the same object. This is far more efficient than duplicating a
+new <B>PassReferences</B> object just so that you can send an argument to a
+method. But it brings up an important issue.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I2' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I3>
+</FONT><A NAME="_Toc375545423"></A><A NAME="_Toc481064925"></A><BR></P></DIV>
+<A NAME="Heading601"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Aliasing<BR><A NAME="Index2219"></A><A NAME="Index2220"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Aliasing means that more than one
+reference is tied to the same object, as in the above example. The problem with
+aliasing occurs when someone <I>writes</I> to that object. If the owners of the
+other references aren&#8217;t expecting that object to change, they&#8217;ll be
+surprised. This can be demonstrated with a simple example:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: appendixa:Alias1.java</font>
+<font color=#009900>// Aliasing two references to one object.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Alias1 {
+  <font color=#0000ff>int</font> i;
+  Alias1(<font color=#0000ff>int</font> ii) { i = ii; }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Alias1 x = <font color=#0000ff>new</font> Alias1(7);
+    Alias1 y = x; <font color=#009900>// Assign the reference</font>
+    System.out.println(<font color=#004488>"x: "</font> + x.i);
+    System.out.println(<font color=#004488>"y: "</font> + y.i);
+    System.out.println(<font color=#004488>"Incrementing x"</font>);
+    x.i++;
+    System.out.println(<font color=#004488>"x: "</font> + x.i);
+    System.out.println(<font color=#004488>"y: "</font> + y.i);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In the line:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Alias1 y = x; <font color=#009900>// Assign the reference</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">a new <B>Alias1</B> reference is created,
+but instead of being assigned to a fresh object created with <B>new</B>,
+it&#8217;s assigned to an existing reference. So the contents of reference
+<B>x</B>, which is the address of the object <B>x</B> is pointing to, is
+assigned to <B>y</B>, and thus both <B>x</B> and <B>y</B> are attached to the
+same object. So when <B>x</B>&#8217;s <B>i</B> is incremented in the statement:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I3' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I4>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>x.i++;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>y</B>&#8217;s <B>i </B>will be
+affected as well. This can be seen in the output:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>x: 7
+y: 7
+Incrementing x
+x: 8
+y: 8</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">One good solution in this case is to
+simply not do it: don&#8217;t consciously alias more than one reference to an
+object at the same scope. Your code will be much easier to understand and debug.
+However, when you&#8217;re passing a reference in as an argument&#8212;which is
+the way Java is supposed to work&#8212;you automatically alias because the local
+reference that&#8217;s created can modify the &#8220;outside object&#8221; (the
+object that was created outside the scope of the method). Here&#8217;s an
+example: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I4' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I5>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: appendixa:Alias2.java</font>
+<font color=#009900>// Method calls implicitly alias their</font>
+<font color=#009900>// arguments.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Alias2 {
+  <font color=#0000ff>int</font> i;
+  Alias2(<font color=#0000ff>int</font> ii) { i = ii; }
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> f(Alias2 reference) {
+    reference.i++;
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Alias2 x = <font color=#0000ff>new</font> Alias2(7);
+    System.out.println(<font color=#004488>"x: "</font> + x.i);
+    System.out.println(<font color=#004488>"Calling f(x)"</font>);
+    f(x);
+    System.out.println(<font color=#004488>"x: "</font> + x.i);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The output is:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>x: 7
+Calling f(x)
+x: 8</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The method is changing its argument, the
+outside object. When this kind of situation arises, you must decide whether it
+makes sense, whether the user expects it, and whether it&#8217;s going to cause
+problems. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I5' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I6>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In general, you call a method in order to
+produce a return value and/or a change of state in the object <I>that the method
+is called for</I>. (A method is how you &#8220;send a message&#8221; to that
+object.) It&#8217;s much less common to call a method in order to manipulate its
+arguments; this is referred to as &#8220;calling a method for its
+<A NAME="Index2221"></A><I>side effects</I>.&#8221; Thus, when you create a
+method that modifies its arguments the user must be clearly instructed and
+warned about the use of that method and its potential surprises. Because of the
+confusion and pitfalls, it&#8217;s much better to avoid changing the argument.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I6' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I7>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you need to modify an argument during
+a method call and you don&#8217;t intend to modify the outside argument, then
+you should protect that argument by making a copy inside your method.
+That&#8217;s the subject of much of this appendix.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I7' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I8>
+</FONT><A NAME="_Toc481064926"></A><BR></P></DIV>
+<A NAME="Heading602"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Making local copies</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To review: All argument passing in Java
+is performed by passing references. That is, when you pass &#8220;an
+object,&#8221; you&#8217;re really passing only a reference to an object that
+lives outside the method, so if you perform any modifications with that
+reference, you modify the outside object. In addition:</FONT><BR></P></DIV>
+<UL>
+<LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia">Aliasing happens
+automatically during argument
+passing.</FONT><LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia">There are no
+local objects, only local
+references.</FONT><LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia">References
+have scopes, objects do
+not.</FONT><LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia">Object lifetime
+is never an issue in
+Java.</FONT><LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia">There is no
+language support (e.g., &#8220;const&#8221;) to prevent objects from being
+modified (that is, to prevent the negative effects of
+aliasing).</FONT></UL><DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you&#8217;re
+only reading information from an object and not modifying it, passing a
+reference is the most efficient form of argument passing. This is nice; the
+default way of doing things is also the most efficient. However, sometimes
+it&#8217;s necessary to be able to treat the object as if it were
+&#8220;local&#8221; so that changes you make affect only a local copy and do not
+modify the outside object. Many programming languages support the ability to
+automatically make a local copy of the outside object, inside the
+method</FONT><A NAME="fnB79" HREF="#fn79">[79]</A><FONT FACE="Georgia">. Java
+does not, but it allows you to produce this effect.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I8' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I9>
+</FONT><A NAME="_Toc481064927"></A><BR></P></DIV>
+<A NAME="Heading603"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Pass by value</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This brings up the terminology issue,
+which always seems good for an argument. The term is
+&#8220;<A NAME="Index2222"></A>pass by value,&#8221; and the meaning depends on
+how you perceive the operation of the program. The general meaning is that you
+get a local copy of whatever you&#8217;re passing, but the real question is how
+you think about what you&#8217;re passing. When it comes to the meaning of
+&#8220;pass by value,&#8221; there are two fairly distinct
+camps:</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Java passes everything by
+value. When you&#8217;re passing primitives into a method, you get a distinct
+copy of the primitive. When you&#8217;re passing a reference into a method, you
+get a copy of the reference. Ergo, everything is pass-by-value. Of course, the
+assumption is that you&#8217;re always thinking (and caring) that references are
+being passed, but it seems like the Java design has gone a long way toward
+allowing you to ignore (most of the time) that you&#8217;re working with a
+reference. That is, it seems to allow you to think of the reference as
+&#8220;the object,&#8221; since it implicitly dereferences it whenever you make
+a method call.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I9' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I10>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Java
+passes primitives by value (no argument there), but objects are passed by
+reference. This is the world view that the reference is an alias for the object,
+so you <I>don&#8217;t</I> think about passing references, but instead say
+&#8220;I&#8217;m passing the object.&#8221; Since you don&#8217;t get a local
+copy of the object when you pass it into a method, objects are clearly not
+passed by value. There appears to be some support for this view within Sun,
+since one of the &#8220;reserved but not implemented&#8221; keywords was
+<B>byvalue</B>. (There&#8217;s no knowing, however, whether that keyword will
+ever see the light of day.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I10' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I11>
+</FONT></OL><DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Having
+given both camps a good airing, and after saying &#8220;It depends on how you
+think of a reference,&#8221; I will attempt to sidestep the issue. In the end,
+it isn&#8217;t <I>that</I> important&#8212;what is important is that you
+understand that passing a reference allows the caller&#8217;s object to be
+changed unexpectedly.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I11' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I12>
+</FONT><A NAME="_Toc375545425"></A><A NAME="_Toc481064928"></A><BR></P></DIV>
+<A NAME="Heading604"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Cloning objects</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The most likely reason for making a local
+copy of an object is if you&#8217;re going to modify that object and you
+don&#8217;t want to modify the caller&#8217;s object. If you decide that you
+want to make a local copy, you simply use the <B>clone(&#160;)</B> method to
+perform the operation. This is a method that&#8217;s defined as <B>protected
+</B>in the base class <B>Object</B>, and which you must override as <B>public
+</B>in any derived classes that you want to clone. For example, the standard
+library class <B>ArrayList</B> overrides <B>clone(&#160;)</B>, so we can call
+<B>clone(&#160;)</B> for <B>ArrayList</B>:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: appendixa:Cloning.java</font>
+<font color=#009900>// The clone() operation works for only a few</font>
+<font color=#009900>// items in the standard Java library.</font>
+<font color=#0000ff>import</font> java.util.*;
+
+<font color=#0000ff>class</font> Int {
+  <font color=#0000ff>private</font> <font color=#0000ff>int</font> i;
+  <font color=#0000ff>public</font> Int(<font color=#0000ff>int</font> ii) { i = ii; }
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> increment() { i++; }
+  <font color=#0000ff>public</font> String toString() { 
+    <font color=#0000ff>return</font> Integer.toString(i); 
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Cloning {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    ArrayList v = <font color=#0000ff>new</font> ArrayList();
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; 10; i++ )
+      v.add(<font color=#0000ff>new</font> Int(i));
+    System.out.println(<font color=#004488>"v: "</font> + v);
+    ArrayList v2 = (ArrayList)v.clone();
+    <font color=#009900>// Increment all v2's elements:</font>
+    <font color=#0000ff>for</font>(Iterator e = v2.iterator();
+        e.hasNext(); )
+      ((Int)e.next()).increment();
+    <font color=#009900>// See if it changed v's elements:</font>
+    System.out.println(<font color=#004488>"v: "</font> + v);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>clone(&#160;)</B> method produces
+an <B>Object</B>, which must then be recast to the proper type. This example
+shows how <B>ArrayList</B>&#8217;s<B> clone(&#160;)</B> method <I>does not</I>
+automatically try to clone each of the objects that the <B>ArrayList</B>
+contains&#8212;the old <B>ArrayList</B> and the cloned <B>ArrayList</B> are
+aliased to the same objects. This is often called a
+<A NAME="Index2223"></A><A NAME="Index2224"></A><I>shallow copy,</I> since
+it&#8217;s copying only the &#8220;surface&#8221; portion of an object. The
+actual object consists of this &#8220;surface,&#8221; plus all the objects that
+the references are pointing to, plus all the objects <I>those </I>objects are
+pointing to, etc. This is often referred to as the
+&#8220;<A NAME="Index2225"></A><A NAME="Index2226"></A>web of objects.&#8221;
+Copying the entire mess is called a
+<A NAME="Index2227"></A><A NAME="Index2228"></A><I>deep copy.</I>
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I12' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I13>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can see the effect of the shallow
+copy in the output, where the actions performed on <B>v2 </B>affect
+<B>v</B>:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>v: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+v: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Not trying to <B>clone(&#160;) </B>the
+objects contained in the <B>ArrayList </B>is probably a fair assumption because
+there&#8217;s no guarantee that those objects <I>are</I>
+cloneable</FONT><A NAME="fnB80" HREF="#fn80">[80]</A><FONT FACE="Georgia">.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I13' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I14>
+</FONT><A NAME="_Toc375545426"></A><A NAME="_Toc481064929"></A><BR></P></DIV>
+<A NAME="Heading605"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Adding cloneability to a class</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Even though the clone method is defined
+in the base-of-all-classes <B>Object</B>, cloning is <I>not </I>automatically
+available in every
+class</FONT><A NAME="fnB81" HREF="#fn81">[81]</A><FONT FACE="Georgia">. This
+would seem to be counterintuitive to the idea that base-class methods are always
+available in derived classes. Cloning in Java goes against this idea; if you
+want it to exist for a class, you must specifically add code to make cloning
+work. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I14' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I15>
+</FONT><BR></P></DIV>
+<A NAME="Heading606"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Using a trick with protected</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To prevent default cloneability in every
+class you create, the
+<A NAME="Index2229"></A><A NAME="Index2230"></A><B>clone(&#160;)</B> method is
+<B>protected</B> in the base class <B>Object</B>. Not only does this mean that
+it&#8217;s not available by default to the client programmer who is simply using
+the class (not subclassing it), but it also means that you cannot call
+<B>clone(&#160;)</B> via a reference to the base class. (Although that might
+seem to be useful in some situations, such as to polymorphically clone a bunch
+of <B>Object</B>s.) It is in effect a way to give you, at compile-time, the
+information that your object is not cloneable&#8212;and oddly enough most
+classes in the standard Java library are not cloneable. Thus, if you
+say:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>    Integer x = <font color=#0000ff>new</font> Integer(1);
+    x = x.clone();</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You will get, at compile-time, an error
+message that says <B>clone(&#160;) </B>is not accessible (since <B>Integer</B>
+doesn&#8217;t override it and it defaults to the <B>protected</B> version). 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I15' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I16>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If, however, you&#8217;re in a class
+derived from <B>Object </B>(as all classes are), then you have permission to
+call <B>Object.clone(&#160;) </B>because it&#8217;s
+<A NAME="Index2231"></A><B>protected </B>and you&#8217;re an inheritor. The base
+class <B>clone(&#160;) </B>has useful functionality&#8212;it performs the actual
+bitwise duplication <I>of the derived-class object</I>, thus acting as the
+common cloning operation. However, you then need to make <I>your</I> clone
+operation <B>public</B> for it to be accessible. <A NAME="Index2232"></A>So, two
+key issues when you clone are: 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I16' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I17>
+</FONT><BR></P></DIV>
+<UL>
+<LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia">Virtually always call
+<B>super.clone(&#160;)
+</B></FONT><LI><FONT FACE="Symbol">	</FONT><FONT FACE="Georgia">Make your clone
+<B>public</B></FONT></UL><DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You&#8217;ll
+probably want to override <B>clone(&#160;) </B>in any further derived classes,
+otherwise your (now <B>public</B>) <B>clone(&#160;)</B> will be used, and that
+might not do the right thing (although, since <B>Object.clone(&#160;)</B> makes
+a copy of the actual object, it might). The <B>protected</B> trick works only
+once&#8212;the first time you inherit from a class that has no cloneability and
+you want to make a class that&#8217;s cloneable. In any classes inherited from
+your class the <B>clone(&#160;) </B>method is available since it&#8217;s not
+possible in Java to reduce the access of a method during derivation. That is,
+once a class is cloneable, everything derived from it is cloneable unless you
+use provided mechanisms (described later) to &#8220;turn off&#8221; cloning.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I17' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I18>
+</FONT><BR></P></DIV>
+<A NAME="Heading607"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Implementing the Cloneable interface</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There&#8217;s one more thing you need to
+do to complete the cloneability of an object: implement the
+<A NAME="Index2233"></A><B>Cloneable</B> <B>interface</B>. This
+<A NAME="Index2234"></A><B>interface</B> is a bit strange, because it&#8217;s
+empty!</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>interface</font> Cloneable {}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The reason for implementing this empty
+<B>interface</B> is obviously not because you are going to upcast to
+<B>Cloneable</B> and call one of its methods. The use of <B>interface</B> here
+is considered by some to be a &#8220;hack&#8221; because it&#8217;s using a
+feature for something other than its original intent. Implementing the
+<B>Cloneable</B> <B>interface</B> acts as a kind of a flag, wired into the type
+of the class.  
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I18' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I19>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There are two reasons for the existence
+of the <B>Cloneable</B> <B>interface</B>. First, you might have an upcast
+reference to a base type and not know whether it&#8217;s possible to clone that
+object. In this case, you can use the <B>instanceof</B> keyword (described in
+Chapter 12) to find out whether the reference is connected to an object that can
+be cloned:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>if</font>(myReference <font color=#0000ff>instanceof</font> Cloneable) <font color=#009900>// ...</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The second reason is that mixed into this
+design for cloneability was the thought that maybe you didn&#8217;t want all
+types of objects to be cloneable. So <B>Object.clone(&#160;)</B> verifies that a
+class implements the <B>Cloneable</B> interface. If not, it throws a
+<B>CloneNotSupportedException</B> exception. So in general, you&#8217;re forced
+to <B>implement Cloneable</B> as part of support for cloning.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I19' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I20>
+</FONT><A NAME="_Toc375545427"></A><A NAME="_Toc481064930"></A><BR></P></DIV>
+<A NAME="Heading608"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Successful cloning</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Once you understand the details of
+implementing the <B>clone(&#160;)</B> method, you&#8217;re able to create
+classes that can be easily duplicated to provide a local copy:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: appendixa:LocalCopy.java</font>
+<font color=#009900>// Creating local copies with clone().</font>
+<font color=#0000ff>import</font> java.util.*;
+
+<font color=#0000ff>class</font> MyObject <font color=#0000ff>implements</font> Cloneable {
+  <font color=#0000ff>int</font> i;
+  MyObject(<font color=#0000ff>int</font> ii) { i = ii; }
+  <font color=#0000ff>public</font> Object clone() {
+    Object o = <font color=#0000ff>null</font>;
+    <font color=#0000ff>try</font> {
+      o = <font color=#0000ff>super</font>.clone();
+    } <font color=#0000ff>catch</font>(CloneNotSupportedException e) {
+      System.err.println(<font color=#004488>"MyObject can't clone"</font>);
+    }
+    <font color=#0000ff>return</font> o;
+  }
+  <font color=#0000ff>public</font> String toString() {
+    <font color=#0000ff>return</font> Integer.toString(i);
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> LocalCopy {
+  <font color=#0000ff>static</font> MyObject g(MyObject v) {
+    <font color=#009900>// Passing a reference, </font>
+    <font color=#009900>// modifies outside object:</font>
+    v.i++;
+    <font color=#0000ff>return</font> v;
+  }
+  <font color=#0000ff>static</font> MyObject f(MyObject v) {
+    v = (MyObject)v.clone(); <font color=#009900>// Local copy</font>
+    v.i++;
+    <font color=#0000ff>return</font> v;
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    MyObject a = <font color=#0000ff>new</font> MyObject(11);
+    MyObject b = g(a);
+    <font color=#009900>// Testing reference equivalence,</font>
+    <font color=#009900>// not object equivalence:</font>
+    <font color=#0000ff>if</font>(a == b) 
+      System.out.println(<font color=#004488>"a == b"</font>);
+    <font color=#0000ff>else</font> 
+      System.out.println(<font color=#004488>"a != b"</font>);
+    System.out.println(<font color=#004488>"a = "</font> + a);
+    System.out.println(<font color=#004488>"b = "</font> + b);
+    MyObject c = <font color=#0000ff>new</font> MyObject(47);
+    MyObject d = f(c);
+    <font color=#0000ff>if</font>(c == d) 
+      System.out.println(<font color=#004488>"c == d"</font>);
+    <font color=#0000ff>else</font> 
+      System.out.println(<font color=#004488>"c != d"</font>);
+    System.out.println(<font color=#004488>"c = "</font> + c);
+    System.out.println(<font color=#004488>"d = "</font> + d);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">First of all, <B>clone(&#160;)</B> must
+be accessible so you must make it <B>public</B>. Second, for the initial part of
+your <B>clone(&#160;)</B> operation you should call the base-class version of
+<B>clone(&#160;)</B>. The <B>clone(&#160;)</B> that&#8217;s being called here is
+the one that&#8217;s predefined inside <B>Object</B>, and you can call it
+because it&#8217;s <B>protected</B> and thereby accessible in derived classes.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I20' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I21>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Object.clone(&#160;)</B> figures out
+how big the object is, creates enough memory for a new one, and copies all the
+bits from the old to the new. This is called a
+<A NAME="Index2235"></A><I>bitwise copy,</I> and is typically what you&#8217;d
+expect a <B>clone(&#160;)</B> method to do. But before
+<B>Object.clone(&#160;)</B> performs its operations, it first checks to see if a
+class is <B>Cloneable</B>&#8212;that is, whether it implements the
+<B>Cloneable</B> interface. If it doesn&#8217;t, <B>Object.clone(&#160;)</B>
+throws a <A NAME="Index2236"></A><B>CloneNotSupportedException</B> to indicate
+that you can&#8217;t clone it. Thus, you&#8217;ve got to surround your call to
+<B>super.clone(&#160;)</B> with a try-catch block, to catch an exception that
+should never happen (because you&#8217;ve implemented the <B>Cloneable</B>
+interface). 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I21' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I22>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In <B>LocalCopy</B>, the two methods
+<B>g(&#160;)</B> and <B>f(&#160;)</B> demonstrate the difference between the two
+approaches for argument passing. <B>g(&#160;)</B> shows passing by reference in
+which it modifies the outside object and returns a reference to that outside
+object, while <B>f(&#160;)</B> clones the argument, thereby decoupling it and
+leaving the original object alone. It can then proceed to do whatever it wants,
+and even to return a reference to this new object without any ill effects to the
+original. Notice the somewhat curious-looking statement:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>v = (MyObject)v.clone();</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This is where the local copy is created.
+To prevent confusion by such a statement, remember that this rather strange
+coding idiom is perfectly feasible in Java because every object identifier is
+actually a reference. So the reference <B>v</B> is used to <B>clone(&#160;)</B>
+a copy of what it refers to, and this returns a reference to the base type
+<B>Object</B> (because it&#8217;s defined that way in
+<B>Object.clone(&#160;)</B>) that must then be cast to the proper type.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I22' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I23>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In <B>main(&#160;)</B>, the difference
+between the effects of the two different argument-passing approaches in the two
+different methods is tested. The output is:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>a == b
+a = 12
+b = 12
+c != d
+c = 47
+d = 48</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It&#8217;s important to notice that the
+equivalence tests in Java do not look inside the objects being compared to see
+if their values are the same. The
+<A NAME="Index2237"></A><A NAME="Index2238"></A><A NAME="Index2239"></A><B>==</B>
+and <B>!=</B> operators are simply comparing the <I>references</I>. If the
+addresses inside the <A NAME="Index2240"></A><A NAME="Index2241"></A>references
+are the same, the references are pointing to the same object and are therefore
+&#8220;equal.&#8221; So what the operators are really testing is whether the
+references are aliased to the same object!
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I23' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I24>
+</FONT><A NAME="_Toc375545428"></A><A NAME="_Toc481064931"></A><BR></P></DIV>
+<A NAME="Heading609"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+The effect of Object.clone(&#160;)</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">What actually happens when
+<A NAME="Index2242"></A><A NAME="Index2243"></A><B>Object.clone(&#160;)</B> is
+called that makes it so essential to call
+<A NAME="Index2244"></A><A NAME="Index2245"></A><B>super.clone(&#160;)</B> when
+you override <B>clone(&#160;)</B> in your class? The <B>clone(&#160;)</B> method
+in the root class is responsible for creating the correct amount of storage and
+making the bitwise copy of the bits from the original object into the new
+object&#8217;s storage. That is, it doesn&#8217;t just make storage and copy an
+<B>Object</B>&#8212;it actually figures out the size of the precise object
+that&#8217;s being copied and duplicates that. Since all this is happening from
+the code in the <B>clone(&#160;)</B> method defined in the root class (that has
+no idea what&#8217;s being inherited from it), you can guess that the process
+involves <A NAME="Index2246"></A>RTTI to determine the actual object
+that&#8217;s being cloned. This way, the <B>clone(&#160;)</B> method can create
+the proper amount of storage and do the correct bitcopy for that type.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I24' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I25>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Whatever you do, the first part of the
+cloning process should normally be a call to <B>super.clone(&#160;)</B>. This
+establishes the groundwork for the cloning operation by making an exact
+duplicate. At this point you can perform other operations necessary to complete
+the cloning. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I25' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I26>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To know for sure what those other
+operations are, you need to understand exactly what <B>Object.clone(&#160;)</B>
+buys you. In particular, does it automatically clone the destination of all the
+references? The following example tests this:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: appendixa:Snake.java</font>
+<font color=#009900>// Tests cloning to see if destination</font>
+<font color=#009900>// of references are also cloned.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Snake <font color=#0000ff>implements</font> Cloneable {
+  <font color=#0000ff>private</font> Snake next;
+  <font color=#0000ff>private</font> <font color=#0000ff>char</font> c;
+  <font color=#009900>// Value of i == number of segments</font>
+  Snake(<font color=#0000ff>int</font> i, <font color=#0000ff>char</font> x) {
+    c = x;
+    <font color=#0000ff>if</font>(--i &gt; 0)
+      next = <font color=#0000ff>new</font> Snake(i, (<font color=#0000ff>char</font>)(x + 1));
+  }
+  <font color=#0000ff>void</font> increment() {
+    c++;
+    <font color=#0000ff>if</font>(next != <font color=#0000ff>null</font>)
+      next.increment();
+  }
+  <font color=#0000ff>public</font> String toString() {
+    String s = <font color=#004488>":"</font> + c;
+    <font color=#0000ff>if</font>(next != <font color=#0000ff>null</font>)
+      s += next.toString();
+    <font color=#0000ff>return</font> s;
+  }
+  <font color=#0000ff>public</font> Object clone() {
+    Object o = <font color=#0000ff>null</font>;
+    <font color=#0000ff>try</font> {
+      o = <font color=#0000ff>super</font>.clone();
+    } <font color=#0000ff>catch</font>(CloneNotSupportedException e) {
+      System.err.println(<font color=#004488>"Snake can't clone"</font>);
+    }
+    <font color=#0000ff>return</font> o;
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Snake s = <font color=#0000ff>new</font> Snake(5, 'a');
+    System.out.println(<font color=#004488>"s = "</font> + s);
+    Snake s2 = (Snake)s.clone();
+    System.out.println(<font color=#004488>"s2 = "</font> + s2);
+    s.increment();
+    System.out.println(
+      <font color=#004488>"after s.increment, s2 = "</font> + s2);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A <B>Snake</B> is made up of a bunch of
+segments, each of type <B>Snake</B>. Thus, it&#8217;s a singly linked list. The
+segments are created recursively, decrementing the first constructor argument
+for each segment until zero is reached. To give each segment a unique tag, the
+second argument, a <B>char</B>, is incremented for each recursive constructor
+call. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I26' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I27>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>increment(&#160;)</B> method
+recursively increments each tag so you can see the change, and the
+<B>toString(&#160;)</B> recursively prints each tag. The output
+is:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>s = :a:b:c:d:e
+s2 = :a:b:c:d:e
+after s.increment, s2 = :a:c:d:e:f</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This means that only the first segment is
+duplicated by <B>Object.clone(&#160;)</B>, therefore it does a
+<A NAME="Index2247"></A>shallow copy. If you want the whole snake to be
+duplicated&#8212;a <A NAME="Index2248"></A>deep copy&#8212;you must perform the
+additional operations inside your overridden <B>clone(&#160;)</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I27' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I28>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You&#8217;ll typically call
+<B>super.clone(&#160;)</B> in any class derived from a cloneable class to make
+sure that all of the base-class operations (including
+<B>Object.clone(&#160;)</B>) take place. This is followed by an explicit call to
+<B>clone(&#160;) </B>for every reference in your object; otherwise those
+references will be aliased to those of the original object. It&#8217;s analogous
+to the way constructors are called&#8212;base-class constructor first, then the
+next-derived constructor, and so on to the most-derived constructor. The
+difference is that <B>clone(&#160;)</B> is not a constructor, so there&#8217;s
+nothing to make it happen automatically. You must make sure to do it yourself.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I28' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I29>
+</FONT><A NAME="_Toc481064932"></A><BR></P></DIV>
+<A NAME="Heading610"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Cloning a composed
+object<BR><A NAME="Index2249"></A><A NAME="Index2250"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There&#8217;s a problem you&#8217;ll
+encounter when trying to deep copy a composed object. You must assume that the
+<B>clone(&#160;)</B> method in the member objects will in turn perform a deep
+copy on <I>their</I> references, and so on. This is quite a commitment. It
+effectively means that for a deep copy to work you must either control all of
+the code in all of the classes, or at least have enough knowledge about all of
+the classes involved in the deep copy to know that they are performing their own
+deep copy correctly. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I29' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I30>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This example shows what you must do to
+accomplish a deep copy when dealing with a composed object:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: appendixa:DeepCopy.java</font>
+<font color=#009900>// Cloning a composed object.</font>
+
+<font color=#0000ff>class</font> DepthReading <font color=#0000ff>implements</font> Cloneable {
+  <font color=#0000ff>private</font> <font color=#0000ff>double</font> depth;
+  <font color=#0000ff>public</font> DepthReading(<font color=#0000ff>double</font> depth) { 
+    <font color=#0000ff>this</font>.depth = depth;
+  }
+  <font color=#0000ff>public</font> Object clone() {
+    Object o = <font color=#0000ff>null</font>;
+    <font color=#0000ff>try</font> {
+      o = <font color=#0000ff>super</font>.clone();
+    } <font color=#0000ff>catch</font>(CloneNotSupportedException e) {
+      e.printStackTrace(System.err);
+    }
+    <font color=#0000ff>return</font> o;
+  }
+}
+
+<font color=#0000ff>class</font> TemperatureReading <font color=#0000ff>implements</font> Cloneable {
+  <font color=#0000ff>private</font> <font color=#0000ff>long</font> time;
+  <font color=#0000ff>private</font> <font color=#0000ff>double</font> temperature;
+  <font color=#0000ff>public</font> TemperatureReading(<font color=#0000ff>double</font> temperature) {
+    time = System.currentTimeMillis();
+    <font color=#0000ff>this</font>.temperature = temperature;
+  }
+  <font color=#0000ff>public</font> Object clone() {
+    Object o = <font color=#0000ff>null</font>;
+    <font color=#0000ff>try</font> {
+      o = <font color=#0000ff>super</font>.clone();
+    } <font color=#0000ff>catch</font>(CloneNotSupportedException e) {
+      e.printStackTrace(System.err);
+    }
+    <font color=#0000ff>return</font> o;
+  }
+}
+
+<font color=#0000ff>class</font> OceanReading <font color=#0000ff>implements</font> Cloneable {
+  <font color=#0000ff>private</font> DepthReading depth;
+  <font color=#0000ff>private</font> TemperatureReading temperature;
+  <font color=#0000ff>public</font> OceanReading(<font color=#0000ff>double</font> tdata, <font color=#0000ff>double</font> ddata){
+    temperature = <font color=#0000ff>new</font> TemperatureReading(tdata);
+    depth = <font color=#0000ff>new</font> DepthReading(ddata);
+  }
+  <font color=#0000ff>public</font> Object clone() {
+    OceanReading o = <font color=#0000ff>null</font>;
+    <font color=#0000ff>try</font> {
+      o = (OceanReading)<font color=#0000ff>super</font>.clone();
+    } <font color=#0000ff>catch</font>(CloneNotSupportedException e) {
+      e.printStackTrace(System.err);
+    }
+    <font color=#009900>// Must clone references:</font>
+    o.depth = (DepthReading)o.depth.clone();
+    o.temperature = 
+      (TemperatureReading)o.temperature.clone();
+    <font color=#0000ff>return</font> o; <font color=#009900>// Upcasts back to Object</font>
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> DeepCopy {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    OceanReading reading = 
+      <font color=#0000ff>new</font> OceanReading(33.9, 100.5);
+    <font color=#009900>// Now clone it:</font>
+    OceanReading r = 
+      (OceanReading)reading.clone();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>DepthReading</B> and
+<B>TemperatureReading</B> are quite similar; they both contain only primitives.
+Therefore, the <B>clone(&#160;)</B> method can be quite simple: it calls
+<B>super.clone(&#160;)</B> and returns the result. Note that the
+<B>clone(&#160;)</B> code for both classes is identical.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I30' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I31>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>OceanReading</B> is composed of
+<B>DepthReading</B> and <B>TemperatureReading</B> objects and so, to produce a
+deep copy, its <B>clone(&#160;)</B> must clone the references inside
+<B>OceanReading</B>. To accomplish this, the result of
+<B>super.clone(&#160;)</B> must be cast to an <B>OceanReading</B> object (so you
+can access the <B>depth</B> and <B>temperature</B> references).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I31' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I32>
+</FONT><A NAME="_Toc481064933"></A><BR></P></DIV>
+<A NAME="Heading611"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+A deep copy with ArrayList</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Let&#8217;s revisit the
+<A NAME="Index2251"></A><A NAME="Index2252"></A><B>ArrayList</B> example from
+earlier in this appendix. This time the <B>Int2</B> class is cloneable, so the
+<B>ArrayList</B> can be deep copied:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: appendixa:AddingClone.java</font>
+<font color=#009900>// You must go through a few gyrations</font>
+<font color=#009900>// to add cloning to your own class.</font>
+<font color=#0000ff>import</font> java.util.*;
+
+<font color=#0000ff>class</font> Int2 <font color=#0000ff>implements</font> Cloneable {
+  <font color=#0000ff>private</font> <font color=#0000ff>int</font> i;
+  <font color=#0000ff>public</font> Int2(<font color=#0000ff>int</font> ii) { i = ii; }
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> increment() { i++; }
+  <font color=#0000ff>public</font> String toString() {
+    <font color=#0000ff>return</font> Integer.toString(i);
+  }
+  <font color=#0000ff>public</font> Object clone() {
+    Object o = <font color=#0000ff>null</font>;
+    <font color=#0000ff>try</font> {
+      o = <font color=#0000ff>super</font>.clone();
+    } <font color=#0000ff>catch</font>(CloneNotSupportedException e) {
+      System.err.println(<font color=#004488>"Int2 can't clone"</font>);
+    }
+    <font color=#0000ff>return</font> o;
+  }
+}
+
+<font color=#009900>// Once it's cloneable, inheritance</font>
+<font color=#009900>// doesn't remove cloneability:</font>
+<font color=#0000ff>class</font> Int3 <font color=#0000ff>extends</font> Int2 {
+  <font color=#0000ff>private</font> <font color=#0000ff>int</font> j; <font color=#009900>// Automatically duplicated</font>
+  <font color=#0000ff>public</font> Int3(<font color=#0000ff>int</font> i) { <font color=#0000ff>super</font>(i); }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> AddingClone {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Int2 x = <font color=#0000ff>new</font> Int2(10);
+    Int2 x2 = (Int2)x.clone();
+    x2.increment();
+    System.out.println(
+      <font color=#004488>"x = "</font> + x + <font color=#004488>", x2 = "</font> + x2);
+    <font color=#009900>// Anything inherited is also cloneable:</font>
+    Int3 x3 = <font color=#0000ff>new</font> Int3(7);
+    x3 = (Int3)x3.clone();
+
+    ArrayList v = <font color=#0000ff>new</font> ArrayList();
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; 10; i++ )
+      v.add(<font color=#0000ff>new</font> Int2(i));
+    System.out.println(<font color=#004488>"v: "</font> + v);
+    ArrayList v2 = (ArrayList)v.clone();
+    <font color=#009900>// Now clone each element:</font>
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; v.size(); i++)
+      v2.set(i, ((Int2)v2.get(i)).clone());
+    <font color=#009900>// Increment all v2's elements:</font>
+    <font color=#0000ff>for</font>(Iterator e = v2.iterator();
+        e.hasNext(); )
+      ((Int2)e.next()).increment();
+    <font color=#009900>// See if it changed v's elements:</font>
+    System.out.println(<font color=#004488>"v: "</font> + v);
+    System.out.println(<font color=#004488>"v2: "</font> + v2);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Int3</B> is inherited from <B>Int2</B>
+and a new primitive member <B>int j </B>is added. You might think that
+you&#8217;d need to override <B>clone(&#160;)</B> again to make sure <B>j</B> is
+copied, but that&#8217;s not the case. When <B>Int2</B>&#8217;s
+<B>clone(&#160;)</B> is called as <B>Int3</B>&#8217;s <B>clone(&#160;)</B>, it
+calls <B>Object.clone(&#160;),</B> which determines that it&#8217;s working with
+an <B>Int3</B> and duplicates all the bits in the <B>Int3</B>. As long as you
+don&#8217;t add references that need to be cloned, the one call to
+<B>Object.clone(&#160;)</B> performs all of the necessary duplication,
+regardless of how far down in the hierarchy <B>clone(&#160;)</B> is defined.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I32' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I33>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can see what&#8217;s necessary in
+order to do a deep copy of an <B>ArrayList</B>: after the <B>ArrayList</B> is
+cloned, you have to step through and clone each one of the objects pointed to by
+the <B>ArrayList</B>. You&#8217;d have to do something similar to this to do a
+deep copy of a <B>HashMap</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I33' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I34>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The remainder of the example shows that
+the cloning did happen by showing that, once an object is cloned, you can change
+it and the original object is left untouched.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I34' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I35>
+</FONT><A NAME="_Toc375545429"></A><A NAME="_Toc481064934"></A><BR></P></DIV>
+<A NAME="Heading612"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Deep copy via serialization</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When you consider Java&#8217;s object
+serialization (introduced in Chapter 11), you might observe that an object
+that&#8217;s serialized and then deserialized is, in effect, cloned.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I35' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I36>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">So why not use
+<A NAME="Index2253"></A><A NAME="Index2254"></A>serialization to perform deep
+copying? Here&#8217;s an example that compares the two approaches by timing
+them:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: appendixa:Compete.java</font>
+<font color=#0000ff>import</font> java.io.*;
+
+<font color=#0000ff>class</font> Thing1 <font color=#0000ff>implements</font> Serializable {}
+<font color=#0000ff>class</font> Thing2 <font color=#0000ff>implements</font> Serializable {
+  Thing1 o1 = <font color=#0000ff>new</font> Thing1();
+}
+
+<font color=#0000ff>class</font> Thing3 <font color=#0000ff>implements</font> Cloneable {
+  <font color=#0000ff>public</font> Object clone() {
+    Object o = <font color=#0000ff>null</font>;
+    <font color=#0000ff>try</font> {
+      o = <font color=#0000ff>super</font>.clone();
+    } <font color=#0000ff>catch</font>(CloneNotSupportedException e) {
+      System.err.println(<font color=#004488>"Thing3 can't clone"</font>);
+    }
+    <font color=#0000ff>return</font> o;
+  }
+}
+
+<font color=#0000ff>class</font> Thing4 <font color=#0000ff>implements</font> Cloneable {
+  Thing3 o3 = <font color=#0000ff>new</font> Thing3();
+  <font color=#0000ff>public</font> Object clone() {
+    Thing4 o = <font color=#0000ff>null</font>;
+    <font color=#0000ff>try</font> {
+      o = (Thing4)<font color=#0000ff>super</font>.clone();
+    } <font color=#0000ff>catch</font>(CloneNotSupportedException e) {
+      System.err.println(<font color=#004488>"Thing4 can't clone"</font>);
+    }
+    <font color=#009900>// Clone the field, too:</font>
+    o.o3 = (Thing3)o3.clone();
+    <font color=#0000ff>return</font> o;
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Compete {
+  <font color=#0000ff>static</font> <font color=#0000ff>final</font> <font color=#0000ff>int</font> SIZE = 5000;
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) 
+  <font color=#0000ff>throws</font> Exception {
+    Thing2[] a = <font color=#0000ff>new</font> Thing2[SIZE];
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; a.length; i++)
+      a[i] = <font color=#0000ff>new</font> Thing2();
+    Thing4[] b = <font color=#0000ff>new</font> Thing4[SIZE];
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; b.length; i++)
+      b[i] = <font color=#0000ff>new</font> Thing4();
+    <font color=#0000ff>long</font> t1 = System.currentTimeMillis();
+    ByteArrayOutputStream buf = 
+      <font color=#0000ff>new</font> ByteArrayOutputStream();
+    ObjectOutputStream o =
+      <font color=#0000ff>new</font> ObjectOutputStream(buf);
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; a.length; i++)
+      o.writeObject(a[i]);
+    <font color=#009900>// Now get copies:</font>
+    ObjectInputStream in =
+      <font color=#0000ff>new</font> ObjectInputStream(
+        <font color=#0000ff>new</font> ByteArrayInputStream(
+          buf.toByteArray()));
+    Thing2[] c = <font color=#0000ff>new</font> Thing2[SIZE];
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; c.length; i++)
+      c[i] = (Thing2)in.readObject();
+    <font color=#0000ff>long</font> t2 = System.currentTimeMillis();
+    System.out.println(
+      <font color=#004488>"Duplication via serialization: "</font> +
+      (t2 - t1) + <font color=#004488>" Milliseconds"</font>);
+    <font color=#009900>// Now try cloning:</font>
+    t1 = System.currentTimeMillis();
+    Thing4[] d = <font color=#0000ff>new</font> Thing4[SIZE];
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; d.length; i++)
+      d[i] = (Thing4)b[i].clone();
+    t2 = System.currentTimeMillis();
+    System.out.println(
+      <font color=#004488>"Duplication via cloning: "</font> +
+      (t2 - t1) + <font color=#004488>" Milliseconds"</font>);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Thing2</B> and <B>Thing4</B> contain
+member objects so that there&#8217;s some deep copying going on. It&#8217;s
+interesting to notice that while <B>Serializable</B> classes are easy to set up,
+there&#8217;s much more work going on to duplicate them. Cloning involves a lot
+of work to set up the class, but the actual duplication of objects is relatively
+simple. The results really tell the tale. Here is the output from three
+different runs:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Duplication via serialization: 940 Milliseconds
+Duplication via cloning: 50 Milliseconds
+
+Duplication via serialization: 710 Milliseconds
+Duplication via cloning: 60 Milliseconds
+
+Duplication via serialization: 770 Milliseconds
+Duplication via cloning: 50 Milliseconds</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Despite the significant time difference
+between serialization and cloning, you&#8217;ll also notice that the
+serialization technique seems to vary more in its duration, while cloning tends
+to be more stable.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I36' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I37>
+</FONT><A NAME="_Toc481064935"></A><BR></P></DIV>
+<A NAME="Heading613"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Adding cloneability <BR>further down a hierarchy</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you create a new class, its base class
+defaults to <B>Object</B>, which defaults to noncloneability (as you&#8217;ll
+see in the next section). As long as you don&#8217;t explicitly add
+cloneability, you won&#8217;t get it.
+<A NAME="Index2255"></A><A NAME="Index2256"></A>But you can add it in at any
+layer and it will then be cloneable from that layer downward, like
+this:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: appendixa:HorrorFlick.java</font>
+<font color=#009900>// You can insert Cloneability </font>
+<font color=#009900>// at any level of inheritance.</font>
+<font color=#0000ff>import</font> java.util.*;
+
+<font color=#0000ff>class</font> Person {}
+<font color=#0000ff>class</font> Hero <font color=#0000ff>extends</font> Person {}
+<font color=#0000ff>class</font> Scientist <font color=#0000ff>extends</font> Person 
+    <font color=#0000ff>implements</font> Cloneable {
+  <font color=#0000ff>public</font> Object clone() {
+    <font color=#0000ff>try</font> {
+      <font color=#0000ff>return</font> <font color=#0000ff>super</font>.clone();
+    } <font color=#0000ff>catch</font>(CloneNotSupportedException e) {
+      <font color=#009900>// this should never happen:</font>
+      <font color=#009900>// It's Cloneable already!</font>
+      <font color=#0000ff>throw</font> <font color=#0000ff>new</font> InternalError();
+    }
+  }
+}
+<font color=#0000ff>class</font> MadScientist <font color=#0000ff>extends</font> Scientist {}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> HorrorFlick {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Person p = <font color=#0000ff>new</font> Person();
+    Hero h = <font color=#0000ff>new</font> Hero();
+    Scientist s = <font color=#0000ff>new</font> Scientist();
+    MadScientist m = <font color=#0000ff>new</font> MadScientist();
+
+    <font color=#009900>// p = (Person)p.clone(); // Compile error</font>
+    <font color=#009900>// h = (Hero)h.clone(); // Compile error</font>
+    s = (Scientist)s.clone();
+    m = (MadScientist)m.clone();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Before cloneability was added, the
+compiler stopped you from trying to clone things. When cloneability is added in
+<B>Scientist</B>, then <B>Scientist</B> and all its descendants are cloneable.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I37' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I38>
+</FONT><A NAME="_Toc375545430"></A><A NAME="_Toc481064936"></A><BR></P></DIV>
+<A NAME="Heading614"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Why this strange design?</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If all this seems to be a strange scheme,
+that&#8217;s because it is. You might wonder why it worked out this way. What is
+the meaning behind this design?
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I38' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I39>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Originally, Java was designed as a
+language to control hardware boxes, and definitely not with the Internet in
+mind. In a general-purpose language like this, it makes sense that the
+programmer be able to clone any object. Thus, <B>clone(&#160;)</B> was placed in
+the root class <B>Object</B>, <I>but</I> it was a <B>public</B> method so you
+could always clone any object. This seemed to be the most flexible approach, and
+after all, what could it hurt?
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I39' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I40>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Well, when Java was seen as the ultimate
+Internet programming language, things changed. Suddenly, there are security
+issues, and of course, these issues are dealt with using objects, and you
+don&#8217;t necessarily want anyone to be able to clone your security objects.
+So what you&#8217;re seeing is a lot of patches applied on the original simple
+and straightforward scheme: <B>clone(&#160;)</B> is now <B>protected</B> in
+<B>Object</B>. You must override it <I>and</I> <B>implement Cloneable</B>
+<I>and</I> deal with the exceptions.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I40' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I41>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It&#8217;s worth noting that you must use
+the <B>Cloneable</B> interface <I>only </I>if you&#8217;re going to call
+<B>Object</B>&#8217;s <B>clone(&#160;)</B>, method, since that method checks at
+run-time to make sure that your class implements <B>Cloneable</B>. But for
+consistency (and since <B>Cloneable</B> is empty anyway) you should implement
+it.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I41' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I42>
+</FONT><A NAME="_Toc375545431"></A><A NAME="_Toc481064937"></A><BR></P></DIV>
+<A NAME="Heading615"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Controlling cloneability</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You might suggest that, to remove
+<A NAME="Index2257"></A><A NAME="Index2258"></A>cloneability, the
+<B>clone(&#160;)</B> method simply be made <B>private</B>, but this won&#8217;t
+work since you cannot take a base-class method and make it less accessible in a
+derived class. So it&#8217;s not that simple. And yet, it&#8217;s necessary to
+be able to control whether an object can be cloned. There are actually a number
+of attitudes you can take to this in a class that you design:</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Indifference. You
+don&#8217;t do anything about cloning, which means that your class can&#8217;t
+be cloned but a class that inherits from you can add cloning if it wants. This
+works only if the default <B>Object.clone(&#160;)</B> will do something
+reasonable with all the fields in your class.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I42' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I43>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Support
+<B>clone(&#160;)</B>. Follow the standard practice of implementing
+<B>Cloneable</B> and overriding <B>clone(&#160;)</B>. In the overridden
+<B>clone(&#160;)</B>, you call <B>super.clone(&#160;) </B>and catch all
+exceptions (so your overridden <B>clone(&#160;)</B> doesn&#8217;t throw any
+exceptions).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I43' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I44>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Support
+cloning conditionally. If your class holds references to other objects that
+might or might not be cloneable (a container class, for example), your
+<B>clone(&#160;)</B> can try to clone all of the objects for which you have
+references, and if they throw exceptions just pass those exceptions out to the
+programmer. For example, consider a special sort of <B>ArrayList</B> that tries
+to clone all the objects it holds. When you write such an <B>ArrayList</B>, you
+don&#8217;t know what sort of objects the client programmer might put into your
+<B>ArrayList</B>, so you don&#8217;t know whether they can be cloned.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I44' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I45>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Don&#8217;t
+implement <B>Cloneable</B> but override <B>clone(&#160;)</B> as
+<B>protected</B>, producing the correct copying behavior for any fields. This
+way, anyone inheriting from this class can override <B>clone(&#160;)</B> and
+call <B>super.clone(&#160;)</B> to produce the correct copying behavior. Note
+that your implementation can and should invoke <B>super.clone(&#160;)</B> even
+though that method expects a <B>Cloneable</B> object (it will throw an exception
+otherwise), because no one will directly invoke it on an object of your type. It
+will get invoked only through a derived class, which, if it is to work
+successfully, implements <B>Cloneable</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I45' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I46>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Try
+to prevent cloning by not implementing <B>Cloneable</B> and overriding
+<B>clone(&#160;)</B> to throw an exception. This is successful only if any class
+derived from this calls <B>super.clone(&#160;)</B> in its redefinition of
+<B>clone(&#160;)</B>. Otherwise, a programmer may be able to get around it.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I46' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I47>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Prevent
+cloning by making your class <B>final</B>. If <B>clone(&#160;)</B> has not been
+overridden by any of your ancestor classes, then it can&#8217;t be. If it has,
+then override it again and throw <B>CloneNotSupportedException</B>. Making the
+class <B>final </B>is the only way to guarantee that cloning is prevented. In
+addition, when dealing with security objects or other situations in which you
+want to control the number of objects created you should make all constructors
+<B>private</B> and provide one or more special methods for creating objects.
+That way, these methods can restrict the number of objects created and the
+conditions in which they&#8217;re created. (A particular case of this is the
+<I>singleton</I> pattern shown in <I>Thinking in Patterns with Java</I>,
+downloadable at <I>www.BruceEckel.com</I>.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I47' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I48>
+</FONT></OL><DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here&#8217;s
+an example that shows the various ways cloning can be implemented and then,
+later in the hierarchy, &#8220;turned off&#8221;:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I48' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I49>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: appendixa:CheckCloneable.java</font>
+<font color=#009900>// Checking to see if a reference can be cloned.</font>
+
+<font color=#009900>// Can't clone this because it doesn't</font>
+<font color=#009900>// override clone():</font>
+<font color=#0000ff>class</font> Ordinary {}
+
+<font color=#009900>// Overrides clone, but doesn't implement</font>
+<font color=#009900>// Cloneable:</font>
+<font color=#0000ff>class</font> WrongClone <font color=#0000ff>extends</font> Ordinary {
+  <font color=#0000ff>public</font> Object clone()
+      <font color=#0000ff>throws</font> CloneNotSupportedException {
+    <font color=#0000ff>return</font> <font color=#0000ff>super</font>.clone(); <font color=#009900>// Throws exception</font>
+  }
+}
+
+<font color=#009900>// Does all the right things for cloning:</font>
+<font color=#0000ff>class</font> IsCloneable <font color=#0000ff>extends</font> Ordinary 
+    <font color=#0000ff>implements</font> Cloneable {
+  <font color=#0000ff>public</font> Object clone() 
+      <font color=#0000ff>throws</font> CloneNotSupportedException {
+    <font color=#0000ff>return</font> <font color=#0000ff>super</font>.clone();
+  }
+}
+
+<font color=#009900>// Turn off cloning by throwing the exception:</font>
+<font color=#0000ff>class</font> NoMore <font color=#0000ff>extends</font> IsCloneable {
+  <font color=#0000ff>public</font> Object clone() 
+      <font color=#0000ff>throws</font> CloneNotSupportedException {
+    <font color=#0000ff>throw</font> <font color=#0000ff>new</font> CloneNotSupportedException();
+  }
+}
+
+<font color=#0000ff>class</font> TryMore <font color=#0000ff>extends</font> NoMore {
+  <font color=#0000ff>public</font> Object clone() 
+      <font color=#0000ff>throws</font> CloneNotSupportedException {
+    <font color=#009900>// Calls NoMore.clone(), throws exception:</font>
+    <font color=#0000ff>return</font> <font color=#0000ff>super</font>.clone();
+  }
+}
+
+<font color=#0000ff>class</font> BackOn <font color=#0000ff>extends</font> NoMore {
+  <font color=#0000ff>private</font> BackOn duplicate(BackOn b) {
+    <font color=#009900>// Somehow make a copy of b</font>
+    <font color=#009900>// and return that copy. This is a dummy</font>
+    <font color=#009900>// copy, just to make the point:</font>
+    <font color=#0000ff>return</font> <font color=#0000ff>new</font> BackOn();
+  }
+  <font color=#0000ff>public</font> Object clone() {
+    <font color=#009900>// Doesn't call NoMore.clone():</font>
+    <font color=#0000ff>return</font> duplicate(<font color=#0000ff>this</font>);
+  }
+}
+
+<font color=#009900>// Can't inherit from this, so can't override</font>
+<font color=#009900>// the clone method like in BackOn:</font>
+<font color=#0000ff>final</font> <font color=#0000ff>class</font> ReallyNoMore <font color=#0000ff>extends</font> NoMore {}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> CheckCloneable {
+  <font color=#0000ff>static</font> Ordinary tryToClone(Ordinary ord) {
+    String id = ord.getClass().getName();
+    Ordinary x = <font color=#0000ff>null</font>;
+    <font color=#0000ff>if</font>(ord <font color=#0000ff>instanceof</font> Cloneable) {
+      <font color=#0000ff>try</font> {
+        System.out.println(<font color=#004488>"Attempting "</font> + id);
+        x = (Ordinary)((IsCloneable)ord).clone();
+        System.out.println(<font color=#004488>"Cloned "</font> + id);
+      } <font color=#0000ff>catch</font>(CloneNotSupportedException e) {
+        System.err.println(<font color=#004488>"Could not clone "</font>+id);
+      }
+    }
+    <font color=#0000ff>return</font> x;
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    <font color=#009900>// Upcasting:</font>
+    Ordinary[] ord = { 
+      <font color=#0000ff>new</font> IsCloneable(),
+      <font color=#0000ff>new</font> WrongClone(),
+      <font color=#0000ff>new</font> NoMore(),
+      <font color=#0000ff>new</font> TryMore(),
+      <font color=#0000ff>new</font> BackOn(),
+      <font color=#0000ff>new</font> ReallyNoMore(),
+    };
+    Ordinary x = <font color=#0000ff>new</font> Ordinary();
+    <font color=#009900>// This won't compile, since clone() is</font>
+    <font color=#009900>// protected in Object:</font>
+    <font color=#009900>//! x = (Ordinary)x.clone();</font>
+    <font color=#009900>// tryToClone() checks first to see if</font>
+    <font color=#009900>// a class implements Cloneable:</font>
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; ord.length; i++)
+      tryToClone(ord[i]);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The first class, <B>Ordinary</B>,
+represents the kinds of classes we&#8217;ve seen throughout this book: no
+support for cloning, but as it turns out, no prevention of cloning either. But
+if you have a reference to an <B>Ordinary</B> object that might have been upcast
+from a more derived class, you can&#8217;t tell if it can be cloned or not.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I49' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I50>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The class <B>WrongClone</B> shows an
+incorrect way to implement cloning. It does override <B>Object.clone(&#160;)</B>
+and makes that method <B>public</B>, but it doesn&#8217;t implement
+<B>Cloneable</B>, so when <B>super.clone(&#160;)</B> is called (which results in
+a call to <B>Object.clone(&#160;)</B>), <B>CloneNotSupportedException</B> is
+thrown so the cloning doesn&#8217;t work.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I50' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I51>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In <B>IsCloneable</B> you can see all the
+right actions performed for cloning: <B>clone(&#160;)</B> is overridden and
+<B>Cloneable</B> is implemented. However, this <B>clone(&#160;)</B> method and
+several others that follow in this example <I>do not</I> catch
+<B>CloneNotSupportedException,</B> but instead pass it through to the caller,
+who must then put a try-catch block around it. In your own <B>clone(&#160;)</B>
+methods you will typically catch <B>CloneNotSupportedException</B> <I>inside</I>
+<B>clone(&#160;)</B> rather than passing it through. As you&#8217;ll see, in
+this example it&#8217;s more informative to pass the exceptions through.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I51' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I52>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Class <B>NoMore</B> attempts to
+&#8220;turn off&#8221; cloning in the way that the Java designers intended: in
+the derived class <B>clone(&#160;)</B>, you throw
+<B>CloneNotSupportedException</B>. The <B>clone(&#160;) </B>method in class
+<B>TryMore</B> properly calls <B>super.clone(&#160;)</B>, and this resolves to
+<B>NoMore.clone(&#160;),</B> which throws an exception and prevents cloning.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I52' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I53>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">But what if the programmer doesn&#8217;t
+follow the &#8220;proper&#8221; path of calling
+<A NAME="Index2259"></A><A NAME="Index2260"></A><B>super.clone(&#160;)</B>
+inside the overridden <B>clone(&#160;)</B> method? In <B>BackOn</B>, you can see
+how this can happen. This class uses a separate method <B>duplicate(&#160;)
+</B>to make a copy of the current object and calls this method inside
+<B>clone(&#160;)</B> <I>instead</I> of calling <B>super.clone(&#160;)</B>. The
+exception is never thrown and the new class is cloneable. You can&#8217;t rely
+on throwing an exception to prevent making a cloneable class. The only sure-fire
+solution is shown in <B>ReallyNoMore</B>, which is <B>final</B> and thus cannot
+be inherited. That means if <B>clone(&#160;)</B> throws an exception in the
+<B>final</B> class, it cannot be modified with inheritance and the prevention of
+cloning is assured. (You cannot explicitly call <B>Object.clone(&#160;) </B>from
+a class that has an arbitrary level of inheritance; you are limited to calling
+<B>super.clone(&#160;),</B> which has access to only the direct base class.)
+Thus, if you make any objects that involve security issues, you&#8217;ll want to
+make those classes <B>final</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I53' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I54>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The first method you see in class
+<B>CheckCloneable</B> is <B>tryToClone(&#160;)</B>, which takes any
+<B>Ordinary</B> object and checks to see whether it&#8217;s cloneable with
+<B>instanceof</B>. If so, it casts the object to an <B>IsCloneable</B>, calls
+<B>clone(&#160;)</B> and casts the result back to <B>Ordinary</B>, catching any
+exceptions that are thrown. Notice the use of run-time type identification (see
+Chapter 12) to print the class name so you can see what&#8217;s happening.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I54' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I55>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In <B>main(&#160;)</B>, different types
+of <B>Ordinary</B> objects are created and upcast to <B>Ordinary</B> in the
+array definition. The first two lines of code after that create a plain
+<B>Ordinary</B> object and try to clone it. However, this code will not compile
+because <B>clone(&#160;)</B> is a <B>protected</B> method in <B>Object</B>. The
+remainder of the code steps through the array and tries to clone each object,
+reporting the success or failure of each. The output is:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I55' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I56>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Attempting IsCloneable
+Cloned IsCloneable
+Attempting NoMore
+Could not clone NoMore
+Attempting TryMore
+Could not clone TryMore
+Attempting BackOn
+Cloned BackOn
+Attempting ReallyNoMore
+Could not clone ReallyNoMore</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">So to summarize, if you want a class to
+be cloneable: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I56' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I57>
+</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Implement the
+<B>Cloneable</B>
+interface.</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Override
+<B>clone(&#160;)</B>.</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Call
+<B>super.clone(&#160;)</B> inside your
+<B>clone(&#160;)</B>.</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Capture
+exceptions inside your
+<B>clone(&#160;)</B>.</FONT></OL><DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This
+will produce the most convenient effects.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I57' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I58>
+</FONT><A NAME="_Toc375545432"></A><A NAME="_Toc481064938"></A><BR></P></DIV>
+<A NAME="Heading616"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+The copy constructor</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Cloning can seem to be a complicated
+process to set up. It might seem like there should be an alternative. One
+approach that might occur to you (especially if you&#8217;re a C++ programmer)
+is to make a special constructor whose job it is to duplicate an object. In C++,
+this is called the <A NAME="Index2261"></A><A NAME="Index2262"></A><I>copy
+constructor</I>. At first, this seems like the obvious solution, but in fact it
+doesn&#8217;t work. Here&#8217;s an example:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: appendixa:CopyConstructor.java</font>
+<font color=#009900>// A constructor for copying an object of the same</font>
+<font color=#009900>// type, as an attempt to create a local copy.</font>
+
+<font color=#0000ff>class</font> FruitQualities {
+  <font color=#0000ff>private</font> <font color=#0000ff>int</font> weight;
+  <font color=#0000ff>private</font> <font color=#0000ff>int</font> color;
+  <font color=#0000ff>private</font> <font color=#0000ff>int</font> firmness;
+  <font color=#0000ff>private</font> <font color=#0000ff>int</font> ripeness;
+  <font color=#0000ff>private</font> <font color=#0000ff>int</font> smell;
+  <font color=#009900>// etc.</font>
+  FruitQualities() { <font color=#009900>// Default constructor</font>
+    <font color=#009900>// do something meaningful...</font>
+  }
+  <font color=#009900>// Other constructors:</font>
+  <font color=#009900>// ...</font>
+  <font color=#009900>// Copy constructor:</font>
+  FruitQualities(FruitQualities f) {
+    weight = f.weight;
+    color = f.color;
+    firmness = f.firmness;
+    ripeness = f.ripeness;
+    smell = f.smell;
+    <font color=#009900>// etc.</font>
+  }
+}
+
+<font color=#0000ff>class</font> Seed {
+  <font color=#009900>// Members...</font>
+  Seed() { <font color=#009900>/* Default constructor */</font> }
+  Seed(Seed s) { <font color=#009900>/* Copy constructor */</font> }
+}
+
+<font color=#0000ff>class</font> Fruit {
+  <font color=#0000ff>private</font> FruitQualities fq;
+  <font color=#0000ff>private</font> <font color=#0000ff>int</font> seeds;
+  <font color=#0000ff>private</font> Seed[] s;
+  Fruit(FruitQualities q, <font color=#0000ff>int</font> seedCount) { 
+    fq = q;
+    seeds = seedCount;
+    s = <font color=#0000ff>new</font> Seed[seeds];
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; seeds; i++)
+      s[i] = <font color=#0000ff>new</font> Seed();
+  }
+  <font color=#009900>// Other constructors:</font>
+  <font color=#009900>// ...</font>
+  <font color=#009900>// Copy constructor:</font>
+  Fruit(Fruit f) {
+    fq = <font color=#0000ff>new</font> FruitQualities(f.fq);
+    seeds = f.seeds;
+    <font color=#009900>// Call all Seed copy-constructors:</font>
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; seeds; i++)
+      s[i] = <font color=#0000ff>new</font> Seed(f.s[i]);
+    <font color=#009900>// Other copy-construction activities...</font>
+  }
+  <font color=#009900>// To allow derived constructors (or other </font>
+  <font color=#009900>// methods) to put in different qualities:</font>
+  <font color=#0000ff>protected</font> <font color=#0000ff>void</font> addQualities(FruitQualities q) {
+    fq = q;
+  }
+  <font color=#0000ff>protected</font> FruitQualities getQualities() {
+    <font color=#0000ff>return</font> fq;
+  }
+}
+
+<font color=#0000ff>class</font> Tomato <font color=#0000ff>extends</font> Fruit {
+  Tomato() {
+    <font color=#0000ff>super</font>(<font color=#0000ff>new</font> FruitQualities(), 100);
+  }
+  Tomato(Tomato t) { <font color=#009900>// Copy-constructor</font>
+    <font color=#0000ff>super</font>(t); <font color=#009900>// Upcast for base copy-constructor</font>
+    <font color=#009900>// Other copy-construction activities...</font>
+  }
+}
+
+<font color=#0000ff>class</font> ZebraQualities <font color=#0000ff>extends</font> FruitQualities {
+  <font color=#0000ff>private</font> <font color=#0000ff>int</font> stripedness;
+  ZebraQualities() { <font color=#009900>// Default constructor</font>
+    <font color=#009900>// do something meaningful...</font>
+  }
+  ZebraQualities(ZebraQualities z) {
+    <font color=#0000ff>super</font>(z);
+    stripedness = z.stripedness;
+  }
+}
+
+<font color=#0000ff>class</font> GreenZebra <font color=#0000ff>extends</font> Tomato {
+  GreenZebra() {
+    addQualities(<font color=#0000ff>new</font> ZebraQualities());
+  }
+  GreenZebra(GreenZebra g) {
+    <font color=#0000ff>super</font>(g); <font color=#009900>// Calls Tomato(Tomato)</font>
+    <font color=#009900>// Restore the right qualities:</font>
+    addQualities(<font color=#0000ff>new</font> ZebraQualities());
+  }
+  <font color=#0000ff>void</font> evaluate() {
+    ZebraQualities zq = 
+      (ZebraQualities)getQualities();
+    <font color=#009900>// Do something with the qualities</font>
+    <font color=#009900>// ...</font>
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> CopyConstructor {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> ripen(Tomato t) {
+    <font color=#009900>// Use the "copy constructor":</font>
+    t = <font color=#0000ff>new</font> Tomato(t); 
+    System.out.println(<font color=#004488>"In ripen, t is a "</font> +
+      t.getClass().getName());
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> slice(Fruit f) {
+    f = <font color=#0000ff>new</font> Fruit(f); <font color=#009900>// Hmmm... will this work?</font>
+    System.out.println(<font color=#004488>"In slice, f is a "</font> +
+      f.getClass().getName());
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Tomato tomato = <font color=#0000ff>new</font> Tomato();
+    ripen(tomato); <font color=#009900>// OK</font>
+    slice(tomato); <font color=#009900>// OOPS!</font>
+    GreenZebra g = <font color=#0000ff>new</font> GreenZebra();
+    ripen(g); <font color=#009900>// OOPS!</font>
+    slice(g); <font color=#009900>// OOPS!</font>
+    g.evaluate();
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This seems a bit strange at first. Sure,
+fruit has qualities, but why not just put data members representing those
+qualities directly into the <B>Fruit</B> class? There are two potential reasons.
+The first is that you might want to easily insert or change the qualities. Note
+that <B>Fruit</B> has a <B>protected</B> <B>addQualities(&#160;)</B> method to
+allow derived classes to do this. (You might think the logical thing to do is to
+have a <B>protected</B> constructor in <B>Fruit</B> that takes a
+<B>FruitQualities</B> argument, but constructors don&#8217;t inherit so it
+wouldn&#8217;t be available in second or greater level classes.) By making the
+fruit qualities into a separate class, you have greater flexibility, including
+the ability to change the qualities midway through the lifetime of a particular
+<B>Fruit</B> object. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I58' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I59>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The second reason for making
+<B>FruitQualities</B> a separate object is in case you want to add new qualities
+or to change the behavior via inheritance and polymorphism. Note that for
+<B>GreenZebra</B> (which <I>really is</I> a type of tomato&#8212;I&#8217;ve
+grown them and they&#8217;re fabulous), the constructor calls
+<B>addQualities(&#160;)</B> and passes it a <B>ZebraQualities</B> object, which
+is derived from <B>FruitQualities</B> so it can be attached to the
+<B>FruitQualities</B> reference in the base class. Of course, when
+<B>GreenZebra</B> uses the <B>FruitQualities</B> it must downcast it to the
+correct type (as seen in <B>evaluate(&#160;)</B>), but it always knows that type
+is <B>ZebraQualities</B>. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I59' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I60>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You&#8217;ll also see that there&#8217;s
+a <B>Seed</B> class, and that <B>Fruit</B> (which by definition carries its own
+seeds)</FONT><A NAME="fnB82" HREF="#fn82">[82]</A><FONT FACE="Georgia"> contains
+an array of <B>Seed</B>s. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I60' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I61>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Finally, notice that each class has a
+copy constructor, and that each copy constructor must take care to call the copy
+constructors for the base class and member objects to produce a deep copy. The
+copy constructor is tested inside the class <B>CopyConstructor</B>. The method
+<B>ripen(&#160;)</B> takes a <B>Tomato </B>argument and performs
+copy-construction on it in order to duplicate the object:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>t = <font color=#0000ff>new</font> Tomato(t);</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">while <B>slice(&#160;)</B> takes a more
+generic <B>Fruit</B> object and also duplicates it:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>f = <font color=#0000ff>new</font> Fruit(f);</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">These are tested with different kinds of
+<B>Fruit</B> in <B>main(&#160;)</B>. Here&#8217;s the output:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>In ripen, t is a Tomato
+In slice, f is a Fruit
+In ripen, t is a Tomato
+In slice, f is a Fruit</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This is where the problem shows up. After
+the copy-construction that happens to the <B>Tomato</B> inside
+<B>slice(&#160;)</B>, the result is no longer a <B>Tomato</B> object, but just a
+<B>Fruit</B>. It has lost all of its tomato-ness. Further, when you take a
+<B>GreenZebra</B>, both <B>ripen(&#160;)</B> and <B>slice(&#160;)</B> turn it
+into a <B>Tomato</B> and a <B>Fruit</B>, respectively. Thus, unfortunately, the
+copy constructor scheme is no good to us in Java when attempting to make a local
+copy of an object. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I61' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I62>
+</FONT><BR></P></DIV>
+<A NAME="Heading617"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Why does it work in C++ and not Java?</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The copy constructor is a fundamental
+part of C++, since it automatically makes a local copy of an object. Yet the
+example above proves that it does not work for Java. Why? In Java everything
+that we manipulate is a reference, while in C++ you can have reference-like
+entities and you can <I>also</I> pass around the objects directly. That&#8217;s
+what the C++ copy constructor is for: when you want to take an object and pass
+it in by value, thus duplicating the object. So it works fine in C++, but you
+should keep in mind that this scheme fails in Java, so don&#8217;t use it.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I62' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I63>
+</FONT><A NAME="_Toc375545433"></A><A NAME="_Toc481064939"></A><BR></P></DIV>
+<A NAME="Heading618"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Read-only classes<BR><A NAME="Index2263"></A></H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">While the local copy produced by
+<B>clone(&#160;) </B>gives the desired results in the appropriate cases, it is
+an example of forcing the programmer (the author of the method) to be
+responsible for preventing the ill effects of aliasing. What if you&#8217;re
+making a library that&#8217;s so general purpose and commonly used that you
+cannot make the assumption that it will always be cloned in the proper places?
+Or more likely, what if you <I>want</I> to allow aliasing for
+efficiency&#8212;to prevent the needless duplication of objects&#8212;but you
+don&#8217;t want the negative side effects of aliasing?
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I63' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I64>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">One solution is to create
+<A NAME="Index2264"></A><A NAME="Index2265"></A><I>immutable objects</I> which
+belong to read-only classes. You can define a class such that no methods in the
+class cause changes to the internal state of the object. In such a class,
+aliasing has no impact since you can read only the internal state, so if many
+pieces of code are reading the same object there&#8217;s no problem.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I64' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I65>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">As a simple example of immutable objects,
+Java&#8217;s standard library contains
+<A NAME="Index2266"></A><A NAME="Index2267"></A>&#8220;wrapper&#8221; classes
+for all the primitive types. You might have already discovered that, if you want
+to store an <B>int</B> inside a container such as an <B>ArrayList</B> (which
+takes only <B>Object reference</B>s), you can wrap your <B>int</B> inside the
+standard library <B>Integer</B> class:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: appendixa:ImmutableInteger.java</font>
+<font color=#009900>// The Integer class cannot be changed.</font>
+<font color=#0000ff>import</font> java.util.*;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> ImmutableInteger {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    ArrayList v = <font color=#0000ff>new</font> ArrayList();
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; 10; i++) 
+      v.add(<font color=#0000ff>new</font> Integer(i));
+    <font color=#009900>// But how do you change the int</font>
+    <font color=#009900>// inside the Integer?</font>
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>Integer</B> class (as well as all
+the primitive &#8220;wrapper&#8221; classes) implements immutability in a simple
+fashion: they have no methods that allow you to change the object.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I65' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I66>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you do need an object that holds a
+primitive type that can be modified, you must create it yourself. Fortunately,
+this is trivial:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: appendixa:MutableInteger.java</font>
+<font color=#009900>// A changeable wrapper class.</font>
+<font color=#0000ff>import</font> java.util.*;
+
+<font color=#0000ff>class</font> IntValue { 
+  <font color=#0000ff>int</font> n;
+  IntValue(<font color=#0000ff>int</font> x) { n = x; }
+  <font color=#0000ff>public</font> String toString() { 
+    <font color=#0000ff>return</font> Integer.toString(n);
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> MutableInteger {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    ArrayList v = <font color=#0000ff>new</font> ArrayList();
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; 10; i++) 
+      v.add(<font color=#0000ff>new</font> IntValue(i));
+    System.out.println(v);
+    <font color=#0000ff>for</font>(<font color=#0000ff>int</font> i = 0; i &lt; v.size(); i++)
+      ((IntValue)v.get(i)).n++;
+    System.out.println(v);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Note that <B>n</B> is friendly to
+simplify coding. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I66' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I67>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>IntValue</B> can be even simpler if
+the default initialization to zero is adequate (then you don&#8217;t need the
+constructor) and you don&#8217;t care about printing it out (then you
+don&#8217;t need the <B>toString(&#160;)</B>):</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>class</font> IntValue { <font color=#0000ff>int</font> n; }</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Fetching the element out and casting it
+is a bit awkward, but that&#8217;s a feature of <B>ArrayList,</B> not of
+<B>IntValue</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I67' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I68>
+</FONT><A NAME="_Toc481064940"></A><BR></P></DIV>
+<A NAME="Heading619"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Creating read-only classes</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It&#8217;s possible to create your own
+read-only class. Here&#8217;s an example:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: appendixa:Immutable1.java</font>
+<font color=#009900>// Objects that cannot be modified</font>
+<font color=#009900>// are immune to aliasing.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Immutable1 {
+  <font color=#0000ff>private</font> <font color=#0000ff>int</font> data;
+  <font color=#0000ff>public</font> Immutable1(<font color=#0000ff>int</font> initVal) {
+    data = initVal;
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>int</font> read() { <font color=#0000ff>return</font> data; }
+  <font color=#0000ff>public</font> <font color=#0000ff>boolean</font> nonzero() { <font color=#0000ff>return</font> data != 0; }
+  <font color=#0000ff>public</font> Immutable1 quadruple() {
+    <font color=#0000ff>return</font> <font color=#0000ff>new</font> Immutable1(data * 4);
+  }
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> f(Immutable1 i1) {
+    Immutable1 quad = i1.quadruple();
+    System.out.println(<font color=#004488>"i1 = "</font> + i1.read());
+    System.out.println(<font color=#004488>"quad = "</font> + quad.read());
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Immutable1 x = <font color=#0000ff>new</font> Immutable1(47);
+    System.out.println(<font color=#004488>"x = "</font> + x.read());
+    f(x);
+    System.out.println(<font color=#004488>"x = "</font> + x.read());
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">All data is <B>private</B>, and
+you&#8217;ll see that none of the <B>public</B> methods modify that data.
+Indeed, the method that does appear to modify an object is
+<B>quadruple(&#160;)</B>, but this creates a new <B>Immutable1</B> object and
+leaves the original one untouched.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I68' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I69>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The method <B>f(&#160;)</B> takes an
+<B>Immutable1</B> object and performs various operations on it, and the output
+of <B>main(&#160;)</B> demonstrates that there is no change to <B>x</B>. Thus,
+<B>x</B>&#8217;s object could be aliased many times without harm because the
+<B>Immutable1</B> class is designed to guarantee that objects cannot be changed.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I69' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I70>
+</FONT><A NAME="_Toc481064941"></A><BR></P></DIV>
+<A NAME="Heading620"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+The drawback to immutability</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Creating an immutable class seems at
+first to provide an elegant solution. However, whenever you do need a modified
+object of that new type you must suffer the overhead of a new object creation,
+as well as potentially causing more frequent garbage collections. For some
+classes this is not a problem, but for others (such as the <B>String</B> class)
+it is prohibitively expensive.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I70' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I71>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The solution is to create a companion
+class that <I>can</I> be modified. Then, when you&#8217;re doing a lot of
+modifications, you can switch to using the modifiable companion class and switch
+back to the immutable class when you&#8217;re done.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I71' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I72>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The example above can be modified to show
+this:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: appendixa:Immutable2.java</font>
+<font color=#009900>// A companion class for making </font>
+<font color=#009900>// changes to immutable objects.</font>
+
+<font color=#0000ff>class</font> Mutable {
+  <font color=#0000ff>private</font> <font color=#0000ff>int</font> data;
+  <font color=#0000ff>public</font> Mutable(<font color=#0000ff>int</font> initVal) {
+    data = initVal;
+  }
+  <font color=#0000ff>public</font> Mutable add(<font color=#0000ff>int</font> x) { 
+    data += x;
+    <font color=#0000ff>return</font> <font color=#0000ff>this</font>;
+  }
+  <font color=#0000ff>public</font> Mutable multiply(<font color=#0000ff>int</font> x) {
+    data *= x;
+    <font color=#0000ff>return</font> <font color=#0000ff>this</font>;
+  }
+  <font color=#0000ff>public</font> Immutable2 makeImmutable2() {
+    <font color=#0000ff>return</font> <font color=#0000ff>new</font> Immutable2(data);
+  }
+}
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Immutable2 {
+  <font color=#0000ff>private</font> <font color=#0000ff>int</font> data;
+  <font color=#0000ff>public</font> Immutable2(<font color=#0000ff>int</font> initVal) {
+    data = initVal;
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>int</font> read() { <font color=#0000ff>return</font> data; }
+  <font color=#0000ff>public</font> <font color=#0000ff>boolean</font> nonzero() { <font color=#0000ff>return</font> data != 0; }
+  <font color=#0000ff>public</font> Immutable2 add(<font color=#0000ff>int</font> x) { 
+    <font color=#0000ff>return</font> <font color=#0000ff>new</font> Immutable2(data + x);
+  }
+  <font color=#0000ff>public</font> Immutable2 multiply(<font color=#0000ff>int</font> x) {
+    <font color=#0000ff>return</font> <font color=#0000ff>new</font> Immutable2(data * x);
+  }
+  <font color=#0000ff>public</font> Mutable makeMutable() {
+    <font color=#0000ff>return</font> <font color=#0000ff>new</font> Mutable(data);
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> Immutable2 modify1(Immutable2 y){
+    Immutable2 val = y.add(12);
+    val = val.multiply(3);
+    val = val.add(11);
+    val = val.multiply(2);
+    <font color=#0000ff>return</font> val;
+  }
+  <font color=#009900>// This produces the same result:</font>
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> Immutable2 modify2(Immutable2 y){
+    Mutable m = y.makeMutable();
+    m.add(12).multiply(3).add(11).multiply(2);
+    <font color=#0000ff>return</font> m.makeImmutable2();
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    Immutable2 i2 = <font color=#0000ff>new</font> Immutable2(47);
+    Immutable2 r1 = modify1(i2);
+    Immutable2 r2 = modify2(i2);
+    System.out.println(<font color=#004488>"i2 = "</font> + i2.read());
+    System.out.println(<font color=#004488>"r1 = "</font> + r1.read());
+    System.out.println(<font color=#004488>"r2 = "</font> + r2.read());
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Immutable2 </B>contains methods that,
+as before, preserve the immutability of the objects by producing new objects
+whenever a modification is desired. These are the <B>add(&#160;)</B> and
+<B>multiply(&#160;) </B>methods. The companion class is called <B>Mutable</B>,
+and it also has <B>add(&#160;)</B> and <B>multiply(&#160;)</B> methods, but
+these modify the <B>Mutable</B> object rather than making a new one. In
+addition, <B>Mutable</B> has a method to use its data to produce an
+<B>Immutable2</B> object and vice versa. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I72' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I73>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The two static methods
+<B>modify1(&#160;)</B> and <B>modify2(&#160;)</B> show two different approaches
+to producing the same result. In <B>modify1(&#160;)</B>, everything is done
+within the <B>Immutable2</B> class and you can see that four new
+<B>Immutable2</B> objects are created in the process. (And each time <B>val</B>
+is reassigned, the previous object becomes garbage.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I73' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I74>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In the method <B>modify2(&#160;)</B>, you
+can see that the first action is to take the <B>Immutable2 y</B> and produce a
+<B>Mutable</B> from it. (This is just like calling <B>clone(&#160;)</B> as you
+saw earlier, but this time a different type of object is created.) Then the
+<B>Mutable</B> object is used to perform a lot of change operations
+<I>without</I> requiring the creation of many new objects. Finally, it&#8217;s
+turned back into an <B>Immutable2</B>. Here, two new objects are created (the
+<B>Mutable</B> and the result <B>Immutable2</B>) instead of four.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I74' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I75>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This approach makes sense, then,
+when:</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">You need immutable objects
+and</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">You often need
+to make a lot of modifications
+or</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">It&#8217;s
+expensive to create new immutable
+objects.</FONT><A NAME="_Toc481064942"></A></OL><A NAME="Heading621"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Immutable Strings<BR><A NAME="Index2268"></A><A NAME="Index2269"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Consider the following code:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I75' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I76>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: appendixa:Stringer.java</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> Stringer {
+  <font color=#0000ff>static</font> String upcase(String s) {
+    <font color=#0000ff>return</font> s.toUpperCase();
+  }
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    String q = <font color=#0000ff>new</font> String(<font color=#004488>"howdy"</font>);
+    System.out.println(q); <font color=#009900>// howdy</font>
+    String qq = upcase(q);
+    System.out.println(qq); <font color=#009900>// HOWDY</font>
+    System.out.println(q); <font color=#009900>// howdy</font>
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When <B>q</B> is passed in to
+<B>upcase(&#160;)</B> it&#8217;s actually a copy of the reference to <B>q</B>.
+The object this reference is connected to stays put in a single physical
+location. The references are copied as they are passed around.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I76' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I77>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Looking at the definition for
+<B>upcase(&#160;)</B>, you can see that the reference that&#8217;s passed in has
+the name <B>s</B>, and it exists for only as long as the body of
+<B>upcase(&#160;)</B> is being executed. When <B>upcase(&#160;)</B> completes,
+the local reference <B>s</B> vanishes. <B>upcase(&#160;)</B> returns the result,
+which is the original string with all the characters set to uppercase. Of
+course, it actually returns a reference to the result. But it turns out that the
+reference that it returns is for a new object, and the original <B>q</B> is left
+alone. How does this happen?
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I77' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I78>
+</FONT><BR></P></DIV>
+<A NAME="Heading622"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Implicit constants<BR><A NAME="Index2270"></A></H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you say:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>String s = <font color=#004488>"asdf"</font>;
+String x = Stringer.upcase(s);</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">do you really want the
+<B>upcase(&#160;)</B> method to <I>change</I> the argument? In general, you
+don&#8217;t, because an argument usually looks to the reader of the code as a
+piece of information provided to the method, not something to be modified. This
+is an important guarantee, since it makes code easier to write and understand.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I78' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I79>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In C++, the availability of this
+guarantee was important enough to put in a special keyword,
+<A NAME="Index2271"></A><B>const</B>, to allow the programmer to ensure that a
+reference (pointer or reference in C++) could not be used to modify the original
+object. But then the C++ programmer was required to be diligent and remember to
+use <B>const</B> everywhere. It can be confusing and easy to forget.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I79' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I80>
+</FONT><A NAME="_Toc375545435"></A><BR></P></DIV>
+<A NAME="Heading623"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Overloading &#8216;+&#8217; and the StringBuffer</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Objects of the <B>String</B> class are
+designed to be immutable, using the technique shown previously. If you examine
+the online documentation<B> </B>for the <B>String</B> class (which is summarized
+a little later in this appendix), you&#8217;ll see that every method in the
+class that appears to modify a <B>String</B> really creates and returns a brand
+new <B>String</B> object containing the modification. The original <B>String</B>
+is left untouched. Thus, there&#8217;s no feature in Java like C++&#8217;s
+<B>const</B> to make the compiler support the immutability of your objects. If
+you want it, you have to wire it in yourself, like <B>String</B> does.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I80' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I81>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Since <B>String </B>objects are
+immutable, you can <A NAME="Index2272"></A>alias to a particular <B>String
+</B>as many times as you want. Because it&#8217;s read-only there&#8217;s no
+possibility that one reference will change something that will affect the other
+references. So a read-only object solves the aliasing problem nicely.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I81' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I82>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="Index2273"></A><A NAME="Index2274"></A><A NAME="Index2275"></A><A NAME="Index2276"></A><FONT FACE="Georgia">It
+also seems possible to handle all the cases in which you need a modified object
+by creating a brand new version of the object with the modifications, as
+<B>String</B> does. However, for some operations this isn&#8217;t efficient. A
+case in point is the operator <B>&#8216;+</B>&#8217; that has been overloaded
+for <B>String</B> objects. Overloading means that it has been given an extra
+meaning when used with a particular class. (The &#8216;<B>+</B>&#8217; and
+&#8216;<B>+=</B>&#8217; for <B>String</B> are the only operators that are
+overloaded in Java, and Java does not allow the programmer to overload any
+others)</FONT><A NAME="fnB83" HREF="#fn83">[83]</A><FONT FACE="Georgia">.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I82' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I83>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When used with <B>String</B> objects, the
+&#8216;<B>+</B>&#8217; allows you to concatenate <B>String</B>s
+together:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>String s = <font color=#004488>"abc"</font> + foo + <font color=#004488>"def"</font> + Integer.toString(47);</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You could imagine how this <I>might</I>
+work: the <B>String</B> &#8220;abc&#8221; could have a method
+<B>append(&#160;)</B> that creates a new <B>String</B> object containing
+&#8220;abc&#8221; concatenated with the contents of <B>foo</B>. The new
+<B>String</B> object would then create another new <B>String</B> that added
+&#8220;def,&#8221; and so on.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I83' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I84>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This would certainly work, but it
+requires the creation of a lot of <B>String</B> objects just to put together
+this new <B>String</B>, and then you have a bunch of the intermediate
+<B>String</B> objects that need to be garbage-collected. I suspect that the Java
+designers tried this approach first (which is a lesson in software
+design&#8212;you don&#8217;t really know anything about a system until you try
+it out in code and get something working). I also suspect they discovered that
+it delivered unacceptable performance.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I84' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I85>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The solution is a mutable companion class
+similar to the one shown previously. For <B>String</B>, this companion class is
+called <B>StringBuffer</B>, and the compiler automatically creates a
+<B>StringBuffer</B> to evaluate certain expressions, in particular when the
+overloaded operators <B>+</B> and <B>+=</B> are used with <B>String</B> objects.
+This example shows what happens:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: appendixa:ImmutableStrings.java</font>
+<font color=#009900>// Demonstrating StringBuffer.</font>
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> ImmutableStrings {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    String foo = <font color=#004488>"foo"</font>;
+    String s = <font color=#004488>"abc"</font> + foo +
+      <font color=#004488>"def"</font> + Integer.toString(47);
+    System.out.println(s);
+    <font color=#009900>// The "equivalent" using StringBuffer:</font>
+    StringBuffer sb = 
+      <font color=#0000ff>new</font> StringBuffer(<font color=#004488>"abc"</font>); <font color=#009900>// Creates String!</font>
+    sb.append(foo);
+    sb.append(<font color=#004488>"def"</font>); <font color=#009900>// Creates String!</font>
+    sb.append(Integer.toString(47));
+    System.out.println(sb);
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In the creation of <B>String s</B>, the
+compiler is doing the rough equivalent of the subsequent code that uses
+<B>sb</B>: a <B>StringBuffer</B> is created and <B>append(&#160;)</B> is used to
+add new characters directly into the <B>StringBuffer</B> object (rather than
+making new copies each time). While this is more efficient, it&#8217;s worth
+noting that each time you create a quoted character string such as
+<B>&#8220;abc&#8221;</B> and <B>&#8220;def&#8221;</B>, the compiler turns those
+into <B>String</B> objects. So there can be more objects created than you
+expect, despite the efficiency afforded through <B>StringBuffer</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I85' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I86>
+</FONT><A NAME="_Toc375545436"></A><A NAME="_Toc375545434"></A><A NAME="_Toc375545438"></A><A NAME="_Toc481064943"></A><BR></P></DIV>
+<A NAME="Heading624"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+The String and <BR>StringBuffer classes</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here is an overview of the methods
+available for both <A NAME="Index2277"></A><B>String</B> and <B>StringBuffer</B>
+so you can get a feel for the way they interact. These tables don&#8217;t
+contain every single method, but rather the ones that are important to this
+discussion. Methods that are overloaded are summarized in a single row.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I86' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I87>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">First, the <B>String</B>
+class:</FONT><BR></P></DIV>
+<DIV ALIGN="CENTER"><TABLE BORDER>
+<TR VALIGN="TOP">
+<TH WIDTH=117 COLSPAN=1 ROWSPAN=1 VALIGN="TOP">
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Method</B></FONT><BR></P></DIV>
+</TH>
+<TH WIDTH=126 COLSPAN=1 ROWSPAN=1 VALIGN="TOP">
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Arguments,
+Overloading</B></FONT><BR></P></DIV>
+</TH>
+<TH WIDTH=133 COLSPAN=1 ROWSPAN=1 VALIGN="TOP">
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Use</B></FONT><BR></P></DIV>
+</TH>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Constructor</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Overloaded: Default, <B>String</B>,
+<B>StringBuffer</B>, <B>char</B> arrays, <B>byte</B> arrays.</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Creating <B>String</B>
+objects.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>length(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<BR></TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Number of characters in the
+<B>String</B>.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>charAt()</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>int</B> Index</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The char at a location in the
+<B>String</B>.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>getChars(&#160;),
+getBytes(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The beginning and end from which to copy,
+the array to copy into, an index into the destination array.</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Copy <B>char</B>s or <B>byte</B>s into an
+external array.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>toCharArray(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<BR></TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Produces a <B>char[]</B> containing the
+characters in the <B>String</B>.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>equals(&#160;),
+equals-IgnoreCase(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A <B>String</B> to compare
+with.</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">An equality check on the contents of the
+two <B>Strings</B>.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>compareTo(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A <B>String</B> to compare
+with.</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Result is negative, zero, or positive
+depending on the lexicographical ordering of the <B>String</B> and the argument.
+Uppercase and lowercase are not equal!</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>regionMatches(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Offset into this <B>String</B>, the other
+<B>String</B> and its offset and length to compare. Overload adds &#8220;ignore
+case.&#8221;</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>boolean</B> result indicates whether
+the region matches.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>startsWith(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>String</B> that it might start with.
+Overload adds offset into argument.</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>boolean</B> result indicates whether
+the <B>String</B> starts with the argument.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>endsWith(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>String</B> that might be a suffix of
+this <B>String</B>.</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>boolean</B> result indicates whether
+the argument is a suffix.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>indexOf(&#160;),
+lastIndexOf(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Overloaded: <B>char</B>, <B>char</B> and
+starting index, <B>String</B>, <B>String</B>, and starting
+index.</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Returns -1 if the argument is not found
+within this <B>String</B>, otherwise returns the index where the argument
+starts. <B>lastIndexOf(&#160;) </B>searches backward from end.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>substring(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Overloaded: Starting index, starting
+index, and ending index.</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Returns a new <B>String</B> object
+containing the specified character set.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>concat(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>String</B> to
+concatenate</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Returns a new <B>String</B> object
+containing the original <B>String</B>&#8217;s characters followed by the
+characters in the argument.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>replace(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The old character to search for, the new
+character to replace it with.</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Returns a new <B>String</B> object with
+the replacements made. Uses the old <B>String</B> if no match is
+found.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>toLowerCase(&#160;)
+toUpperCase(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<BR></TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Returns a new <B>String</B> object with
+the case of all letters changed. Uses the old <B>String</B> if no changes need
+to be made.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>trim(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<BR></TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Returns a new <B>String</B> object with
+the white space removed from each end. Uses the old <B>String</B> if no changes
+need to be made.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>valueOf(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Overloaded: <B>Object</B>, <B>char[]</B>,
+<B>char[]</B> and offset and count, <B>boolean</B>, <B>char</B>, <B>int</B>,
+<B>long</B>, <B>float</B>, <B>double</B>.</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Returns a <B>String</B> containing a
+character representation of the argument.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>intern(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<BR></TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Produces one and only one <B>String</B>
+ref per unique character sequence.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<A NAME="_Toc375545437"></A></TABLE></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can see that every <B>String</B>
+method carefully returns a new <B>String</B> object when it&#8217;s necessary to
+change the contents. Also notice that if the contents don&#8217;t need changing
+the method will just return a reference to the original <B>String</B>. This
+saves storage and overhead.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Here&#8217;s the
+<A NAME="Index2278"></A><B>StringBuffer</B> class:</FONT><BR></P></DIV>
+<DIV ALIGN="CENTER"><TABLE BORDER>
+<TR VALIGN="TOP">
+<TH WIDTH=90 COLSPAN=1 ROWSPAN=1 VALIGN="TOP">
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Method</B></FONT><BR></P></DIV>
+</TH>
+<TH WIDTH=152 COLSPAN=1 ROWSPAN=1 VALIGN="TOP">
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Arguments,
+overloading</B></FONT><BR></P></DIV>
+</TH>
+<TH WIDTH=125 COLSPAN=1 ROWSPAN=1 VALIGN="TOP">
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Use</B></FONT><BR></P></DIV>
+</TH>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Constructor</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Overloaded: default, length of buffer to
+create, <B>String</B> to create from.</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Create a new <B>StringBuffer</B>
+object.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>toString(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<BR></TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Creates a <B>String</B> from this
+<B>StringBuffer</B>.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>length(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<BR></TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Number of characters in the
+<B>StringBuffer</B>.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>capacity(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<BR></TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Returns current number of spaces
+allocated.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>ensure-</B></FONT><BR><FONT FACE="Georgia"><B>Capacity(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Integer indicating desired
+capacity.</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Makes the <B>StringBuffer</B> hold at
+least the desired number of spaces.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>setLength(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Integer indicating new length of
+character string in buffer.</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Truncates or expands the previous
+character string. If expanding, pads with nulls.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>charAt(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Integer indicating the location of the
+desired element.</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Returns the <B>char</B> at that location
+in the buffer.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>setCharAt(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Integer indicating the location of the
+desired element and the new <B>char</B> value for the element.</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Modifies the value at that
+location.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>getChars(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The beginning and end from which to copy,
+the array to copy into, an index into the destination array.</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Copy <B>char</B>s into an external array.
+There is no <B>getBytes(&#160;)</B> as in <B>String</B>.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>append(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Overloaded: <B>Object</B>, <B>String</B>,
+<B>char[]</B>, <B>char[]</B> with offset and length, <B>boolean</B>,
+<B>char</B>, <B>int</B>, <B>long</B>, <B>float</B>,
+<B>double</B>.</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The argument is converted to a string and
+appended to the end of the current buffer, increasing the buffer if
+necessary.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>insert(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Overloaded, each with a first argument of
+the offset at which to start inserting: <B>Object</B>, <B>String</B>,
+<B>char[]</B>, <B>boolean</B>, <B>char</B>, <B>int</B>, <B>long</B>,
+<B>float</B>, <B>double</B>.</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The second argument is converted to a
+string and inserted into the current buffer beginning at the offset. The buffer
+is increased if necessary.</FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>reverse(&#160;)</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<BR></TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The order of the characters in the buffer
+is reversed.</FONT><BR></P></DIV>
+</TD>
+</TR>
+</TABLE></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The most commonly used method is
+<B>append(&#160;)</B>, which is used by the compiler when evaluating
+<B>String</B> expressions that contain the &#8216;<B>+</B>&#8217; and
+&#8216;<B>+=</B>&#8217; operators. The <B>insert(&#160;)</B> method has a
+similar form, and both methods perform significant manipulations to the buffer
+instead of creating new objects.</FONT><A NAME="_Toc481064944"></A><BR></P></DIV>
+<A NAME="Heading625"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Strings are special</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">By now you&#8217;ve seen that the
+<B>String</B> class is not just another class in Java. There are a lot of
+special cases in <B>String</B>, not the least of which is that it&#8217;s a
+built-in class and fundamental to Java. Then there&#8217;s the fact that a
+quoted character string is converted to a <B>String</B> by the compiler and the
+special overloaded operators <B>+</B> and <B>+=</B>. In this appendix
+you&#8217;ve seen the remaining special case: the carefully built immutability
+using the companion <B>StringBuffer</B> and some extra magic in the compiler.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I87' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I88>
+</FONT><A NAME="_Toc375545442"></A><A NAME="_Toc481064945"></A><BR></P></DIV>
+<A NAME="Heading626"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Summary</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Because everything is a reference in
+Java, and because every object is created on the heap and garbage-collected only
+when it is no longer used, the flavor of object manipulation changes, especially
+when passing and returning objects. For example, in C or C++, if you wanted to
+initialize some piece of storage in a method, you&#8217;d probably request that
+the user pass the address of that piece of storage into the method. Otherwise
+you&#8217;d have to worry about who was responsible for destroying that storage.
+Thus, the interface and understanding of such methods is more complicated. But
+in Java, you never have to worry about responsibility or whether an object will
+still exist when it is needed, since that is always taken care of for you. Your
+can create an object at the point that it is needed, and no sooner, and never
+worry about the mechanics of passing around responsibility for that object: you
+simply pass the reference. Sometimes the simplification that this provides is
+unnoticed, other times it is staggering.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I88' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I89>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The downside to all this underlying magic
+is twofold:</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">You always take the
+efficiency hit for the extra memory management (although this can be quite
+small), and there&#8217;s always a slight amount of uncertainty about the time
+something can take to run (since the garbage collector can be forced into action
+whenever you get low on memory). For most applications, the benefits outweigh
+the drawbacks, and particularly time-critical sections can be written using
+<B>native</B> methods (see Appendix B). 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I89' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I90>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Aliasing:
+sometimes you can accidentally end up with two references to the same object,
+which is a problem only if both references are assumed to point to a
+<I>distinct</I> object. This is where you need to pay a little closer attention
+and, when necessary, <B>clone(&#160;)</B> an object to prevent the other
+reference from being surprised by an unexpected change. Alternatively, you can
+support aliasing for efficiency by creating immutable objects whose operations
+can return a new object of the same type or some different type, but never
+change the original object so that anyone aliased to that object sees no change.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I90' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I91>
+</FONT></OL><DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Some
+people say that cloning in Java is a botched design, and to heck with it, so
+they implement their own version of
+cloning</FONT><A NAME="fnB84" HREF="#fn84">[84]</A><FONT FACE="Georgia"> and
+never call the <B>Object.clone(&#160;)</B> method, thus eliminating the need to
+implement <B>Cloneable</B> and catch the <B>CloneNotSupportedException</B>. This
+is certainly a reasonable approach and since <B>clone(&#160;)</B> is supported
+so rarely within the standard Java library, it is apparently a safe one as well.
+But as long as you don&#8217;t call <B>Object.clone(&#160;)</B> you don&#8217;t
+need to implement <B>Cloneable</B> or catch the exception, so that would seem
+acceptable as well.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I91' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I92>
+</FONT><A NAME="_Toc375545443"></A><A NAME="_Toc481064946"></A><BR></P></DIV>
+<A NAME="Heading627"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Exercises</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=2>Solutions to selected exercises
+can be found in the electronic document <I>The Thinking in Java Annotated
+Solution Guide</I>, available for a small fee from
+<I>www.BruceEckel.com</I>.</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Demonstrate a second level
+of aliasing. Create a method that takes a reference to an object but
+doesn&#8217;t modify that reference&#8217;s object. However, the method calls a
+second method, passing it the reference, and this second method does modify the
+object.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I92' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I93>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class <B>myString</B> containing a <B>String</B> object that you initialize in
+the constructor using the constructor&#8217;s argument. Add a
+<B>toString(&#160;)</B> method and a method <B>concatenate(&#160;)</B> that
+appends a <B>String</B> object to your internal string. Implement
+<B>clone(&#160;)</B> in <B>myString</B>. Create two <B>static</B> methods that
+each take a <B>myString x</B> reference as an argument and call
+<B>x.concatenate("test")</B>, but in the second method call <B>clone(&#160;)</B>
+first. Test the two methods and show the different effects.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I93' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I94>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Create
+a class called <B>Battery</B> containing an <B>int</B> that is a battery number
+(as a unique identifier). Make it cloneable and give it a
+<B>toString(&#160;)</B> method. Now create a class called <B>Toy</B> that
+contains an array of <B>Battery</B> and a <B>toString(&#160;)</B> that prints
+out all the batteries. Write a <B>clone(&#160;)</B> for <B>Toy</B> that
+automatically clones all of its <B>Battery</B> objects. Test this by cloning
+<B>Toy</B> and printing the result.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I94' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I95>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Change
+<B>CheckCloneable.java</B> so that all of the <B>clone(&#160;)</B> methods catch
+the <B>CloneNotSupportedException</B> rather than passing it to the caller.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I95' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I96>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Using
+the mutable-companion-class technique, make an immutable class containing an
+<B>int</B>, a <B>double</B> and an array of <B>char</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I96' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I97>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Modify
+<B>Compete.java</B> to add more member objects to classes <B>Thing2</B> and
+<B>Thing4</B> and see if you can determine how the timings vary with
+complexity&#8212;whether it&#8217;s a simple linear relationship or if it seems
+more complicated.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I97' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I98>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Starting
+with <B>Snake.java</B>, create a deep-copy version of the snake.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I98' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_APPENDIXA_I99>
+</FONT><LI><FONT FACE="Verdana"><STRIKE>	</STRIKE></FONT><FONT FACE="Georgia"><STRIKE>Inherit
+an <B>ArrayList</B> and make its <B>clone(&#160;)</B> perform a deep
+copy.</STRIKE><U>Implement the <B>Collection</B> interface in a class called
+<B>CloningCollection</B>, using a <B>private</B> <B>ArrayList</B> to provide the
+container functionality. Override the <B>clone( )</B> method so that
+<B>CloningCollection</B> performs a &#8220;conditional deep copy:&#8221; it
+attempts to <B>clone( )</B> all the elements it contains, but if it cannot it
+leaves the reference(s) aliased.</U>
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_APPENDIXA_I99' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+</FONT></OL>
+<HR><DIV ALIGN="LEFT"><P><A NAME="fn79" HREF="#fnB79">[79]</A><FONT FACE="Georgia" SIZE=2>
+In C, which generally handles small bits of data, the default is pass-by-value.
+C++ had to follow this form, but with objects pass-by-value isn&#8217;t usually
+the most efficient way. In addition, coding classes to support pass-by-value in
+C++ is a big headache.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn80" HREF="#fnB80">[80]</A><FONT FACE="Georgia" SIZE=2>
+This is not the dictionary spelling of the word, but it&#8217;s what is used in
+the Java library, so I&#8217;ve used it here, too, in some hopes of reducing
+confusion.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn81" HREF="#fnB81">[81]</A><FONT FACE="Georgia" SIZE=2>
+You can apparently create a simple counter-example to this statement, like
+this:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>public</font> <font color=#0000ff>class</font> Cloneit <font color=#0000ff>implements</font> Cloneable {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main (String[] args) 
+  <font color=#0000ff>throws</font> CloneNotSupportedException {
+    Cloneit a = <font color=#0000ff>new</font> Cloneit();
+    Cloneit b = (Cloneit)a.clone();
+  }
+}</PRE></FONT></BLOCKQUOTE><DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=2>However, this only works
+because <B>main(&#160;)</B> is a method of <B>Cloneit</B> and thus has
+permission to call the <B>protected</B> base-class method <B>clone(&#160;)</B>.
+If you call it from a different class, it won&#8217;t compile.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn82" HREF="#fnB82">[82]</A><FONT FACE="Georgia" SIZE=2>
+Except for the poor avocado, which has been reclassified to simply
+&#8220;fat.&#8221;</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn83" HREF="#fnB83">[83]</A><FONT FACE="Georgia" SIZE=2>
+C++ allows the programmer to overload operators at will. Because this can often
+be a complicated process (see Chapter 10 of <I>Thinking in C++, 2<SUP>nd</SUP>
+edition,</I> Prentice-Hall, 2000), the Java designers deemed it a
+&#8220;bad&#8221; feature that shouldn&#8217;t be included in Java. It
+wasn&#8217;t so bad that they didn&#8217;t end up doing it themselves, and
+ironically enough, operator overloading would be much easier to use in Java than
+in C++. This can be seen in Python (see www.Python.org) which has garbage
+collection and straightforward operator overloading.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn84" HREF="#fnB84">[84]</A><FONT FACE="Georgia" SIZE=2>
+Doug Lea, who was helpful in resolving this issue, suggested this to me, saying
+that he simply creates a function called <B>duplicate(&#160;)</B> for each
+class.</FONT><BR></P></DIV>
+
+<DIV ALIGN="CENTER">
+    <FONT FACE="Verdana" size = "-1">
+     [ <a href="Chap15.htm">Previous Chapter</a> ] 
+    [ <a href="SimpCont.htm">Short TOC</a> ] 
+    [ <a href="Contents.htm">Table of Contents</a> ] 
+    [ <a href="DocIdx.htm">Index</a> ]
+     [ <a href="AppendB.htm">Next Chapter</a> ] 
+    </FONT>
+    <BR>
+ Last Update:05/21/2001</P></DIV>
+
+</BODY>
+
+</HTML>

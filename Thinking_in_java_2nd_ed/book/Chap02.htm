@@ -1,0 +1,2372 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<!--
+This document was converted from RTF source: 
+By rtftohtml 4.19
+See http://www.sunpack.com/RTF
+Filename:TIJ2.rtf
+Application Directory:C:\TOOLS\RTF2HTML\
+Subject:
+Author:Bruce Eckel
+Operator:Bruce Eckel
+Document Comments:
+Version Comments:
+Comments:
+Keywords:
+Translation Date:05/21/2001
+Translation Time:10:39:04
+Translation Platform:Win32
+Number of Output files:23
+This File:Chap02.htm
+SplitDepth=1
+SkipNavPanel=1
+SkipLeadingToc=1
+SkipTrailingToc=1
+GenContents=1
+GenFrames=1
+GenIndex=1
+-->
+<HEAD lang="en"><META http-equiv="Content-Type" content="text/html">
+<TITLE>2: Everything is an Object</TITLE>
+</HEAD>
+
+<BODY  BGCOLOR="#FFFFFF"><DIV ALIGN="CENTER">
+  <a href="http://www.MindView.net">
+  <img src="mindview.gif" alt="MindView Inc." BORDER = "0"></a>
+  <CENTER>
+    <FONT FACE="Verdana" size = "-1">
+    [ <a href="README.txt">Viewing Hints</a> ]
+    [ <a href="RevHist.htm">Revision History</a> ]
+    [ <a href="http://www.mindview.net/Books/TIJ/">Book Home Page</a> ]
+    [ <a href="http://www.mindview.net/Etc/MailingList.html">Free Newsletter</a> ] <br>
+    [ <a href="http://www.mindview.net/Seminars">Seminars</a> ]
+    [ <a href="http://www.mindview.net/CDs">Seminars on CD ROM</a> ]
+    [ <a href="http://www.mindview.net/Services">Consulting</a> ]
+    </FONT>
+  <H2><FONT FACE="Verdana">
+  Thinking in Java, 2nd edition, Revision 12</FONT></H2>
+  <H3><FONT FACE="Verdana">&copy;2000 by Bruce Eckel</FONT></H3>
+  
+    <FONT FACE="Verdana" size = "-1">
+     [ <a href="Chap01.htm">Previous Chapter</a> ] 
+    [ <a href="SimpCont.htm">Short TOC</a> ] 
+    [ <a href="Contents.htm">Table of Contents</a> ] 
+    [ <a href="DocIdx.htm">Index</a> ]
+     [ <a href="Chap03.htm">Next Chapter</a> ] 
+    </FONT>
+    
+  </CENTER>
+  </P></DIV><FONT FACE = "Verdana"><H1 ALIGN="LEFT">
+2: Everything<BR>is an Object</H1></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=4><backtalk:display ID=TIJ3_CHAPTER2_I0>
+Although
+it is based on C++, Java is more of a &#8220;pure&#8221; object-oriented
+language.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Both C++ and Java are hybrid languages,
+but in Java the designers felt that the hybridization was not as important as it
+was in C++. A hybrid language allows multiple programming styles; the reason C++
+is hybrid is to support backward compatibility with the C language. Because C++
+is a superset of the C language, it includes many of that language&#8217;s
+undesirable features, which can make some aspects of C++ overly complicated.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I0' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I1>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The Java language assumes that you want
+to do only object-oriented programming. This means that before you can begin you
+must shift your mindset into an object-oriented world (unless it&#8217;s already
+there)<I>.</I> The benefit of this initial effort is the ability to program in a
+language that is simpler to learn and to use than many other OOP languages. In
+this chapter we&#8217;ll see the basic components of a Java program and
+we&#8217;ll learn that everything in Java is an object, even a Java program.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I1' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I2>
+</FONT><A NAME="_Toc375545217"></A><A NAME="_Toc481064510"></A><BR></P></DIV>
+<A NAME="Heading86"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+You manipulate objects <BR>with references </H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Each programming language has its own
+means of manipulating data. Sometimes the programmer must be constantly aware of
+what type of manipulation is going on. Are you manipulating the object directly,
+or are you dealing with some kind of indirect representation (a pointer in C or
+C++) that must be treated with a special syntax?
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I2' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I3>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">All this is simplified in Java. You treat
+everything as an object, so there is a single consistent syntax that you use
+everywhere. Although you <I>treat </I>everything as an object, the identifier
+you manipulate is actually a &#8220;reference&#8221; to an
+object</FONT><A NAME="fnB20" HREF="#fn20">[20]</A><FONT FACE="Georgia">. You
+might imagine this scene as a television (the object) with your remote control
+(the reference). As long as you&#8217;re holding this reference, you have a
+connection to the television, but when someone says &#8220;change the
+channel&#8221; or &#8220;lower the volume,&#8221; what you&#8217;re manipulating
+is the reference, which in turn modifies the object. If you want to move around
+the room and still control the television, you take the remote/reference with
+you, not the television. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I3' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I4>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Also, the remote control can stand on its
+own, with no television. That is, just because you have a reference
+doesn&#8217;t mean there&#8217;s necessarily an object connected to it. So if
+you want to hold a word or sentence, you create a <B>String</B> reference:<I>
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I4' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I5>
+</I></FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>String s;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">But here you&#8217;ve created <I>only</I>
+the reference, not an object. If you decided to send a message to <B>s</B> at
+this point, you&#8217;ll get an error (at run-time) because <B>s</B> isn&#8217;t
+actually attached to anything (there&#8217;s no television). A safer practice,
+then, is always to initialize a reference when you create it:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I5' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I6>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>String s = <font color=#004488>"asdf"</font>;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">However, this uses a special Java
+feature: strings can be initialized with quoted text. Normally, you must use a
+more general type of initialization for objects.<I>
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I6' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I7>
+</I></FONT><A NAME="_Toc375545218"></A><A NAME="_Toc481064511"></A><BR></P></DIV>
+<A NAME="Heading87"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+You must create <BR>all the objects</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When you create a reference, you want to
+connect it with a new object. You do so, in general, with the <B>new</B>
+keyword. <B>new</B> says, &#8220;Make me a new one of these objects.&#8221; So
+in the above example, you can say:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I7' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I8>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>String s = <font color=#0000ff>new</font> String(<font color=#004488>"asdf"</font>);</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Not only does this mean &#8220;Make me a
+new <B>String</B>,&#8221; but it also gives information about <I>how</I> to make
+the <B>String</B> by supplying an initial character string.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I8' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I9>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Of course, <B>String</B> is not the only
+type that exists. Java comes with a plethora of ready-made types. What&#8217;s
+more important is that you can create your own types. In fact, that&#8217;s the
+fundamental activity in Java programming, and it&#8217;s what you&#8217;ll be
+learning about in the rest of this book.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I9' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I10>
+</FONT><A NAME="_Toc375545219"></A><A NAME="_Toc481064512"></A><BR></P></DIV>
+<A NAME="Heading88"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Where storage lives</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It&#8217;s useful to visualize some
+aspects of how things are laid out while the program is running, in particular
+how memory is arranged. There are six different places to store data:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I10' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I11>
+</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Registers</B>.
+This is the fastest storage because it exists in a place different from that of
+other storage: inside the processor. However, the number of registers is
+severely limited, so registers are allocated by the compiler according to its
+needs. You don&#8217;t have direct control, nor do you see any evidence in your
+programs that registers even exist.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I11' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I12>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>The
+stack</B>. This lives in the general RAM (random-access memory) area, but has
+direct support from the processor via its <I>stack pointer</I>. The stack
+pointer is moved down to create new memory and moved up to release that memory.
+This is an extremely fast and efficient way to allocate storage, second only to
+registers. The Java compiler must know, while it is creating the program, the
+exact size and lifetime of all the data that is stored on the stack, because it
+must generate the code to move the stack pointer up and down. This constraint
+places limits on the flexibility of your programs, so while some Java storage
+exists on the stack&#8212;in particular, object references&#8212;Java objects
+themselves are not placed on the stack.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I12' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I13>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>The
+heap</B>. This is a general-purpose pool of memory (also in the RAM area) where
+all Java objects live. The nice thing about the heap is that, unlike the stack,
+the compiler doesn&#8217;t need to know how much storage it needs to allocate
+from the heap or how long that storage must stay on the heap. Thus,
+there&#8217;s a great deal of flexibility in using storage on the heap. Whenever
+you need to create an object, you simply write the code to create it using
+<B>new</B>,<B> </B>and the storage is allocated on the heap when that code is
+executed. Of course there&#8217;s a price you pay for this flexibility: it takes
+more time to allocate heap storage than it does to allocate stack storage (that
+is, if you even <I>could</I> create objects on the stack in Java, as you can in
+C++).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I13' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I14>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Static
+storage</B>. &#8220;Static&#8221; is used here in the sense of &#8220;in a fixed
+location&#8221; (although it&#8217;s also in RAM). Static storage contains data
+that is available for the entire time a program is running. You can use the
+<B>static</B> keyword to specify that a particular element of an object is
+static, but Java objects themselves are never placed in static storage.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I14' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I15>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Constant
+storage</B>. Constant values are often placed directly in the program code,
+which is safe since they can never change. Sometimes constants are cordoned off
+by themselves so that they can be optionally placed in read-only memory (ROM).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I15' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I16>
+</FONT><LI><FONT FACE="Verdana"><B>	</B></FONT><FONT FACE="Georgia"><B>Non-RAM
+storage</B>. If data lives completely outside a program it can exist while the
+program is not running, outside the control of the program. The two primary
+examples of this are <I>streamed objects,</I> in which objects are turned into
+streams of bytes, generally to be sent to another machine, and <I>persistent
+objects, </I>in which the objects are placed on disk so they will hold their
+state even when the program is terminated. The trick with these types of storage
+is turning the objects into something that can exist on the other medium, and
+yet can be resurrected into a regular RAM-based object when necessary. Java
+provides support for <I>lightweight persistence</I>, and future versions of Java
+might provide more complete solutions for persistence.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I16' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I17>
+</FONT><A NAME="_Toc375545220"></A><A NAME="_Toc481064513"></A></OL><A NAME="Heading89"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Special case: primitive
+types<BR><A NAME="Index184"></A><A NAME="Index185"></A></H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There is a group of types that gets
+special treatment; you can think of these as &#8220;primitive&#8221; types that
+you use quite often in your programming. The reason for the special treatment is
+that to create an object with <B>new</B>&#8212;especially a small, simple
+variable&#8212;isn&#8217;t very efficient because <B>new</B> places objects on
+the heap. For these types Java falls back on the approach taken by C and C++.
+That is, instead of creating the variable using <B>new</B>, an
+&#8220;automatic&#8221; variable is created that <I>is not a reference</I>. The
+variable holds the value, and it&#8217;s placed on the stack so it&#8217;s much
+more efficient. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I17' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I18>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java determines the size of each
+primitive type. These sizes don&#8217;t change from one machine architecture to
+another as they do in most languages. This size invariance is one reason Java
+programs are so portable.  
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I18' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I19>
+</FONT><BR></P></DIV>
+<DIV ALIGN="CENTER"><TABLE BORDER>
+<TR VALIGN="TOP">
+<TH WIDTH=72 COLSPAN=1 ROWSPAN=1 VALIGN="TOP">
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Primitive type</B></FONT><BR></P></DIV>
+</TH>
+<TH WIDTH=45 COLSPAN=1 ROWSPAN=1 VALIGN="TOP">
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Size</B></FONT><BR></P></DIV>
+</TH>
+<TH WIDTH=72 COLSPAN=1 ROWSPAN=1 VALIGN="TOP">
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Minimum</B></FONT><BR></P></DIV>
+</TH>
+<TH WIDTH=85 COLSPAN=1 ROWSPAN=1 VALIGN="TOP">
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Maximum</B></FONT><BR></P></DIV>
+</TH>
+<TH WIDTH=78 COLSPAN=1 ROWSPAN=1 VALIGN="TOP">
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Wrapper type</B></FONT><BR></P></DIV>
+</TH>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>boolean</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">&#8212;</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">&#8212;</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">&#8212;</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Boolean</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>char</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">16-bit</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Unicode 0</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Unicode 2<SUP>16</SUP>-
+1</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Character</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>byte </B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">8-bit</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">-128</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">+127</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Byte</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>short</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">16-bit</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">-2<SUP>15</SUP></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">+2<SUP>15</SUP>&#8212;1</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Short</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>int</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">32-bit</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">-2<SUP>31</SUP></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">+2<SUP>31</SUP>&#8212;1</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Integer</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>long</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">64-bit</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">-2<SUP>63</SUP></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">+2<SUP>63</SUP>&#8212;1</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Long</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>float</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">32-bit</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">IEEE754</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">IEEE754</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Float</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>double</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">64-bit </FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">IEEE754</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">IEEE754</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Double</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>void</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">&#8212;</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">&#8212;</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">&#8212;</FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Void</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+</TABLE></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">All numeric types are signed, so
+don&#8217;t go looking for unsigned types.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I19' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I20>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The size of the <B>boolean</B> type is
+not explicitly defined; it is only specified to be able to take the literal
+values <B>true</B> or <B>false</B>.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The primitive data types also have
+&#8220;wrapper&#8221;<I> </I>classes for them. That means that if you want to
+make a nonprimitive object on the heap to represent that primitive type, you use
+the associated wrapper. For example:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I20' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I21>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>char</font> c = 'x';
+Character C = <font color=#0000ff>new</font> Character(c);</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Or you could also use:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>Character C = <font color=#0000ff>new</font> Character('x');</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The reasons for doing this will be shown
+in a later chapter. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I21' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I22>
+</FONT><BR></P></DIV>
+<A NAME="Heading90"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+High-precision numbers</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java includes two classes for performing
+high-precision arithmetic: <B>BigInteger</B> and <B>BigDecimal</B>. Although
+these approximately fit into the same category as the &#8220;wrapper&#8221;
+classes, neither one has a primitive analogue.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I22' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I23>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Both classes have methods that provide
+analogues for the operations that you perform on primitive types. That is, you
+can do anything with a <B>BigInteger</B> or <B>BigDecimal </B>that you can with
+an <B>int</B> or <B>float</B>, it&#8217;s just that you must use method calls
+instead of operators. Also, since there&#8217;s more involved, the operations
+will be slower. You&#8217;re exchanging speed for accuracy.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I23' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I24>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>BigInteger</B> supports
+arbitrary-precision integers. This means that you can accurately represent
+integral values of any size without losing any information during operations.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I24' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I25>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>BigDecimal</B> is for
+arbitrary-precision fixed-point numbers; you can use these for accurate monetary
+calculations, for example. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I25' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I26>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Consult your online documentation for
+details about the constructors and methods you can call for these two classes.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I26' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I27>
+</FONT><A NAME="_Toc375545221"></A><A NAME="_Toc481064514"></A><BR></P></DIV>
+<A NAME="Heading91"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Arrays in Java</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Virtually all programming languages
+support arrays. Using arrays in C and C++ is perilous because those arrays are
+only blocks of memory. If a program accesses the array outside of its memory
+block or uses the memory before initialization (common programming errors) there
+will be unpredictable results.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I27' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I28>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">One of the primary goals of Java is
+safety, so many of the problems that plague programmers in C and C++ are not
+repeated in Java. A Java array is guaranteed to be initialized and cannot be
+accessed outside of its range. The range checking comes at the price of having a
+small amount of memory overhead on each array as well as verifying the index at
+run-time, but the assumption is that the safety and increased productivity is
+worth the expense. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I28' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I29>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When you create an array of objects, you
+are really creating an array of references, and each of those references is
+automatically initialized to a special value with its own keyword:
+<A NAME="Index186"></A><A NAME="Index187"></A><B>null</B>. When Java sees
+<B>null</B>, it recognizes that the reference in question isn&#8217;t pointing
+to an object.<B> </B>You must assign an object to each reference before you use
+it, and if you try to use a reference that&#8217;s still <B>null,</B> the
+problem will be reported at run-time. Thus, typical array errors are prevented
+in Java. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I29' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I30>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can also create an array of
+primitives. Again, the compiler guarantees initialization because it zeroes the
+memory for that array. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I30' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I31>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Arrays will be covered in detail in later
+chapters.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I31' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I32>
+</FONT><A NAME="_Toc375545222"></A><A NAME="_Toc481064515"></A><BR></P></DIV>
+<A NAME="Heading92"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+You never need to <BR>destroy an object</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In most programming languages, the
+concept of the lifetime of a variable occupies a significant portion of the
+programming effort. How long does the variable last? If you are supposed to
+destroy it, when should you? Confusion over variable lifetimes can lead to a lot
+of bugs, and this section shows how Java greatly simplifies the issue by doing
+all the cleanup work for you.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I32' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I33>
+</FONT><A NAME="_Toc375545223"></A><A NAME="_Toc481064516"></A><BR></P></DIV>
+<A NAME="Heading93"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Scoping</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Most procedural languages have the
+concept of <I>scope</I>. This determines both the visibility and lifetime of the
+names defined within that scope. In C, C++, and Java, scope is determined by the
+placement of curly braces <B>{}</B>. So for example:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I33' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I34>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>{
+  <font color=#0000ff>int</font> x = 12;
+  <font color=#009900>/* only x available */</font>
+  {
+    <font color=#0000ff>int</font> q = 96;
+    <font color=#009900>/* both x &amp; q available */</font>
+  }
+  <font color=#009900>/* only x available */</font>
+  <font color=#009900>/* q &#8220;out of scope&#8221; */</font>
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A variable defined within a scope is
+available only to the end of that scope.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I34' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I35>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Indentation makes Java code easier to
+read. Since Java is a free-form language, the extra spaces, tabs, and carriage
+returns do not affect the resulting program.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I35' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I36>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Note that you <I>cannot</I> do the
+following, even though it is legal in C and C++:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>{
+  <font color=#0000ff>int</font> x = 12;
+  {
+    <font color=#0000ff>int</font> x = 96; <font color=#009900>/* illegal */</font>
+  }
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The compiler will announce that the
+variable <B>x </B>has already been defined. Thus the C and C++ ability to
+&#8220;hide&#8221; a variable in a larger scope is not allowed because the Java
+designers thought that it led to confusing programs.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I36' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I37>
+</FONT><A NAME="_Toc375545224"></A><A NAME="_Toc481064517"></A><BR></P></DIV>
+<A NAME="Heading94"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Scope of objects</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java objects do not have the same
+lifetimes as primitives. When you create a Java object using <B>new</B>, it
+hangs around past the end of the scope. Thus if you use:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>{
+  String s = <font color=#0000ff>new</font> String(<font color=#004488>"a string"</font>);
+} <font color=#009900>/* end of scope */</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">the reference <B>s</B> vanishes at the
+end of the scope. However, the <B>String</B> object that <B>s</B> was pointing
+to is still occupying memory. In this bit of code, there is no way to access the
+object because the only reference to it is out of scope. In later chapters
+you&#8217;ll see how the reference to the object can be passed around and
+duplicated during the course of a program.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I37' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I38>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It turns out that because objects created
+with <B>new</B> stay around for as long as you want them, a whole slew of C++
+programming problems simply vanish in Java. The hardest problems seem to occur
+in C++ because you don&#8217;t get any help from the language in making sure
+that the objects are available when they&#8217;re needed. And more important, in
+C++ you must make sure that you destroy the objects when you&#8217;re done with
+them. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I38' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I39>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">That brings up an interesting question.
+If Java leaves the objects lying around, what keeps them from filling up memory
+and halting your program? This is exactly the kind of problem that would occur
+in C++. This is where a bit of magic happens. Java has a <I>garbage
+collector</I>, which looks at all the objects that were created with <B>new</B>
+and figures out which ones are not being referenced anymore. Then it releases
+the memory for those objects, so the memory can be used for new objects. This
+means that you never need to worry about reclaiming memory yourself. You simply
+create objects, and when you no longer need them they will go away by
+themselves. This eliminates a certain class of programming problem: the
+so-called &#8220;memory leak,&#8221; in which a programmer forgets to release
+memory.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I39' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I40>
+</FONT><A NAME="_Toc375545225"></A><A NAME="_Toc481064518"></A><BR></P></DIV>
+<A NAME="Heading95"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Creating new <BR>data types: class</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If everything is an object, what
+determines how a particular class of object looks and behaves? Put another way,
+what establishes the <I>type</I> of an object? You might expect there to be a
+keyword called &#8220;type,&#8221; and that certainly would have made sense.
+Historically, however, most object-oriented languages have used the keyword
+<B>class</B> to mean &#8220;I&#8217;m about to tell you what a new type of
+object looks like.&#8221; The <B>class</B> keyword (which is so common that it
+will not be emboldened throughout this book) is followed by the name of the new
+type. For example: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I40' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I41>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>class</font> ATypeName { <font color=#009900>/* class body goes here */</font> }</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This introduces a new type, so you can
+now create an object of this type using <B>new</B>:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>ATypeName a = <font color=#0000ff>new</font> ATypeName();</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In <B>ATypeName</B>, the class body
+consists only of a comment (the stars and slashes and what is inside, which will
+be discussed later in this chapter), so there is not too much that you can do
+with it. In fact, you cannot tell it to do much of anything (that is, you cannot
+send it any interesting messages) until you define some methods for it.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I41' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I42>
+</FONT><A NAME="_Toc375545226"></A><A NAME="_Toc481064519"></A><BR></P></DIV>
+<A NAME="Heading96"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Fields and methods</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When you define a class (and all you do
+in Java is define classes, make objects of those classes, and send messages to
+those objects), you can put two types of elements in your class: data members
+(sometimes called <I>fields</I>), and member functions (typically called
+<I>methods</I>). A data member is an object of any type that you can communicate
+with via its reference. It can also be one of the primitive types (which
+isn&#8217;t a reference). If it is a reference to an object, you must initialize
+that reference to connect it to an actual object (using <B>new</B>, as seen
+earlier) in a special function called a <I>constructor</I> (described fully in
+Chapter 4). If it is a primitive type you can initialize it directly at the
+point of definition in the class. (As you&#8217;ll see later, references can
+also be initialized at the point of definition.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I42' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I43>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Each object keeps its own storage for its
+data members; the data members are not shared among objects. Here is an example
+of a class with some data members:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I43' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I44>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>class</font> DataOnly {
+  <font color=#0000ff>int</font> i;
+  <font color=#0000ff>float</font> f;
+  <font color=#0000ff>boolean</font> b;
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This class doesn&#8217;t <I>do</I>
+anything, but you can create an object:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I44' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I45>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>DataOnly d = <font color=#0000ff>new</font> DataOnly();</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can assign values to the data
+members, but you must first know how to refer to a member of an object. This is
+accomplished by stating the name of the object reference, followed by a period
+(dot), followed by the name of the member inside the object:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I45' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I46>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>objectReference.member</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">For example:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I46' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I47>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>d.i = 47;
+d.f = 1.1f;
+d.b = <font color=#0000ff>false</font>;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It is also possible that your object
+might contain other objects that contain data you&#8217;d like to modify. For
+this, you just keep &#8220;connecting the dots.&#8221; For example:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I47' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I48>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>myPlane.leftTank.capacity = 100;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>DataOnly </B>class cannot do much
+of anything except hold data, because it has no member functions (methods). To
+understand how those work, you must first understand <I>arguments</I> and
+<I>return values</I>, which will be described shortly.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I48' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I49>
+</FONT><BR></P></DIV>
+<A NAME="Heading97"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+Default values for primitive members</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When a primitive data type is a member of
+a class, it is guaranteed to get a default value if you do not initialize
+it:</FONT><BR></P></DIV>
+<DIV ALIGN="CENTER"><TABLE BORDER>
+<TR VALIGN="TOP">
+<TH WIDTH=100 COLSPAN=1 ROWSPAN=1 VALIGN="TOP">
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Primitive type</B></FONT><BR></P></DIV>
+</TH>
+<TH WIDTH=106 COLSPAN=1 ROWSPAN=1 VALIGN="TOP">
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>Default</B></FONT><BR></P></DIV>
+</TH>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>boolean</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>false</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>char</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>&#8216;\u0000&#8217;
+(null)</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>byte</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>(byte)0</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>short</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>(short)0</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>int</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>0</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>long</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>0L</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>float</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>0.0f</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+<TR VALIGN="TOP">
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>double</B></FONT><BR></P></DIV>
+</TD>
+<TD>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"><B>0.0d</B></FONT><BR></P></DIV>
+</TD>
+</TR>
+</TABLE></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Note carefully that the default values
+are what Java guarantees when the variable is used <I>as a member of a
+class</I>. This ensures that member variables of primitive types will always be
+initialized (something C++ doesn&#8217;t do), reducing a source of bugs.
+However, this initial value may not be correct or even legal for the program you
+are writing. It&#8217;s best to always explicitly initialize your variables. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I49' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I50>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This guarantee doesn&#8217;t apply to
+&#8220;local&#8221; variables&#8212;those that are not fields of a class. Thus,
+if within a function definition you have:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>int</font> x;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Then <B>x</B> will get some arbitrary
+value (as in C and C++); it will not automatically be initialized to zero. You
+are responsible for assigning an appropriate value before you use <B>x</B>. If
+you forget, Java definitely improves on C++: you get a compile-time error
+telling you the variable might not have been initialized. (Many C++ compilers
+will warn you about uninitialized variables, but in Java these are errors.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I50' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I51>
+</FONT><A NAME="_Toc375545227"></A><A NAME="_Toc481064520"></A><BR></P></DIV>
+<A NAME="Heading98"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Methods, arguments, <BR>and return values</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Up until now, the term <I>function</I>
+has been used to describe a named subroutine. The term that is more commonly
+used in Java is <I>method,</I> as in &#8220;a way to do something.&#8221; If you
+want, you can continue thinking in terms of functions. It&#8217;s really only a
+syntactic difference, but from now on &#8220;method&#8221; will be used in this
+book rather than &#8220;function.&#8221;
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I51' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I52>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Methods in Java determine the messages an
+object can receive. In this section you will learn how simple it is to define a
+method. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I52' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I53>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The fundamental parts of a method are the
+name, the arguments, the return type, and the body. Here is the basic
+form:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>returnType methodName( <font color=#009900>/* Argument list */</font> ) {
+  <font color=#009900>/* Method body */</font>
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The return type is the type of the value
+that pops out of the method after you call it. The argument list gives the types
+and names for the information you want to pass into the method. The method name
+and argument list together uniquely identify the method. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I53' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I54>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Methods in Java can be created only as
+part of a class. A method can be called only for an
+object,</FONT><A NAME="fnB21" HREF="#fn21">[21]</A><FONT FACE="Georgia"> and
+that object must be able to perform that method call. If you try to call the
+wrong method for an object, you&#8217;ll get an error message at compile-time.
+You call a method for an object by naming the object followed by a period (dot),
+followed by the name of the method and its argument list, like this:
+<B>objectName.methodName(arg1, arg2, arg3)</B>. For example, suppose you have a
+method <B>f(&#160;)</B> that takes no arguments and returns a value of type
+<B>int</B>. Then, if you have an object called <B>a</B> for which
+<B>f(&#160;)</B> can be called, you can say this:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>int</font> x = a.f();</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The type of the return value must be
+compatible with the type of <B>x</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I54' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I55>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This act of calling a method is commonly
+referred to as <I>sending a message to an object</I>. In the above example, the
+message is <B>f(&#160;)</B> and the object is <B>a</B>. Object-oriented
+programming is often summarized as simply &#8220;sending messages to
+objects.&#8221;
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I55' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I56>
+</FONT><A NAME="_Toc375545228"></A><A NAME="_Toc481064521"></A><BR></P></DIV>
+<A NAME="Heading99"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+The argument list</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The method argument list specifies what
+information you pass into the method. As you might guess, this
+information&#8212;like everything else in Java&#8212;takes the form of objects.
+So, what you must specify in the argument list are the types of the objects to
+pass in and the name to use for each one. As in any situation in Java where you
+seem to be handing objects around, you are actually passing
+references</FONT><A NAME="fnB22" HREF="#fn22">[22]</A><FONT FACE="Georgia">. The
+type of the reference must be correct, however. If the argument is supposed to
+be a <B>String</B>, what you pass in must be a string.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I56' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I57>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Consider a method that takes a
+<B>String</B> as its argument. Here is the definition, which must be placed
+within a class definition for it to be compiled:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>int</font> storage(String s) {
+  <font color=#0000ff>return</font> s.length() * 2;
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This method tells you how many bytes are
+required to hold the information in a particular <B>String. </B>(Each <B>char
+</B>in a <B>String </B>is 16 bits, or two bytes, long, to support Unicode
+characters.) The argument is of type <B>String</B> and is called <B>s</B>. Once
+<B>s</B> is passed into the method, you can treat it just like any other object.
+(You can send messages to it.) Here, the <B>length(&#160;)</B> method is called,
+which is one of the methods for <B>String</B>s; it returns the number of
+characters in a string. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I57' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I58>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can also see the use of the
+<B>return</B> keyword, which does two things. First, it means &#8220;leave the
+method, I&#8217;m done.&#8221; Second, if the method produces a value, that
+value is placed right after the <B>return</B> statement. In this case, the
+return value is produced by evaluating the expression <B>s.length(&#160;) *
+2</B>. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I58' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I59>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can return any type you want, but if
+you don&#8217;t want to return anything at all, you do so by indicating that the
+method returns <B>void</B>. Here are some examples:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>boolean</font> flag() { <font color=#0000ff>return</font> <font color=#0000ff>true</font>; }
+<font color=#0000ff>float</font> naturalLogBase() { <font color=#0000ff>return</font> 2.718f; }
+<font color=#0000ff>void</font> nothing() { <font color=#0000ff>return</font>; }
+<font color=#0000ff>void</font> nothing2() {}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">When the return type is <B>void</B>, then
+the <B>return</B> keyword is used only to exit the method, and is therefore
+unnecessary when you reach the end of the method. You can return from a method
+at any point, but if you&#8217;ve given a non-<B>void </B>return type then the
+compiler will force you (with error messages) to return the appropriate type of
+value regardless of where you return.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I59' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I60>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">At this point, it can look like a program
+is just a bunch of objects with methods that take other objects as arguments and
+send messages to those other objects. That is indeed much of what goes on, but
+in the following chapter you&#8217;ll learn how to do the detailed low-level
+work by making decisions within a method. For this chapter, sending messages
+will suffice.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I60' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I61>
+</FONT><A NAME="_Toc375545229"></A><A NAME="_Toc481064522"></A><BR></P></DIV>
+<A NAME="Heading100"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Building a Java program</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There are several other issues you must
+understand before seeing your first Java program.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I61' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I62>
+</FONT><A NAME="_Toc375545230"></A><A NAME="_Toc481064523"></A><BR></P></DIV>
+<A NAME="Heading101"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Name visibility</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">A problem in any programming language is
+the control of names. If you use a name in one module of the program, and
+another programmer uses the same name in another module, how do you distinguish
+one name from another and prevent the two names from &#8220;clashing?&#8221; In
+C this is a particular problem because a program is often an unmanageable sea of
+names. C++ classes (on which Java classes are based) nest functions within
+classes so they cannot clash with function names nested within other classes.
+However, C++ still allowed global data and global functions, so clashing was
+still possible. To solve this problem, C++ introduced <I>namespaces</I> using
+additional keywords. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I62' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I63>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Java was able to avoid all of this by
+taking a fresh approach. To produce an unambiguous name for a library, the
+specifier used is not unlike an Internet domain name. In fact, the Java creators
+want you to use your Internet domain name in reverse since those are guaranteed
+to be unique. Since my domain name is <B>BruceEckel.com</B>, my utility library
+of foibles would be named <B>com.bruceeckel.utility.foibles</B>. After your
+reversed domain name, the dots are intended to represent subdirectories.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I63' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I64>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In Java 1.0 and Java 1.1 the domain
+extensions <B>com</B>, <B>edu</B>, <B>org</B>, <B>net</B>, etc., were
+<A NAME="Index188"></A><A NAME="Index189"></A>capitalized by convention, so the
+library would appear: <B>COM.bruceeckel.utility.foibles</B>. Partway through the
+development of Java 2, however, it was discovered that this caused problems, and
+so now the entire package name is lowercase.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I64' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I65>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This mechanism means that all of your
+files automatically live in their own namespaces, and each class within a file
+must have a unique identifier. So you do not need to learn special language
+features to solve this problem&#8212;the language takes care of it for you.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I65' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I66>
+</FONT><A NAME="_Toc375545231"></A><A NAME="_Toc481064524"></A><BR></P></DIV>
+<A NAME="Heading102"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Using other components</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Whenever you want to use a predefined
+class in your program, the compiler must know how to locate it. Of course, the
+class might already exist in the same source code file that it&#8217;s being
+called from. In that case, you simply use the class&#8212;even if the class
+doesn&#8217;t get defined until later in the file. Java eliminates the
+&#8220;forward referencing&#8221; problem so you don&#8217;t need to think about
+it. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I66' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I67>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">What about a class that exists in some
+other file? You might think that the compiler should be smart enough to simply
+go and find it, but there is a problem. Imagine that you want to use a class of
+a particular name, but more than one definition for that class exists
+(presumably these are different definitions). Or worse, imagine that
+you&#8217;re writing a program, and as you&#8217;re building it you add a new
+class to your library that conflicts with the name of an existing class.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I67' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I68>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To solve this problem, you must eliminate
+all potential ambiguities. This is accomplished by telling the Java compiler
+exactly what classes you want using the <B>import</B> keyword. <B>import
+</B>tells the compiler to bring in a <I>package</I>, which is a library of
+classes. (In other languages, a library could consist of functions and data as
+well as classes, but remember that all code in Java must be written inside a
+class.)  
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I68' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I69>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Most of the time you&#8217;ll be using
+components from the standard Java libraries that come with your compiler. With
+these, you don&#8217;t need to worry about long, reversed domain names; you just
+say, for example:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>import</font> java.util.ArrayList;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">to tell the compiler that you want to use
+Java&#8217;s <B>ArrayList</B> class. However, <B>util</B> contains a number of
+classes and you might want to use several of them without declaring them all
+explicitly. This is easily accomplished by using &#8216;<B>*</B>&#8217; to
+indicate a wild card:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>import</font> java.util.*;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">It is more common to import a collection
+of classes in this manner than to import classes individually.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I69' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I70>
+</FONT><A NAME="_Toc375545232"></A><A NAME="_Toc481064525"></A><BR></P></DIV>
+<A NAME="Heading103"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+The static keyword</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Ordinarily, when you create a class you
+are describing how objects of that class look and how they will behave. You
+don&#8217;t actually get anything until you create an object of that class with
+<B>new</B>, and at that point data storage is created and methods become
+available. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I70' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I71>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">But there are two situations in which
+this approach is not sufficient. One is if you want to have only one piece of
+storage for a particular piece of data, regardless of how many objects are
+created, or even if no objects are created. The other is if you need a method
+that isn&#8217;t associated with any particular object of this class. That is,
+you need a method that you can call even if no objects are created. You can
+achieve both of these effects with the <B>static</B> keyword. When you say
+something is <B>static</B>, it means that data or method is not tied to any
+particular object instance of that class. So even if you&#8217;ve never created
+an object of that class you can call a <B>static</B> method or access a piece of
+<B>static</B> data. With ordinary, non-<B>static</B> data and methods you must
+create an object and use that object to access the data or method, since
+non-<B>static</B> data and methods must know the particular object they are
+working with. Of course, since <B>static</B> methods don&#8217;t need any
+objects to be created before they are used, they cannot <I>directly </I>access
+non-<B>static</B> members or methods by simply calling those other members
+without referring to a named object (since non-<B>static</B> members and methods
+must be tied to a particular object).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I71' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I72>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Some object-oriented languages use the
+terms <I>class data</I> and <I>class methods</I>, meaning that the data and
+methods exist only for the class as a whole, and not for any particular objects
+of the class. Sometimes the Java literature uses these terms too.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I72' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I73>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To make a data member or method
+<B>static</B>, you simply place the keyword before the definition. For example,
+the following produces a <B>static</B> data member and initializes it:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I73' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I74>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>class</font> StaticTest {
+    <font color=#0000ff>static</font> <font color=#0000ff>int</font> i = 47;
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Now even if you make two
+<B>StaticTest</B> objects, there will still be only one piece of storage for
+<B>StaticTest.i.</B> Both objects will share the same <B>i</B>.<B> </B>Consider:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I74' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I75>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>StaticTest st1 = <font color=#0000ff>new</font> StaticTest();
+StaticTest st2 = <font color=#0000ff>new</font> StaticTest();</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">At this point, both <B>st1.i</B> and
+<B>st2.i</B> have the same value of 47 since they refer to the same piece of
+memory. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I75' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I76>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There are two ways to refer to a
+<B>static</B> variable. As indicated above, you can name it via an object, by
+saying, for example, <B>st2.i</B>. You can also refer to it directly through its
+class name, something you cannot do with a non-static member. (This is the
+preferred way to refer to a <B>static</B> variable since it emphasizes that
+variable&#8217;s <B>static</B> nature.)
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I76' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I77>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>StaticTest.i++;</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>++</B> operator increments the
+variable. At this point, both <B>st1.i</B> and <B>st2.i</B> will have the value
+48. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I77' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I78>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Similar logic applies to static methods.
+You can refer to a static method either through an object as you can with any
+method, or with the special additional syntax <B>ClassName.method(&#160;)</B>.
+You define a static method in a similar way:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I78' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I79>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>class</font> StaticFun {
+  <font color=#0000ff>static</font> <font color=#0000ff>void</font> incr() { StaticTest.i++; }
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can see that the <B>StaticFun</B>
+method <B>incr(&#160;)</B> increments the <B>static</B> data <B>i</B>. You can
+call <B>incr(&#160;)</B> in the typical way, through an object:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I79' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I80>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>StaticFun sf = <font color=#0000ff>new</font> StaticFun();
+sf.incr();</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Or, because <B>incr(&#160;) </B>is a
+static method, you can call it directly through its class:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I80' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I81>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>StaticFun.incr();</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">While <B>static</B>, when applied to a
+data member, definitely changes the way the data is created (one for each class
+vs. the non-<B>static </B>one for each object), when applied to a method
+it&#8217;s not so dramatic. An important use of <B>static</B> for methods is to
+allow you to call that method without creating an object. This is essential, as
+we will see, in defining the <B>main(&#160;)</B> method that is the entry point
+for running an application.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I81' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I82>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Like any method, a <B>static</B> method
+can create or use named objects of its type, so a <B>static</B> method is often
+used as a &#8220;shepherd&#8221; for a flock of instances of its own type.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I82' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I83>
+</FONT><A NAME="_Toc375545233"></A><A NAME="_Toc481064526"></A><BR></P></DIV>
+<A NAME="Heading104"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Your first Java program</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Finally, here&#8217;s the
+program.</FONT><A NAME="fnB23" HREF="#fn23">[23]</A><FONT FACE="Georgia"> It
+starts by printing a string, and then the date, using the <B>Date </B>class from
+the Java standard library. Note that an additional style of comment is
+introduced here: the &#8216;<B>//</B>&#8217;, which is a comment until the end
+of the line: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I83' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I84>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>// HelloDate.java</font>
+<font color=#0000ff>import</font> java.util.*;
+
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> HelloDate {
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    System.out.println(<font color=#004488>"Hello, it's: "</font>);
+    System.out.println(<font color=#0000ff>new</font> Date());
+  }
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">At the beginning of each program file,
+you must place the <B>import</B> statement to bring in any extra classes
+you&#8217;ll need for the code in that file. Note that I say
+&#8220;extra;&#8221; that&#8217;s because there&#8217;s a certain library of
+classes that are automatically brought into every Java file: <B>java.lang</B>.
+Start up your Web browser and look at the documentation from Sun. (If you
+haven&#8217;t downloaded it from <I>java.sun.com</I> or otherwise installed the
+Java documentation, do so now). If you look at the list of the packages,
+you&#8217;ll see all the different class libraries that come with Java. Select
+<B>java.lang</B>. This will bring up a list of all the classes that are part of
+that library. Since <B>java.lang</B> is implicitly included in every Java code
+file, these classes are automatically available. There&#8217;s no <B>Date</B>
+class listed in <B>java.lang</B>, which means you must import another library to
+use that. If you don&#8217;t know the library where a particular class is, or if
+you want to see all of the classes, you can select &#8220;Tree&#8221; in the
+Java documentation. Now you can find every single class that comes with Java.
+Then you can use the browser&#8217;s &#8220;find&#8221; function to find
+<B>Date</B>.<B> </B>When you do you&#8217;ll see it listed as
+<B>java.util.Date</B>, which lets you know that it&#8217;s in the <B>util</B>
+library and that you must <B>import java.util.*</B> in order to use <B>Date</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I84' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I85>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">If you go back to the beginning, select
+<B>java.lang</B> and then <B>System</B>, you&#8217;ll see that the <B>System</B>
+class has several fields, and if you select <B>out</B> you&#8217;ll discover
+that it&#8217;s a <B>static</B> <B>PrintStream </B>object. Since it&#8217;s
+<B>static</B> you don&#8217;t need to create anything. The <B>out</B> object is
+always there and you can just use it. What you can do with this <B>out</B>
+object is determined by the type it is: a <B>PrintStream</B>. Conveniently,
+<B>PrintStream </B>is shown in the description as a hyperlink, so if you click
+on that you&#8217;ll see a list of all the methods you can call for
+<B>PrintStream</B>. There are quite a few and these will be covered later in
+this book. For now all we&#8217;re interested in is <B>println(&#160;)</B>,
+which in effect means &#8220;print what I&#8217;m giving you out to the console
+and end with a new line.&#8221; Thus, in any Java program you write you can say
+<B>System.out.println("things")</B> whenever you want to print something to the
+console. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I85' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I86>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The name of the class is the same as the
+name of the file. When you&#8217;re creating a stand-alone program such as this
+one, one of the classes in the file must have the same name as the file. (The
+compiler complains if you don&#8217;t do this.) That class must contain a method
+called <B>main(&#160;)</B> with the signature shown:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I86' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I87>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The <B>public</B> keyword means that the
+method is available to the outside world (described in detail in Chapter 5). The
+argument to <B>main(&#160;)</B> is an array of <B>String</B> objects. The
+<B>args</B> won&#8217;t be used in this program, but the Java compiler insists
+that they be there because they hold the arguments invoked on the command line.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I87' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I88>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The line that prints the date is quite
+interesting: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I88' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I89>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>System.out.println(<font color=#0000ff>new</font> Date());</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Consider the argument: a <B>Date</B>
+object is being created just to send its value to <B>println(&#160;)</B>. As
+soon as this statement is finished, that <B>Date</B> is unnecessary, and the
+garbage collector can come along and get it anytime. We don&#8217;t need to
+worry about cleaning it up.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I89' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I90>
+</FONT><A NAME="_Toc375545234"></A><A NAME="_Toc481064527"></A><BR></P></DIV>
+<A NAME="Heading105"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Compiling and running</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">To
+compile<A NAME="Index190"></A><A NAME="Index191"></A><A NAME="Index192"></A><A NAME="Index193"></A>
+and run this program, and all the other programs in this book, you must first
+have a Java programming environment. There are a number of third-party
+development environments, but in this book we will assume that you are using the
+JDK from Sun, which is free. If you are using another development system, you
+will need to look in the documentation for that system to determine how to
+compile and run programs. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I90' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I91>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Get on the Internet and go to
+<I>java.sun.com</I>. There you will find information and links that will lead
+you through the process of downloading and installing the JDK for your
+particular platform. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I91' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I92>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Once the JDK is installed, and
+you&#8217;ve set up your computer&#8217;s path information so that it will find
+<B>javac<A NAME="Index194"></A></B> and <B>java</B>, download and unpack the
+source code for this book (you can find it on the CD ROM that&#8217;s bound in
+with this book, or at <I>www.BruceEckel.com</I>). This will create a
+subdirectory for each chapter in this book. Move to subdirectory <B>c02</B> and
+type: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I92' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I93>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>javac HelloDate.java</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This command should produce no response.
+If you get any kind of an error message it means you haven&#8217;t installed the
+JDK properly and you need to investigate those problems. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I93' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I94>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">On the other hand, if you just get your
+command prompt back, you can type:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>java HelloDate</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">and you&#8217;ll get the message and the
+date as output. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I94' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I95>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This is the process you can use to
+compile and run each of the programs in this book. However, you will see that
+the source code for this book also has a file called <B>makefile</B> in each
+chapter, and this contains &#8220;make&#8221; commands for automatically
+building the files for that chapter. See this book&#8217;s Web page at
+<I>www.BruceEckel.com</I> for details on how to use the makefiles.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I95' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I96>
+</FONT><A NAME="_Toc481064528"></A><BR></P></DIV>
+<A NAME="Heading106"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Comments and embedded
+documentation<BR><A NAME="Index195"></A><A NAME="Index196"></A></H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There are two types of comments in Java.
+The first is the traditional C-style comment that was inherited by C++. These
+comments begin with a <B>/*</B> and continue, possibly across many lines, until
+a <B>*/</B>. Note that many programmers will begin each line of a continued
+comment with a <B>*</B>, so you&#8217;ll often see:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>/* This is a comment
+*  that continues
+*  across lines
+*/</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Remember, however, that everything inside
+the <B>/*</B> and <B>*/</B> is ignored, so there&#8217;s no difference in
+saying: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I96' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I97>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>/* This is a comment that
+continues across lines */</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The second form of comment comes from
+C++. It is the single-line comment, which starts at a <B>//</B> and continues
+until the end of the line. This type of comment is convenient and commonly used
+because it&#8217;s easy. You don&#8217;t need to hunt on the keyboard to find
+<B>/</B> and then <B>*</B> (instead, you just press the same key twice), and you
+don&#8217;t need to close the comment. So you will often see:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I97' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I98>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>// this is a one-line comment</font></PRE></FONT></BLOCKQUOTE><DIV ALIGN="LEFT"><P><A NAME="_Toc375545235"></A><A NAME="_Toc481064529"></A><BR></P></DIV>
+<A NAME="Heading107"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Comment documentation</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">One of the thoughtful parts of the Java
+language is that the designers didn&#8217;t consider writing code to be the only
+important activity&#8212;they also thought about documenting it. Possibly the
+biggest problem with documenting code has been maintaining that documentation.
+If the documentation and the code are separate, it becomes a hassle to change
+the documentation every time you change the code. The solution seems simple:
+link the code to the documentation. The easiest way to do this is to put
+everything in the same file. To complete the picture, however, you need a
+special comment syntax to mark special documentation, and a tool to extract
+those comments and put them in a useful form. This is what Java has done.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I98' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I99>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The tool to extract the comments is
+called <I>javadoc.</I> It uses some of the technology from the Java compiler to
+look for special comment tags you put in your programs. It not only extracts the
+information marked by these tags, but it also pulls out the class name or method
+name that adjoins the comment. This way you can get away with the minimal amount
+of work to generate decent program documentation.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I99' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I100>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The output of javadoc is an HTML file
+that you can view with your Web browser. This tool allows you to create and
+maintain a single source file and automatically generate useful documentation.
+Because of javadoc we have a standard for creating documentation, and it&#8217;s
+easy enough that we can expect or even demand documentation with all Java
+libraries.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I100' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I101>
+</FONT><A NAME="_Ref348399283"></A><A NAME="_Toc375545236"></A><A NAME="_Toc481064530"></A><BR></P></DIV>
+<A NAME="Heading108"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Syntax</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">All of the javadoc commands occur only
+within <B>/**</B> comments. The comments end with <B>*/ </B>as usual. There are
+two primary ways to use javadoc: embed HTML, or use &#8220;doc tags.&#8221; Doc
+tags are commands that start with a &#8216;<B>@</B>&#8217; and are placed at the
+beginning of a comment line. (A leading &#8216;<B>*</B>&#8217;, however, is
+ignored.) 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I101' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I102>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">There are three &#8220;types&#8221; of
+comment documentation, which correspond to the element the comment precedes:
+class, variable, or method. That is, a class comment appears right before the
+definition of a class; a variable comment appears right in front of the
+definition of a variable, and a method comment appears right in front of the
+definition of a method. As a simple example:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I102' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I103>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>/** A class comment */</font>
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> docTest {
+  <font color=#009900>/** A variable comment */</font>
+  <font color=#0000ff>public</font> <font color=#0000ff>int</font> i;
+  <font color=#009900>/** A method comment */</font>
+  <font color=#0000ff>public</font> <font color=#0000ff>void</font> f() {}
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Note that javadoc will process comment
+documentation for only <B>public </B>and <B>protected </B>members. Comments for
+<B>private </B>and &#8220;friendly&#8221; members (see Chapter 5) are ignored
+and you&#8217;ll see no output. (However, you can use the <B>-private </B>flag
+to include <B>private</B> members as well.) This makes sense, since only
+<B>public</B> and <B>protected</B> members are available outside the file, which
+is the client programmer&#8217;s perspective. However, all <B>class</B> comments
+are included in the output.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I103' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I104>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The output for the above code is an HTML
+file that has the same standard format as all the rest of the Java
+documentation, so users will be comfortable with the format and can easily
+navigate your classes. It&#8217;s worth entering the above code, sending it
+through javadoc and viewing the resulting HTML file to see the results.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I104' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I105>
+</FONT><A NAME="_Toc375545237"></A><A NAME="_Toc481064531"></A><BR></P></DIV>
+<A NAME="Heading109"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Embedded HTML</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Javadoc passes HTML commands through to
+the generated HTML document. This allows you full use of HTML; however, the
+primary motive is to let you format code, such as:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I105' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I106>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>/**
+* &lt;pre&gt;
+* System.out.println(new Date());
+* &lt;/pre&gt;
+*/</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can also use HTML just as you would
+in any other Web document to format the regular text in your descriptions:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I106' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I107>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>/**
+* You can &lt;em&gt;even&lt;/em&gt; insert a list:
+* &lt;ol&gt;
+* &lt;li&gt; Item one
+* &lt;li&gt; Item two
+* &lt;li&gt; Item three
+* &lt;/ol&gt;
+*/</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Note that within the documentation
+comment, asterisks at the beginning of a line are thrown away by javadoc, along
+with leading spaces. Javadoc reformats everything so that it conforms to the
+standard documentation appearance. Don&#8217;t use headings such as
+<B>&lt;h1&gt;</B> or <B>&lt;hr&gt;</B> as embedded HTML because javadoc inserts
+its own headings and yours will interfere with them.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I107' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I108>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">All types of comment
+documentation&#8212;class, variable, and method&#8212;can support embedded HTML.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I108' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I109>
+</FONT><A NAME="_Toc375545238"></A><A NAME="_Toc481064532"></A><BR></P></DIV>
+<A NAME="Heading110"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+@see: referring to other classes</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">All three types of comment documentation
+(class, variable, and method) can contain <B>@see</B> tags, which allow you to
+refer to the documentation in other classes. Javadoc will generate HTML with the
+<B>@see</B> tags hyperlinked to the other documentation. The forms are:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I109' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I110>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>@see classname
+@see fully-qualified-classname
+@see fully-qualified-classname#method-name</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Each one adds a hyperlinked &#8220;See
+Also&#8221; entry to the generated documentation. Javadoc will not check the
+hyperlinks you give it to make sure they are valid.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I110' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I111>
+</FONT><A NAME="_Toc375545239"></A><A NAME="_Toc481064533"></A><BR></P></DIV>
+<A NAME="Heading111"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Class documentation tags</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Along with embedded HTML and <B>@see
+</B>references, class documentation can include tags for version information and
+the author&#8217;s name. Class documentation can also be used for
+<I>interfaces</I> (see Chapter 8).
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I111' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I112>
+</FONT><BR></P></DIV>
+<A NAME="Heading112"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+@version</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This is of the form:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>@version version-information</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">in which <B>version-information</B> is
+any significant information you see fit to include. When the <B>-version</B>
+flag is placed on the javadoc command line, the version information will be
+called out specially in the generated HTML documentation.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I112' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I113>
+</FONT><BR></P></DIV>
+<A NAME="Heading113"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+@author</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This is of the form:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>@author author-information</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">in which <B>author-information</B> is,
+presumably, your name, but it could also include your email address or any other
+appropriate information. When the <B>-author </B>flag is placed on the javadoc
+command line, the author information will be called out specially in the
+generated HTML documentation.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I113' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I114>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">You can have multiple author tags for a
+list of authors, but they must be placed consecutively. All the author
+information will be lumped together into a single paragraph in the generated
+HTML. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I114' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I115>
+</FONT><BR></P></DIV>
+<A NAME="Heading114"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+@since</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This tag allows you to indicate the
+version of this code that began using a particular feature. You&#8217;ll see it
+appearing in the HTML Java documentation to indicate what version of the JDK is
+used.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I115' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I116>
+</FONT><A NAME="_Toc375545240"></A><A NAME="_Toc481064534"></A><BR></P></DIV>
+<A NAME="Heading115"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Variable documentation tags</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Variable documentation can include only
+embedded HTML and <B>@see</B> references.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I116' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I117>
+</FONT><A NAME="_Toc375545241"></A><A NAME="_Toc481064535"></A><BR></P></DIV>
+<A NAME="Heading116"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Method documentation tags</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">As well as embedded documentation and
+<B>@see</B> references, methods allow documentation tags for parameters, return
+values, and exceptions. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I117' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I118>
+</FONT><BR></P></DIV>
+<A NAME="Heading117"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+@param</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This is of the form:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>@param parameter-name description</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">in which <B>parameter-name </B>is the
+identifier in the parameter list, and <B>description </B>is text that can
+continue on subsequent lines. The description is considered finished when a new
+documentation tag is encountered. You can have any number of these, presumably
+one for each parameter. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I118' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I119>
+</FONT><BR></P></DIV>
+<A NAME="Heading118"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+@return</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This is of the form:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>@<font color=#0000ff>return</font> description</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">in which <B>description</B> gives you the
+meaning of the return value. It can continue on subsequent lines.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I119' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I120>
+</FONT><BR></P></DIV>
+<A NAME="Heading119"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+@throws</H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Exceptions will be demonstrated in
+Chapter 10, but briefly they are objects that can be &#8220;thrown&#8221; out of
+a method if that method fails. Although only one exception object can emerge
+when you call a method, a particular method might produce any number of
+different types of exceptions, all of which need descriptions. So the form for
+the exception tag is:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>@<font color=#0000ff>throws</font> fully-qualified-<font color=#0000ff>class</font>-name description</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">in which
+<B>fully-qualified-class-name</B> gives an unambiguous name of an exception
+class that&#8217;s defined somewhere, and <B>description</B> (which can continue
+on subsequent lines) tells you why this particular type of exception can emerge
+from the method call. 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I120' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I121>
+</FONT><BR></P></DIV>
+<A NAME="Heading120"></A><FONT FACE = "Verdana"><H4 ALIGN="LEFT">
+@deprecated<BR><A NAME="Index197"></A></H4></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">This is used to tag features that were
+superseded by an improved feature. The deprecated tag is a suggestion that you
+no longer use this particular feature, since sometime in the future it is likely
+to be removed. A method that is marked <B>@deprecated</B> causes the compiler to
+issue a warning if it is used.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I121' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I122>
+</FONT><A NAME="_Toc375545242"></A><A NAME="_Toc481064536"></A><BR></P></DIV>
+<A NAME="Heading121"></A><FONT FACE = "Verdana"><H3 ALIGN="LEFT">
+Documentation example</H3></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia"> Here is the first Java program again,
+this time with documentation comments added:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#009900>//: c02:HelloDate.java</font>
+<font color=#0000ff>import</font> java.util.*;
+
+<font color=#009900>/** The first Thinking in Java example program.
+ * Displays a string and today's date.
+ * @author Bruce Eckel
+ * @author www.BruceEckel.com
+ * @version 2.0 
+*/</font>
+<font color=#0000ff>public</font> <font color=#0000ff>class</font> HelloDate {
+  <font color=#009900>/** Sole entry point to class &amp; application
+   * @param args array of string arguments
+   * @return No return value
+   * @exception exceptions No exceptions thrown
+  */</font>
+  <font color=#0000ff>public</font> <font color=#0000ff>static</font> <font color=#0000ff>void</font> main(String[] args) {
+    System.out.println(<font color=#004488>"Hello, it's: "</font>);
+    System.out.println(<font color=#0000ff>new</font> Date());
+  }
+} <font color=#009900>///:~</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The first line of the file uses my own
+technique of putting a &#8216;<B>:</B>&#8217; as a special marker for the
+comment line containing the source file name. That line contains the path
+information to the file (in this case, <B>c02 </B>indicates Chapter 2) followed
+by the file
+name</FONT><A NAME="fnB24" HREF="#fn24">[24]</A><FONT FACE="Georgia">. The last
+line also finishes with a comment, and this one indicates the end of the source
+code listing, which allows it to be automatically extracted from the text of
+this book and checked with a compiler.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I122' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I123>
+</FONT><A NAME="_Toc312373851"></A><A NAME="_Toc375545243"></A><A NAME="_Toc481064537"></A><BR></P></DIV>
+<A NAME="Heading122"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Coding style</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The unofficial standard in Java is to
+capitalize the first letter of a class name. If the class name consists of
+several words, they are run together (that is, you don&#8217;t use underscores
+to separate the names), and the first letter of each embedded word is
+capitalized, such as: 
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I123' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I124>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>class</font> AllTheColorsOfTheRainbow { <font color=#009900>// ...</font></PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">For almost everything else: methods,
+fields (member variables), and object reference names, the accepted style is
+just as it is for classes <I>except</I> that the first letter of the identifier
+is lowercase. For example:
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I124' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I125>
+</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE><font color=#0000ff>class</font> AllTheColorsOfTheRainbow {
+  <font color=#0000ff>int</font> anIntegerRepresentingColors;
+  <font color=#0000ff>void</font> changeTheHueOfTheColor(<font color=#0000ff>int</font> newHue) {
+    <font color=#009900>// ...</font>
+  }
+  <font color=#009900>// ...</font>
+}</PRE></FONT></BLOCKQUOTE>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">Of course, you should remember that the
+user must also type all these long names, and so be merciful. 
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I125' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I126>
+</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">The Java code you will see in the Sun
+libraries also follows the placement of open-and-close curly braces that you see
+used in this book.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I126' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I127>
+</FONT><A NAME="_Toc375545244"></A><A NAME="_Toc481064538"></A><BR></P></DIV>
+<A NAME="Heading123"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Summary</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia">In this chapter you have seen enough of
+Java programming to understand how to write a simple program, and you have
+gotten an overview of the language and some of its basic ideas. However, the
+examples so far have all been of the form &#8220;do this, then do that, then do
+something else.&#8221; What if you want the program to make choices, such as
+&#8220;if the result of doing this is red, do that; if not, then do something
+else&#8221;? The support in Java for this fundamental programming activity will
+be covered in the next chapter.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I127' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I128>
+</FONT><A NAME="_Toc375545245"></A><A NAME="_Toc481064539"></A><BR></P></DIV>
+<A NAME="Heading124"></A><FONT FACE = "Verdana"><H2 ALIGN="LEFT">
+Exercises</H2></FONT>
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=2>Solutions to selected exercises
+can be found in the electronic document <I>The Thinking in Java Annotated
+Solution Guide</I>, available for a small fee from
+<I>www.BruceEckel.com</I>.</FONT><BR></P></DIV>
+<OL>
+<LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Following the
+<B>HelloDate.java</B> example in this chapter, create a &#8220;hello,
+world&#8221; program that simply prints out that statement. You need only a
+single method in your class (the &#8220;main&#8221; one that gets executed when
+the program starts). Remember to make it <B>static</B> and to include the
+argument list, even though you don&#8217;t use the argument list. Compile the
+program with <B>javac</B> and run it using <B>java</B>. If you are using a
+different development environment than the JDK, learn how to compile and run
+programs in that environment.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I128' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I129>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Find
+the code fragments involving <B>ATypeName</B> and turn them into a program that
+compiles and runs.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I129' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I130>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Turn
+the <B>DataOnly</B> code fragments into a program that compiles and runs.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I130' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I131>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Modify
+Exercise 3 so that the values of the data in <B>DataOnly</B> are assigned to and
+printed in <B>main(&#160;)</B>.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I131' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I132>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Write
+a program that includes and calls the <B>storage(&#160;)</B> method defined as a
+code fragment in this chapter.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I132' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I133>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Turn
+the <B>StaticFun</B> code fragments into a working program.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I133' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I134>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Write
+a program that prints three arguments taken from the command line. To do this,
+you&#8217;ll need to index into the command-line array of <B>String</B>s.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I134' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I135>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Turn
+the <B>AllTheColorsOfTheRainbow</B> example into a program that compiles and
+runs.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I135' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I136>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Find
+the code for the second version of <B>HelloDate.java</B>, which is the simple
+comment documentation example. Execute <B>javadoc</B> on the file and view the
+results with your Web browser.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I136' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I137>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Turn
+<B>docTest</B> into a file that compiles and then run it through <B>javadoc</B>.
+Verify the resulting documentation with your Web browser.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I137' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I138>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Add
+an HTML list of items to the documentation in Exercise 10.
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I138' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I139>
+</FONT><LI><FONT FACE="Verdana">	</FONT><FONT FACE="Georgia">Take
+the program in Exercise 1 and add comment documentation to it. Extract this
+comment documentation into an HTML file using <B>javadoc</B> and view it with
+your Web browser.<A NAME="Chapter_3"></A><A NAME="_Toc375545246"></A>
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I139' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+<backtalk:display ID=TIJ3_CHAPTER2_I140>
+</FONT></OL><DIV ALIGN="LEFT"><P><FONT FACE="Georgia">
+
+</backtalk:display>
+[&nbsp;<a href='http://www.mindview.net/backtalk/CommentServlet?ID=TIJ3_CHAPTER2_I140' 
+  target="_blank">Add&nbsp;Comment</a>&nbsp;]
+
+</FONT><BR></P></DIV>
+<HR><DIV ALIGN="LEFT"><P><A NAME="fn20" HREF="#fnB20">[20]</A><FONT FACE="Georgia" SIZE=2>
+This can be a flashpoint. There are those who say &#8220;clearly, it&#8217;s a
+pointer,&#8221; but this presumes an underlying implementation. Also, Java
+references are much more akin to C++ references than pointers in their syntax.
+In the first edition of this book, I chose to invent a new term,
+&#8220;handle,&#8221; because C++ references and Java references have some
+important differences. I was coming out of C++ and did not want to confuse the
+C++ programmers whom I assumed would be the largest audience for Java. In the
+2<SUP>nd</SUP> edition, I decided that &#8220;reference&#8221; was the more
+commonly used term, and that anyone changing from C++ would have a lot more to
+cope with than the terminology of references, so they might as well jump in with
+both feet. However, there are people who disagree even with the term
+&#8220;reference.&#8221; I read in one book where it was &#8220;completely wrong
+to say that Java supports pass by reference,&#8221; because Java object
+identifiers (according to that author) are <I>actually</I> &#8220;object
+references.&#8221; And (he goes on) everything is <I>actually</I> pass by value.
+So you&#8217;re not passing by reference, you&#8217;re &#8220;passing an object
+reference by value.&#8221; One could argue for the precision of such convoluted
+explanations, but I think my approach simplifies the understanding of the
+concept without hurting anything (well, the language lawyers may claim that
+I&#8217;m lying to you, but I&#8217;ll say that I&#8217;m providing an
+appropriate abstraction.)</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn21" HREF="#fnB21">[21]</A><FONT FACE="Georgia" SIZE=2>
+<B>static</B> methods, which you&#8217;ll learn about soon, can be called <I>for
+the class</I>, without an object.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn22" HREF="#fnB22">[22]</A><FONT FACE="Georgia" SIZE=2>
+With the usual exception of the aforementioned &#8220;special&#8221; data types
+<B>boolean, char</B>, <B>byte</B>, <B>short</B>, <B>int</B>, <B>long</B>,<B>
+float,</B> and <B>double</B>. In general, though, you pass objects, which really
+means you pass references to objects.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn23" HREF="#fnB23">[23]</A><FONT FACE="Georgia" SIZE=2>
+Some programming environments will flash programs up on the screen and close
+them before you've had a chance to see the results. You can put in the following
+bit of code at the end of <B>main(&#160;)</B> to pause the
+output:</FONT><BR></P></DIV>
+
+<BLOCKQUOTE><FONT SIZE = "+1"><PRE>    <font color=#0000ff>try</font> {
+      System.in.read();</PRE></FONT></BLOCKQUOTE><DIV ALIGN="LEFT"><P><TT><FONT FACE="Courier New" SIZE=2>
+} catch(Exception e) {}</FONT></TT><BR></P></DIV>
+
+<DIV ALIGN="LEFT"><P><FONT FACE="Georgia" SIZE=2>This will pause the output until
+you press &#8220;Enter&#8221; (or any other key). This code involves concepts
+that will not be introduced until much later in the book, so you won&#8217;t
+understand it until then, but it will do the trick.</FONT><BR></P></DIV>
+<DIV ALIGN="LEFT"><P><A NAME="fn24" HREF="#fnB24">[24]</A><FONT FACE="Georgia" SIZE=2>
+A tool that I created using Python (see www.Python.org) uses this information to
+extract the code files, put them in appropriate subdirectories, and create
+makefiles.</FONT><BR></P></DIV>
+
+<DIV ALIGN="CENTER">
+    <FONT FACE="Verdana" size = "-1">
+     [ <a href="Chap01.htm">Previous Chapter</a> ] 
+    [ <a href="SimpCont.htm">Short TOC</a> ] 
+    [ <a href="Contents.htm">Table of Contents</a> ] 
+    [ <a href="DocIdx.htm">Index</a> ]
+     [ <a href="Chap03.htm">Next Chapter</a> ] 
+    </FONT>
+    <BR>
+ Last Update:05/21/2001</P></DIV>
+
+</BODY>
+
+</HTML>
