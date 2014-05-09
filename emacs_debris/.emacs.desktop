@@ -1,0 +1,2822 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Wed Apr 21 11:26:34 2010
+;; Desktop file format version 206
+;; Emacs version 22.3.1
+
+;; Global section:
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring '("ACCOUNT_LIST_REPORT_SQL" "setAccountInfo" "SAVE_CORE_AR_ACCOUNT" "save_core_ar" "balance" "p_" "one_gazillion" "select * from dataset" "invis" "---" "process_ar_acct_member" "postupdatecorearacctmember" "---" "address_query_sql" "get_institution" "annotated"))
+(setq regexp-search-ring '("; w$" "function[ ]+f_get_seq" "^[a-z_]+$" "procedure .*rx" "function .*rx" "procedure \\*.buy" "\\(function\\)\\|\\(procedure\\)" "\\(function\\)|\\(procedure\\)" "'[^',]+'[^',]+'" "acc_acct_holder" "'[^']+'[^']+'" "AR.*:" "prescriber_base[^._%']\\|prescriber_base$" "prescriber_base[^._%']|prescriber_base$" "\\(prescriber_base[^._%']\\)|\\(prescriber_base$\\)" "prescriber_base$"))
+(setq register-alist (list (desktop-list* 105 (let ((mk (make-marker))) (add-hook 'desktop-delay-hook (list 'lambda '() (list 'set-marker mk 8854 (get-buffer "trexone_numbering_body.sql")))) mk)) (list 82 "Unprintable entity" (let ((mk (make-marker))) (add-hook 'desktop-delay-hook (list 'lambda '() (list 'set-marker mk nil (get-buffer " *temp*")))) mk))))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/Application Data/org/current.org"
+  "current.org"
+  'org-mode
+  nil
+  97178
+  '(95655 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . undecided-dos) (overwrite-mode) (fill-column . 80) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  nil
+  "2.2.0"
+  'dired-mode
+  nil
+  1
+  '(1 nil)
+  t
+  '("c:/scc/erx/branches/release/2.2.0/" "c:/scc/erx/branches/release/2.2.0/DatabaseSchema/" "c:/scc/erx/branches/release/2.2.0/DatabaseSchema/OLTP/" "c:/scc/erx/branches/release/2.2.0/DatabaseSchema/OLTP/trexone/" "c:/scc/erx/branches/release/2.2.0/DatabaseSchema/OLTP/trexone/pkg/" "c:/scc/erx/branches/release/2.2.0/Source/" "c:/scc/erx/branches/release/2.2.0/Source/com/" "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/" "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/" "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/" "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/" "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/defaults/" "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/defaults/general/" "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/maint/" "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/reports/" "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/reports/core/" "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/transactions/" "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/schema/" "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/schema/OLTP/" "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/schema/OLTP/trexone/" "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/schema/OLTP/trexone/pkg/" "c:/scc/erx/branches/release/2.2.0/Tools/")
+  '((truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/schema/OLTP/trexone/pkg/trexone_ar_body_annotated_20100415.sql"
+  "trexone_ar_body_annotated_20100415.sql"
+  'sql-mode
+  nil
+  1
+  '(1 nil)
+  nil
+  nil
+  '((tab-width . 4) (buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/reports/core/AccountListReportPersistor.java"
+  "AccountListReportPersistor.java<2>"
+  'java-mode
+  '(abbrev-mode)
+  2562
+  '(4077 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/reports/core/CoreARReportPersistor.java"
+  "CoreARReportPersistor.java"
+  'java-mode
+  '(abbrev-mode view-mode)
+  9222
+  '(1 nil)
+  t
+  nil
+  '((tab-width . 4) (buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/schema/OLTP/trexone/pkg/trexone_ar_body.sql"
+  "trexone_ar_body.sql"
+  'sql-mode
+  nil
+  74257
+  '(85610 nil)
+  nil
+  nil
+  '((tab-width . 4) (buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/schema/OLTP/trexone/pkg/.svn/text-base/trexone_ar_head.sql.svn-base"
+  "trexone_ar_head.sql.svn-base"
+  'fundamental-mode
+  nil
+  13978
+  '(14008 nil)
+  t
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/schema/OLTP/trexone/pkg/.svn/text-base/trexone_ar_body.sql.svn-base"
+  "trexone_ar_body.sql.svn-base"
+  'fundamental-mode
+  nil
+  85580
+  '(85610 nil)
+  t
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/trexone/pkg/trexone_data_capture.sql"
+  "trexone_data_capture.sql"
+  'sql-mode
+  nil
+  8954
+  '(8972 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/Source/com/techrx/schema/OLTP/trexone/pkg/trexone_sequence_body.sql"
+  "trexone_sequence_body.sql"
+  'sql-mode
+  nil
+  1483
+  '(1501 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/maint/AccountMaintPersistorImpl.java"
+  "AccountMaintPersistorImpl.java"
+  'java-mode
+  '(abbrev-mode view-mode)
+  2882
+  '(2863 nil)
+  t
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/datavalidator_standard_ar_body.sql"
+  "datavalidator_standard_ar_body.sql"
+  'sql-mode
+  nil
+  31651
+  '(44702 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/Sample_data/Sample.AR.data.for.store.758.ver18.txt"
+  "Sample.AR.data.for.store.758.ver18.txt"
+  'text-mode
+  nil
+  1844
+  '(18215 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/core_ar_account_querying_20100420.sql"
+  "core_ar_account_querying_20100420.sql"
+  'sql-mode
+  nil
+  4871
+  '(18634 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode) (buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/Schnucks_AR_testing_2010/ar_accounts_investigation.sql"
+  "ar_accounts_investigation.sql"
+  'sql-mode
+  nil
+  80978
+  '(66685 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/dataloader_standard_ar_account_body.sql"
+  "dataloader_standard_ar_account_body.sql"
+  'sql-mode
+  nil
+  1
+  '(102719 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/dataloader_txndcq21_with_erx_36730_bug_fix_erx_36274_20100415_0838.sql"
+  "dataloader_txndcq21_with_erx_36730_bug_fix_erx_36274_20100415_0838.sql"
+  'sql-mode
+  nil
+  1478547
+  '(1476639 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode) (buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Combined_AR_LTC_sample_data/Dependant.Sample.AR+LTC.data.for.store.702.ver10.txt"
+  "Dependant.Sample.AR+LTC.data.for.store.702.ver10.txt"
+  'text-mode
+  nil
+  1519
+  '(16474 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  nil
+  "Combined_AR_LTC_sample_data"
+  'dired-mode
+  nil
+  481
+  '(nil nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Combined_AR_LTC_sample_data/")
+  nil)
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/trexone_1_6.sql"
+  "trexone_1_6.sql<2>"
+  'sql-mode
+  nil
+  106043
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/dataloader_standard_ar_person_body.sql"
+  "dataloader_standard_ar_person_body.sql"
+  'sql-mode
+  nil
+  117122
+  '(87025 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Combined_AR_LTC_sample_data/Dependant.Sample.AR+LTC.data.for.store.702.ver5a.annotated.txt"
+  "Dependant.Sample.AR+LTC.data.for.store.702.ver5a.annotated.txt"
+  'text-mode
+  nil
+  12334
+  '(12703 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Combined_AR_LTC_sample_data/LTC_CONVERSION_TEST_DATA_V1_4.txt"
+  "LTC_CONVERSION_TEST_DATA_V1_4.txt"
+  'text-mode
+  nil
+  1
+  '(35519 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/dataloader_common_body.sql"
+  "dataloader_common_body.sql"
+  'sql-mode
+  nil
+  159075
+  '(1 nil)
+  nil
+  nil
+  '((tab-width . 4) (buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/datavalidator_standard_ar_head.sql"
+  "datavalidator_standard_ar_head.sql"
+  'sql-mode
+  '(smerge-mode)
+  2524
+  '(1928 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/Source/com/techrx/schema/OLTP/trexone/pkg/trexone_sequence_head.sql"
+  "trexone_sequence_head.sql"
+  'sql-mode
+  nil
+  163
+  '(181 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/trexone/application/db/sql/maint_trexone.sql"
+  "maint_trexone.sql"
+  'sql-mode
+  nil
+  3278
+  '(3296 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  nil
+  "trunk<2>"
+  'dired-mode
+  nil
+  1
+  '(1 nil)
+  t
+  '("c:/scc/erx/trunk/" "c:/scc/erx/trunk/Source/" "c:/scc/erx/trunk/Source/com/" "c:/scc/erx/trunk/Source/com/techrx/" "c:/scc/erx/trunk/Source/com/techrx/schema/" "c:/scc/erx/trunk/Source/com/techrx/schema/OLTP/" "c:/scc/erx/trunk/Source/com/techrx/schema/OLTP/trexone/" "c:/scc/erx/trunk/Source/com/techrx/schema/OLTP/trexone/pkg/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "pkg"
+  'dired-mode
+  nil
+  221
+  '(1 nil)
+  t
+  '("c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/")
+  '((truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/Source/com/techrx/schema/OLTP/trexone/pkg/trexone_ar_body.sql"
+  "trexone_ar_body.sql<2>"
+  'sql-mode
+  nil
+  9660
+  '(12371 nil)
+  nil
+  nil
+  '((tab-width . 4) (buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Allergies_issues/datavalidator.sql"
+  "datavalidator.sql"
+  'sql-mode
+  nil
+  1
+  '(395565 nil)
+  nil
+  nil
+  '((tab-width . 4) (buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/oracle/ora92/rdbms/admin/utlxplan.sql"
+  "utlxplan.sql"
+  'sql-mode
+  nil
+  2071
+  '(1273 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/trexone_pkg_from_txndcq21.sql"
+  "trexone_pkg_from_txndcq21.sql"
+  'sql-mode
+  nil
+  38777
+  '(21203 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/Source/com/techrx/schema/OLTP/trexone/pkg/trexone_funcs_body.sql"
+  "trexone_funcs_body.sql"
+  'sql-mode
+  nil
+  57498
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  nil
+  "pkg<4>"
+  'dired-mode
+  nil
+  296
+  '(nil nil)
+  t
+  '("c:/scc/erx/branches/release/2.2.0/DatabaseSchema/OLTP/trexone/pkg/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "pkg<2>"
+  'dired-mode
+  nil
+  1
+  '(6459 nil)
+  t
+  '("c:/scc/erx/trunk/Source/com/techrx/schema/OLTP/trexone/pkg/")
+  nil)
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/dataloader_txndcq21_with_erx_36730_bug_fix_erx_36274_20100414_0938.sql"
+  "dataloader_txndcq21_with_erx_36730_bug_fix_erx_36274_20100414_0938.sql"
+  'sql-mode
+  nil
+  1527081
+  '(1 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode) (buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Combined_AR_LTC_sample_data/Dependant.Sample.AR+LTC.data.for.store.702.ver3.txt"
+  "Dependant.Sample.AR+LTC.data.for.store.702.ver3.txt"
+  'text-mode
+  nil
+  9173
+  '(13327 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/Source/com/techrx/schema/OLTP/trexone/pkg/trexone_numbering_declare.sql"
+  "trexone_numbering_declare.sql"
+  'sql-mode
+  nil
+  575
+  '(535 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/Source/com/techrx/schema/OLTP/trexone/pkg/trexone_numbering_body.sql"
+  "trexone_numbering_body.sql"
+  'sql-mode
+  '(view-mode)
+  9737
+  '(9935 nil)
+  t
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/Source/com/techrx/schema/OLTP/trexone/pkg/trexone_po_batch_body.sql"
+  "trexone_po_batch_body.sql<2>"
+  'sql-mode
+  nil
+  29217
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/personal/eclipse/trunk/ErxEclipseTrunk/src/com/techrx/schema/OLTP/trexone/pkg/trexone_po_batch_body.sql"
+  "trexone_po_batch_body.sql"
+  'sql-mode
+  nil
+  28976
+  '(28991 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  nil
+  "trunk"
+  'dired-mode
+  nil
+  1544
+  '(8699 nil)
+  t
+  '("c:/scc/personal/eclipse/trunk/" "c:/scc/personal/eclipse/trunk/ErxEclipseTrunk/" "c:/scc/personal/eclipse/trunk/ErxEclipseTrunk/src/" "c:/scc/personal/eclipse/trunk/ErxEclipseTrunk/src/com/" "c:/scc/personal/eclipse/trunk/ErxEclipseTrunk/src/com/techrx/" "c:/scc/personal/eclipse/trunk/ErxEclipseTrunk/src/com/techrx/app/" "c:/scc/personal/eclipse/trunk/ErxEclipseTrunk/src/com/techrx/app/trexone/" "c:/scc/personal/eclipse/trunk/ErxEclipseTrunk/src/com/techrx/app/trexone/batch/" "c:/scc/personal/eclipse/trunk/ErxEclipseTrunk/src/com/techrx/app/trexone/batch/dataloader/" "c:/scc/personal/eclipse/trunk/ErxEclipseTrunk/src/com/techrx/app/trexone/batch/dataloader/injector/" "c:/scc/personal/eclipse/trunk/ErxEclipseTrunk/src/com/techrx/app/trexone/batch/dataloader/util/" "c:/scc/personal/eclipse/trunk/ErxEclipseTrunk/src/com/techrx/tools/" "c:/scc/personal/eclipse/trunk/ErxEclipseTrunk/src/com/techrx/tools/dataconverter/" "c:/scc/personal/eclipse/trunk/ErxEclipseTrunk/src/com/techrx/tools/dataconverter/util/")
+  nil)
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/ERX_36730_changes/dataloader_standard_ar_account_body.sql"
+  "dataloader_standard_ar_account_body.sql<2>"
+  'sql-mode
+  nil
+  105319
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/datavalidator_standard_ar_body_r46596.sql"
+  "datavalidator_standard_ar_body_r46596.sql"
+  'sql-mode
+  nil
+  1130
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/dataloader_standard_ar_account_body_r47201.sql"
+  "dataloader_standard_ar_account_body_r47201.sql"
+  'sql-mode
+  nil
+  103986
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/datavalidator_txndcq21_with_erx_36730_20100412_1434.sql"
+  "datavalidator_txndcq21_with_erx_36730_20100412_1434.sql"
+  'sql-mode
+  nil
+  348892
+  '(348927 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/datavalidator_txndcq21_pre_erx_36730_test_20100412_1430.sql"
+  "datavalidator_txndcq21_pre_erx_36730_test_20100412_1430.sql"
+  'sql-mode
+  nil
+  1
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  nil
+  "OLTP"
+  'dired-mode
+  nil
+  1
+  '(1 nil)
+  t
+  '("c:/scc/erx/trunk/DatabaseSchema/OLTP/" "c:/scc/erx/trunk/DatabaseSchema/OLTP/trexone/" "c:/scc/erx/trunk/DatabaseSchema/OLTP/trexone/pkg/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "3rd_party_plan_mapping"
+  'dired-mode
+  nil
+  302
+  '(5092 nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/B_and_R_conversion/3rd_party_plan_mapping/")
+  nil)
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/Source/com/techrx/schema/OLTP/trexone/pkg/trexone_po_batch_head.sql"
+  "trexone_po_batch_head.sql"
+  'sql-mode
+  nil
+  4955
+  '(5049 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/reports/AccountListReportPersistor.java"
+  "AccountListReportPersistor.java"
+  'java-mode
+  '(abbrev-mode view-mode)
+  10996
+  '(2831 nil)
+  t
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/attempt_to_reform_check_rx_linkage_20100413.sql"
+  "attempt_to_reform_check_rx_linkage_20100413.sql"
+  'sql-mode
+  nil
+  7825
+  '(4015 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/B_and_R_conversion/3rd_party_plan_mapping/third_party_plan_mapping_setup_interim_20100413_BandR_uat_803635.sql"
+  "third_party_plan_mapping_setup_interim_20100413_BandR_uat_803635.sql"
+  'sql-mode
+  nil
+  6398
+  '(1948 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/B_and_R_conversion/3rd_party_plan_mapping/third_party_plan_mapping_setup_interim_20100413_BandR_prod_803634.sql"
+  "third_party_plan_mapping_setup_interim_20100413_BandR_prod_803634.sql"
+  'sql-mode
+  nil
+  6385
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  nil
+  "Renlar_conversion_to_ERX"
+  'dired-mode
+  nil
+  3806
+  '(1 nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/3rd_party_plan_mapping/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Sample_data_from_Renlar_team/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Sample_data_from_Renlar_team/Test_environment_maintenance/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Data_map_item_sources/")
+  '((truncate-lines . t)))
+
+(desktop-create-buffer 206
+  nil
+  "Plone"
+  'dired-mode
+  nil
+  18586
+  '(18708 nil)
+  t
+  '("c:/Program Files/Plone/" "c:/Program Files/Plone/bin/" "c:/Program Files/Plone/buildout-cache/" "c:/Program Files/Plone/develop-eggs/" "c:/Program Files/Plone/parts/" "c:/Program Files/Plone/parts/instance/" "c:/Program Files/Plone/parts/instance/Extensions/" "c:/Program Files/Plone/parts/instance/Products/" "c:/Program Files/Plone/parts/instance/bin/" "c:/Program Files/Plone/parts/instance/lib/" "c:/Program Files/Plone/parts/instance/lib/python/" "c:/Program Files/Plone/products/" "c:/Program Files/Plone/python/" "c:/Program Files/Plone/python/Lib/" "c:/Program Files/Plone/var/" "c:/Program Files/Plone/var/instance/" "c:/Program Files/Plone/var/log/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "Performance_improvement"
+  'dired-mode
+  nil
+  1
+  '(1 nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/")
+  '((truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/Software_engineering/Specifications_and_programming/heap_specified.py"
+  "heap_specified.py"
+  'python-mode
+  '(hs-minor-mode view-mode)
+  1
+  '(13079 nil)
+  t
+  nil
+  '((tab-width . 8) (indent-tabs-mode) (buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  nil
+  "Specifications_and_programming"
+  'dired-mode
+  nil
+  404
+  '(nil nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/Software_engineering/Specifications_and_programming/")
+  nil)
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/reports/Utils.java"
+  "Utils.java"
+  'java-mode
+  '(abbrev-mode view-mode)
+  27659
+  '(1 nil)
+  t
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  nil
+  "Python25"
+  'dired-mode
+  nil
+  25266
+  '(20919 nil)
+  t
+  '("c:/Python25/" "c:/Python25/Lib/" "c:/Python25/Lib/distutils/" "c:/Python25/Lib/distutils/command/" "c:/Python25/Tools/" "c:/Python25/Tools/Scripts/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "erx"
+  'dired-mode
+  nil
+  34270
+  '(5971 nil)
+  t
+  '("c:/scc/erx/" "c:/scc/erx/branches/" "c:/scc/erx/branches/release/" "c:/scc/erx/branches/release/2.2.0/" "c:/scc/erx/branches/release/2.2.0/Source/" "c:/scc/erx/branches/release/2.2.0/Source/com/" "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/" "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/" "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/" "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/" "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/maint/" "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/reports/" "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/util/" "c:/scc/erx/trunk/" "c:/scc/erx/trunk/DatabaseSchema/" "c:/scc/erx/trunk/DatabaseSchema/OLTP/" "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/" "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/Baseline/" "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/Baseline/seed_data/" "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/" "c:/scc/erx/trunk/DatabaseSchema/OLTP/trexone/" "c:/scc/erx/trunk/DatabaseSchema/OLTP/trexone/custom_seed_data/" "c:/scc/erx/trunk/DatabaseSchema/OLTP/trexone/custom_seed_data/eprx/" "c:/scc/erx/trunk/DatabaseSchema/OLTP/trexone/model/" "c:/scc/erx/trunk/DatabaseSchema/OLTP/trexone/pkg/" "c:/scc/erx/trunk/DatabaseSchema/OLTP/trexone/seed_data/" "c:/scc/erx/trunk/DatabaseSchema/OLTP/trexone/seed_data/core/" "c:/scc/erx/trunk/Proprietary/" "c:/scc/erx/trunk/Proprietary/ismc/" "c:/scc/erx/trunk/Proprietary/ismc/batch/" "c:/scc/erx/trunk/Proprietary/ismc/batch/bin/" "c:/scc/erx/trunk/Proprietary/ismc/batch/bin/ctl_files/" "c:/scc/erx/trunk/Proprietary/ismc/batch/bin/ctl_files/convdata/" "c:/scc/erx/trunk/Source/" "c:/scc/erx/trunk/Source/com/" "c:/scc/erx/trunk/Source/com/techrx/" "c:/scc/erx/trunk/Source/com/techrx/app/" "c:/scc/erx/trunk/Source/com/techrx/app/trexone/" "c:/scc/erx/trunk/Source/com/techrx/app/trexone/batch/" "c:/scc/erx/trunk/Source/com/techrx/app/trexone/batch/dataloader/" "c:/scc/erx/trunk/Source/com/techrx/app/trexone/batch/dataloader/injector/" "c:/scc/erx/trunk/Source/com/techrx/model/" "c:/scc/erx/trunk/Source/com/techrx/model/util/" "c:/scc/erx/trunk/Source/com/techrx/model/util/batch/" "c:/scc/erx/trunk/Source/com/techrx/schema/" "c:/scc/erx/trunk/Source/com/techrx/schema/OLTP/" "c:/scc/erx/trunk/Source/com/techrx/schema/OLTP/trexone/" "c:/scc/erx/trunk/Source/com/techrx/schema/OLTP/trexone/pkg/" "c:/scc/erx/trunk/trexone/")
+  '((truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Combined_AR_LTC_sample_data/Dependant.Sample.AR+LTC.data.for.store.702.ver9.txt"
+  "Dependant.Sample.AR+LTC.data.for.store.702.ver9.txt"
+  'text-mode
+  nil
+  17884
+  '(17610 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/datavalidator_custom_safeway_body.sql"
+  "datavalidator_custom_safeway_body.sql"
+  'sql-mode
+  nil
+  1
+  '(1 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode) (buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/Schnucks_AR_testing_2010/testing_for_erx_36252.sql"
+  "testing_for_erx_36252.sql"
+  'sql-mode
+  nil
+  11224
+  '(2133 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/Sample_data/Sample.AR.data.for.store.758.ver14_annotated.txt"
+  "Sample.AR.data.for.store.758.ver14_annotated.txt"
+  'text-mode
+  nil
+  921
+  '(541 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/Prolog/clock_sequences.pl"
+  "clock_sequences.pl"
+  'prolog-mode
+  nil
+  623
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Combined_AR_LTC_sample_data/Combined.Sample.AR+LTC.data.for.store.702.ver1.txt"
+  "Combined.Sample.AR+LTC.data.for.store.702.ver1.txt"
+  'text-mode
+  '(view-mode)
+  1
+  '(47163 nil)
+  t
+  nil
+  '((buffer-file-coding-system . undecided-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Combined_AR_LTC_sample_data/LTC_CONVERSION_TEST_DATA_V1_3.txt"
+  "LTC_CONVERSION_TEST_DATA_V1_3.txt"
+  'text-mode
+  nil
+  3813
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Combined_AR_LTC_sample_data/LTC_CONVERSION_TEST_DATA_V1_2.txt"
+  "LTC_CONVERSION_TEST_DATA_V1_2.txt"
+  'text-mode
+  nil
+  1587
+  '(36572 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/dataloader_from_txndcq21_20100324_1050_pre_AR_patient_person_link_fix.sql"
+  "dataloader_from_txndcq21_20100324_1050_pre_AR_patient_person_link_fix.sql"
+  'sql-mode
+  nil
+  1454859
+  '(1781863 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/Sample_data/Sample.AR.data.for.store.758.ver14.txt"
+  "Sample.AR.data.for.store.758.ver14.txt"
+  'text-mode
+  nil
+  541
+  '(541 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/Prolog/two_three_trees.pl"
+  "two_three_trees.pl"
+  'prolog-mode
+  nil
+  3779
+  '(3761 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . iso-latin-1-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Combined_AR_LTC_sample_data/LTC_CONVERSION_TEST_DATA_V1_2_corrected_20100405.txt"
+  "LTC_CONVERSION_TEST_DATA_V1_2_corrected_20100405.txt"
+  'text-mode
+  nil
+  6345
+  '(7061 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/B_and_R_conversion/3rd_party_plan_mapping/third_party_plan_mapping_setup_interim_20100330_BandR_prod_803636.sql"
+  "third_party_plan_mapping_setup_interim_20100330_BandR_prod_803636.sql"
+  'sql-mode
+  nil
+  1499
+  '(39346 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode) (buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/B_and_R_conversion/3rd_party_plan_mapping/third_party_plan_mapping_setup_interim_20100402_BandR_uat_804515.sql"
+  "third_party_plan_mapping_setup_interim_20100402_BandR_uat_804515.sql"
+  'sql-mode
+  nil
+  1
+  '(4729 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  nil
+  "AR_and_LTC_work"
+  'dired-mode
+  nil
+  11162
+  '(1031 nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/Schnucks_AR_testing_2010/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Carmichael_testing_evaluation_200907/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Combined_AR_LTC_sample_data/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Consolidated_code/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Consolidated_code/pkg_building_work/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Consolidated_code/pkg_building_work/scc/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Consolidated_code/pkg_building_work/scc/erx/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Consolidated_code/pkg_building_work/scc/erx/trunk/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Consolidated_code/pkg_building_work/scc/erx/trunk/DatabaseSchema/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Consolidated_code/pkg_building_work/scc/erx/trunk/DatabaseSchema/OLTP/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Consolidated_code/pkg_building_work/scc/erx/trunk/DatabaseSchema/OLTP/conv/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Consolidated_code/pkg_building_work/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/LTC_notes/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "AR_testing_2010"
+  'dired-mode
+  nil
+  1
+  '(947 nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/Sample_data/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/Schnucks_AR_testing_2010/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "Sample_data"
+  'dired-mode
+  nil
+  6364
+  '(339 nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/Sample_data/")
+  '((truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/Schnucks_AR_testing_2010/testing_for_ERX_35981_and_ERX_36258.sql"
+  "testing_for_ERX_35981_and_ERX_36258.sql"
+  'sql-mode
+  nil
+  12528
+  '(6144 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode) (buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_34719_patient_to_ar_account_linking/migrate_ar_person_to_pat.sql"
+  "migrate_ar_person_to_pat.sql"
+  'sql-mode
+  nil
+  1534
+  '(3612 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/Sample_data/Sample_AR_data_for_store_758_ver9b.txt"
+  "Sample_AR_data_for_store_758_ver9b.txt"
+  'text-mode
+  nil
+  1
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/Sample_data/Sample.AR.data.for.store.758.ver13a_annotated.txt"
+  "Sample.AR.data.for.store.758.ver13a_annotated.txt"
+  'text-mode
+  nil
+  19055
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/Sample_data/Sample.AR.data.for.store.758.ver15.txt"
+  "Sample.AR.data.for.store.758.ver15.txt"
+  'text-mode
+  nil
+  1
+  '(18594 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/dataloader_standard_ar_person_head.sql"
+  "dataloader_standard_ar_person_head.sql"
+  'sql-mode
+  nil
+  1008
+  '(910 nil)
+  nil
+  nil
+  '((tab-width . 4) (buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  nil
+  "*info*<2>"
+  'Info-mode
+  nil
+  169887
+  '(1 nil)
+  t
+  '("c:/Program Files/emacs-22.3/info/emacs" "Text and Binary")
+  '((tab-width . 8) (buffer-file-coding-system . undecided-unix) (case-fold-search . t) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/Schnucks_AR_testing_2010/testing_for_ERX_35600.sql"
+  "testing_for_ERX_35600.sql"
+  'sql-mode
+  nil
+  68226
+  '(68530 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/Sample_data/Sample_AR_data_for_store_758_ver9a.txt"
+  "Sample_AR_data_for_store_758_ver9a.txt"
+  'text-mode
+  nil
+  3687
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/Sample_data/Sample.AR.data.for.store.758.ver13.txt"
+  "Sample.AR.data.for.store.758.ver13.txt"
+  'text-mode
+  nil
+  18584
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/defaults/general/AccountDefaultsPersistorImpl.java"
+  "AccountDefaultsPersistorImpl.java"
+  'java-mode
+  '(abbrev-mode)
+  1
+  '(937 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  nil
+  "pl"
+  'dired-mode
+  nil
+  1
+  '(2159 nil)
+  t
+  '("c:/Program Files/pl/" "c:/Program Files/pl/boot/" "c:/Program Files/pl/custom/" "c:/Program Files/pl/doc/" "c:/Program Files/pl/doc/Manual/" "c:/Program Files/pl/doc/packages/" "c:/Program Files/pl/doc/packages/examples/" "c:/Program Files/pl/doc/packages/examples/http/" "c:/Program Files/pl/include/" "c:/Program Files/pl/library/")
+  '((truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/Sample_data/Sample_AR_data_for_store_758_ver12_annotated.txt"
+  "Sample_AR_data_for_store_758_ver12_annotated.txt"
+  'text-mode
+  nil
+  13582
+  '(13961 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  nil
+  "*info*<6>"
+  'Info-mode
+  nil
+  186651
+  '(1 nil)
+  t
+  '("c:/Program Files/emacs-22.3/info/org" "Agenda files")
+  '((tab-width . 8) (buffer-file-coding-system . iso-latin-1-unix) (case-fold-search . t) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/B_and_R_conversion/3rd_party_plan_mapping/B_and_R_data_map_item_creation_ismc06_uat_20100311_for_803636.sql"
+  "B_and_R_data_map_item_creation_ismc06_uat_20100311_for_803636.sql"
+  'sql-mode
+  nil
+  1
+  '(81886 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/B_and_R_conversion/3rd_party_plan_mapping/third_party_plan_mapping_setup_generalized.sql"
+  "third_party_plan_mapping_setup_generalized.sql"
+  'sql-mode
+  nil
+  1236
+  '(37519 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/B_and_R_conversion/3rd_party_plan_mapping/B_and_R_data_map_item_creation_ismc06_prod_20100309_for_803632.sql"
+  "B_and_R_data_map_item_creation_ismc06_prod_20100309_for_803632.sql"
+  'sql-mode
+  nil
+  387
+  '(74187 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/maint/ARAddressBoundaryImpl.java"
+  "ARAddressBoundaryImpl.java"
+  'java-mode
+  '(abbrev-mode)
+  1185
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/dataloader_standard_ar_account_body_changed_20100325.sql"
+  "dataloader_standard_ar_account_body_changed_20100325.sql"
+  'sql-mode
+  nil
+  81748
+  '(3084 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode) (buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/Sample_data/dataloader_saved_from_qa21_20100318_2218.sql"
+  "dataloader_saved_from_qa21_20100318_2218.sql"
+  'sql-mode
+  nil
+  1455801
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/Sample_data/dataloader_saved_for_qa21_erx_35600_erx_35979.sql"
+  "dataloader_saved_for_qa21_erx_35600_erx_35979.sql"
+  'sql-mode
+  nil
+  1487981
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/datavalidator_txndcq21_20100324_0857.sql"
+  "datavalidator_txndcq21_20100324_0857.sql"
+  'sql-mode
+  nil
+  1
+  '(41381 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/Sample_data/Schnucks-758-Sample_AR_data_for_store_758_ver7.txt"
+  "Schnucks-758-Sample_AR_data_for_store_758_ver7.txt"
+  'text-mode
+  nil
+  7532
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/dataloader_from_txndcq21_20200324_1013.sql"
+  "dataloader_from_txndcq21_20200324_1013.sql"
+  'sql-mode
+  nil
+  1514793
+  '(1513520 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode) (buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/process/ProcessPersistorImpl.java"
+  "ProcessPersistorImpl.java"
+  'java-mode
+  '(abbrev-mode)
+  89299
+  '(2416 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/oracle/ora92/network/admin/tnsnames.ora"
+  "tnsnames.ora"
+  'fundamental-mode
+  nil
+  6978
+  '(6691 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/datavalidator_standard_gen_body.sql"
+  "datavalidator_standard_gen_body.sql"
+  'sql-mode
+  nil
+  9021
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/Sample_data/dataloader_standard_ar_account_body_from_qa21_20100318_2218.sql"
+  "dataloader_standard_ar_account_body_from_qa21_20100318_2218.sql"
+  'sql-mode
+  nil
+  59916
+  '(88424 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/Schnucks_AR_testing_2010/ar_balance_records_explanation.txt"
+  "ar_balance_records_explanation.txt"
+  'text-mode
+  nil
+  1092
+  '(1092 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/maint/AccountMaintServiceImpl.java"
+  "AccountMaintServiceImpl.java"
+  'java-mode
+  '(abbrev-mode)
+  3686
+  '(2061 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/B_and_R_conversion/3rd_party_plan_mapping/new_prod_mappings_work_20100210.sql"
+  "new_prod_mappings_work_20100210.sql"
+  'sql-mode
+  nil
+  42517
+  '(4687 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/transactions/ARTransactionPersistorImpl.java"
+  "ARTransactionPersistorImpl.java"
+  'java-mode
+  '(abbrev-mode)
+  5024
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Program Files/emacs-22.3/etc/PROBLEMS"
+  "PROBLEMS"
+  'outline-mode
+  '(view-mode)
+  2149
+  '(nil nil)
+  t
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/defaults/general/AccountDefaultsBoundary.java"
+  "AccountDefaultsBoundary.java"
+  'java-mode
+  '(abbrev-mode)
+  45
+  '(52 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/defaults/general/AbstractGeneralDefaultsPersistor.java"
+  "AbstractGeneralDefaultsPersistor.java"
+  'java-mode
+  '(abbrev-mode)
+  5935
+  '(5942 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/config/account/AccountTypeStatementBoundaryImpl.java"
+  "AccountTypeStatementBoundaryImpl.java"
+  'java-mode
+  '(abbrev-mode)
+  2440
+  '(2447 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/config/account/AccountTypeDefaultsPersistorImpl.java"
+  "AccountTypeDefaultsPersistorImpl.java"
+  'java-mode
+  '(abbrev-mode)
+  13559
+  '(10660 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/config/account/AbstractAccountTypeDefaultsPersistor.java"
+  "AbstractAccountTypeDefaultsPersistor.java"
+  'java-mode
+  '(abbrev-mode)
+  522
+  '(3565 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/reports/core/AccountActivityReportPersistor.java"
+  "AccountActivityReportPersistor.java"
+  'java-mode
+  '(abbrev-mode)
+  8657
+  '(8663 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/maint/AccountMaintBoundaryImpl.java"
+  "AccountMaintBoundaryImpl.java"
+  'java-mode
+  '(abbrev-mode)
+  1
+  '(3702 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/B_and_R_conversion/3rd_party_plan_mapping/B_and_R_data_map_item_creation_ismc06_prod_20100223.sql"
+  "B_and_R_data_map_item_creation_ismc06_prod_20100223.sql"
+  'sql-mode
+  nil
+  1558
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/ltc_hoa_hierarchies_work.sql"
+  "ltc_hoa_hierarchies_work.sql"
+  'sql-mode
+  nil
+  5954
+  '(4252 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Data_map_item_sources/datavalidator_proposed_unmapped_item_query_changes.sql"
+  "datavalidator_proposed_unmapped_item_query_changes.sql"
+  'sql-mode
+  '(hs-minor-mode)
+  338408
+  '(332723 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode) (buffer-file-coding-system . iso-latin-1-dos) (overwrite-mode) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/AccountingCommonPersistorImpl.java"
+  "AccountingCommonPersistorImpl.java"
+  'java-mode
+  '(abbrev-mode)
+  8431
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  nil
+  "accounting"
+  'dired-mode
+  nil
+  829
+  '(nil nil)
+  t
+  '("c:/scc/erx/branches/release/2.2.0/Source/com/techrx/model/service/accounting/")
+  nil)
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/dataloader_from_txndcq21_as_of_20100119_0843.sql"
+  "dataloader_from_txndcq21_as_of_20100119_0843.sql"
+  'sql-mode
+  nil
+  1
+  '(42468 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/dataloader.sql"
+  "dataloader.sql<2>"
+  'sql-mode
+  nil
+  181456
+  '(182234 nil)
+  nil
+  nil
+  '((tab-width . 4) (buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/AR_testing_2010/dataloader_standard_ar_account_body_20100126_annotated.sql"
+  "dataloader_standard_ar_account_body_20100126_annotated.sql"
+  'sql-mode
+  nil
+  47926
+  '(58929 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/B_and_R_conversion/3rd_party_plan_mapping/B_and_R_data_map_item_creation_ismc06_uat_20100114.sql"
+  "B_and_R_data_map_item_creation_ismc06_uat_20100114.sql"
+  'sql-mode
+  nil
+  85085
+  '(49074 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/B_and_R_conversion/3rd_party_plan_mapping/new_uat_mappings_20100205.sql"
+  "new_uat_mappings_20100205.sql"
+  'sql-mode
+  nil
+  399035
+  '(361939 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/oracle/ora92/sqlplus/login.sql"
+  "login.sql"
+  'sql-mode
+  nil
+  5884
+  '(5836 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  nil
+  "*info*"
+  'Info-mode
+  nil
+  1880
+  '(13540 nil)
+  t
+  '("c:/Program Files/emacs-22.3/info/org" "Top")
+  '((tab-width . 8) (buffer-file-coding-system . iso-latin-1-unix) (case-fold-search . t) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  nil
+  "*info*<3>"
+  'Info-mode
+  nil
+  105774
+  '(1 nil)
+  t
+  '("c:/Program Files/emacs-22.3/info/eintr" "Writing Defuns")
+  '((tab-width . 8) (buffer-file-coding-system . undecided-unix) (case-fold-search . t)))
+
+(desktop-create-buffer 206
+  nil
+  "EnterpriseRx"
+  'dired-mode
+  nil
+  3205
+  '(310 nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/EnterpriseRx/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "EnterpriseRx_qamail"
+  'dired-mode
+  nil
+  1750
+  '(6945 nil)
+  t
+  '("c:/Program Files/EnterpriseRx_qamail/" "c:/Program Files/EnterpriseRx_qamail/jpos/" "c:/Program Files/EnterpriseRx_qamail/jre/" "c:/Program Files/EnterpriseRx_qamail/logs/")
+  nil)
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Consolidated_code/pkg_building_work/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/dataloader_standard_ar_account_body.sql-as_of_20091118_0002_kr_tweaks"
+  "dataloader_standard_ar_account_body.sql-as_of_20091118_0002_kr_tweaks"
+  'fundamental-mode
+  nil
+  81124
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  nil
+  "My Documents"
+  'dired-mode
+  nil
+  12823
+  '(1 nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_server_setup/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_server_setup/Database_initialization_scripts/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Dev_database_work/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Dev_database_work/Topological_sorting/" "c:/Documents and Settings/Richard.Stewart/My Documents/Oracle/" "c:/Documents and Settings/Richard.Stewart/My Documents/Software_engineering/" "c:/Documents and Settings/Richard.Stewart/My Documents/Software_engineering/Specifications_and_programming/" "c:/Documents and Settings/Richard.Stewart/My Documents/Svn_experiment/" "c:/Documents and Settings/Richard.Stewart/My Documents/Svn_experiment/branches/" "c:/Documents and Settings/Richard.Stewart/My Documents/Svn_experiment/trunk/" "c:/Documents and Settings/Richard.Stewart/My Documents/Svn_storage/")
+  '((truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/3rd_party_plan_mapping/StLuke_mappings_saved_from_ismc06_uat_20100115.txt"
+  "StLuke_mappings_saved_from_ismc06_uat_20100115.txt"
+  'text-mode
+  nil
+  2216
+  '(343 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_30254_dropping_and_creating_fk_indexes_foolishness/proposed_conv_util_20091002.sql"
+  "proposed_conv_util_20091002.sql"
+  'sql-mode
+  nil
+  40104
+  '(2878 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/datavalidator_slow_statement_in_testdb1_from_cindy_20090511.txt"
+  "datavalidator_slow_statement_in_testdb1_from_cindy_20090511.txt"
+  'text-mode
+  nil
+  7525
+  '(3323 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_33607_safeway_icd9_codes/datavalidator_custom_safeway_body.sql"
+  "datavalidator_custom_safeway_body.sql<2>"
+  'sql-mode
+  nil
+  201
+  '(3231 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode) (buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/3rd_party_plan_mapping/StLuke_mappings_saved_from_ismc06_prod_20100115.txt"
+  "StLuke_mappings_saved_from_ismc06_prod_20100115.txt"
+  'text-mode
+  nil
+  17597
+  '(139 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/3rd_party_plan_mapping/saved_mappings_notes_20100115.txt"
+  "saved_mappings_notes_20100115.txt"
+  'text-mode
+  nil
+  1046
+  '(728 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos)))
+
+(desktop-create-buffer 206
+  nil
+  "Conversion_issues"
+  'dired-mode
+  nil
+  11788
+  '(404 nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/Health_partners_images_issue_20090625/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/Kinney_correction_20090729/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_24599_massgen_clearing_data/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_25603_spartan_non_nullable_field/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_27498_prescriber_query_from_performance_firedrill/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_27871_butt_drug_issues/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_31373_milner_rushing_rx_expiration_dates/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_33057_safeway_make_signature_image_the_last_update_date/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_33607_safeway_icd9_codes/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_34719_patient_to_ar_account_linking/")
+  '((truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_27498_prescriber_query_from_performance_firedrill/performance_testing_in_local_db_20091109.sql"
+  "performance_testing_in_local_db_20091109.sql"
+  'sql-mode
+  '(view-mode)
+  34721
+  '(1835 nil)
+  t
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/Source/com/techrx/app/trexone/batch/dataloader/injector/RunDataset.java"
+  "RunDataset.java"
+  'java-mode
+  '(abbrev-mode view-mode)
+  8029
+  '(nil nil)
+  t
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_27498_prescriber_query_from_performance_firedrill/check_prescriber_addresses_comparisons.sql"
+  "check_prescriber_addresses_comparisons.sql"
+  'sql-mode
+  '(view-mode)
+  7885
+  '(nil nil)
+  t
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/repair_privacyack_actioncode.awk"
+  "repair_privacyack_actioncode.awk"
+  'awk-mode
+  '(abbrev-mode)
+  1
+  '(528 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . iso-latin-1-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_33057_safeway_make_signature_image_the_last_update_date/NewProcedure.sql"
+  "NewProcedure.sql"
+  'sql-mode
+  nil
+  1913
+  '(2800 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/Desktop/RemovePrescriberNPIs_commit.sql"
+  "RemovePrescriberNPIs_commit.sql"
+  'sql-mode
+  '(view-mode)
+  1
+  '(nil nil)
+  t
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  nil
+  "Desktop"
+  'dired-mode
+  nil
+  510
+  '(nil nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/Desktop/")
+  nil)
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Data_map_item_sources/ismc06_prod_environment_data_map_item_reference_data_20091027.sql"
+  "ismc06_prod_environment_data_map_item_reference_data_20091027.sql"
+  'sql-mode
+  nil
+  36925
+  '(37468 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/Clear_script_issues/clear_script_derived_from_trace_file.sql"
+  "clear_script_derived_from_trace_file.sql"
+  'sql-mode
+  nil
+  1323
+  '(20994 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode) (buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_31373_milner_rushing_rx_expiration_dates/rx_expiration_date_update_20091014.sql"
+  "rx_expiration_date_update_20091014.sql"
+  'sql-mode
+  nil
+  15885
+  '(14264 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/dataloader_rx_body.sql"
+  "dataloader_rx_body.sql"
+  'sql-mode
+  nil
+  47248
+  '(1 nil)
+  nil
+  nil
+  '((tab-width . 4) (buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/Image_loading/image_load_report_4620.txt"
+  "image_load_report_4620.txt"
+  'text-mode
+  nil
+  15375
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/dataloader.sql"
+  "dataloader.sql"
+  'sql-mode
+  nil
+  1250810
+  '(1247144 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/Kinney_correction_20090729/redo_kinney_updates_20091217.sql"
+  "redo_kinney_updates_20091217.sql"
+  'sql-mode
+  nil
+  637
+  '(939 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Allergies_issues/allercheck_update_procedure_for_datavalidator.sql"
+  "allercheck_update_procedure_for_datavalidator.sql"
+  'sql-mode
+  '(view-mode)
+  1
+  '(214 nil)
+  t
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  nil
+  "injector"
+  'dired-mode
+  nil
+  783
+  '(442 nil)
+  t
+  '("c:/scc/personal/eclipse/trunk/ErxEclipseTrunk/src/com/techrx/app/trexone/batch/dataloader/injector/")
+  nil)
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Allergies_issues/allercheck_update_statement_20091104.sql"
+  "allercheck_update_statement_20091104.sql"
+  'sql-mode
+  '(view-mode)
+  318969
+  '(74863 nil)
+  t
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  nil
+  "St_Lukes_testing"
+  'dired-mode
+  nil
+  7309
+  '(1 nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/3rd_party_validation_query_work/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Allergies_issues/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Data_map_item_sources/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Second_ELF_file_test_200908/")
+  '((truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/Source/com/techrx/app/trexone/batch/dataloader/injector/LoadDataset.java"
+  "LoadDataset.java"
+  'java-mode
+  '(abbrev-mode view-mode)
+  3232
+  '(14750 nil)
+  t
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/personal/eclipse/trunk/ErxEclipseTrunk/src/com/techrx/app/trexone/batch/dataloader/injector/LoadImages.java"
+  "LoadImages.java"
+  'java-mode
+  '(abbrev-mode)
+  2509
+  '(12374 nil)
+  nil
+  nil
+  '((tab-width . 4) (buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_27498_prescriber_query_from_performance_firedrill/query_in_question_20091001.txt"
+  "query_in_question_20091001.txt"
+  'text-mode
+  nil
+  147337
+  '(140011 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . iso-latin-1-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_27498_prescriber_query_from_performance_firedrill/check_prescriber_address_comparisons_20091026.sql"
+  "check_prescriber_address_comparisons_20091026.sql"
+  'sql-mode
+  nil
+  7747
+  '(7215 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  nil
+  "sqlplus"
+  'dired-mode
+  nil
+  1
+  '(5631 nil)
+  t
+  '("c:/oracle/ora92/sqlplus/")
+  nil)
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/Image_loading/image_load_report_3420.txt"
+  "image_load_report_3420.txt"
+  'text-mode
+  nil
+  19365
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_27498_prescriber_query_from_performance_firedrill/runstats.sql"
+  "runstats.sql"
+  'sql-mode
+  nil
+  22311
+  '(11633 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  nil
+  "Allergies_issues"
+  'dired-mode
+  nil
+  1073
+  '(nil nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Allergies_issues/")
+  nil)
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Data_map_item_sources/Create_Dummy_Plans.sql"
+  "Create_Dummy_Plans.sql"
+  'sql-mode
+  nil
+  1622
+  '(20623 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/personal/eclipse/trunk/ErxEclipseTrunk/src/com/techrx/app/trexone/batch/dataloader/injector/MonitorRun.java"
+  "MonitorRun.java"
+  'java-mode
+  '(abbrev-mode)
+  3023
+  '(4388 nil)
+  nil
+  nil
+  '((tab-width . 4) (buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  nil
+  "Image_loading"
+  'dired-mode
+  nil
+  941
+  '(nil nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/Image_loading/")
+  nil)
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/Image_loading/image_load_report_6004.txt"
+  "image_load_report_6004.txt"
+  'text-mode
+  '(view-mode)
+  1
+  '(nil nil)
+  t
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_33057_safeway_make_signature_image_the_last_update_date/pre_safeway_image_update_20100106.sql"
+  "pre_safeway_image_update_20100106.sql"
+  'sql-mode
+  nil
+  1171
+  '(1184 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/personal/eclipse/trunk/ErxEclipseTrunk/src/com/techrx/tools/dataconverter/util/TaskProgress.java"
+  "TaskProgress.java"
+  'java-mode
+  '(abbrev-mode)
+  8334
+  '(3192 nil)
+  nil
+  nil
+  '((indent-tabs-mode . t) (buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_server_setup/long_running_queries_etc.sql"
+  "long_running_queries_etc.sql"
+  'sql-mode
+  nil
+  1145
+  '(514 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/Clear_script_issues/rxentdc_ora_22325.trc"
+  "rxentdc_ora_22325.trc"
+  'fundamental-mode
+  nil
+  69944
+  '(91553 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/Clear_script_issues/rxentdc_ora_22325_tkprof_report_sorted_1.txt"
+  "rxentdc_ora_22325_tkprof_report_sorted_1.txt"
+  'text-mode
+  nil
+  1
+  '(83945 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/Clear_script_issues/rxentdc_ora_22325_tkprof_report_sorted.txt"
+  "rxentdc_ora_22325_tkprof_report_sorted.txt"
+  'text-mode
+  nil
+  56935
+  '(1843 nil)
+  nil
+  nil
+  '((tab-width . 4) (buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/Clear_script_issues/rxentdc_ora_22325_tkprof_report.txt"
+  "rxentdc_ora_22325_tkprof_report.txt"
+  'text-mode
+  nil
+  55250
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/Kinney_correction_20090729/further_work_20091209.sql"
+  "further_work_20091209.sql"
+  'sql-mode
+  nil
+  16435
+  '(16435 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/Kinney_correction_20090729/price_calc_core_rx_fill_updates.sql"
+  "price_calc_core_rx_fill_updates.sql"
+  'sql-mode
+  nil
+  6995
+  '(1944 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_33057_safeway_make_signature_image_the_last_update_date/erx_33057_notes.sql"
+  "erx_33057_notes.sql"
+  'sql-mode
+  nil
+  4957
+  '(4048 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/Kinney_correction_20090729/notes.sql"
+  "notes.sql"
+  'sql-mode
+  nil
+  4603
+  '(13234 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Allergies_issues/AllerCheck_code_text_from_perkins_20091103.txt"
+  "AllerCheck_code_text_from_perkins_20091103.txt"
+  'text-mode
+  '(view-mode)
+  1
+  '(1 nil)
+  t
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/datavalidator_prototype_20090904_txdhum06_ismc06uat.sql"
+  "datavalidator_prototype_20090904_txdhum06_ismc06uat.sql"
+  'sql-mode
+  nil
+  113553
+  '(113532 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  nil
+  "factor"
+  'dired-mode
+  nil
+  12960
+  '(1 nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/Windows_software/Factor/factor/" "c:/Documents and Settings/Richard.Stewart/My Documents/Windows_software/Factor/factor/extra/" "c:/Documents and Settings/Richard.Stewart/My Documents/Windows_software/Factor/factor/work/" "c:/Documents and Settings/Richard.Stewart/My Documents/Windows_software/Factor/factor/work/palindrome/")
+  nil)
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/3rd_party_validation_query_work/other_investigation_query_file_1.sql"
+  "other_investigation_query_file_1.sql"
+  'sql-mode
+  nil
+  24248
+  '(2256 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/stmts_from_manning_tracefile_20090513.txt"
+  "stmts_from_manning_tracefile_20090513.txt"
+  'text-mode
+  nil
+  1
+  '(183722 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Data_map_item_sources/allergen_xref_contrived.sql"
+  "allergen_xref_contrived.sql"
+  'sql-mode
+  nil
+  646
+  '(1475 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/datavalidator_body_prototype_20090819.sql"
+  "datavalidator_body_prototype_20090819.sql"
+  'sql-mode
+  nil
+  216579
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/datavalidator_edited_for_StLukes_20090718.sql"
+  "datavalidator_edited_for_StLukes_20090718.sql"
+  'sql-mode
+  nil
+  1
+  '(1067 nil)
+  nil
+  nil
+  '((tab-width . 4) (buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/datavalidator_20091028_ismc06_prod_txdhmp06.sql"
+  "datavalidator_20091028_ismc06_prod_txdhmp06.sql"
+  'sql-mode
+  nil
+  256885
+  '(83104 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/Divestiture_deployment_automation/directory_creation_final_for_unix.sh"
+  "directory_creation_final_for_unix.sh"
+  'sh-mode
+  nil
+  3819
+  '(3634 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . unix)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_27498_prescriber_query_from_performance_firedrill/toad_formatter_examples.sql"
+  "toad_formatter_examples.sql"
+  'sql-mode
+  nil
+  10497
+  '(8246 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/3rd_party_validation_query_work/main_query_file_1.sql"
+  "main_query_file_1.sql"
+  'sql-mode
+  nil
+  1
+  '(17120 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/3rd_party_validation_query_work/other_investigation_query_file_2.sql"
+  "other_investigation_query_file_2.sql"
+  'sql-mode
+  nil
+  2830
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  nil
+  "erx_30254_dropping_and_creating_fk_indexes_foolishness"
+  'dired-mode
+  nil
+  435
+  '(1 nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_30254_dropping_and_creating_fk_indexes_foolishness/")
+  '((truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_30254_dropping_and_creating_fk_indexes_foolishness/fk_index_creation_package.sql"
+  "fk_index_creation_package.sql"
+  'sql-mode
+  '(view-mode)
+  5359
+  '(nil nil)
+  t
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  nil
+  "Divestiture_deployment_automation"
+  'dired-mode
+  nil
+  1103
+  '(nil nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/Divestiture_deployment_automation/")
+  '((truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Allergies_issues/duplicated_rows_update_problems_research.sql"
+  "duplicated_rows_update_problems_research.sql"
+  'sql-mode
+  nil
+  279
+  '(38265 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . iso-latin-1-dos)))
+
+(desktop-create-buffer 206
+  nil
+  "Python"
+  'dired-mode
+  nil
+  2184
+  '(1 nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/Windows_software/Python/" "c:/Documents and Settings/Richard.Stewart/My Documents/Windows_software/Python/Zope/" "c:/Documents and Settings/Richard.Stewart/My Documents/Windows_software/Python/Zope/Zope-2.11.4-final/" "c:/Documents and Settings/Richard.Stewart/My Documents/Windows_software/Python/Zope/Zope-2.11.4-final/doc/" "c:/Documents and Settings/Richard.Stewart/My Documents/Windows_software/Python/Zope/Zope-2.11.4-final/doc/PLATFORMS/" "c:/Documents and Settings/Richard.Stewart/My Documents/Windows_software/Python/Zope/Zope-2.11.4-final/inst/" "c:/Documents and Settings/Richard.Stewart/My Documents/Windows_software/Python/Zope/Zope-2.11.4-final/inst/WinBuilders/" "c:/Documents and Settings/Richard.Stewart/My Documents/Windows_software/Python/Zope/Zope-2.11.4-final/inst/WinBuilders/bin/" "c:/Documents and Settings/Richard.Stewart/My Documents/Windows_software/Python/Zope/Zope-2.11.4-final/inst/WinBuilders/doc/" "c:/Documents and Settings/Richard.Stewart/My Documents/Windows_software/Python/Zope/Zope-2.11.4-final/inst/WinBuilders/mk/" "c:/Documents and Settings/Richard.Stewart/My Documents/Windows_software/Python/Zope/Zope-2.11.4-final/lib/" "c:/Documents and Settings/Richard.Stewart/My Documents/Windows_software/Python/Zope/Zope-2.11.4-final/lib/Components/" "c:/Documents and Settings/Richard.Stewart/My Documents/Windows_software/Python/Zope/Zope-2.11.4-final/lib/Components/BTree/" "c:/Documents and Settings/Richard.Stewart/My Documents/Windows_software/Python/Zope/Zope-2.11.4-final/lib/python/" "c:/Documents and Settings/Richard.Stewart/My Documents/Windows_software/Python/Zope/Zope-2.11.4-final/lib/python/Persistence/" "c:/Documents and Settings/Richard.Stewart/My Documents/Windows_software/Python/Zope/Zope-2.11.4-final/lib/python/ZODB/" "c:/Documents and Settings/Richard.Stewart/My Documents/Windows_software/Python/Zope/Zope-2.11.4-final/lib/python/persistent/" "c:/Documents and Settings/Richard.Stewart/My Documents/Windows_software/Python/Zope/Zope-2.11.4-final/lib/python/zodbcode/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "*info*<4>"
+  'Info-mode
+  nil
+  233465
+  '(1 nil)
+  t
+  '("c:/Program Files/emacs-22.3/info/elisp" "Syntax Descriptors")
+  '((tab-width . 8) (buffer-file-coding-system . iso-latin-1-unix) (case-fold-search . t) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  nil
+  "erx_27498_prescriber_query_from_performance_firedrill"
+  'dired-mode
+  nil
+  367
+  '(nil nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_27498_prescriber_query_from_performance_firedrill/")
+  nil)
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Data_map_item_sources/ismc06_uat_environment_data_map_item_reference_data_20090904.sql"
+  "ismc06_uat_environment_data_map_item_reference_data_20090904.sql"
+  'sql-mode
+  nil
+  34010
+  '(33903 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  nil
+  "*info*<5>"
+  'Info-mode
+  nil
+  268585
+  '(236146 nil)
+  t
+  '("c:/Program Files/emacs-22.3/info/elisp" "Example Major Modes")
+  '((tab-width . 8) (buffer-file-coding-system . undecided-unix) (case-fold-search . t) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Program Files/emacs-22.3/lisp/progmodes/sql.el"
+  "sql.el"
+  'emacs-lisp-mode
+  nil
+  3498
+  '(118814 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Data_map_item_sources/allercheck_to_medispan_bridge_translation_notes.txt"
+  "allercheck_to_medispan_bridge_translation_notes.txt"
+  'text-mode
+  nil
+  392
+  '(580150 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  nil
+  "Test_environment_maintenance"
+  'dired-mode
+  nil
+  540
+  '(nil nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Sample_data_from_Renlar_team/Test_environment_maintenance/")
+  nil)
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_server_setup/settings_checking_notes.txt"
+  "settings_checking_notes.txt"
+  'text-mode
+  nil
+  1
+  '(7923 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/Divestiture_deployment_automation/directory_creation_original.sh"
+  "directory_creation_original.sh"
+  'sh-mode
+  nil
+  653
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  nil
+  "McKesson"
+  'dired-mode
+  nil
+  46118
+  '(46851 nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Consolidated_code/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Consolidated_code/pkg_building_work/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Consolidated_code/pkg_building_work/pkgbuild/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Consolidated_code/pkg_building_work/scc/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Consolidated_code/pkg_building_work/scc/erx/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Consolidated_code/pkg_building_work/scc/erx/trunk/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Consolidated_code/pkg_building_work/scc/erx/trunk/DatabaseSchema/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Consolidated_code/pkg_building_work/scc/erx/trunk/DatabaseSchema/OLTP/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Consolidated_code/pkg_building_work/scc/erx/trunk/DatabaseSchema/OLTP/conv/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Consolidated_code/pkg_building_work/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/LTC_notes/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Schnucks_testing_200910/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Schnucks_testing_200910/Package_building/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_and_validation_source/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_and_validation_source/scc/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_and_validation_source/scc/erx/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_and_validation_source/scc/erx/trunk/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_and_validation_source/scc/erx/trunk/DatabaseSchema/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_and_validation_source/scc/erx/trunk/DatabaseSchema/OLTP/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_and_validation_source/scc/erx/trunk/DatabaseSchema/OLTP/conv/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_and_validation_source/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/Health_partners_script_issue_20090616/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/Purging_of_aged_data_issues/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_31373_milner_rushing_rx_expiration_dates/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/sql_assistance_20090219_erx_21286/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/uw_uat_20090226/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_server_setup/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_server_setup/Database_initialization_scripts/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/EnterpriseRx/" "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/")
+  '((truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/filter_renlar_extra_record_types_unix.awk"
+  "filter_renlar_extra_record_types_unix.awk"
+  'awk-mode
+  '(abbrev-mode)
+  1286
+  '(349 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_server_setup/Database_initialization_scripts/TXCONV.sql"
+  "TXCONV.sql"
+  'sql-mode
+  nil
+  1039
+  '(3140 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Program Files/emacs-22.3/lisp/progmodes/plsql.el"
+  "plsql.el"
+  'emacs-lisp-mode
+  nil
+  6082
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-unix)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/branches/release/2.1.1/DatabaseSchema/OLTP/conv/pkg/p_dataloader_body.sql"
+  "p_dataloader_body.sql<2>"
+  'sql-mode
+  nil
+  222009
+  '(1642620 nil)
+  nil
+  nil
+  '((tab-width . 4) (buffer-file-coding-system . unix)))
+
+(desktop-create-buffer 206
+  nil
+  "pkg<3>"
+  'dired-mode
+  nil
+  175
+  '(nil nil)
+  t
+  '("c:/scc/erx/branches/release/2.1.1/DatabaseSchema/OLTP/conv/pkg/")
+  nil)
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_30254_dropping_and_creating_fk_indexes_foolishness/proposed_dbmaint_20091002.sql"
+  "proposed_dbmaint_20091002.sql"
+  'sql-mode
+  nil
+  7489
+  '(1327 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_30254_dropping_and_creating_fk_indexes_foolishness/proposed_util_packages_bifurcated_using_primitives_20091002_1206.sql"
+  "proposed_util_packages_bifurcated_using_primitives_20091002_1206.sql"
+  'sql-mode
+  nil
+  58676
+  '(58517 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_30254_dropping_and_creating_fk_indexes_foolishness/local_db_testing_20090930.sql"
+  "local_db_testing_20090930.sql"
+  'sql-mode
+  nil
+  36848
+  '(36711 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/dataloader_body.sql"
+  "dataloader_body.sql<2>"
+  'sql-mode
+  nil
+  150782
+  '(166694 nil)
+  nil
+  nil
+  '((tab-width . 4) (buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/Purging_of_aged_data_issues/topological_sort_for_purging.txt"
+  "topological_sort_for_purging.txt"
+  'text-mode
+  nil
+  14288
+  '(4272 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Data_map_item_sources/transcript_of_reference_data_creation_20090719.sql"
+  "transcript_of_reference_data_creation_20090719.sql"
+  'sql-mode
+  '(hs-minor-mode view-mode)
+  22580
+  '(56438 nil)
+  t
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/trexone_1_6.sql"
+  "trexone_1_6.sql"
+  'sql-mode
+  nil
+  2434324
+  '(1 nil)
+  nil
+  nil
+  '((tab-width . 4) (buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/Application Data/org/notes.org"
+  "notes.org"
+  'org-mode
+  '(auto-fill-mode)
+  90972
+  '(65970 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Second_ELF_file_test_200908/tracing_one_rx_notes_20090810.sql"
+  "tracing_one_rx_notes_20090810.sql"
+  'sql-mode
+  nil
+  1340843
+  '(1342824 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  nil
+  "progmodes"
+  'dired-mode
+  nil
+  10664
+  '(nil nil)
+  t
+  '("c:/Program Files/emacs-22.3/lisp/progmodes/")
+  nil)
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_server_setup/Database_initialization_scripts/OLTP_ClientId_2.1.sql"
+  "OLTP_ClientId_2.1.sql"
+  'sql-mode
+  '(view-mode)
+  1
+  '(13381 nil)
+  t
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Second_ELF_file_test_200908/purge_OLTP_2.1_wo_ltc_ar.sql"
+  "purge_OLTP_2.1_wo_ltc_ar.sql"
+  'sql-mode
+  nil
+  1
+  '(21817 nil)
+  nil
+  nil
+  '((tab-width . 4) (buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/Source/com/techrx/schema/OLTP/trexone/pkg/trexone_workflow_body.sql"
+  "trexone_workflow_body.sql"
+  'sql-mode
+  nil
+  69535
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/Source/com/techrx/schema/OLTP/trexone/pkg/trexone_workflow_body_debugging_session_v34373.sql"
+  "trexone_workflow_body_debugging_session_v34373.sql"
+  'sql-mode
+  nil
+  69366
+  '(197220 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/scc/erx/trunk/Source/com/techrx/schema/OLTP/trexone/pkg/trexone_patient_admin_body.sql"
+  "trexone_patient_admin_body.sql"
+  'sql-mode
+  '(view-mode)
+  25274
+  '(25748 nil)
+  t
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/notes_about_testing_of_Kinney_store_12.sql"
+  "notes_about_testing_of_Kinney_store_12.sql"
+  'sql-mode
+  nil
+  820
+  '(15506 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Second_ELF_file_test_200908/trace_rx_script.sql"
+  "trace_rx_script.sql"
+  'sql-mode
+  nil
+  6496
+  '(6706 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Second_ELF_file_test_200908/reset_load_statuses.sql"
+  "reset_load_statuses.sql"
+  'sql-mode
+  nil
+  2280
+  '(1369 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Data_map_item_sources/kinney_data_testing_data_map_item_population_20090609.txt"
+  "kinney_data_testing_data_map_item_population_20090609.txt"
+  'text-mode
+  nil
+  1223
+  '(3555 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Carmichael_testing_evaluation_200907/stage_ar_account_diagnosis_20090723.sql"
+  "stage_ar_account_diagnosis_20090723.sql"
+  'sql-mode
+  nil
+  16225
+  '(15616 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Data_map_item_sources/tp_plan_checking_query.sql"
+  "tp_plan_checking_query.sql"
+  'sql-mode
+  nil
+  11671
+  '(201706 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  nil
+  "Safeway_and_load_testing_issues"
+  'dired-mode
+  nil
+  700
+  '(1 nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/")
+  nil)
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Testing_of_Part_I/St_Lukes_testing/Data_map_item_sources/data_map_item_creation.sql"
+  "data_map_item_creation.sql"
+  'sql-mode
+  nil
+  38067
+  '(35023 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/trexone_corereports_online_annotated_20090601.sql"
+  "trexone_corereports_online_annotated_20090601.sql"
+  'sql-mode
+  nil
+  126904
+  '(25779 nil)
+  nil
+  nil
+  '((tab-width . 4) (buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  nil
+  "Carmichael_testing_evaluation_200907"
+  'dired-mode
+  nil
+  368
+  '(nil nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Carmichael_testing_evaluation_200907/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "emacs-22.3"
+  'dired-mode
+  nil
+  52475
+  '(45050 nil)
+  t
+  '("c:/Program Files/emacs-22.3/" "c:/Program Files/emacs-22.3/lisp/" "c:/Program Files/emacs-22.3/lisp/progmodes/" "c:/Program Files/emacs-22.3/site-lisp/")
+  nil)
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/migrate_rx_block_excerpt.sql"
+  "migrate_rx_block_excerpt.sql"
+  'sql-mode
+  '(view-mode)
+  389048
+  '(418916 nil)
+  t
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/rx_initial_query.sql"
+  "rx_initial_query.sql"
+  'sql-mode
+  nil
+  9271
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/Application Data/org/expenses.org"
+  "expenses.org"
+  'org-mode
+  nil
+  1096
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  nil
+  "erx_25603_spartan_non_nullable_field"
+  'dired-mode
+  nil
+  370
+  '(nil nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Conversion_issues/erx_25603_spartan_non_nullable_field/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "org"
+  'dired-mode
+  nil
+  393
+  '(nil nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/Application Data/org/")
+  nil)
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/Sample_data_from_Renlar_team/Test_environment_maintenance/environment_metadata.txt"
+  "environment_metadata.txt"
+  'text-mode
+  '(view-mode)
+  1
+  '(2392 nil)
+  t
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos) (truncate-lines . t)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/Application Data/diary"
+  "diary"
+  'fundamental-mode
+  nil
+  144953
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos)))
+
+(desktop-create-buffer 206
+  "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Renlar_conversion_to_ERX/medical_conditions_research_20090615.txt"
+  "medical_conditions_research_20090615.txt"
+  'text-mode
+  nil
+  2700
+  '(2106 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-dos)))
+
+(desktop-create-buffer 206
+  nil
+  "eclipse3.4.0"
+  'dired-mode
+  nil
+  735
+  '(nil nil)
+  t
+  '("c:/eclipse/eclipse3.4.0/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "Emacs_language_tools"
+  'dired-mode
+  nil
+  888
+  '(428 nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/My Documents/Software_engineering/Emacs_language_tools/" "c:/Documents and Settings/Richard.Stewart/My Documents/Software_engineering/Emacs_language_tools/cedet-1.0pre6/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "Application Data"
+  'dired-mode
+  nil
+  681
+  '(nil nil)
+  t
+  '("c:/Documents and Settings/Richard.Stewart/Application Data/")
+  nil)
+

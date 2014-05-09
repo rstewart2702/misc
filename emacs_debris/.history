@@ -1,0 +1,44 @@
+grep
+--
+path
+--
+exit
+--
+set
+--
+exit
+--
+pwd
+--
+find 
+--
+find --help
+--
+exit
+--
+cd c:/oracle/ora92
+--
+cd c:\oracle\ora92
+--
+cd sqlplus
+--
+sqlplus "/ as sysdba"
+--
+startup open antioch2
+--
+exit
+--
+exit
+--
+plcon
+--
+cd \Program Files\
+--
+cd pl\bin
+--
+plcon
+--
+.\plcon
+--
+?
+--

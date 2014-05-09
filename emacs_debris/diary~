@@ -1,0 +1,2420 @@
+12/01/2008 
+  8:15 Arrived at work (approximate)
+  Spent most of the day trying to get software set up on my work PC in
+  order to get access to the Java-code which invokes Oracle stored
+  procedures/packages (like the DATALOADER, DATAVALIDATOR.) I was
+  trying to get a feel for how the Java-code is invoked, how and when
+  it writes entries into QuickBuilder logs, etc. It was truly useful
+  to get Eclipse set up, but it wasn't until the end of the day that
+  Bron pointed us to an "example buildfile" (named build.xml) which
+  helps Eclipse "comprehend" a big enough chunk of the entire source
+  tree of EnterpriseRX to enable one to browse through the Java code
+  invoked via instances of BatchLauncher.
+  
+  (I had forgotten how powerful and simple this diary stuff is! Emacs
+  is one of the greatest free-software systems on the planet!)
+
+12/02/2008 
+  8:15 Arrived at work (Approximate)
+  Showed Phani how I have used Eclipse (with the build.xml file Bron
+  provided) to "troll through" and "browse through" the Java code
+  which is driven by the QuickBuild processes. Lots of stuff done
+  (inside of Java-driven-by-Ant-driven-by-QuickBuild) that could be
+  done a bit more simply...
+  
+  I spent a good deal of time comprehending the Java source tree, and
+  trying to track down where the Oracle Package procedures (in the
+  DATALOADER package, for example) are invoked.
+  
+  10am (Approximately) Keith and Calvin spoke with me; Calvin said
+  that nothing is more important (right now) than this conversion
+  work. Explained what I was doing to Calvin, showed him how I'd
+  figured out how to use Eclipse to walk through the sources and
+  figure out where things lie. He also asked me to give him a weekly
+  status report (bulleted list of "what I did this past week, what I
+  plan to do this week.")
+  
+  11am Keith wanted me to focus my attention on the datavalidator (sp?)
+  package; there are threshold specifications in one of the metadata
+  tables mentioned therein; he also recommended looking into one of
+  the QA_MEDISPAN instances, looking at the datavalidator package
+  there, and in particular, at how the metadata stored in the
+  dataload_setting table is used. (There are some threshold values
+  stored there...) {Note from later in the day: apparently, the table
+  DATALOAD_SETTING is only used within the DATALOADER package:
+    inside the LOAD_RUN procedure
+    inside the PURGE_FACILITY_RXS procedure
+    inside the PURGE_CONVERTED_RXS procedure
+  and it is not referenced at all within the DATAVALIDATOR
+  package. So, either I just don't understand what Keith's talking
+  about, or he misunderstands its role in things? Too early to tell,
+  as I don't yet understand what role that table is supposed to play
+  in things...}
+  
+  11:42am started heating up my lunch.
+  I *must* get my W4 stuff created, and I shall have to get on the
+  phone with the weenie who's supposed to be fixing my remote access
+  capabilities! (must admit I'm kind of tired of this sort of
+  thing...)
+  
+  12:15pm finished lunch
+  
+  1:45pm Still looking into the structure of the ValidateDataset
+  class, and its methods; the whole thing is rather procedural, not
+  very object-oriented at all. Classes like LoadDataset,
+  ValidateDataset, are just "containers for procedures," really. (This
+  is sort of in keeping with the way PL/SQL is often written, but this
+  style is not very well-suited to Java, or else it doesn't play to
+  Java's strengths...) I think that I shall be able to write, or start
+  to write, new procedures (as Keith thinks necessary?) to add to the
+  DATAVALIDATOR package, if need be. But, doggone it!!! I NEED a
+  reasonable development environment, and that's not coming any
+  quicker than my remote access has been coming. (This is kinda
+  awful...)
+ 
+  2:20pm It's pretty clear that there are two levels of indirection
+  within the DATAVALIDATOR package (not sure I presently understand
+  the thinking of the original designer, but, oh well...) There's
+  another metadata table, called DATAVALIDATOR_TEST, which drives
+  which "test procedures" are invoked (presently, they're invoked by
+  Java code, and I fail to see the necessity for Java to invoke each
+  individual test procedure in a lockstep sequence...) I'm having
+  visions of something radically simpler and more reliable, which
+  processes a great deal on the Oracle side, and which relegates the
+  Java code to what it does best: web-side, client-visible code, which
+  queries Oracle databases for status information. This would make
+  things much more reliable, would separate concerns MUCH more cleanly
+  than they currently are. Why don't people think about such issues,
+  even for five minutes, before they haul off and start coding?)
+ 
+  3:22pm Found out from Bron that the place to look for triggers (on
+  the OLTP schema) is in the trexone_data schema (when, for example,
+  logged into the QA_MEDISPAN instance, as user txstage/stage...)
+  There, I see that, for example, table rx_base has an after
+  update-delete-insert trigger defined (but I don't know if an
+  after-statement, per-row trigger will cause the kinds of concurrency
+  control issues which would motivate somebody to write a PL/SQL loop
+  that does a row-at-a-time update, like the ones I had to write on
+  the CIT database for AT&T...)
+ 
+  3:33pm I *definitely* need to perform the following actions:
+  (i) create a new tablespace in my own local Oracle instance
+  (ii) create a new user to hold the staging stuff (at the very least)
+  (iii) pull in the new staging tables, and their data, from an
+  example schema
+  (iv) pull in the oltp tables (if possible) into another schema on
+  the same local database instance (if there's room... Maybe just the
+  tables that're actually being targeted? It'll be tough to tell at
+  first, right?)
+  (v) set up the same kinds of synonyms from the staging schema into
+  the oltp schema.
+  This'll be a good application for the "dependency-checker" I
+  created, although the places where they use "dynamic" techniques
+  will make it more difficult, right? Maybe start a database of
+  dependencies, etc? (might be handy anyway, right?)
+  This is all because I need, as soon as possible, to figure out a way
+  to get this stuff to run, at least in part, on my local machine,
+  right? This way I can really move much more quickly, and get a head
+  start on having a "sandbox," right?
+  We need to understand what the "urgency" is with getting a local
+  sandbox set up, right? What the heck is the issue with getting that
+  stuff set up quickly?
+ 
+  4:32pm Just got off the phone with Cedric Alford (404-461-1265), an
+  IT support guy who had my ticket to get my privileges to use the
+  Citrix RDP client enabled so that I could have remote access from
+  home. Apparently, the requests to use that capability are just
+  a-pouring in, and ol'Cedric was concerned about who's going to pay
+  for it all, seeing as how they just had an audit, and they have
+  discovered that it costs $300 for each PC somebody wants to use the
+  RDP client from! I am wondering, now, long-term, whether or not I
+  should try to get VPN access via a company-supplied laptop! Because
+  ol' Cedric did confirm that the Citrix infrastructure is being
+  pushed to do more than they originally intended for it to
+  do. (What's more, this RDP thingie was originally intended to be a
+  "convenience" for IT support personnel to use, and now there's been
+  some freaking out over the fact that every time somebody
+  downloads/fetches that RDP client software to a remote PC, it costs
+  McKesson $300... Meh.) Well, at least I have the access I need now,
+  and should be able to remotely access my machine.
+  
+  6:13pm Just got done with talking to Keith for about 45 minutes (I
+  think!) He gave me some more to-do's for tomorrow, for sure, about
+  the AR-related work, and how he's been poring over the "conversion
+  specifications" for the AR system, which is all-of-a-sudden very
+  important (it was before I got here...)
+  
+12/3/2008 
+  To-do's for today, derived from yesterday's discussions:
+  Need to understand the role of the DATALOAD_SETTING table in things,
+  see if it plays a smaller role than Keith R. thought, right?
+  Need to examine the "Dataconversion requirements for A/R" document
+  Keith sent me, plus the A/R datamodel document, the AR
+  dataconversion wiki (Keith's page?)
+  Need to look for that "Enterprise Fields.xls" specifications file
+  (which enumerates the EnterpriseRX fields): IT SHOULD BE IN THE
+  SUBVERSION REPOSITORY, right?
+  Also need to get Oracle setup for personal machine completed, right?
+  
+  8:03am (Approximately) Arrived at the office.
+  Need to:
+  get "local Oracle instance" set up, and
+  get an understanding of the tables the DATALOADER and DATAVALIDATOR
+  packages depend upon (this will go a long way towards helping us
+  determine which tables need to be "copied in the local Oracle
+  instance..."
+  
+  8:49am (Neither Calvin nor Keith are in the office yet...)
+  
+  9:40am Keith finally arrived!
+  
+  9:40am Got the new tablespace created on the local instance (thanks
+  to some example commands I had saved from previous work) and created
+  a new local user with (hopefully) most of the needed privileges to
+  get started. Now I must turn my attention to getting the local
+  copies of tables created...
+  
+  9:56am Appears that it might be a bit more tricky to get things
+  "copied over" than I thought. They use a pile of synonyms to point
+  to that trexone_proxy schema, and access views there; I think they
+  said that those guys were "views wrapped around tables." I may need
+  to create my own local "trexone_proxy" schema, and put views/tables
+  into it as well?
+  {I wonder what the heck KR expects to be able to accomplish this
+  week? Meh.}
+  
+  12:07pm It's becoming pretty clear to me that there are going to be
+  several obstacles to getting a "complete" data set imported into my
+  local db (and it's not clear whether or not it will be useful to my
+  efforts in the near term anyhow....) There are lots of synonyms
+  which point to other objects in other schemata, which I will have to
+  duplicate somehow. I may have a way to run down a lot of this
+  automatically, but it will take some more time, maybe more time than
+  I've got. We need to understand whether or not that Linux box will
+  be available soon; if so, then I'll abandon these efforts for
+  now. And right now, I shall have to take a break soon, and I shall
+  have to switch over to working on the DATAVALIDATOR package anyhow,
+  enhancing my understanding of that bad boy, anyway.
+  
+  12:35pm call/inquire about contact lenses
+  
+  3:32pm Have spent the rest of the day poring over the code in the
+  DATAVALIDATOR and DATALOADER packages; have discovered that the
+  DATALOADER package is a seriously complicated piece of work (e.g.,
+  look at the migrate_patient_block procedure: it contains on the
+  order of seventy nested sub-programs... I don't know what to do with
+  such an astonishingly complicated artifact. The only editor I could
+  find that would help me start to make sense of it was the PL/SQL
+  Developer system from allaroundautomations, a Dutch company! And in
+  a 30-day trial version of their system, I was able to get an outline
+  view of that monstrosity of a procedure, and accidentally punched
+  the "compile" button whilst logged into the QA_MEDISPAN
+  environment. One Oracle error that came back was "PLS-00123 Program
+  too large"... So I don't know how they got it to compile in the
+  first place, and now it won't work properly the next time they try
+  to do a conversion? Dangit.)
+  
+  I do think I understand the basic flow of the DATAVALIDATOR package
+  now, but that DATALOADER is going to continue to be a big problem
+  for us until somebody decides to do something about it, and I will
+  try to lobby for that package to be reworked/revisited with Gaddis
+  at the earliest opportunity.
+  
+  3:43pm I am going to take about 15 minutes to call AL Vision Center
+  and see about whether or not we still have some VSP money left to
+  re-order contact lenses with!
+  
+  3:51pm AL Vision Center passed me off to their Optical Shop, so I
+  hope to hear back from them soon. (205-592-3911 is AL Vision
+  Center's number...)
+  
+  3:51pm onwards: continued to digest/understand the "AR Conversion
+  Requirements" document that KR had forwarded to me...
+
+  4:52pm Okay, DATALOAD_SETTING is used in the DATALOADER package, to
+  load a PL/SQL collection called pkg_settings. Okay, so it looks like
+  that table is ONLY used by the DATALOADER package, and it seems that
+  the pkg_settings collection is used to pass important settings
+  information to the various procedures invoked within that doggone
+  package. So, the various "tolerances" that're used in that table are
+  what I should look into next, correct? How are the data queried and
+  then compared to the tolerance values specified in the
+  DATALOAD_SETTING table after an attempt to load things, etc?
+  
+  5:15pm (approximate) left the office, after speaking briefly with
+  Keith, who reiterated that the DATAVALIDATOR package will be the
+  focus for that AR conversion work, as it will probably be the place
+  where most of the additions will be made (I think?)
+
+12/4/2008 
+  7:55am (approximate) arrived in the office; will probably have to
+  leave at about 11am, to be gone for a couple of hours, and sent
+  email to team to that effect.
+  
+  11:10am (appt) need to make W4 changes, if possible, fill out auto-deposit
+  information, and try to get that "personal information" stuff filled
+  out (via mcknet...)
+  
+  9:56am (approximately) Keith R arrived.
+  
+  10:00am Started trying to work out how to use my topological sorting
+  PL/SQL code to derive a build-ordering so that I can get the correct
+  set of objects built out in a local schema, hopefully. Perhaps, one
+  day, this can become part of a regularly used process?
+  
+  11:20am Had to leave for my mid-morning appointment...
+  
+  2:20pm Finally back to the office!!! ARRRGH!
+
+  2:48pm It seems that most of the "threshold checking" is done via
+  the "post-apply" routines invoked by the "apply-it-to-oltp"
+  processing that comes after the DATAVALIDATOR package is used. So, I
+  think that I should, in the end of it, create my own doggone
+  package, perhaps in the same general style and structure of the
+  existing packages, to do the "threshold checking" that the AR
+  requirements seem to be asking for.
+  
+  4:35pm to about 5:05pm Sappan (I think) came by my desk, basically
+  asking about whether or not I had mad some neads or tails of the
+  DATALOADER package myself; we spent about 30 minutes (I think) going
+  through the source code using the PLSQLDeveloper tool, and also
+  tracing things from the "top" where they begin within the Java code
+  invoked via the Quickbuild-process-which-drives-Ant. (He was just as
+  frightened by the PL/SQL code as I was. I fail to understand why
+  they did some of the things they did, why they sought to do some of
+  those "do it yourself" parallelism that they had...)
+
+  5:38pm Have spent a little more time going throught the flow of the
+  DATALOADER, trying to understand how the RUN_DATASET procedure gets
+  used; it seems that the wretched procedure invokes the
+  PROCESS_DOMAINS procedure (via DBMS_JOBS, at that!) to run it in the
+  "background." And there is an invocation of the MIGRATE_PRESCRIBERS
+  procedure first (and it invokes several other "MIGRATE_" procedures,
+  as far as I can tell...) It seems that there is some "old" legacy
+  code left behind in the DATALOADER package, I think, because I see
+  simplified versions of several procedures in place there, and more
+  complicated versions of the same present as well.
+  
+  6pm (approximate) left the office...
+  
+  TO-DO's for tomorrow morning, late this evening:
+  Perhaps via Jira tickets, create requests to get proper permissions
+  granted, objects created, to support the proper use of explain plan
+  and "autotrace" functionality that our standard tools BADLY NEED in
+  order for us to do a proper job!!!
+
+12/5/2008 
+  8am Arrived in the office; CG walked in right before I did, I
+  believe...
+  
+  Received an email from KR last night; it enumerates the requests he
+  tried to make of me right before I left the office at about 6pm...
+  
+  9am (approximate) KR arrives (a little earlier this time...)
+  
+  9:15am further thoughts on the DATALOADER package: there is lots of
+  procedural thinking that is present in that thing (really
+  grating...) This makes it very difficult to get an understanding of
+  what's going on... Ok: there's lots of "prep all of this stuff by
+  fetching things into in-memory collections," and then later code
+  which traverses that collection one member at a time, and uses that
+  to execute individual update (or insert?) statements. AND THEN:
+  THERE'S A CALL, FOR EXAMPLE, TO A PROCEDURE CALLED check_update
+  WHICH SIMPLY CHECKS THE STATE OF sql%rowcount TO SEE IF IT'S
+  NON-ZERO! OBVIOUSLY, THE AUTHOR DIDN'T UNDERSTAND HOW TO GUARANTEE
+  THAT THE UPDATE WOULD SUCCEED, OR WOULDN'T BE NECESSARY; FEELS LIKE
+  LOTS OF "DEFENSIVE CODING" DONE BECAUSE THERE WAS A GENERAL LACK OF
+  UNDERSTANDING AND THUS LACK OF CONFIDENCE IN THE SYSTEM.
+  
+  9:50am Seems that I shall need to get an understanding of how these
+  DATAVALIDATOR routines return results to the Java code. My current
+  understanding is this: they open a cursor, and the cursor is
+  returned, ultimately, to the Java code which invoked the stored
+  procedure body in the first place.
+  
+  The requirements, to make a new testing procedure work within the
+  existing framework, are as follows:
+  
+  + We shall need to add some "enumStandardSomethingOrOtherPre"
+    routines which shall insert appropriate rows into the
+    DATAVALIDATOR_TEST table. This ensures that the Java code (in
+    ValidateDataset.runTests()) will retrieve the correct list of
+    test procedure names from the database.
+  + ValidateDataset.runTests() consumes rows returned from the
+    DATAVALIDATOR.enumerateTests() routine, via a cursor retrieved via
+    the first out-parameter. The cursor which
+    DATAVALIDATOR.enumerateTests() creates is based on a query against
+    the DATAVALIDATOR_TEST table. The Java code (in
+    ValidateDataset.runTests()) is driven by rows retrieved from that
+    cursor to execute test procedures named in the columns retrieved
+    from that query, eh?
+  + There are several standard parameters required by these "test"
+    procedures which the Java code expects to work with:
+    (1) first parameter is always an instance of a DATAVALIDATOR_ARGS
+    "Oracle-type" (it is a database-resident type-structure, most
+    likely created with a "create type" statement...)
+    (2) 2nd through 6th parameters are ref-cursors
+  + These test procedures (preCardDupID, for example) following this
+    pattern:
+    (1) execute a query (perhaps based on dataset and facility
+    specified in the Dataset and FacilityNum fields of the
+    DATAVALIDATOR_ARGS structure passed in the first parameter, named
+    "Args") that counts (or something like that)
+    (2) if the count is non-zero (i.e., the data did not pass the
+    test) then:
+      Set the Args.Result to RESULT_FAIL, or RESULT_WARN;
+      Set the Args.Cursors to hold the number of cursors that will be
+      opened (in the set of returned, ref-cursor, out-parameters);
+      Open up a cursor for each "record type" involved in the problem
+      identified by the counting query that was executed by the
+      procedure (Each of these queries is intended to create an
+      aggregation over the set of incorrect records, or something like
+      that, so that we can give the users a feel for how many staging
+      records of a particular type contained an incorrect code value,
+      for example); {see the preRxValidDAWCodes procedure, for example}
+      {good infrastructure, approach, on the face of it, right?}
+    (3) Might possibly update the "staging" records that had just been
+    queried to reset their invalid codes, or something like that. (The
+    preRxValidDAWCodes does just that, as an example...)
+  
+  Now, a great deal of what's been written above was also documented
+  by the Keane guys (Venki and Sappan), but they fail to mention (in
+  the draft of their document which I possess) how the Java-driven
+  infrastructure ties into it.
+  
+  11:40am (approximately) I presented the above analysis (of how any
+  new "validation testing procedures" should be implemented and worked
+  into the existing DATAVALIDATOR framework) to KR. He seemed to be
+  okay with what I had to say thus far. [editorial comment: there
+  doesn't seem to be much urgency on anybody's part to get a
+  development environment "up and available," or else Keith and Bron
+  are just so overwhelmed right at the moment that they don't have the
+  spare mental energy to help get access to one; it did sound like
+  that they probably have some ideas about what kind of environment
+  out there we could just "cannibalize"...]
+  
+  3:30pm Have been working all day on comprehending things further;
+  after spending the morning on the analysis of how to add to the
+  DATAVALIDATOR test suite, I worked further into the DATALOADER
+  package. I have printed out DATALOADER.migrate_prescriber_block, as
+  an example to look at. I have also determined that they probably
+  don't use the "possible parallelism" most of the time in the
+  DATALOADER. (In other words, it doesn't look as though the
+  parallelize_block procedure is actually used to try and execute the
+  given PL/SQL block in parallel, most of the time, which is a VERY
+  GOOD THING...) The other interesting thing is that the
+  DATALOADER.migrate_prescriber_block should probably be rewritten
+  using intermediate tables, and we should try to do things there with
+  atomic sql statements as much as possible. It's an absolute pity
+  that the doggone PL/SQL code is so very "multi-layered" and
+  complicated. It did not need to be, that's for sure.
+  
+  On the DATAVALIDATOR front, it should be pretty simple to add new
+  testing routines to that package, and Ithink that I stand a good
+  chance of getting fairly robust routines added to that thing in
+  pretty short order, when the need arises. The tricky part will be
+  the doggone specifications of the tests they will want to perform.
+  
+  5:45pm It's pretty clear that either I'll have to monkey around in
+  the QA_MEDISPAN environment, or I will have to set up my own
+  development environment (on my desktop) which I'm really
+  dreading. Bron indicated that I should probably be able to play
+  around in there, right? I should also use the Khan-based wiki more
+  often, and spend some time documenting my activities there, eh?
+  {might be a nice place to put a redacted version of this diary,
+  right? }
+
+  6pm leaving.
+  
+12/8/2008 
+  8am (approximate) arrived at the office. (CG arrived about the same
+  time I did, I think...)
+  
+  Downloaded, last Friday, a document written originally by a Mark
+  Brown, of NDCHealth, concerning the coversion work. It was a
+  "style-and-vision" kind of document. It included recommendations on
+  how to make the conversion processes run efficiently, effectively,
+  under Oracle. (And it looks like those tasked with writing the
+  DATALOADER package did not listen to those recommendations!)
+  
+  Need to continue with working to understand the DATAVALIDATOR
+  framework, with an eye towards the AR work, correct?
+  
+  Spent the morning:
+  + Creating a JIRA ticket to get the DBA's to create the plustrace
+    role, and grant it to txconv and txstage in the qa_medispan
+    database instance (txndcq07?) (ticket number OPS-3726) so that
+    autotrace functionality will work in that database.
+  + Learning a bit about the v1.6 data model for EnterpriseRx.
+  + Poring over the DATAVALIDATOR documentation that the Keane guys
+    have been working on, coming up with feedback to Calvin, et al, on
+    what should be added to such a document.
+  
+  10am KR arrived. :)
+  
+  12:47pm left for lunch...
+  2pm returned from lunch {those errands took a tad longer than I
+  anticipated...}
+  
+  3:27pm I have finally learned how to edit/create a doggone wiki page
+  in the "khan" wiki. (It's pretty irritating though: the original
+  designers of the concept devised it as a "content roach motel," eh?
+  Content can get in, but once it's in there, the Wiki system will
+  remember it forever. Good grief. Makes deleting "false starts" a
+  royal pain in the neck...)
+  
+  4:59pm I finally finished documenting what I had deduced from
+  reading the DATAVALIDATOR PL/SQL package concerning the conventions
+  that testing/validation procedures must follow. I created a wiki
+  page on the "khan" server.
+  
+  5:20pm Spoke with Bron and Keith for about 30 minutes; sounds like
+  tomorrow, we'll start trying to get code written for the AR
+  conversion work tomorrow (beginning with validation testing.) So,
+  the FIRST THING I NEED TO DO IS FINISH RUNNING DOWN THE METHOD,
+  LOCATION, IN WHICH ALL OF THE TESTS FOR A COMPANY, CLIENT, ETC, ARE
+  "ENUMERATED/NAMED" SO THAT THE DRIVING JAVA CODE CAN INVOKE THEM...
+  
+  Keith showed me that he has finished writing up defintions for the
+  "new" staging tables that'll be needed for the AR conversion work
+  (so I didn't have to do the "tricky" parts of analysis of those
+  documents in order to figure out what they meant, which would've
+  been difficult for me to do as a "newbie to the industry" anyhow...)
+  Keith and Bron were also asking about how knowledegable I have
+  become concerning the workings of the DATALOADER package; I showed
+  them the printouts I had made, in which I tried to enumerate, break
+  down, one of those colossal procedures (which each contain ~70
+  sub-procedures, etc) within the DATALOADER package. Bron also made
+  the important point that they seem to be trying to parallelize by
+  domain, right, within the DATALOADER? In other words, they try to
+  kick off, within the PL/SQL, background jobs, one per "domain"
+  (which is McKesson-speak for "subject area." The separate domains
+  are areas like "patient," "prescriber," "prescription," etc...)
+  
+  6:08pm Left the office.
+  
+12/9/2008 
+  8:10am Finally got into the office.
+  
+  Worked quite a bit on finishing up the wiki-based documentation on
+  how to add specific kinds of tests to the DATAVALIDATOR-based
+  "framework" (if it can be called that...) Worked to make the
+  documentation I started yesterday much more specific.
+  
+  10:30am (approximate) Keith mentioned that the new environment he
+  emailed me about last night/yesterday (txconv@TXLTCD01?) should have
+  versions of the AR staging tables he specified (for he created them
+  out there...) So now I should be able to start writing code, etc.
+  
+  11am Emailed request to Brent Perry (in Vancouver, 604.436.0033x661)
+  for somebody to execte the correct grant statements so that "set
+  autotrace on" will work in sqlplus when logged into
+  txconv@txltcd01... I'm not holding my breath, that's for sure.
+  
+  11:30am Met with Keith to talk about the requirements for
+  DATAVALIDATOR procedures to check for errors with the AR staging
+  data. (This took about 1.75 hours?)
+    
+  1:41pm Left for lunch/errands.
+  2:55pm returned from lunch-break...
+  
+  3pm I worked on adding two new procedures to the existing
+  DATAVALIDATOR framework; at least the two kinds of tests are now
+  written and should be evaluated against test data the moment we can
+  get some set up in the txconv@txltcd01 environment. Of course, in
+  the process, we come up with other questions, and other ideas for
+  things to test (existence checking between tables that're supposed
+  to join together, "identifying orphans," as it were; stuff like
+  that...)
+  
+  6pm Left the office.
+  
+12/10/2008 
+  8:10am Arrived.
+  Discovered, much to my dismay, that my PC had been unceremoniously
+  rebooted (sometime in the night?) OOOHHH! That really ticks me off!
+  Mainly because I had EVERYTHING where it needed to be, and now I
+  have to PUT IT ALL BACK! ARRGHHH! I went in and shut off all that
+  "Automatic Updates" crappola, so that it won't be rammed down my
+  throat again! I need this desktop PC to be more like a doggone
+  server, which means that it goes down when I say it goes down, not
+  when somebody else who knows nothing about my job responsibilities
+  says it should go down! MAN, that makes me angry!
+  
+  10:00am KR arrived, I think?
+  
+  11:20am left for "Birmingham Campus Christmas Lunch."
+  1:30pm returned from the "Christmas Lunch."
+  
+  This afternoon: KR was in meetings with John Orange; I tried to work
+  out an alternative query for the validation testing of
+  stage_ar_person, stage_ar_acct_member, and stage_ar_account (some
+  of the "staging" tables for AR conversion.) Since we have revised
+  our understanding of the stage_ar_acct_member (and using it as a
+  "generalized," "many-to-many" kind of "relationship table") some of
+  the validation queries may be simplified.
+  
+  One of the challenges we face when doing this kind of work is to
+  derive reasonable, rigorous-enough definitions of the concepts we
+  are trying to work with. Keith seems to be grappling with procedural
+  thinking, and with the kinds of reports people probably want to see.
+
+  I think that one of the other issues is that there are problems with
+  the ways people define this stuff, and you kind of have to "get
+  inside their head" when you read the "requirements" documents they
+  write. I have come to the conclusion that when people write down
+  "requirements documents," what they are really doing is writing down
+  the "laundry list" of all the things they can think of, and what is
+  really created is a list of bullet points that remind them of what
+  they want to ask you, the software development crew, to do. Because
+  these are really "to-do lists," they usually don't have enough
+  detail to "stand on their own," and so the start of the development
+  cycle looks like this:
+      (i) write down the laundry list
+     (ii) hand it off the the programmer
+    (iii) the programmer meets with the author of the laundry list to
+          ask just what they meant by some of the bullet points
+     (iv) the "annotated" list goes back with the programmer to his
+          desk
+      (v) go back to step iii.
+  The programmer and laundry-list author must go through that cycle
+  through steps iii, iv, v MANY times before the software is finished,
+  because there are untold, numerous details that the programmer has
+  questions about, that the laundry-list author either didn't think
+  about or was not even aware were relevant issues! Sigh.
+  
+  Towards the end of our end-of-the-workday conversation before I
+  left, I got off on a tangent about whether or not we could insert
+  hyperlinks to a report that would be the "dump of all the detail
+  about the records that failed to pass inspection," and how it would
+  probably be impossible to get QuickBuild to do that. (This is a
+  puzzle sometimes, how there is so little urgency, so little desire
+  to act decisively and push hard when action is called for, and the
+  path forward is so obvious and quickly addressed once the right
+  people and pieces are in place. But it's easy for me to be critical
+  on such issues, especially when it comes to Oracle-based stuff, just
+  because, so often, I could sit down and do exactly what is called
+  for myself. In other areas of life, I am sure that I look just as
+  lazy or unmotivated or "laid back...")
+  
+  6pm Left the office
+  
+12/11/2008
+  8:10 arrived in office, tried to update yesterday's diary entry
+  with info about the work completed yesterday afternoon after the
+  "Christmas Lunch" when Angelia called me and caused a colossal
+  train-of-though wreck in my head. Sigh. She called with the same
+  topic of conversation she always opens up with when there's bad
+  weather on the commute-to-school: "Did you guys get there ok, on
+  time, blah-blah-blah?" Sigh. Would've been better off if I'd just
+  sat at my desk, doing nothing, and waited for her phone call, and
+  maybe I wouldn't have been so badly screwed up. I think she really
+  has no inkling, concept, idea, notion that I am so badly screwed up
+  by her interruptions...
+  
+  But that is just one of the things about life that I shall have to
+  put up with until I am DEAD, because SHE IS NOT GOING TO CHANGE when
+  it comes to things like that. Yes, she is more important to me than
+  "any other person on this earth," etc, but what she called to talk
+  to me about was not all that terribly important. It's just like that
+  scene in the movie _The Incredibles_, where Frozone is trying to
+  explain to his wife that he needs his superhero suit, that the
+  public is in danger and needs his help, and that "we're talking
+  about the greater good," here. Her reply: "Greater good? I AM YOUR
+  WIFE. I AM the GREATEST GOOD you are EVER going to get!" So, she is
+  not ever going to understand, does not WANT to understand, and
+  frankly doesn't give a rip whether you're harried, hurried,
+  etc. That stuff doesn't matter, and SHE does!
+  
+  EMACS positively Rocks! I must say...
+  
+  9:30am (approximate) KR arrived
+  
+  CG came by and asked me about what it'd take to build up the ELF
+  definitions for those new AR files? I said that it'd have to be
+  based on the definitions already outlined by KR on his wiki page,
+  which I was looking at...
+  
+  10:30am Spent a couple of hours (I think?) talking with Keith about:
+  the data model for the AR portion of the "EnterpriseRx" product, how
+  we map source data into it, what stuff like the acc_acct_entity in
+  that model means, etc. It sounds like there's an attempt by the
+  EnterpriseRx folks to allow that acc_acct_entity table to permit us
+  to model two different situations: "business" accounts (with a
+  corresponding "institution" and for which there are also
+  corresponding people?) and "personal" accounts (in which no
+  "institution" is involved...) (And we came to the conclusion that we
+  would have modeled it differently, probably...)
+  
+  Also made the decision to divide/separate out validation queries for
+  personal accounts from validation queries for business
+  accounts. Might also want to add a validation process for "stranded
+  people," person records for which we don't have a matching account?
+  
+  12:45pm Started to heat up lunch; plan is to work through lunch.
+  
+  Spent the afternoon trying to derive a newer version of the doggone
+  DATAVALIDATOR package, with the kinds of existence checks Keith was
+  talking about; this after trying to get a comprehensive
+  understanding of the AR data model (which has some peculiar
+  properties, to say the least. Sigh.)
+  
+  5:15pm Probably going to be leaving the office soon...
+  
+12/12/2008 
+  9:30am is when I finally arrived in the office (late start to school
+  day due to inclement weather, etc, and thus got into office late...)
+  
+  The following is based on my recollections on the following Monday
+  morning, 12/15/2008:
+  I believe I spent most of Friday trying to do some more to
+  understand the doggone DATALOADER processing, as it's clear that
+  we shall need to alter the DATALOADER in order to load the data for
+  AR conversions, right?
+  
+  Spent some time (in the morning?) talking to Keith about which
+  tables in the AR model we'll be responsible for populating; he was
+  also looking at what I had written in the DATAVALIDATOR package (the
+  DV_DUMMY version that'd been placed into the txconv@txltcd01) and
+  some of the queries. I ended up trying to explain to him the
+  reasoning behind some of the "(not(P) or (Q))" kinds of items in
+  some where clauses. It's pretty clear that I need to be as clear,
+  careful, as possible in the comment texts I add to queries, or
+  people will have a really hard time following what I mean.
+  
+  We also discussed the kinds of work needed to load: it's clear that
+  the AR stuff won't be "at the facility_num level," i.e., we won't be
+  loading things based on the "store number," right? The AR data is
+  really for the entire pharmacy "chain," right?
+  
+  5:30pm Had to leave about this time, I think (HAD to go to my
+  "birthday get-together..." The wife insisted. Please, Lord God,
+  grant me patience for this kind of thing; she seems to live for
+  these sorts of things, whilst I live for getting the work done. I
+  don't know who is crazier. Probably the working world is: people
+  don't take responsibility, and those hired to do "development" are
+  not able or willing to do it properly, so this increases the burden
+  on those who are able to do the work properly. Scheduling and other
+  attempts to stomp down the chaos fail to help, after a certain
+  point, right?)
+  
+12/15/2008 
+  8:05am (approximate) arrived in the office.
+  
+  Spent most of the morning trying to understand some other relevant
+  portions of the DATALOADER package; I have been trying to make a
+  study of the stuff that handles PRESCRIBERS ("those who prescribe
+  medicines") and the various weirdness that I have seen in the
+  existing package's code:
+  + "Locking" of the existing prescriber (by key value, I think) via
+    the DBMS_LOCK package calls is done to avoid "lost update"
+    problems, as far as KR understood things.
+  + Also, KR gave long discourse about how we have to code to the
+    possibility that a few rows, here and there, will fail to be
+    acceptable to the OLTP schema because the "owners/custodians" of
+    said schema REFUSE to communicate effectively with the rest of the
+    organization about changes they have made to the
+    restrictions/rules the data must follow. (I.e., they make changes
+    to constraints, etc, that they don't tell conversions team about,
+    and then conversion runs fail because of it...) So, because of
+    this organizational dysfunction, we have to handle records VERY
+    PROCEDURALLY, and try to process a "batch of 100 at a time." That
+    way, if something in the batch causes an Oracle exception-error to
+    be thrown, the package code intercepts that, then retries that
+    entire set of 100, but one item at a time instead, making note
+    along the way of which ones "failed."
+  
+  Aside: KR is interested in fitting the AR data conversion work into
+  the existing package framework. I think my struggle will be with
+  working out at which "level" I will fit into the framework. I
+  certainly REFUSE to load all kinds of things into in-memory
+  collections! Perhaps I will still have to do things "slow-by-slow,"
+  but I won't be using procedural mechanism to accomplish what a
+  query, or sequence of queries, could accomplish!  The end of a
+  process, as I see it, will probably be to set up a
+  "staging-of-results" set, and perhaps iterate through it with a
+  cursor, performing updates/inserts against the AR-related data
+  structures in the precious OLTP schema.
+  
+  By end-of-day: KR asked me to look into what it will take to work
+  population of AR-related tables in the OLTP schema, in particular
+  the ACC_ACCT and ACC_AR_ACCT tables. 
+
+12/16/2008 
+  8:10am (approximate) arrived at the office...
+  
+  Had to work on a "status email" to Keith and Calvin (first thing,
+  since I forgot to do it yesterday afternoon, so much in a hurry I
+  was to get home and help spousal unit with "party preparations,"
+  etc...)
+  
+  9am trying to get started on working out how to populate the
+  ACC_ACCT, ACC_AR_ACCT tables from the staging tables for the AR
+  conversion work; what will it take to change the doggone DATALOADER
+  package in order to get those tables handled?
+  
+  4:45pm Had to leave: run couple of errands, then work some more this
+  afternoon from the house, right? Work has proceeded hot-and-heavy on
+  getting those two AR tables loaded; and I have to figure out a way
+  to do it "in the same style" as the DATALOADER package (without
+  doing it in such a heavily procedural manner that it becomes
+  profoundly more difficult to get the code written correctly...)
+  
+12/17/2008 
+  7:45am Arrived in the office.
+  
+  THIS DAY WAS SPENT ALMOST EXCLUSIVELY ON A/R CONVERSIONS WORK
+  Spent most of this day working out how to declaratively handle the
+  processing of the stage_ar_account, with the goal of properly
+  updating or inserting into the acc_acct.
+  
+  7:00pm Left the office
+
+12/18/2008 
+  7:55am arrived
+  
+  8am start of "A/R training" (user training I sat in on, offered to
+  the users of the new A/R module for McKesson's EnterpriseRx
+  software.)
+  9:30am END OF THAT A/R TRAINING.
+  
+  Spent most of today working out, and explaining to KR, the kinds of
+  SQL statements needed to process staging data needed to populate the
+  acc_acct table for an A/R conversion.
+  
+  12:45pm just got done explaining proposed statements to KR; he
+  seemed okay thus far, and I emailed him the two statements (an
+  insert and then a merge) that would be executed atomically to do
+  most of what needs to be done (there are a few details to be
+  handled, but this means I have cleared a major conceptual hurdle in
+  understanding how we need to do things in this shop, going
+  forward...)
+  
+  5:10pm leaving the office; almost have all four statements finished
+  to deal with the loads into the acc_acct and the acc_ar_acct. I
+  think that they'll be pretty quick to finish tomorrow.
+
+12/19/2008 
+  8am arrived;
+  
+  Many discussions about the ultimate disposition of the
+  work-to-be-done, today.
+  
+  "Framework it" seemed to be one popular idea...
+  
+  I may be able to take Tues, 12/23 off, if I can get some "test
+  cases" set up and run through some flavor of the "operating
+  approach" chosen late this afternoon (at KR's urging...)
+  
+12/20/2008 
+  2:30pm Logged in from home about 2:30pm, to try and think some
+  things through, perhaps get an email sent off to KR about the
+  "generalized, slow-by-slow framework." Sigh.
+  
+  And I think that there was a decision that it wasn't necessary to
+  create an "xref" table for the acc_ar_acct? But that it WAS
+  necessary to create an "xref" for the acc_tx table...
+  
+  Thoughts on ANSI-style join syntax:
+  There are profound drawbacks, in my opinion. In terms of
+  intellectual manageability, it's not a good idea two introduce two
+  radically different means of expressing exactly the same concept. If
+  one is accustomed to reading the where clause to understand business
+  rules are being applied to table columns in order to understand what
+  the query is doing, then the ANSI-style syntax forces one to look in
+  two different places to understand what is going on. Join predicates
+  are predicates, just like any others. It is the database engine's
+  job to deduce that some of them are "join predicates." ANSI join
+  syntax adds very little, and takes away more, from the
+  comprehensibility of queries. Most of the time, the join queries I
+  write in production code join subsets of tables together: there are
+  ALMOST ALWAYS other "requirements" imposed on the data, besides the
+  predicates which specify the join criteria. If you insert those
+  other requirements into the "on clause" part of the ANSI-STYLE join
+  syntax, then you've migrated all of the where clause's predicates up
+  into the from clause. Sigh.
+
+  Not sure about the nature of the joining that must be done between
+  the acc_acct and the acc_ar_acct, and the acc_acct_xref; I think
+  that there might need to be TWO outer joins done by the merge
+  statement used to upsert the acc_ar_acct table; or maybe I need to
+  outer join "everything else" up with the join of acc_acct to
+  acc_ar_acct, right? Because the existence of an acc_acct implies the
+  existence of an acc_ar_acct, correct? I think that is correct, based
+  on what I know right now: you have to populated both tables from the
+  stage_ar_account's data, and if we fail to populate the acc_ar_acct,
+  then the corresponding acc_acct should not be populated, either,
+  correct? I SHALL PROCEED WITH THAT ASSUMPTION.
+  
+  6:00pm Okay, looks like I am almost done with the CODE for the
+  acc_acct, acc_ar_acct (within the "new framework KR glommed into
+  Friday afternoon," so that it'll kinda hack together.) And other
+  than a difficulty with deciding the joins needed for the query which
+  drives the upsert/merge for acc_ar_acct, I'm pretty good thus far.
+  
+  6:02pm stopping for dinner
+  
+  8:03pm returned to work.
+  Worked (on and off) for about another two hours, trying to work out
+  the details of the remaining pieces. I think that subsidiary pieces
+  (procedures) for the "recurring-charges" pieces will mirror the
+  pitiful "main loop" process that exists for the acc_acct and
+  acc_ar_acct pieces, right? The pitiful bit is that there may be a
+  good risk that things will move with glacial slowness unless we
+  agressively tune the plans before going into production, and cram
+  hints into our sql queries...
+
+  11:45pm stopped for the night.
+  WORKED 3.5hrs + 3 hours (approximately)
+  
+12/21/2008 
+  WORKED ON THE CONCEPTS OF THE STAGE_AR_REC_CHARGE-HANDLING from
+  about 8:30am to about 9:45am.
+
+  I think the driving loop will have to work off a query which joins
+  up acc_acct, acc_entry, acc_tx as its own "unit," and then which
+  outer-joins to that unit to detect whether or not there's been a
+  past load of the ar_rec_charge data (for "id", aka, also called the
+  acc_acct.acct_number in the OLTP schema.)
+  
+  3:15pm Returned to work further on things...
+  
+  6:30pm (I think?) paused for dinner for about 30 minutes...
+  
+  7:00 returned to working on this stuff...
+  
+  Really worked until about 12:30am!
+  
+12/22/2008 
+  Spent all of this day working towards:
+  + Acquainting Sapan Patel with the package routines I had worked on
+    (which eventually were worked into the dl_proposed package...) and
+    handing the work off to him to continue with.
+  + Walking KR through some of what I had written.
+  + Trying to get at least a little testing together for the package
+    routines I had written.
+
+12/23/2008 
+  1:15am FOR ABOUT THE PAST 3.5 HOURS, BEEN WORKING ON SOME INITIAL
+  TEST CASES FOR THE DL_PROPOSED PACKAGE, WHICH HAD TO BE TWEAKED
+  SLIGHTLY TO MAKE THINGS JUST RUN. IT'S STILL REFUSING TO DO A "BASE
+  LOAD" FOR THE ACC_RECURRING_TX TABLE (FED FROM
+  STAGING_AR_REC_CHARGE.) I think it might have something to do with
+  the way the merge statement's driving query (in the
+  process_acc_recurring_tx procedure) is trying to lookup rows in the
+  FREQUENCY table, but I can't figure it out yet. It looks like, on
+  initial glance, that lots of other things run correctly though, for
+  the test data I added to the tables.
+  
+  9:30am finished an email to Sapan about how to test, where he could
+  continue to look into things.
+
+  (Don't think he'll get much done that direction, based on the emails
+  that I saw stream in as I checked back in a couple of times later in
+  this afternoon; looks like they had him working on issues related to
+  conversion runs anyway...)
+
+12/29/2008 
+  7:40am (approximate) pulled into office parking lot (was certainly
+  in the office by 7:45am, I think... PC clock says 7:48am as I write
+  this.) 
+  
+  I *know* that I had worked until the wee hours of the morning on
+  Tues, 12/23/2008; I worked from about 9:45pm the day before (Mon,
+  12/22) until about 1:15am on Tues, 12/23. I think that should count
+  as almost 1.5 workdays, starting on Mon, 12/22!
+  
+  AFAICT: nobody's made any changes to the txconv.dl_proposed@txltcd01
+  package.
+  
+  Found out later that Sapan had been instructed (by Keith) to make
+  some changes to the package I had created, dl_proposed. The vast
+  majority of the changes had to do with "cosmetic" issues, like join
+  syntax, and "how to retrieve default settings into package-level
+  variables for use in queries," etc.
+
+  12:30pm (approximate) left to fetch lunch (had Jim 'n Nick's coupon,
+  and got a "free" lunch for it, but the long drive-through line wait
+  kept it from being a low-cost lunch, time-wise. Sigh.)
+  1:10pm (approximate) back in the office?
+  
+  2:25pm Done with testing an "initial load," now that I have some
+  "cardinality-related" issues settled (like how to look up the
+  correct, default "cost center" key number, given that the A/R
+  account is PERSONAL or BUSINESS.) I have also successfully gotten to
+  the bottom of the issues that bedeviled me last week (before trying
+  to hand the work off to Sapan Patel) and early this morning. So, NOW
+  I have to try to process a "delta," AND I need to make sure that the
+  processes in place to handle loading to the ACC_BALANCE table work
+  correctly, right?
+  
+  5:43pm Leaving the office; I think I have a solution to the
+  "multiple stage_ar_rec_charge rows per corresponding
+  stage_ar_account row" issue. There is an issue, possibly, with
+  getting the update to the acc_tx.acc_recurring_tx_num done properly
+  when there is such a situation...
+
+12/30/2008 
+  8:45am (approximate) arrived at the office
+  
+  Spent this day getting some final changes into my codes; also got a
+  glimpse of KR's code, finally. And worked with Sapan Patel on the
+  logging changes needed (if any...)
+  
+  4pm Had to leave the office to be with SHS at a necessary doc appt.
+  
+  4:45pm re-started working on things from home; finsished
+  consolidating changes to my code, making changes to it and prepping
+  it to be folded into the final code base.
+  
+  6:15pm finally got my code sent off to KR (for incorporation into
+  the "consolidated version" of the code we'll add to the beloved
+  DATALOADER package. Sigh.)
+
+  6:20pm SO WORK REALLY CONCLUDED HERE?
+  
+  I have to wonder if things might've worked out differently if I had
+  used "BULK COLLECT" techniques? Maybe things would've been FAR MORE
+  NICELY STRUCTURED? Sigh again.
+  
+  Noticed used of conjuncts like "rownum <= 1" in many of KR's where
+  clauses (in the code which handles "members.") This kind of thing is
+  most frightening, disconcerting.
+  
+12/31/2008
+  7:30am checked email from home, looked into things for about half an
+  hour; looks like KR was "at it" until about 2:45am this morning?
+  (received an email from him marked with that approximate
+  timeframe...) 
+  
+  8:45am finally arrived in the office.
+  
+  1:42pm Okay: looks like we'll spend the rest of today, and this
+  coming Friday, trying to get the pl/sql code incorporated into the
+  existing crufty/overcomplex/clumsy "conversion-and-loading"
+  processes (the stuff that's driven by QuickBuild, currently...) OH,
+  AND WE'RE STILL WAITING ON CORRECTIONS TO THE PRECIOUS PARTS WHICH
+  LOAD acc_person, acc_entity (THOSE PARTS WERE KR'S RESPONSIBILITY,
+  AND GUESS WHAT? HE WROTE THEM IN THE STYLE AND FASHION THAT THE
+  DATALOADER PACKAGE DOES THINGS. SO IT'S *ABSOLUTELY NO SURPRISE*
+  THAT HE'S HAVING DIFFICULTIES GETTING TO THE BOTTOM OF THE CURRENT
+  PROBLEMS WHICH BEDEVIL THAT CODE, EH?)
+  
+  Therefore, the next part that'll come will be to try and get the
+  doggone DATALOADER package's piece parts together, compiled, loaded,
+  etc... Good grief. I won't be a bit surprised when Oracle complains
+  that the text of the package is literally too big!
+  
+  5:26pm Getting ready to head for home; but first, I want to note
+  some kind of vision I have had for "data transformation checking
+  functions" that could be invoked as part of a comprehensive scheme
+  to prevent garbage from being propagated into the OLTP schema. If I
+  could write a function (say) that would return TRUE when a
+  string-typed column in a staging table's row contains data which can
+  be converted to a date-typed value by Oracle's to_date() function
+  without throwing an error, then I could use that in a where clause
+  to filter data, and in a derived column to provide an error flag
+  value, right? WOW! Such a mechanism would be useful for preventing
+  bad data from getting into the OLTP schema in the first place, and
+  then we could use it to flag bad data as well, and yield an error
+  count! Semantic checks of other kinds would have to be handled using
+  join queries, right? It's SO SIMPLE, yet nobody has thought about it
+  before, at least not in this shop. Sigh.
+  
+1/2/2009 
+  8:15am Arrived at the office (approximate)
+  
+  Need to:
+  +  finish making changes to KR's (the "member" stuff...)
+  +  look over Sapan's stuff (his version of the dataloader code? the
+     stuff that has the logging added?)
+  +  see what it'll take to get a "test run" up and going(?)
+  +  SHOP FOR A NEW CELL PHONE, FOR MYSELF AND MY WIFE...
+  
+  5:35pm Okay, getting ready to leave...
+  Spent the day on most of those foregoing activities; the shocking
+  thing is that KR's code was full of problems (the
+  "process-those-members" part had all kinds of syntax errors that
+  will require some rethinking, rewriting of his code that I should
+  not, will not do for him...) The other difficulty is that it's
+  turning out to be a huge pain in the neck to get the database
+  environment set up so that I can invoke the "top-level" DATALOADER
+  package call just as the Java-based QuickBuild-driven process would
+  do. 
+  SO, NO COMPLETED TEST RUN YET, BUT I DO HAVE SOME NOTES, THOUGHTS,
+  TOGETHER ABOUT HOW TO MAKE THAT HAPPEN. MAYBE LATER TONIGHT, AFTER I
+  GET SOME FOOD IN MY STOMACH. I'M VERY TIRED RIGHT NOW. 
+
+1/5/2009 
+  7:30am looked at the Java-based quickbuild processes some more
+  (briefly, for about half an hour...)
+  
+  9am (approximate) arrived in the office.
+  1pm left the office to continue working from home...
+  
+  Continued working from home until about 4:20pm, at which time had to
+  leave the house until about 6pm.
+  
+1/6/2009 
+  8:45am (approximate) arrived in office
+  
+  Spent ALL of the day trying to get the doggone package work on the
+  A/R stuff to work properly. Sapan and I worked together (he knows
+  more about how to set up QuickBuild than I...)
+  
+  The wretched problem is that the surrounding infrastructure of the
+  DATALOADER package is NOT DOCUMENTED AT ALL, and the semantics of
+  its provided logging routines, etc, are not documented. THAT,
+  coupled with the ill-defined, unwieldly way in which we have to
+  invoke this stuff makes it SUPREMELY DIFFICULT to get visibility
+  into what the wretched thing is doing.
+  
+  Sapan and I tried to add more to the package code to get it to
+  output information to the DATALOADER's logging facility, but nothing
+  was coming out. THIS WAS BECAUSE WE DIDN'T KNOW HOW TO USE THE WRETCHED
+  LOGGING FACILITY PROPERLY, AND APPARENTLY, THERE IS A "LEVEL" THAT
+  HAS TO BE SET IN ORDER FOR IT TO OUTPUT ENTRIES TO THE LOG TABLE
+  WHEN IT'S DONE; AS THE ENTIRE DATALOADER INFRASTRUCTURE WAS
+  ENGINEERED WITH A SLOW-BY-SLOW MINDSET, THERE IS A "LOGGING" FEATURE
+  WHICH CRAMS STUFF INTO AN IN-MEMORY COLLECTION WHICH IS DUMPED INTO
+  AN ORACLE TABLE (HEH!) WHEN THE ENTIRE, FAT, UNWIELDLY,
+  INCOMPREHENSIBLE PROCESS IS COMPLETED. BUT YOU'LL ONLY SEE THE
+  LOGGING ENTRIES WHEN A PARTICULAR VARIABLE IS SET CORRECTLY, OR
+  SOMETHING LIKE THAT. BUT HECK, WE DIDN'T KNOW THAT, RIGHT?
+  
+  The upshot is that I got a little "scolding" from Keith ( :-0 "oh,
+  no....") in an email sent out at midnight! "The next time it takes
+  more than a couple of hours to resolve something, definitely come
+  see me... we can't afford to spend too much time debugging issues
+  like these..." and other such "sage wisdom for the ages" were
+  dispensed in this email, with a CC to Gaddis, of course!
+    
+1/7/2009 
+  8:10am arrived in the office.
+  
+  Today was quite productive:
+  Spent about an hour talking over with Sapan why we spent so much
+  time yesterday hitting our heads against the wall; also gave some
+  thought to how we might make the pl/sql procedures more accessible,
+  visible without having to spin up the entire QuickBuild
+  infrastructure just to get it to run through (since it is a bit
+  unwieldly...) BUT I REALLY DID NOT GET TO GO VERY FAR WITH THAT, AS
+  KR CAME IN ABOUT 10:45am, DEMANDING "RESULTS." HE SEEMED TO BE CROSS
+  WITH ME ABOUT HOW WE HADN'T RERUN THINGS WITH HIS PACKAGE FIXES FROM
+  THE NIGHT BEFORE (WHEN HE STAYED UP UNTIL MIDNIGHT OR SO...)
+  We had to deal with the xref tables not having the same primary key
+  or uniqueness constraints that had been defined in the development
+  environment (I'm talking about the acc_acct_xref and the acc_tx_xref
+  tables...)
+  Also, I may have a way around the issues with the package
+  deployment: start up a fresh sqlplus instance from a command prompt,
+  and use that to deploy the dataloader package.
+  Identified issues with the date conversions needed in order to join
+  from the FREQUENCY table to the STAGE_AR_REC_CHARGE table, as well
+  as when we use the STAGE_AR_REC_CHARGE source data to populate the
+  FREQUENCY table.
+  
+  6:30pm left the office
+
+1/8/2009 
+  8:10am arrived in the office.
+  
+  8:45am Had decent talk with CG (until about 9:20am?) about "how I'm
+  doing." The feedback he's getting from KR, apparently, is that I
+  tend to try to rework things rather than try to "work within the
+  provided mess." Which is probably a fair assessment, and which is
+  why KR seems to get irritated with me.... But CG made it pretty
+  clear that the standard American business mantra applies in this
+  shop: "We can't afford to do things properly the first time right
+  now, we just have to survive." Aw, nuts.
+  
+  12:30pm Thus far, I have been researching why the most recent run
+  attempt (launched by SPatel) threw a pile of errors into the log;
+  it appears that we have run into difficulties with sequences and the
+  fact that data already present in the acc_ar_acct_num column of the
+  trexone_data.acc_ar_acct@txndcq05 overlaps with the set of values
+  our code is starting to retrieve from the sequence that is being
+  used to generate "num's" for that table. Also, because KR removed
+  some of the transaction control statements from the mail loop within
+  the process_account_block procedure, these errors cause the present
+  version of the code to leave things in a rather screwed up
+  state. (Subprogram's statement fails, but preceding statements in
+  the caller did not fail, so we throw the exception but leave other
+  stuff intact: this is yet another reason procedural processing in a
+  database application is such a horrible idea. Recovery from logical
+  failure becomes incredibly time-consuming, which implies
+  money-consuming.) So, now I have to return the code which catches
+  such exceptions, make sure it re-raises the exception, and make sure
+  it rolls back?
+  
+  2:55pm It took about an hour to run down where the commits are
+  supposed to happen, etc, so that I could be sure that I was adding
+  back the correct transaction control statements to the right places
+  inside the block embedded in the main loop of the
+  process_account_block procedure. Also, SPatel set up a new dataset,
+  and I had to execute the following kind of block in the
+  txconv@txndcq05:
+    declare
+      k number;
+    begin
+      select sq_acc_ar_acct.nextval into k from dual;
+      while ( k < 1198000)
+      loop
+        dbms_output.put_line(k);
+        select sq_acc_ar_acct.nextval into k from dual;
+      end loop;
+    end;
+  in order to "bump up" the sq_acc_ar_acct sequence so that we could
+  force some more "uniqueness violation" exceptions during the
+  execution of the process_account_block. This was to test the "back
+  off and retry again one row at a time" functionality of the
+  process_loop procedure. (Again, more lunacy which is being forced
+  down my throat in order to "git 'r dun." This is so ludicrous...)
+  
+  So, that test run successfully showed the "back-off-and-retry"
+  lunacy, and I shared this info with KR.  
+  
+  6:51pm spent rest of afternoon, after that aforementioned testing,
+  working with KR to find out what in the world the ERX client was
+  querying in order to retrieve the A/R related information, and
+  whether or not we could use the ERX client software to display any
+  A/R data which we had pushed into the "QA MAIL"
+  database. Apparently, whether or not there are "members" created
+  makes a big difference (something about how we need to have PERSON
+  records tied to PATIENT records, and then we can associate the
+  PERSON to an ACC_ACCT or ACC_AR_ACCT via the MEMBERS table.)
+  
+  In the process of that, we identified a potential issue with KR's
+  code: in one instance in his test data run, the final merge
+  statement of his process_ar_acct_member procedure did not do
+  anything at all when the query in the "using" clause retrieves 0
+  rows. This is just how merge statements are supposed to work, as the
+  point of a merge operation is to use another table/query to drive
+  "upsert" operations on a target table; after all, what does a merge
+  statement mean when there isn't anything retrieved in that driving
+  query? His merge statement was an attempt to drive "upserts" for the
+  acc_acct_member table by querying the acc_acct_member table! So, I
+  illustrated that to him (with a simple "finger exercise!") and he
+  thus rewrote it as an update statement followed by a check against
+  sql%rowcount = 0 to determine whether or not an insert should be
+  executed. (He was trying to make a set-oriented operation fit into
+  his woefully procedural process, and it burned him; big surprise
+  there...)
+  
+  So, before I leave, I will fold in his code changes (as soon as he
+  emails them to me?) and deploy the revised version of the
+  "dataloader_standard_ar_acount_body.sql" into the database, and run
+  another "apply" step. (KR had already created a new dataset?)
+  
+  So, apparently, we'll try to get some more "clean runs" done
+  tomorrow, after clearing out all our "old crappola" from the QAMAIL
+  database instance (txconv@txndcq05.)
+  
+  7:31pm I had to retrieve the code from a file on KR's desktop, and
+  then I re-deployed the dataloader package's code to the database,
+  and re-ran the "apply" portion of the processing.
+  
+  8pm LEFT THE OFFICE...
+  
+  10:31pm Occurred to me (at home) that it should be possible to
+  re-cast the routines written for handling of the A/R accounts stuff
+  to be set up to work with "multiple rows/items" at a time, if
+  necessary! In fact, it's probably not necessary for the
+  process_ar_acct to work as cursor for loop! (Sigh.) It could still
+  be "forced" by the calling routine to work on a single item at a
+  time if the calling routine were to suitably restrict the starting
+  and ending "element number" values (p_startrec and p_endrec, right?)
+  Yet it could also perform processing of multiple items in a single
+  call if there are no data problems which cause exceptions that would
+  cause the process_loop calling procedure to "fall back" to the "one
+  item at a time" mode.
+  
+1/9/2009 
+  7:50am pulled into office parking lot!
+  
+  Okay, last night, ran that "apply" of KR's dataset; this morning,
+  must take a look at what it "means," right?
+
+  I spent most of the morning working through how one might query the
+  wretched database once the loading's been done, just to "verify"
+  that things got loaded as one expected. The amusing thing is that,
+  in the typically schizophrenic way, we want to have such "querying
+  and verification" at the same time that we do all of the
+  "nauseatingly procedural" processing!
+  
+  KR arrived about 10am (I think...) and proceeded to execute the
+  script which "blows away" everything in our development environment
+  so that we could "start over fresh."
+
+  5:50pm things run "cleanly" now, and I next have to apply myself to
+  some querying to make sure that things are "correct." KR also
+  mentioned that we need to do some things to try and figure out how
+  the doggone GUI client is supposed to query things. I think I have a
+  leg up on that, as there are some pl/sql packages mentioned in the
+  "reverse-engineering" documentation shared by our Keane colleagues
+  which included an "A/R handoff" document... The upshot of it is that
+  I have been able to locate this package code in the "EnterpriseRx
+  source tree" and it looks like it may be pl/sql invoked by a
+  front-end client (it includes some obvious things like an "account
+  search" function, and it may be possible to experiment and see if
+  the codes therein mimic the code used by the GUI client...) So, I
+  may be able to utilize this functionality and see if I can get a leg
+  up on things this weekend. Wow! God, you are so good to me in
+  revealing that knowledge to me. I thank you. Please help me to sell
+  this crew on excellence and thus point the way to you, heavenly
+  Father.
+  
+  FTP-SERVER info (before I forget, I'll note it here and then copy it
+  into other notes) : vftp.ndchealth.com, tgarside/exciSEd53#
+
+  6PM LEAVING THE OFFICE...
+
+1/10/2009 
+  
+  ****** IMPORTANT FOR 1/12/2009 ************  
+  MUST CONTACT THAT ANIL MUTHU-SOMETHING-OR-OTHER IN VANCOUVER, BC,
+  about the queries-used-by-the-GUI-client, etc. WE'RE TRYING TO GET
+  WHERE WE CAN VIEW THE DATA WE'RE "CONVERTING/IMPORTING" INTO THE A/R
+  TABLES, ETC....
+
+1/12/2009 
+  8:15am got into the office.
+  
+  9:30am I think I have found the stored procedure (inside a package
+  named TREXONE_1_6, where the "_1_6" portion of the name varies
+  according to a software release number?) that provides the GUI
+  client with a cursor for account data for A/R. Sigh. Unfortunately,
+  I think the authors of this package assume a whole lot of things
+  about the data they're looking for, like the existence, in all
+  cases, of an ACC_BALANCE row. Sigh.
+  
+  10:28am Just finished creating a dataset from KR's
+  "AR-999-20090105-testBase2" file, called
+  "AR-999-20090112-testBase2a" which includes an ARBALANCE record.
+  
+  10:50am I had to create yet another test dataset that includes a
+  ARRECCHARGE record as well (currently, the processing of balance
+  records depends on the presence of "recurring charge" records to
+  process as well...) The dataset is named
+  AR-999-20090112-testBase2b. 
+
+  11:09am Just finished working out a change to the
+  dataloader_standard_ar_account_body.sql (due to the error that the
+  run of "testBase2b" flushed out in the conversion of dates done in
+  the "balance" record procedure named process_acc_balance...) Now I'm
+  just waiting to get my foot in the door to deploy the new version of
+  the DATALOADER package into txconv@txndcq05, past the Oracle timeout
+  error which has bedeviled us from the beginning.
+  
+  11:42am After about four or five attempts, I finally got a corrected
+  version of the package code deployed to the qamail database. So, now
+  I will try to re-apply that most recent dataset.
+  
+  12:08pm Finally got the testBase2b dataset re-applied. (Gotta
+  remember to remove that "apply" line from the batch server's
+  ".properties" file, sigh...)
+  
+  5pm didn't really stop for lunch hardly, so basically put in a 9
+  hour day today...
+
+1/13/2009 
+  8:10am pulled into the parking lot...
+  
+  Spent the morning (before KR's arrival) researching the reply from
+  Anil Muthukrishnan (and Sarah Jiang) in Vancouver: we had an issue
+  last night with trying to view data in the GUI client, and the
+  exception thrown in the GUI. Basically, their response was that
+  exception was thrown due to (surprise!) "missing data" (i.e., row
+  was missing from a table the GUI's query joins to, so the query
+  returns nothing, so the Java code throws up its hands in disgust and
+  walks away...) I know it was probably futile to ask for
+  documentation about the fundamental assumptions which must govern
+  the database (about "rules" like there must be both an
+  ACC_RESPONSIBLE_PARTY row AND an ACC_ACCOUNT_HOLDER row for each row
+  in the ACC_AR_ACCT where it's a "personal" kind of account...)
+  
+  For our particular "test case," I narrowed it down to the fact that
+  the STAGE_AR_MEMBER record did not specify that the "member" is both
+  "responsible" and the "primary" (there are ISRESPONSIBLE and
+  ISPRIMARY fields in that table which should have been set to 'Y'
+  simultaneously, and were NOT; only the ISPRIMARY flag was set to
+  'Y'...)
+  
+  Made sure CG was aware of this issue.
+  
+  9:45am KR arrives
+  
+  My next goal is to try to use KR's "clear-it-all-out" scripts to
+  rerun some data into the A/R tables!
+  
+  10am SENT AN EMAIL TO HUTCHESON REGARDING:
+  MUST TRY TO CONTACT TADD HUTCHESON ("L&D OPERATIONS MANAGER,"
+  404-338-3424) ABOUT TRYING TO GET "BOOKS 24X7 AND ELEARNING" STUFF
+  SET UP IN THE "IT LIBRARY." (APPARENTLY, THIS IS SKILLSOFT JUNKOLA
+  MCKESSON HAD TRIED TO SET UP, AND THEN THEY RAN OUT OF LICENSES?)
+  HUTCHESON SAID ON 12/5/2008 THAT I SHOULD TRY TO "CHECK BACK IN A
+  MONTH OR SO..." MEH. At least they tried to get back with me within
+  a week or so of sending the email. Sigh.
+  
+  10:05am back to trying to get the doggone data re-run into the A/R
+  tables, etc...
+  
+  1:42pm Finally got a reasonably clean dataset loaded into the
+  wretched QAMAIL database. I had to sync-up the two sequences
+  sq_acc_ar_acct and sq_acc_acct because the GUI was expecting the
+  "primary keys" for both acc_ar_acct and acc_acct to be "in sync,"
+  and was querying for the acc_acct.acc_acct_num using values
+  retrieved from the acc_ar_acct.acc_ar_acct_num column. Kinda begs
+  the question about why they didn't just live in that reality when
+  they designed the wretched data model in the first place! It's a
+  really bad joke, sometimes... The most natural thing in the
+  world, and completely in sync with every data modelling philosophy
+  I've ever seen, would have been to make the pk on the acc_ar_acct
+  table a foreign key which references the acc_acct table: this would
+  have been called an "identifying relationship." Instead, their data
+  model contains all kinds of atrocities, and they have enshrined this
+  wrong-headed notion that EVERY table must have a single integer as
+  its primary key. Sigh. The really, truly IRONIC thing about this is
+  that the Java-side application developers have stumbled upon what
+  they would be doing anyway (generating the PK for both tables using
+  the same sequence-object) quite by accident! (I'm laughing so hard
+  now... ;-D )
+  
+  4:40pm So, spent some time re-running A/R test data sets through the
+  DATALOADER and making some minor changes to the
+  dataloader_standard_ar_body portion of the DATALOADER to deal with
+  the "sequence-object confusion problem." Also, tried to run down
+  where the reporting on accounts comes out of. I think it's from a
+  query stored into a String called SUMMARY_ACCOUNT_LIST_REPORT_SQL in
+  the
+  com.techrx.model.service.accounting.reports.AccountListReportPersistor
+  class. But it's not totally clear to me that I'm looking in the
+  right place in the code, and it seems that the way the GUI client
+  works in this context is to attempt to run the query, and quietly
+  log exceptions that could arise, such as when no data are returned
+  by the query. I shall have to investigate this further tomorrow
+  morning, but right now, I've got to go try to work out, I think...
+  
+  5:16pm leaving office
+
+1/14/2009 
+  8:10am arrived at the office
+  Been trying this morning to get to SOMEBODY who knows about whether
+  or not I may have access to the CaliberRM suppository, er,
+  repository, which contains all the preshus A/R and LTC requirements
+  information. Nobody here in Bham knows anything about how to get
+  such access set up (sigh)! Okay, so I shall next have to ask the
+  Vancouver folks if they can extrudesome documents and send them to
+  us, I guess. And perhaps the next thing to do is see whether or not
+  I can get Eclipse to parse the Java code in order to be able to
+  browse the code, right?
+  
+  11:45am got asked for some help by Bron Selle with an update
+  statement. I helped him rework it so that it would execute properly,
+  get the syntax right (so he wouldn't try to do things
+  procedurally...)
+  
+  2:15pm I have been granted access to the CaliberRM repository;
+  proceeded to get the CaliberRM client installed (from a bogged-down
+  network share; the entire process took about 1.5 hours, what with
+  interruptions and all...)
+
+  Sometime after getting the CaliberRM client installation started, I
+  went back to help Bron with another SQL statement question (ended up
+  showing him how to use analytic SQL in order to pick out the latest
+  "fill" out of several for the same dataset, facility, in the
+  stage_fill table, since this was needed to update the stage_rx
+  table, I think?) This was all part of a post-apply
+  verification/vetting/"true-ing" up process that gets run in the
+  midst of conversion processing; these "one-off" scripts are
+  custom-crafted for particular customers to deal with their data
+  issues? (hmm.)
+  
+  So: I spent a fair amount of time today (approx 2 hours?) working
+  with Bron Selle on a SQL statement problem he was dealing with; got
+  him going, and in the midst of trying to see if I could get access
+  to CaliberRM repository-of-requirements-information (to help educate
+  me on the requirements for the A/R stuff, etc...) I spent too much
+  time, I think, trying to figure out how in the world I could browse
+  the code via Eclipse (just takes too long to wind my way down into
+  the setup for a developer right now; I have got to understand Ant
+  scripts better, long term!)
+  
+  4:42pm It looks like the A/R reports are done off of the "core reports"
+  schemas/tables, which is why the accounts we have imported into the
+  system don't show up on the "Tools > Reports > A/R Reports" menu of
+  the GUI application. And I have emailed Sarah Jiang for verification
+  of that point.
+
+1/15/2009 
+  8:00am pulled into parking lot...
+  Spent a little time this morning looking Clojure's uses, I have to
+  admit. I'm not looking forward to trying to figure out how to get
+  the doggone Eclipse stuff working for that wretched EnterpriseRx
+  application, but I suppose that I shall have to just dive in and DO
+  IT...
+  
+  9:10am (approx) KR arrives...
+  9:12am I need to get it moving and try to get the doggone Eclipse
+  stuff set up; I may just have to go ahead and FETCH THE ENTIRE
+  suppository to a fresh directory, and follow their instructions to
+  the letter, in order to get it to work (I may stick with running
+  Eclipse under the newest JVM, but shall have to install the older
+  Java SDK version in order to comply with what they do, I think...)
+  
+  I have to say that I REALLY LIKE EMACS, even though it's a bid
+  "quirky..." It's the most powerful thing for what I do much of the
+  day, which is sling bits of text around....
+  
+  12:24pm Further notes on miscellaneous items that're useful, and
+  crucial to remember:
+    directory on the batch server
+      apollo-admin.enterpriserx.ndchealth.com
+      is: /usr/local/trexone/data/QA-MAIL/autoconv
+    tgarside/exciSEd53#@vftp.ndchealth.com gets you into the ftp
+      server, and the relevant directory is: /bhm/conv/auto
+  Important files:
+  c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/ar_validation_test_notes_20081209.txt
+  c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/acc_ar_acct_loading_notes_20081218.txt
+  c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/fastest_way_20081231.txt
+  c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/AR_and_LTC_work/Consolidated_code/pkg_building_work/pkgbuild/dataset_checking_queries.txt
+  c:/documents and settings/richard.stewart/my documents/mckesson/ar_and_ltc_work/Consolidated_code/pkg_building_work/pkgbuild/reporting_checking_queries.sql
+  
+  2:49pm have saved a bunch of stuff off to text files and have
+  rebooted PC; I had hoped this would help CaliberRM not to crash
+  whenever I tried to run a report, but that did not help it. I have
+  tried to export report information, and that might spew stuff into
+  an XML file (oh! goodie!)
+  
+  I am also in the process of trying to get a command-line subversion
+  client set up, along with a version of Apache Ant, and the BEA
+  Weblogic server, so that I can parrot what EnterpriseRx developers
+  do when they browse their source code....
+  
+  2:52pm Nope: CaliberRM aborts (disappears from the screen) whether I
+  ask for a report print preview, or for it to "export" to an XML
+  file... 
+  
+  3pm I tried further to get some setup done to get the Java source
+  for EnterpriseRx loaded into my machine and so I have spent time
+  fetching a version of WLS onto my box, and also setting up a
+  subversion command-line client, and also an Eclipse subversion
+  plug-in. I've tried to follow the instructions that the development
+  org put onto their wiki pages, but to no avail; the subversion
+  server settings were wrong, for example ("http:" prefix instead of
+  "svn:", which is what worked when using the TortoiseSVN client late
+  last year...) The Ant-based stuff didn't work correctly, it seems,
+  even when I tried to run it manually.
+  
+  5:32pm I am now in the midst of checking out the code, using the
+  Eclipse-based subversion plug-in. I don't know how much longer it
+  will take, and I need to leave the office soon, right?
+  
+  I think that tomorrow, I will try to get further on the development
+  of "validation queries," or I will try to get something done for the
+  doggone LTC development work; apparently, there's been some
+  preliminary work done already to design the staging tables for the
+  LTC work (by Venki Sreeram; he and Bron were conferencing about it
+  earlier this afternoon, and I joined in some of that conversation,
+  to learn about what was going on...) 
+  
+  I need to conference with CG tomorrow morning about how I'm doing,
+  whether or not I need to be doing something else?
+
+  6pm leaving the office...
+  
+  8:00pm I have logged in from home, mainly because I want to see if I
+  can get Eclipse to recognize-and-parse the code from the
+  EnterpriseRx source tree. If I can get a bit done with the issues KR
+  mentioned to me (right before I left the office at about 6pm) then
+  that would be EVEN BETTER.
+  
+1/16/2009 
+  8:10am got into office...
+  First thing today: get those fixes into the dataloader pkg that KR
+  identified last night, then rerun the test dataset, probably...
+  
+  12pm to 1pm:
+  Had struggles with getting the right version of the package code
+  into the txconv@txndcq05 Oracle schema (difficulties with getting
+  the right parameter values to that batch script which we've been
+  using to build up the "final create or replace package body" scripts
+  kept me from installing the correct version of the package code into
+  the doggone environment. After getting THAT worked out, I was able
+  to prove that it was logging the right stuff into the
+  dataload_exceptions table...)
+  
+  1:30pm finished up with runs of AR-999-20090114-testBase4 data into
+  the QA-MAIL, after working out the changes to the
+  process_accounts_block procedure (the main driver of A/R stuff in
+  the A/R conversion portion of the DATALOADER package...) that KR had
+  identifed to me as of 6pm last night.
+  
+  2:05pm left office to run a couple of errands...
+  
+  3:20pm (approximate) Got back into the office...  Started working on
+  the queries to validate the loading of stuff like the "members"
+  data, and trying to understand the use of the acc_acct_member,
+  acc_acct_entity table.
+  
+  5:24pm 
+  Here's the error dialog exception dump from EnterpriseRx application
+  when we try to search for account 20004, and then double-click the
+  account line. I shall have to look into the Java source and see if I
+  can make sense of it:
+  JAVA.LANG.EXCEPTION: CANNOT GENERATE ACCOUNTCOMMINFOBOUNDARY
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTPERSISTORIMPL.GENERATEACCOUNTCOMMBOUNDARY(ACCOUNTMAINTPERSISTORIMPL.JAVA:2722)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTPERSISTORIMPL.GENERATEBUSINESSACCOUNTINFOBOUNDARY(ACCOUNTMAINTPERSISTORIMPL.JAVA:3099)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTPERSISTORIMPL.GENERATEACCOUNTINFOBOUNDARY(ACCOUNTMAINTPERSISTORIMPL.JAVA:2741)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTPERSISTORIMPL.LOADACCOUNTBOUNDARY(ACCOUNTMAINTPERSISTORIMPL.JAVA:2491)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTPERSISTORIMPL.LOADARACCOUNT(ACCOUNTMAINTPERSISTORIMPL.JAVA:2301)
+
+  COM.TECHRX.MODEL.SERVICE.SERVICEEXCEPTION: UNABLE TO LOAD AR ACCOUNT.
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTPERSISTORIMPL.HANDLEEXCEPTION(ACCOUNTMAINTPERSISTORIMPL.JAVA:2273)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTPERSISTORIMPL.LOADARACCOUNT(ACCOUNTMAINTPERSISTORIMPL.JAVA:2318)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTSERVICEIMPL.LOADARACCOUNT(ACCOUNTMAINTSERVICEIMPL.JAVA:88)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.ACCOUNTINGSERVICESB.LOADARACCOUNT(ACCOUNTINGSERVICESB.JAVA:380)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.ACCOUNTINGSERVICESB_K9378G_EOIMPL.LOADARACCOUNT(ACCOUNTINGSERVICESB_K9378G_EOIMPL.JAVA:5587)
+        AT SUN.REFLECT.NATIVEMETHODACCESSORIMPL.INVOKE0(NATIVE METHOD)
+        AT SUN.REFLECT.NATIVEMETHODACCESSORIMPL.INVOKE(NATIVEMETHODACCESSORIMPL.JAVA:39)
+        AT SUN.REFLECT.DELEGATINGMETHODACCESSORIMPL.INVOKE(DELEGATINGMETHODACCESSORIMPL.JAVA:25)
+        AT JAVA.LANG.REFLECT.METHOD.INVOKE(METHOD.JAVA:585)
+        AT COM.TECHRX.MODEL.SERVICE.SBINVOCATIONHANDLER.INVOKE(SBINVOCATIONHANDLER.JAVA:116)
+        AT $PROXY112.LOADARACCOUNT(UNKNOWN SOURCE)
+        AT SUN.REFLECT.NATIVEMETHODACCESSORIMPL.INVOKE0(NATIVE METHOD)
+        AT SUN.REFLECT.NATIVEMETHODACCESSORIMPL.INVOKE(NATIVEMETHODACCESSORIMPL.JAVA:39)
+        AT SUN.REFLECT.DELEGATINGMETHODACCESSORIMPL.INVOKE(DELEGATINGMETHODACCESSORIMPL.JAVA:25)
+        AT JAVA.LANG.REFLECT.METHOD.INVOKE(METHOD.JAVA:585)
+        AT COM.TECHRX.MODEL.SERVICE.SERVICECALL.EXECUTE(SERVICECALL.JAVA:377)
+        AT COM.TECHRX.APP.TREXONE.WEB.TREXWEBENTRY.DOPOST(TREXWEBENTRY.JAVA:154)
+        AT JAVAX.SERVLET.HTTP.HTTPSERVLET.SERVICE(HTTPSERVLET.JAVA:763)
+        AT JAVAX.SERVLET.HTTP.HTTPSERVLET.SERVICE(HTTPSERVLET.JAVA:856)
+        AT WEBLOGIC.SERVLET.INTERNAL.STUBSECURITYHELPER$SERVLETSERVICEACTION.RUN(STUBSECURITYHELPER.JAVA:227)
+        AT WEBLOGIC.SERVLET.INTERNAL.STUBSECURITYHELPER.INVOKESERVLET(STUBSECURITYHELPER.JAVA:125)
+        AT WEBLOGIC.SERVLET.INTERNAL.SERVLETSTUBIMPL.EXECUTE(SERVLETSTUBIMPL.JAVA:283)
+        AT WEBLOGIC.SERVLET.INTERNAL.SERVLETSTUBIMPL.EXECUTE(SERVLETSTUBIMPL.JAVA:175)
+        AT WEBLOGIC.SERVLET.INTERNAL.WEBAPPSERVLETCONTEXT$SERVLETINVOCATIONACTION.RUN(WEBAPPSERVLETCONTEXT.JAVA:3231)
+        AT WEBLOGIC.SECURITY.ACL.INTERNAL.AUTHENTICATEDSUBJECT.DOAS(AUTHENTICATEDSUBJECT.JAVA:321)
+        AT WEBLOGIC.SECURITY.SERVICE.SECURITYMANAGER.RUNAS(SECURITYMANAGER.JAVA:121)
+        AT WEBLOGIC.SERVLET.INTERNAL.WEBAPPSERVLETCONTEXT.SECUREDEXECUTE(WEBAPPSERVLETCONTEXT.JAVA:2002)
+        AT WEBLOGIC.SERVLET.INTERNAL.WEBAPPSERVLETCONTEXT.EXECUTE(WEBAPPSERVLETCONTEXT.JAVA:1908)
+        AT WEBLOGIC.SERVLET.INTERNAL.SERVLETREQUESTIMPL.RUN(SERVLETREQUESTIMPL.JAVA:1362)
+        AT WEBLOGIC.WORK.EXECUTETHREAD.EXECUTE(EXECUTETHREAD.JAVA:209)
+        AT WEBLOGIC.WORK.EXECUTETHREAD.RUN(EXECUTETHREAD.JAVA:181)
+  
+  The problem may lie with the following query in class:
+    com.techrx.model.service.accounting.maint.AccountMaintPersistorImpl
+  SELECT 
+  HOLDER.ACC_ACCT_HOLDER_NUM, 
+  ENTITY.ACC_ACCT_ENTITY_NUM, 
+  ENTITY.NUM_UPDATES -- \"" + AccountCommInfoBoundary.ENTITY_NUM_OF_UPDATES + "\", \n
+  BUSINESS.NAME, 
+  BUSINESS.ACC_INSTITUTION_NUM, 
+  BUSINESS.BILLING_ADDRESS, 
+  BUSINESS.ACC_PERSON_NUM, 
+  BUSINESS.NUM_UPDATES -- \"" + AccountCommInfoBoundary.INSTITUTION_NUM_OF_UPDATES + "\", \n
+  CONTACT.TITLE, 
+  CONTACT.LAST_NAME, 
+  CONTACT.MIDDLE_NAME, 
+  CONTACT.FIRST_NAME, 
+  CONTACT.NAME_SUFFIX, 
+  CONTACT.NUM_UPDATES -- \"" + AccountCommInfoBoundary.PERSON_NUM_OF_UPDATES + "\", \n
+  --         ADDRESS_QUERY_SQL + "\",\n" +
+  --          PHONE_QUERY_SQL + "\",\n" +
+  --          EMAIL_QUERY_SQL + "\"\n" +
+  FROM ACC_ACCT_HOLDER HOLDER
+  INNER JOIN ACC_ACCT_ENTITY ENTITY ON HOLDER.ACC_ACCT_ENTITY_NUM =
+      ENTITY.ACC_ACCT_ENTITY_NUM
+      AND HOLDER.ACC_AR_ACCT_NUM = 1347600
+  INNER JOIN ACC_INSTITUTION BUSINESS ON ENTITY.ACC_INSTITUTION_NUM = BUSINESS.ACC_INSTITUTION_NUM
+  INNER JOIN ADDRESS_LINK AL ON AL.OWNER = BUSINESS.ACC_INSTITUTION_NUM AND AL.OWNER_TYPE_CODE = 'I' AND AL.USAGE = 0
+  INNER JOIN ADDRESS AD ON AL.ADDRESS_NUM = AD.ADDRESS_NUM 
+  INNER JOIN ZIPCODE ZC ON ZC.CSZ_NUM = AD.CSZ_NUM
+  INNER JOIN PHONE_LINK PL ON PL.OWNER = BUSINESS.ACC_INSTITUTION_NUM AND PL.OWNER_TYPE_CODE = 'I' AND (PL.PHONE_USAGE = 0 OR PL.PHONE_USAGE = 4)
+  INNER JOIN PHONE PO ON PL.PHONE_NUM = PO.PHONE_NUM
+  LEFT JOIN URL_LINK UL ON UL.OWNER = BUSINESS.ACC_INSTITUTION_NUM AND UL.OWNER_TYPE_CODE = 'I'
+  LEFT JOIN URL ON UL.URL_NUM = URL.URL_NUM 
+  LEFT JOIN ACC_PERSON CONTACT ON BUSINESS.ACC_PERSON_NUM = CONTACT.ACC_PERSON_NUM
+  
+  5:51pm I have to leave the office now, but sent email, informed, KR,
+  about the issue above, told him I would also try to look into it
+  over the weekend as well... But I have to head home now...
+
+1/19/2009 
+  8:20am (approximate) arrived in the office
+  
+  Started right in on reviewing some stuff that KR had obviously been
+  working on Sunday evening, 1/18/2009. (Man!)
+  
+  Here's another occurrence of the same error that had been
+  encountered Friday afternoon, but with different test dataset:
+  JAVA.LANG.EXCEPTION: CANNOT GENERATE ACCOUNTCOMMINFOBOUNDARY
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTPERSISTORIMPL.GENERATEACCOUNTCOMMBOUNDARY(ACCOUNTMAINTPERSISTORIMPL.JAVA:2722)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTPERSISTORIMPL.GENERATEBUSINESSACCOUNTINFOBOUNDARY(ACCOUNTMAINTPERSISTORIMPL.JAVA:3099)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTPERSISTORIMPL.GENERATEACCOUNTINFOBOUNDARY(ACCOUNTMAINTPERSISTORIMPL.JAVA:2741)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTPERSISTORIMPL.LOADACCOUNTBOUNDARY(ACCOUNTMAINTPERSISTORIMPL.JAVA:2491)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTPERSISTORIMPL.LOADARACCOUNT(ACCOUNTMAINTPERSISTORIMPL.JAVA:2301)
+  
+  COM.TECHRX.MODEL.SERVICE.SERVICEEXCEPTION: UNABLE TO LOAD AR ACCOUNT.
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTPERSISTORIMPL.HANDLEEXCEPTION(ACCOUNTMAINTPERSISTORIMPL.JAVA:2273)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTPERSISTORIMPL.LOADARACCOUNT(ACCOUNTMAINTPERSISTORIMPL.JAVA:2318)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTSERVICEIMPL.LOADARACCOUNT(ACCOUNTMAINTSERVICEIMPL.JAVA:88)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.ACCOUNTINGSERVICESB.LOADARACCOUNT(ACCOUNTINGSERVICESB.JAVA:380)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.ACCOUNTINGSERVICESB_K9378G_EOIMPL.LOADARACCOUNT(ACCOUNTINGSERVICESB_K9378G_EOIMPL.JAVA:5587)
+        AT SUN.REFLECT.NATIVEMETHODACCESSORIMPL.INVOKE0(NATIVE METHOD)
+        AT SUN.REFLECT.NATIVEMETHODACCESSORIMPL.INVOKE(NATIVEMETHODACCESSORIMPL.JAVA:39)
+        AT SUN.REFLECT.DELEGATINGMETHODACCESSORIMPL.INVOKE(DELEGATINGMETHODACCESSORIMPL.JAVA:25)
+        AT JAVA.LANG.REFLECT.METHOD.INVOKE(METHOD.JAVA:585)
+        AT COM.TECHRX.MODEL.SERVICE.SBINVOCATIONHANDLER.INVOKE(SBINVOCATIONHANDLER.JAVA:116)
+        AT $PROXY112.LOADARACCOUNT(UNKNOWN SOURCE)
+        AT SUN.REFLECT.NATIVEMETHODACCESSORIMPL.INVOKE0(NATIVE METHOD)
+        AT SUN.REFLECT.NATIVEMETHODACCESSORIMPL.INVOKE(NATIVEMETHODACCESSORIMPL.JAVA:39)
+        AT SUN.REFLECT.DELEGATINGMETHODACCESSORIMPL.INVOKE(DELEGATINGMETHODACCESSORIMPL.JAVA:25)
+        AT JAVA.LANG.REFLECT.METHOD.INVOKE(METHOD.JAVA:585)
+        AT COM.TECHRX.MODEL.SERVICE.SERVICECALL.EXECUTE(SERVICECALL.JAVA:377)
+        AT COM.TECHRX.APP.TREXONE.WEB.TREXWEBENTRY.DOPOST(TREXWEBENTRY.JAVA:154)
+        AT JAVAX.SERVLET.HTTP.HTTPSERVLET.SERVICE(HTTPSERVLET.JAVA:763)
+        AT JAVAX.SERVLET.HTTP.HTTPSERVLET.SERVICE(HTTPSERVLET.JAVA:856)
+        AT WEBLOGIC.SERVLET.INTERNAL.STUBSECURITYHELPER$SERVLETSERVICEACTION.RUN(STUBSECURITYHELPER.JAVA:227)
+        AT WEBLOGIC.SERVLET.INTERNAL.STUBSECURITYHELPER.INVOKESERVLET(STUBSECURITYHELPER.JAVA:125)
+        AT WEBLOGIC.SERVLET.INTERNAL.SERVLETSTUBIMPL.EXECUTE(SERVLETSTUBIMPL.JAVA:283)
+        AT WEBLOGIC.SERVLET.INTERNAL.SERVLETSTUBIMPL.EXECUTE(SERVLETSTUBIMPL.JAVA:175)
+        AT WEBLOGIC.SERVLET.INTERNAL.WEBAPPSERVLETCONTEXT$SERVLETINVOCATIONACTION.RUN(WEBAPPSERVLETCONTEXT.JAVA:3231)
+        AT WEBLOGIC.SECURITY.ACL.INTERNAL.AUTHENTICATEDSUBJECT.DOAS(AUTHENTICATEDSUBJECT.JAVA:321)
+        AT WEBLOGIC.SECURITY.SERVICE.SECURITYMANAGER.RUNAS(SECURITYMANAGER.JAVA:121)
+        AT WEBLOGIC.SERVLET.INTERNAL.WEBAPPSERVLETCONTEXT.SECUREDEXECUTE(WEBAPPSERVLETCONTEXT.JAVA:2002)
+        AT WEBLOGIC.SERVLET.INTERNAL.WEBAPPSERVLETCONTEXT.EXECUTE(WEBAPPSERVLETCONTEXT.JAVA:1908)
+        AT WEBLOGIC.SERVLET.INTERNAL.SERVLETREQUESTIMPL.RUN(SERVLETREQUESTIMPL.JAVA:1362)
+        AT WEBLOGIC.WORK.EXECUTETHREAD.EXECUTE(EXECUTETHREAD.JAVA:209)
+        AT WEBLOGIC.WORK.EXECUTETHREAD.RUN(EXECUTETHREAD.JAVA:181)
+  
+  5:29pm After a code change (by KR) and lots of
+  running-and-rerunning, we are at the point with the
+  AR-999-testDelta5kr dataset that:
+  
+  We still get the following exception:
+JAVA.LANG.EXCEPTION: CANNOT GENERATE ACCOUNTCOMMINFOBOUNDARY
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTPERSISTORIMPL.GENERATEACCOUNTCOMMBOUNDARY(ACCOUNTMAINTPERSISTORIMPL.JAVA:2722)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTPERSISTORIMPL.GENERATEBUSINESSACCOUNTINFOBOUNDARY(ACCOUNTMAINTPERSISTORIMPL.JAVA:3099)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTPERSISTORIMPL.GENERATEACCOUNTINFOBOUNDARY(ACCOUNTMAINTPERSISTORIMPL.JAVA:2741)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTPERSISTORIMPL.LOADACCOUNTBOUNDARY(ACCOUNTMAINTPERSISTORIMPL.JAVA:2491)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTPERSISTORIMPL.LOADARACCOUNT(ACCOUNTMAINTPERSISTORIMPL.JAVA:2301)
+  
+COM.TECHRX.MODEL.SERVICE.SERVICEEXCEPTION: UNABLE TO LOAD AR ACCOUNT.
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTPERSISTORIMPL.HANDLEEXCEPTION(ACCOUNTMAINTPERSISTORIMPL.JAVA:2273)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTPERSISTORIMPL.LOADARACCOUNT(ACCOUNTMAINTPERSISTORIMPL.JAVA:2318)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.MAINT.ACCOUNTMAINTSERVICEIMPL.LOADARACCOUNT(ACCOUNTMAINTSERVICEIMPL.JAVA:88)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.ACCOUNTINGSERVICESB.LOADARACCOUNT(ACCOUNTINGSERVICESB.JAVA:380)
+        AT COM.TECHRX.MODEL.SERVICE.ACCOUNTING.ACCOUNTINGSERVICESB_K9378G_EOIMPL.LOADARACCOUNT(ACCOUNTINGSERVICESB_K9378G_EOIMPL.JAVA:3787)
+        AT SUN.REFLECT.NATIVEMETHODACCESSORIMPL.INVOKE0(NATIVE METHOD)
+        AT SUN.REFLECT.NATIVEMETHODACCESSORIMPL.INVOKE(NATIVEMETHODACCESSORIMPL.JAVA:39)
+        AT SUN.REFLECT.DELEGATINGMETHODACCESSORIMPL.INVOKE(DELEGATINGMETHODACCESSORIMPL.JAVA:25)
+        AT JAVA.LANG.REFLECT.METHOD.INVOKE(METHOD.JAVA:585)
+        AT COM.TECHRX.MODEL.SERVICE.SBINVOCATIONHANDLER.INVOKE(SBINVOCATIONHANDLER.JAVA:116)
+        AT $PROXY104.LOADARACCOUNT(UNKNOWN SOURCE)
+        AT SUN.REFLECT.NATIVEMETHODACCESSORIMPL.INVOKE0(NATIVE METHOD)
+        AT SUN.REFLECT.NATIVEMETHODACCESSORIMPL.INVOKE(NATIVEMETHODACCESSORIMPL.JAVA:39)
+        AT SUN.REFLECT.DELEGATINGMETHODACCESSORIMPL.INVOKE(DELEGATINGMETHODACCESSORIMPL.JAVA:25)
+        AT JAVA.LANG.REFLECT.METHOD.INVOKE(METHOD.JAVA:585)
+        AT COM.TECHRX.MODEL.SERVICE.SERVICECALL.EXECUTE(SERVICECALL.JAVA:377)
+        AT COM.TECHRX.APP.TREXONE.WEB.TREXWEBENTRY.DOPOST(TREXWEBENTRY.JAVA:154)
+        AT JAVAX.SERVLET.HTTP.HTTPSERVLET.SERVICE(HTTPSERVLET.JAVA:763)
+        AT JAVAX.SERVLET.HTTP.HTTPSERVLET.SERVICE(HTTPSERVLET.JAVA:856)
+        AT WEBLOGIC.SERVLET.INTERNAL.STUBSECURITYHELPER$SERVLETSERVICEACTION.RUN(STUBSECURITYHELPER.JAVA:227)
+        AT WEBLOGIC.SERVLET.INTERNAL.STUBSECURITYHELPER.INVOKESERVLET(STUBSECURITYHELPER.JAVA:125)
+        AT WEBLOGIC.SERVLET.INTERNAL.SERVLETSTUBIMPL.EXECUTE(SERVLETSTUBIMPL.JAVA:283)
+        AT WEBLOGIC.SERVLET.INTERNAL.SERVLETSTUBIMPL.EXECUTE(SERVLETSTUBIMPL.JAVA:175)
+        AT WEBLOGIC.SERVLET.INTERNAL.WEBAPPSERVLETCONTEXT$SERVLETINVOCATIONACTION.RUN(WEBAPPSERVLETCONTEXT.JAVA:3231)
+        AT WEBLOGIC.SECURITY.ACL.INTERNAL.AUTHENTICATEDSUBJECT.DOAS(AUTHENTICATEDSUBJECT.JAVA:321)
+        AT WEBLOGIC.SECURITY.SERVICE.SECURITYMANAGER.RUNAS(SECURITYMANAGER.JAVA:121)
+        AT WEBLOGIC.SERVLET.INTERNAL.WEBAPPSERVLETCONTEXT.SECUREDEXECUTE(WEBAPPSERVLETCONTEXT.JAVA:2002)
+        AT WEBLOGIC.SERVLET.INTERNAL.WEBAPPSERVLETCONTEXT.EXECUTE(WEBAPPSERVLETCONTEXT.JAVA:1908)
+        AT WEBLOGIC.SERVLET.INTERNAL.SERVLETREQUESTIMPL.RUN(SERVLETREQUESTIMPL.JAVA:1362)
+        AT WEBLOGIC.WORK.EXECUTETHREAD.EXECUTE(EXECUTETHREAD.JAVA:209)
+        AT WEBLOGIC.WORK.EXECUTETHREAD.RUN(EXECUTETHREAD.JAVA:181)
+  
+  for acct_number = 21031 (A BUSINESS-typed account)
+  OOPS! no, it turns out it was for 21010....
+  
+1/20/2009 
+  8:10am arrived at the office.
+  Spent the morning researching why account 21010 (see above) still
+  wouldn't come up in the GUI (sure am getting tired of trying to dig
+  through text files without the assistance of an IDE; still trying to
+  get the right piles of stuff "checked out" of the respository so
+  that I can get Eclipse to build, at least, pieces of the
+  EnterpriseRx system...)
+  
+  12pm I had pretty much run down the reason, and it was due to
+  failure of the test dataset to contain precisely one
+  member-who-points-to-a-person-whose-address-should-be-the-business-address. So,
+  told KR about the situation, and he told me to (1) add the proposed
+  validation test I came up with to the DATAVALIDATOR, and (2) he
+  would work on the member-processing code to work with picking a
+  default address to pick (that of the "primary member" if nobody
+  specifies an person-to-supply-the-business-address...) Sigh.
+  
+  3pm I had tried to get my code changes into the database
+  environment, and then to get the dataset rerun
+  (AR-999-20090119-testDelta5kr, I think) when I found that they'd
+  been diggling with the batch server environments again, screwing up
+  the "AutoConv.xml" driver files which the ant-driven quick-build
+  stuff uses. So, KR had to rework that stuff again, and then I could
+  rerun things to display the pleasant little warning messages.
+  
+  I am FRUSTRATED with this stuff, but I am sure that most if it is
+  due to lack of suitable documentation (regarding the ant buildfiles
+  for the EnterpriseRx, and for the Eclipse-based development
+  environment they like to use to build that thing...)
+  
+  5:32pm before leaving, I spent a few minutes trying to figure out
+  their ant build files (I am speaking of those fetched from the
+  repository from the EnterpriseRx developers...)
+  
+  I think that I shall have to take the build scripts and copy them
+  other to some other directories that already contain the
+  "checked-out" code; otherwise, I shall have to "check out" all of
+  the code over again!!! Ugh. Perhaps that's not as bad as it sounds,
+  since I can check my code changes in, and then blow away my
+  PC-resident copies of code, and then re-check it all out after I get
+  straight all of the nuances they have injected into what is arguably
+  a very crufty environment.
+  
+  5:38pm left the office.
+  
+1/21/2009 
+  8:06am pulled into parking lot...
+  Want to try and quickly figure out what the deal is with the Ant
+  build shtuff this morning.
+  
+  It appears that it's possible that the Vancouver instructions are
+  all about using Ant to do nearly everything, and that the Ant build
+  scripts/files make certain assumptions about the layout of your
+  source files. (Just writing out loud what ought to be obvious...)
+  
+  11:33am left the office to go to a school-function for Caroline...
+  
+  1:04pm back at my desk.
+  
+  Saw this morning that John Orange was visiting today; as I left to
+  go to Caroline's square-dancing presentation, they were having a
+  conference in the "kitchen," and KR was presenting some info about
+  the structure of the A/R code, I guess. Sure would've been nice to
+  know that Orange was visiting today. Sigh.
+  
+  4:19pm KR wants me to add another item to the
+  list-of-crud-we-skip-over in the main account-processing loop: he
+  wants any BUSINESS-typed account with a null BUSINESSNAME to have
+  the load_status updated to 'F'. (Coding this and testing it will
+  take about 30 minutes total, I think; most of the rest of the time
+  will be the exhausing setup, right?) I think I can do this pretty
+  quickly tomorrow morning.
+  
+  I found out today that I need to "relocate" some or all of my source
+  tree: when I tried to commit some DATAVALIDATOR changes I had made
+  to the repository, I found out that I had been set up with, and had
+  been using, the wrong URL. Hence the following, which is an example
+  of how to iteratively use a shell scripting facility to switch some
+  source directory trees to be working copies for the corresponding
+  directory trees in the "http" flavor of repository access, which
+  permits workers to make changes to code found there.
+  
+  A shell script that helps me to "relocate" a huge pile of my
+  version-controlled directories of source code from the "read-only"
+  version of the repository to the "repository for grown-ups":
+     I will run this within Cygwin path:
+       /cygdrive/c/scc/erx/trunk/DatabaseSchema/OLTP
+    for i in "fdb" "fdb_stage" "login" "medispan" "medispan_stage" \
+             "practice" "trexone" "trexone_proxy" "trexone_secure" "txstage" 
+    do
+      echo $i
+      cd $i
+      echo "svn switch --relocate \\"
+      echo "  svn://svn.techrx.com/erx/trunk/DatabaseSchema/OLTP/$i \\"
+      echo "  http://svn.techrx.com/erx/trunk/DatabaseSchema/OLTP/$i \\" 
+      echo "  --username richard.stewart --password PASSWORD-GOES-HERE"
+      svn switch --relocate \
+        svn://svn.techrx.com/erx/trunk/DatabaseSchema/OLTP/$i \
+        http://svn.techrx.com/erx/trunk/DatabaseSchema/OLTP/$i \
+        --username richard.stewart --password PASSWORD-GOES-HERE
+      echo 
+      cd ..
+    done
+
+  The following "verified the work" for me:
+    for i in "fdb" "fdb_stage" "login" "medispan" "medispan_stage" \
+             "practice" "trexone" "trexone_proxy" "trexone_secure" "txstage" 
+    do
+      echo $i
+      cd $i
+      svn info .
+      echo
+      cd ..
+    done
+  
+  Cygwin and bash are INCREDIBLY USEFUL! And I am gaining a new
+  appreciation for Subversion! I really thing I would like to start
+  using it for my own work!
+  
+  4:52pm Base on conversation held earlier today (went to get coffee,
+  asked KR, who was conferencing with Bselle, about the changes he was
+  contemplating to the member-processing codes, and he said he was
+  working them out, and didn't expect me to do so) it sounds like it
+  will be more worthwhile than ever to get the EnterpriseRx source
+  code into a place where things can be parsed-enough that we can use
+  Eclipse to browse the source code, and figure out where things go
+  wrong with queries that the wretched thing runs. It seems that the
+  source code for that monstrosity will be the "operational
+  specification" for how we must populate the LTC data model (it has
+  already become the operational specification for how we must handle
+  the A/R data loading processes as well...) Although KR has not been
+  terribly interested in trying to learn the Java sources, I think
+  that I will be interested in doing so, for my own edification, and
+  so that I can add some value to things...
+
+1/21/2009 
+  REMINDER: TODAY YOU NEED TO ADD THAT 'F' FLAGGING TO THE MAIN
+  ACCOUNT-PROCESSING LOOP SO THAT BUSINESS ACCOUNTS WHICH HAVE A
+  BLANK/NULL BUSINESS NAME FIELD WILL BE MARKED AS "FAILED." YOU
+  SHOULD ALSO MAKE A "LOG ENTRY" JUST AS THE CODE ALREADY DOES WITH
+  THOSE STAGE_AR_ACCOUNT RECORDS THAT'RE BEING MARKED WITH AN 'S'. DO
+  THIS THIS MORNING, *FIRST THING*.
+  
+  8:10am (approximate) got to the office...
+  9:34am just got done talking with Bron Selle about a deadlock issue
+  that Publix was having with the conversion software; I told Bron I
+  would try to have some kind of answer for him on whether or not that
+  "select... for update..." statement they talked about in ERX-21375
+  is issued by something in the EnterpriseRx application (will have to
+  grep on the source code I currently possess) and whatever else I can
+  come up with. I told him that I had to make the aforementioned code
+  change (for A/R) first, and then I will try to get some kind of
+  answer to him by this afternoon.
+  
+  10am Got the coding change implemented, deployed to the Oracle
+  database for QA-MAIL (txconv@txndcq05.) (How're we supposed to check
+  this stuff into the source code repository, eventually? How is that
+  supposed to work itself out? I am loath to commit my changes at
+  present, until I am confident it won't cause issues with "the rest
+  of the community...")
+  
+  12:53pm FINALLY got some successful tests run (and re-tooled some
+  "checking SQL's" set up so that I can depend mostly on SQLPlus
+  instead of SQL developer, which is a piece of junk...) to evaluate
+  that change. In the process, I managed to get one of the "member"
+  records set up incorrectly, and this caused the member processing to
+  error out, and prompted questions to KR (which led to the
+  determination that I didn't have that member record in question set
+  up to be "primary," and things won't work for business-class
+  accounts unless you have at precisely one of those; I created a
+  validation check in the DATAVALIDATOR for that yesterday...)
+  
+  It was not immediately clear, from looking at the member-processing
+  procedure, what was going on. That should tell us something. Plus,
+  KR remarked that he wants to go ahead (at some point?) and revisit
+  things in that procedure anyhow... That thing is way too procedural,
+  in my opinion, but that is the folly we're forced into in order to
+  "stick to the existing (read 'broken') process..."
+  
+  1:53pm finally committed my changes to the
+  dataloader_standard_ar_account_body.sql to the svn repository...  I
+  HAD to spend some time understanding KR's code in the main body of
+  his process_ar_acct_member procedure. Unfortunately (and I think he
+  dislikes this also) there's a key piece of that procedure which puts
+  a conditional inside an exception handler, and it's not obvious that
+  a crucial part of the processing hinges upon the
+  conditional-inside-the-exception-handler. So, this begs the
+  question: should people use exception handler blocks in PL/SQL to
+  handle certain kinds of situations? Is it a good idea to clutter up
+  the "flow of control" by using exception conditions to try and
+  determine what to do next, as that procedure does? I am working on a
+  good argument about why the answer should be "ABSOLUTELY NOT." If
+  one sticks to declarative processing and programming , then one does
+  not have to worry about such annoying issues, but unfortunately, the
+  world is not such a gracious place, is it?
+  
+  2pm Started searching for occurences of the text "for update" within
+  the accumulated pile of source files for EnterpriseRx. looks like
+  there is some crappola within EnterpriseRx, either within the Java
+  itself, or within the stored procedures invoked by the Java, which
+  contains some "select ... for update..." kinds of statements. (nuts)
+  This is going to be a sttep climb uphill, I'm afraid.
+  
+  6pm finally finished my initial assessment of issues with JIRA
+  ticket ERX-21375: I have learned how to read deadlock dump's from
+  Oracle, and learned how by causing deadlocks to happen on my own
+  Oracle instance and comparing what I see there with deadlock trace
+  files that Publix folks were good enough to provide. (Only took me
+  about two hours to get to this point... whew!) Next time I may be
+  able to do this a little faster.
+
+1/23/2009 
+  FIRST THING TODAY: NEED TO FINISH THE ASSESSMENT FOR THE PUBLIX
+  DEADLOCK ISSUE, AND ISSUE FINAL FINDINGS TO BSELLE, CG, ET AL.
+  
+  8:10am arrived in office
+  
+  10am finished evaluating the "blocked statements" that were noted in
+  the deadlock trace file send to use by Publix Pharmacies; I think
+  that it was pretty obvious that they had other Oracle sessions up
+  and doing things at the time the conversion run was started. (Can't
+  remember if requiring the customer to shut down EVERYTHING else
+  before kicking off a conversion is a violation of the original
+  "conversion requirements/wish-list!" NEED TO CHECK ON THAT, HAW!)
+  Sent email to BSelle.
+
+  (Update from 11:13am: Hah! I found the contradictions I was looking
+  for, starting on page 5 of the "Legacy Data Conversion Software
+  Architecture Document" by Mark Brown, which says things like:
+    "Conversion processing must happen without database downtime and
+    cannot impact system availability (24x7x365)."
+    "Conversion processing must happen without reducing application
+    response time or overall throughput below acceptable limits."
+    "Due to the volume of data and timeframes available, the
+    processing for each facility must be performed in parallel."
+  <sarcasm> Well, we certainly reached all of those "goals," didn't
+  we? </sarcasm>)
+  
+  When I spoke to him this morning, Bron remarked that perhaps a way
+  around some of this is th "stagger" the loading processing by
+  "adding locks-and-latches" so that parts of processing can be kicked
+  off and automatically stop when it reaches a point that will
+  conflict with another session that is also doing load processing.
+  
+  I certainly understand, and sympathize with, such an idea: it seeems
+  to be appealing because it appears to allow us to make a few
+  incremental changes to the existing code base (i.e., the DATALOADER
+  package code) in order to "fix" the problem. I don't think this is
+  the fix that it appears to be on the surface, because BSelle seems
+  to be assuming that: (1) those enginerring such changes will have
+  sufficiently intimate knowledge of the DATALOADER system to know
+  EXACTLY where to put such locking code, (2) those engineering such
+  changes understand Oracle well enough to do manual locking. I
+  certainly don't want to sound like a complainer and naysayer; it
+  would be, should be possible to pull such a stunt and make it
+  work. However, the risks there are possibly higher than the risks
+  you take on by trying to get the processing redesigned to properly
+  use declarative processing. 
+  
+  11am I think I'm going to go back to trying to get the source tree
+  files set up so that Eclipse can browse them; after that, I'm going
+  to try to look into the LTC stuff as fully as possible (although KR
+  seems, again, to be taking on the "team lead" role in this LTC
+  situation again. I'm still trying to figure out where I stand in
+  this situation, I think. I think I am going to need to understand
+  this stuff, eventually, in order to be able to effectively
+  "debug/ferret-out" issues with the LTC conversion, as well as the
+  A/R conversion, right?
+  
+  There are some great "tidbits" in the "ERX Architecture Guide.doc"
+  file I have squirreled away in:
+    C:\Documents and Settings\Richard.Stewart\
+      My Documents\McKesson\EnterpriseRx\ERX Architecture Guide.doc
+  Lots of stuff about the architectural decisions they made, and
+  information about the rationale behind "Persistor" classes,
+  etc. It also contains some examples of how the user-interface code
+  accomplishes what it does, including examples of MVC at work in
+  their design. A useful document, although it betrays a
+  misunderstanding (in my opinion) of how to implement "database
+  independence" or "database agnosticism."
+  
+  6pm left the office
+  
+1/24/2009 
+  5:43pm Been chipping away at the possibility of building a local
+  version of the EnterpriseRx system on and off today (had to stop and
+  take care of some family business, too, but this remote access is
+  also VERY USEFUL.)
+  
+  It was becoming clear this morning that it isn't really going to be
+  possible to get a clean build, at least not with the trunk code! But
+  that possibility should have occurred to me, as the trunk is
+  supposed to be the place where development staff are keeping their
+  latest stuff, right? And, depending on the practices of the
+  organization, what is in the "trunk" won't necessarily be
+  "buildable," right? I say this because there appear to be, in the
+  "trunk," references to classes in certain files which are not
+  defined anywhere in the existing source tree (or the existing source
+  tree that I know about...) This makes it impossible for me to get a
+  clean build, and I wonder if this is because of activities by the
+  development organization in which they are trying to create new sets
+  of source files, and yet keep the old ones around, somehow (perhaps
+  by getting their IDE's to skip over the "old stuff," yet keeping it
+  around in the same source directories as the "new stuff?") 
+
+  That was when I realized that I may need to take a look at checking
+  out one of the "branches" or "tagged" versions of their source
+  code. Thank goodness that I have an Subversion plug-in for
+  Eclipse. That has actually turned out to be pretty nice.
+  
+1/26/2009 
+  8:10am arrived in the office (right after CG got in the door, it
+  seems!)
+  
+  8:10am until about 10am: spent most of this time going through the
+  little bit of online "training" for the Startime system (which
+  apparently we must start using to record the use of our time so that
+  they can pick out what they want to charge back to customers like
+  Kaiser.) Sigh. CG told me, when I spoke with him, that I need to
+  predominantly record my time on "EnterpriseRx" project, in a
+  "development and coding" activity, going forward (he explicitly said
+  that time recording didn't have to be "retroactive," and that this
+  was going to be an important activity going forward....) (Thank you,
+  Lord God, for EMACS diary mode...)
+  
+  10am KR arrived (approximate)
+  10am started trying to figure out the Ant scripts they (apparently)
+  use to build up the TRexOneEnterprise.jar file. It seems that this
+  is a jar which must be constructed before you try to build the main
+  EnterpriseRx application, but there was nothing in the online
+  instructions which explained how to get that built first; either
+  this stuff is built first within the doggone pile of scripts which
+  they passed out (in that "tools/trunk-dev" pile of Ant scripts) or
+  there's some other piece of documentation that I have overlooked in
+  the Vancouver development Confluence Wiki sites.
+  
+  I searched the "tools/trunk-dev" set of directories, and didn't find
+  any references to "TRexOneEnterprise.jar," so there must be some
+  other way to get to it, right?
+  
+  3pm I have spent most of today trying to fathom how the development
+  or deployment folks ever get a build of their EnterpriseRx system
+  (under Eclipse or any other tool...) I have made a couple of
+  tentative conclusions:
+    (1) It's possible that portions of the system are created by
+        generating Java code. (That is the only explanation I can come
+        up with for why the Eclipse environment's compiler can't find
+        certain kinds of classes that're referenced in Java source
+        files; I am thinking of classes like
+        com.techrx.fop.fo.properties.Overflow, which are referenced
+        inside the FOP "subsystem" and yet there is no source code
+        provided in that part of the namespace. I have to think that
+        the Overflow.java that is needed in the correct part of the
+        source tree has to be generated by something else, perhaps an
+        Ant build script or something? And the pieces which specify
+        its creation are not obvious.) UPDATE: In fact, it is indeed
+        an ASF-sponsored open-source product, not particularly
+        well-integrated with the rest of the ERX stuff. Lots of manual
+        work here just to understand what's going on.
+    (2) I think that, for now, I have managed to get enough of the
+        source code to compile that Eclipse can start to see what I
+        need it to see, so that I won't always be condemned to
+        performing a grep operation on the entire source code tree in
+        order to figure out what uses certain classes. However, a
+        comprehensive understanding of things will have to wait, for
+        now, I'm afraid.
+    (3) I found yet another repository location for "helpful" stuff:
+        http://svn.techrx.com/personal/eclipse/trunk, plus a wiki page
+        that talks a bit about it. It uses properties to automagically
+        check out the other "standard" stuff on your behalf, so I use
+        the Subversion plugin for Eclipse to check out that subtree,
+        and I may have something better now, because it also contained
+        a "baseline" subdirectory which contained several of the
+        "missing jar files" which I think I shall need to compile.
+  
+  5:36pm left the office for now...
+  
+  (Huh: KR didn't say "boo" to me today; probably doesn't mean much,
+  as he doesn't always say anything to BSelle, either.)
+  
+  11:45pm Finally got the cleanest build I've gotten thus far by
+  compiling from that http://svn.techrx.com/personal/eclipse/trunk
+  subtree; I still have issues with the fact that I am missing the
+  following classes:
+    import com.techrx.soap.encoding.ppi.jaxb.MandatoryPrescriberType;
+    import com.techrx.soap.encoding.ppi.jaxb.MandatoryAddressType;
+    import com.techrx.soap.encoding.ppi.jaxb.PrescriberIDType;
+    import com.techrx.soap.encoding.ppi.jaxb.MandatoryNameType;
+    import com.techrx.soap.encoding.ppi.jaxb.NewRxMedicationType;
+    import com.techrx.soap.encoding.ppi.jaxb.ResponseMedicationType;
+    import com.techrx.soap.encoding.ppi.jaxb.ChangeResponseType;
+    import com.techrx.soap.encoding.ppi.jaxb.ApprovedComplexType;
+    import com.techrx.soap.encoding.ppi.jaxb.DeniedComplexType;
+    import com.techrx.soap.encoding.ppi.jaxb.ApprovedWithChangesComplexType;
+    import com.techrx.soap.encoding.ppi.jaxb.PatientIDType;
+    import com.techrx.soap.encoding.ppi.jaxb.MandatoryPatientNameType;
+    import com.techrx.soap.encoding.ppi.jaxb.PharmacyIDType;
+    import com.techrx.soap.encoding.ppi.jaxb.DeniedNewPrescriptionToFollowType;
+    import com.techrx.soap.encoding.ppi.jaxb.ApprovedWithChangesType;
+  There are still problems with unimplemented methods of the following
+  classes:
+    com.techrx.test.sql.MockCallableStatement
+    com.techrx.test.sql.MockConnection
+    com.techrx.test.sql.MockPreparedStatement
+    com.techrx.test.sql.MockResultSet
+    com.techrx.test.sql.MockResultSetMetaData
+    com.techrx.test.sql.MockStatement
+    com.techrx.sql.ConnectionAdapter
+    
+
+1/27/2009 
+  8:15am (approximate?) arrived in office.
+  
+  I spent some time this morning looking through some more
+  architecture information for EnterpriseRx, and found a great ppt
+  file which pointed to a FABULOUS pile of "architecture-related"
+  documents from the development team:
+    http://svn.techrx.com/arch/trunk
+  I proceeded to download some stuff from there (via "svn checkout")
+  and it should be lovely to see, I hope. It may help fill in gaps in
+  my understanding, for sure.
+  
+  Yesterday, a new practice started: I have to start recording the use
+  of my time in the Star Timereporter system. Allegedly, the purpose
+  of this system is so that we can appropriately record our time use
+  so that we can charge back to clients/customers for the time we
+  spend doing work for them. It's a better software package than the
+  one they had at ATT, in many regards.
+  
+  9am (approximate) had short discussion with BSelle; he said that he
+  wanted to see if there were some things I could help with, during
+  the interim time (until KR is ready for me to start on some LTC
+  stuff, apparently...) He said that he would come get me when he was
+  ready to for me to work on some conversion-run-related issues. He
+  also said that, ongoing, they would probably have me working next on
+  things like validation queries and the "one-off" kiinds of scripts
+  that they have to run as part of the conversion runs... We also
+  discussed (briefly) the Publix deadlock issue, and he said that he
+  had tried to call the attention of others to the analysis I had done
+  (which Bron had pasted into the JIRA ticket) but it looked like
+  other folks (Pittsburgh or Atlanta staff?) seemed to think nothing
+  had been done about this Publix deadlocking issue.
+  
+  4:20pm Left office to go work from house (as Angelia called me and
+  said she couldn't get through to the kids on the phone, it kept
+  going straight to voice mail; she didn't bother to tell me that she
+  called them earlier, had to put them on hold... Turns out they
+  didn't get the phone back on the hook when they were done. Sigh.
+  Meant to get home somewhat earlier anyhow...) Anyhow, Bron wasn't
+  able to get to me today...
+  
+  5pm to 9pm On and off, I signed in from home and tried to get some
+  more information extracted outta CaliberRM so that I could pull out
+  some specifics on the Rx conversion process requirements, and I was
+  particularly interested in the "merging" requirements that had been
+  stated for the PATIENT EnterpriseRx subject area. So far, everything
+  I have seen regarding PATIENT-merging requirements could be
+  implemented in a declarative fashion. Even the bits about how "at
+  least the first two words of the street address should match, and
+  the street address must have at least two words" (never mind that
+  the term "word" is not defined....) Nonetheless, those "Document
+  Factory templates" which Susan Peters graciously sent me were just
+  what the doctor ordered!
+  
+  9pm I have been looking back at the data conversion requirements
+  documentation again, thinking about the "merging" idea for
+  PATIENT's. I seems that they have specified something that would
+  have been pretty simple to implement declaratively, if one is
+  willing to think about it the right way.
+  
+  10:30pm Still need to grok how Rx's get "processed," so that it's possible
+  to start understanding how to improve that part of the process,
+  perhaps, long-term.
+
+1/28/2009 
+  8:30am arrived at office...
+  
+  Moved first to immediately respond to an email from BSelle regarding
+  an issue with conversions, and data provided by 2Point, for
+  Schnucks, Brookshire, and A&P.  
+  
+  11am Just finished working with BSelle, showing him that the root of
+  the problem he faced with getting that update statement to run
+  properly was the lack of statistics on the rx_xref and stage_fill
+  tables within txconv@txbrkp01_59 (Brookshire production...) I wrote
+  a simple little PL/SQL block for him that invokes the
+  dbms_stats.gather_table_stats procedure to estimate CBO statistics
+  for the rx_fill table, and we saw, in the staging environment, what
+  a difference that can make in the way the execution plan looked! (I
+  think I would be happy to give a little tutorial to folks here about
+  how Oracle processes execution plans, how to read execution plans
+  derived by the explain plan command, etc.)
+  
+  We also talked for a bit about how the ORA-01555 error occurs, and
+  how a long-running query can encounter it. I tried to emphasize that
+  when one encounters an ORA-01555, either the rollback/undo space
+  needs to be increased, or the query needs to be made more
+  efficient. (And based on what I saw from the query optimizer's plan
+  for the original query, it was as if Oracle was trying to re-create
+  the rx_xref table by traversing several of its indices, and on top
+  of that, the join ordering was probably terrible because of the lack
+  of statistics for the rx_xref and stage_fill tables...)
+  
+  12:06pm Finally finished writing up my notes, looking at the
+  alternative, rewritten query I had had come up with as well, when we
+  ask for an execution plan for that first update statement in the
+  staging environment for Brookshire, where BSelle and I were able to
+  gather table statistics.
+  
+  The long and the short of it is that, even without rewriting Bron's
+  query to simplify it somewhat, the absence of CBO statistics on the
+  rx_xref and stage_fill tables was probably what was giving Bron such
+  heartburn. The lack of statistics had a HUGE impact on the join
+  ordering, which has a tremendous impact on everything else (so much
+  so that the right join ordering can often cover a multitude of other
+  sins, performance-wise...)
+  
+  12:45pm finally wrapped up my conclusions about that update
+  statement BSelle had asked me to look into. (Whew!)
+  
+  2:15pm met with KR, Rebecca McClinton regarding LTC kinds of
+  issues; Rebecca was pulled in due to her experience with PharmacyRx
+  and how that product/system handles long-term care, but one of her
+  caveats was, of course, "your mileage may vary..." Nonetheless, KR
+  found help, some clarity, in what she had to say.
+  
+  4pm (approximately) after meeting with KR, Rebecca, had impromptu
+  talks with BSelle, KR, about LTC implementation, and CG, BSelle,
+  urged KR to "just-make-some-default-assumptions" about LTC
+  conversion implementation, and then work out some code that is
+  consistent with those assumptions. Also, it apparently falls to me
+  to kinda "cookie-cutter" the PATIENT conversion codes from the
+  existing DATALOADER implementation, I guess. This is okay since I
+  have been digging information out of CaliberRM regarding what they
+  mean by "merging" of patient data and I think I'm on my way to
+  understanding the "basic desire" well enough that I now see the
+  "what" that they wanted in that kind of situation. This provides
+  insight into a simple, efficient, correct declarative solution to
+  the problem (such as using a combination of views, and judicious
+  PL/SQL coding, right?)
+  
+  4:34pm SOME TO-DO'S AS AN OUTCOME OF MEETING/TALKING THAT HAS BEEN
+  GOING ON SINCE ABOUT 2:15pm
+  X Need to send doc's, or links-to-docs, to Rebecca McClinton, right?
+    (all that LTC stuff that I just found in the last couple of
+    days...)
+  X Repository URL's for KR, BSelle, right?
+  X Need to put those doggone documents into the local wiki,
+    apparently... 
+  + Need to get GIMP, perhaps, to print those doggone data model JPEG
+    files?
+  + Get going on PATIENT-processing for LTC, apparently (and do it
+    "the old way...")
+  
+1/29/2009 
+  8:30am arrived at office
+  12:37pm been working steadily since arrival on trying to understand
+  how to process patient data for ltc, to get it loaded into the OLTP
+  schema; I think that part of the issue is that this shall have to
+  dovetail with what the existing implementation of DATALOADER already
+  does to bring in the PATIENT information, performing "merging" when
+  necessary. 
+  
+  I have already been thinking about some of the relevant issues,
+  trying to understand them, and have some questions I'm trying to
+  research; I need to know the answers to these before I will have a
+  general idea of implementation direction:
+
+    + I assume that the existing DATALOADER implementation will be
+      handling the main "merging-of-patient" processing (it will still
+      perform its "merging" operations for PATIENT like it did before,
+      unchanged, correct?) And so, when there is incoming LTC_PATIENT
+      data, do I need to be able to determine whether or not the
+      corresponding records in PATIENT (if there are any) were
+      subjected to a "merge" operation, so that the LTC_PATIENT data
+      coming in must be "merged" as well?
+
+    + Really a sub-question I asked above: how does one determine
+      whether or not PATIENT data was subjected to a "merge operation"
+      by the DATALOADER package?
+  
+  6:13pm Have worked pretty much all day on understanding "patient
+  merging," and then on trying to get a merge statement cobbled
+  together for the ltc_patient...
+  
+  
+1/30/2009 
+  8am arrived in office, proceeded immediately to getting a version of
+  the LTC_PATIENT DATALOADER code written.
+  
+  1:17pm Finally got a draft of a proposed merge statement reworked
+  from what I had cobbled together last night, and also wrote up a
+  proposed insert-into-the-LTC_PATIENT_XREF written up.
+  
+  1:30pm (approximate) KR cleared up some of my confusion when he said
+  that I should make sure that the code for LTC_PATIENT should work
+  within the existing "framework" for the regular PATIENT within the
+  DATALOADER package. (And what a bloody mess it is, too; I have spent
+  considerable time this week already just trying to understand that
+  bloody code!)
+ 
+  2:30pm LEFT OFFICE FOR ABOUT 1 HOUR TO RUN A FEW ERRANDS...
+  
+  3:30pm Back in the office
+  
+  5:30pm Left the office (not much more progress made today on trying
+  to understand that doggone PATIENT code, but at least TOAD is loaded
+  now and it's possible to browse the code somewhat more
+  effectively...)
+  
+  
+2/2/2009 
+  8:20am got into office (it was pouring down rain this morning...)
+  
+  Immediately returned to working on the PATIENT-processing part of
+  LTC: recall, KR made it clear on Friday that the way it should work
+  is to follow the pattern already there in the existing DATALOADER
+  package. (Sigh)
+  
+  12:10pm It seems that I shall have to do the following:
+   + Add another PL/SQL in-RAM table to
+     dataloader.migrate_patient_block in order to hold new ltc_patient
+     records.
+   + Change the dataloader.migrate_patient_block.add_patient and the
+     dataloader.migrate_patient_block.merge_patient to invoke an
+     add_ltc_patient procedure and a merge_ltc_patient procedure,
+     respectively.
+   + Add code to the dataloader.migrate_patient_block.insert_data to
+     traverse the i_ltc_patient in-RAM PL/SQL table and use it to
+     insert the new LTC_PATIENT rows which are stored as records in
+     the i_ltc_patient.
+  
+  4:21pm Pretty much worked solidly up until now on getting my changes
+  noodled out. I hope to have my new routine written tonight, or
+  tomorrow morning. And I'll have some more questions for KR by then
+  as well, I think.
+  
+2/3/2009 
+  8:25am got into office
+  
+  11am spoke to KR (for about an hour?) about LTC_PATIENT, etc...
+  
+  12:40pm to 1:30pm Helped Venki identify a problem with a change he
+  had made to the DATALOADER code. This was connected to the Mass
+  General change, wherein engineering deployed a change which added a
+  new, non-null column (RX_TYPE_NUM) to the RX table (in
+  EnterpriseRx/OLTP.) The existing DATALOADER code was breaking
+  because it wasn't inserting a value for that new column. Venki
+  thought he had made changes in all the necessary places, but he had
+  not. Venki made his error partly because DATALOADER is hobbled with
+  lots of similar-looking code repeated in many places! (I.e., it is
+  abundantly clear that nobody's looking at what it costs McKesson to
+  maintain the ghastly DATALOADER package...)
+  
+  7pm left the office, after spending the entire day (nearly) working
+  out the changes needed for the dataloader_patient_body.sql file so
+  as to include the LTC_PATIENT-related changes/work. Whew!
+  
+  (I guess this counts as a 10-hour day?)
+  
+2/4/2009 
+  8am arrived at the office...
+  Immediately started in on trying to review the code I'd cobbled
+  together for the ltc_patient processing; haven't seen any feedback
+  from KR on it yet.
+  
+  8:52am Got asked (by BSelle) to listen in on a Publix-related
+  conference call at 9am.
+  
+  9am PUBLIX-related conference call:
+  Lots discussed about the two tickets regarding: deadlocks, and then
+  performance problems introduced by unindexed foreign keys.
+  
+  10:15am back to work on 
+  
+  ===================
+  
+  LINGERING THOUGHTS ON HOW TO EVALUATE THIS A/R STUFF FOR THE GUI:
+  How do we look into things like the "recurring charges" and
+  "entries" (ACC_RECURRING_TX and ACC_ENTRY)?
+  

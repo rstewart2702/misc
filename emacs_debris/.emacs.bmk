@@ -1,0 +1,84 @@
+;;;; Emacs Bookmark Format Version 1 ;;;;
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("call:dataloader:dataloader.delete_rx_fill:matters:3"
+  ((filename . "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/dataloader_body.sql")
+   (front-context-string . "                ")
+   (rear-context-string . "s not null then\n")
+   (position . 1238583)))
+ ("call:dataloader:dataloader.delete_rx_fill:matters:2"
+  ((filename . "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/dataloader_body.sql")
+   (front-context-string . "(my_facility_num")
+   (rear-context-string . "  delete_rx_fill")
+   (position . 1212530)))
+ ("call:dataloader:dataloader.delete_rx_fill:matters:1"
+  ((filename . "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/dataloader_body.sql")
+   (front-context-string . "(my_facility_num")
+   (rear-context-string . "  delete_rx_fill")
+   (position . 247070)))
+ ("call:dataloader:trexone_corereports.backout_data_summary"
+  ((filename . "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/dataloader_body.sql")
+   (front-context-string . "                ")
+   (rear-context-string . " vNum.last loop\n")
+   (position . 88640)))
+ ("proc:dataloader:delete_rx_fill_defn"
+  ((filename . "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/dataloader_body.sql")
+   (front-context-string . "    procedure de")
+   (rear-context-string . " -1 = No Commit\n")
+   (position . 81915)))
+ ("org-remember-last-stored"
+  ((filename . "~/org/notes.org")
+   (front-context-string . "* MARKERS\n** [20")
+   (rear-context-string . "children...\n   \n")
+   (position . 89897)))
+ ("proc:populate_core_rx_fill"
+  ((filename . "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/trexone_corereports_online_annotated_20090601.sql")
+   (front-context-string . "   PROCEDURE Pop")
+   (rear-context-string . "ULL;\n    END ;\n\n")
+   (position . 106247)))
+ ("proc:populate_core_rx_fill_sold"
+  ((filename . "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/trexone_corereports_online_annotated_20090601.sql")
+   (front-context-string . "    PROCEDURE Po")
+   (rear-context-string . "NULL;\n    END;\n\n")
+   (position . 49139)))
+ ("call:getpriceinfo"
+  ((filename . "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/trexone_corereports_online_populate_core_rx_fill_proc.sql")
+   (front-context-string . "                ")
+   (rear-context-string . " t_priceinfo :=\n")
+   (position . 50109)))
+ ("func:getPriceInfoForReversal"
+  ((filename . "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/trexone_corereports_online.sql")
+   (front-context-string . "Reversal (\n     ")
+   (rear-context-string . " getPriceInfoFor")
+   (position . 12547)))
+ ("func:getpriceinfo"
+  ((filename . "c:/Documents and Settings/Richard.Stewart/My Documents/McKesson/Performance_improvement/Safeway_and_load_testing_issues/trexone_corereports_online.sql")
+   (front-context-string . " (\n      ordernu")
+   (rear-context-string . "ION getpriceinfo")
+   (position . 25419)))
+ ("func:select_prescriber"
+  ((filename . "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/dataloader_prescriber_body.sql")
+   (front-context-string . "		function selec")
+   (rear-context-string . "bernum;\n		end;\n\n")
+   (position . 17734)))
+ ("procbody:migrate_prescriber_block"
+  ((filename . "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/dataloader_prescriber_body.sql")
+   (front-context-string . "	begin\n		log(log")
+   (rear-context-string . "---------------\n")
+   (position . 150430)))
+ ("func:lookup_prescriber_by_ids"
+  ((filename . "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/dataloader_prescriber_body.sql")
+   (front-context-string . "		function looku")
+   (rear-context-string . "_recs);\n		end;\n\n")
+   (position . 23647)))
+ ("proc:process_prescribers"
+  ((filename . "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/dataloader_prescriber_body.sql")
+   (front-context-string . "		procedure proc")
+   (rear-context-string . "---------------\n")
+   (position . 137089)))
+ ("proc:search_for_duplicates"
+  ((filename . "c:/scc/erx/trunk/DatabaseSchema/OLTP/conv/pkg/dataloader_prescriber_body.sql")
+   (front-context-string . "		procedure sear")
+   (rear-context-string . "rd_num;\n		end;\n\n")
+   (position . 135307))))
