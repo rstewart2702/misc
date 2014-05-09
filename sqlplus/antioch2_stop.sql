@@ -1,0 +1,2 @@
+shutdown normal
+exit

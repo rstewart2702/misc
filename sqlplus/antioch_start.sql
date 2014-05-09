@@ -1,0 +1,2 @@
+startup open antioch
+exit
