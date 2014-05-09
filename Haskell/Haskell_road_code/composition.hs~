@@ -1,0 +1,109 @@
+-- Haskell definitions to permit constant-time append of an element
+-- to a list:
+
+-- This <| operator/function is defined in terms of function
+-- composition.
+-- If we had the following in Scheme:
+--   (define compose (lambda (f g) [lambda (x) (f (g x))] ) )
+--   (define append-r (lambda (lfunc itm) (compose lfunc itm)) )
+--   (define r-itm (lambda (x) (lambda (h) (cons x h)) ) )
+-- Then we can execute constant-time list-appends by
+-- deriving a composed function which will be evaluated on
+-- the () at the end to "materialize" the needed list in
+-- linear time:
+--    ((append-r (append-r (r-itm 'a) (r-itm 'b)) (r-itm 'c)) ())
+-- == (a b c)
+-- The Haskell equivalent is much shorter, because Haskell gives
+-- us currying, and has a built-in operator for function composition.
+-- Thus, we don't necessarily need an r-itm function to dress-up
+-- the individual elements to be appended to the list-as-a-function,
+-- and the <| operator, which is the stand-in for append-r, is
+-- succinct and has, built into it, what is defined separately as
+-- r-itm in the Scheme code above.
+--
+-- In Haskell, we say "(i:)" as an equivalent of \x->i:x, where
+-- i is defined elsewhere, right?
+
+(<|) :: ([a] -> c) -> a -> [a] -> c
+lfunc <| i = (lfunc.(i:))
+-- A more verbose definition:
+--   lfunc <| i = lfunc . (\y->(\x->y:x)) i
+-- The sub-expression
+--   (\y->(\x->y:x)) i
+-- is an example of currying:  such is a function in which
+-- the end result is a list-of-something, and in which the
+-- head is always going to be whatever i was, right?
+
+-- The way this could be used is:
+-- (('a':) <| 'b' <| 'c') []
+-- == "abc"
+-- because ('a':) is (\x->'a':x) and thus
+--     ('a':) <| 'b' 
+--  == ((\x->('a':x)) (\h->'b':h))
+--  == \h->('a':('b':h))
+-- and thus
+--     ('a':) <| 'b' <| 'c'
+--  == ((\h->('a':('b':h))) (\h1->'c':h1))
+--  == \h1->('a':('b':('c':h1)))
+-- and finally
+--     (('a':) <| 'b' <| 'c') []
+--  == ((\h1->('a':('b':('c':h1)))) [])
+--  == ('a':('b':('c':[])))
+--  == "abc"
+
+spltLsti :: Int -> ([a] -> [a]) -> [a] -> [[a]]
+spltLsti 0 ll lr            = (ll []):[lr]
+spltLsti n ll (rHead:rTail) = spltLsti (n-1) (ll <| rHead) rTail
+
+spltLst :: Int -> [a] -> [[a]]
+spltLst 0 lst           = []:[lst]
+spltLst n (lHead:lTail) = spltLsti (n-1) (lHead:) lTail
+
+-- Pattern-matching makes the code much shorter:
+merge :: Ord t => [t] -> [t] -> [t]
+merge [] lr = lr
+merge ll [] = ll
+merge (lHead:lTail) (rHead:rTail)
+  | lHead <= rHead = (lHead : (merge lTail         (rHead:rTail)))
+  | rHead  < lHead = (rHead : (merge (lHead:lTail) rTail        ))
+
+mergesort :: Ord t => [t] -> [t]
+mergesort [] = []
+mergesort [item] = [item]
+mergesort [x,y]
+  | x <= y = [x,y]
+  | y <  x = [y,x]
+{-
+mergesort lst =
+  let llst:[rlst] = spltLst ((length lst) `quot` 2) lst
+  in merge (mergesort llst) (mergesort rlst)
+-}
+mergesort lst =
+  merge (mergesort llst) (mergesort rlst)
+  where llst:[rlst] = spltLst ((length lst) `quot` 2) lst
+
+{-
+The fact that any of this is possible at all makes Haskell a triumph
+of software engineering and the application of mathematics to software
+specification and development.
+
+The type inference helps make the programmer much more productive, once
+he gets to where he can reason about his functions and what they do,
+or what their specifications are.  Haskell is truly a functional programming
+language for adults.
+
+Haskell programs truly are executable specifications.
+-}
+
+
+splitLines :: String -> [String]
+splitLines [] = []
+splitLines cs =
+  let (pre, suf) = break isLineTerminator cs
+  in pre : case suf of
+             ('\r':'\n':rest) -> splitLines rest
+             ('\r':rest)      -> splitLines rest
+             ('\n':rest)      -> splitLines rest
+             _                -> []
+
+isLineTerminator c = c == '\r' || c == '\n'

@@ -1,0 +1,211 @@
+-- (:) :: t -> ([t] -> [t])
+
+{- This is apparently legal Haskell...
+   The desire was for constant-time list concatenation operations...
+   The (<|) function maps from a
+     function which maps from a list of "a" to a "c"
+   to a function which maps from 
+     an "a"
+     to a function which maps from
+       a list of "a"
+       to a c
+   
+   So, perhaps, we could view the <| as an operator
+   which accepts a "function which maps from a list of a's to a c"
+   and also accepts an "a"
+   and spits out a "function which maps from a list of a's to a c" ?
+   Perhaps?
+
+   The idea for the <| "operator" originally came from:
+   http://logicaltypes.blogspot.com/2010/09/list-leads-off-with-letter-lambda.html
+
+-}
+
+empty = id
+(<|) :: ([a] -> c) -> a -> [a] -> c
+-- The original author had written:
+--   list <| x = list . (x:)
+-- The following is an equivalent definition, and a heck of a lot more
+-- explicit besides, at the cost of introducing a named parameter.
+-- The "(x:)" is merely a compact lambda expression!  Good grief...
+-- list <| x = list . (\y -> x:y)
+(<|) list x = 
+  \y -> list (x:y)
+  -- The following is a more explicit, but more verbose,
+  -- version of the above line:
+  -- \y -> list ((\z->x:z) y)
+
+-- So, this <| operator creates, on the fly, functions which accept...
+-- what?  This is somewhat confusing, and magical, right now.
+
+-- This restatement of the above function makes things slightly
+-- clearer:  The point seems to be that we build a function,
+-- on the fly, which is actually a sequence of cons calls
+-- and they are executed in the correct order.  Hah!  Lists
+-- are themselves linear structures, and order matters.
+-- We have, at the heart of the programming language, which
+-- putatively eschews deterministic order-of-evaluation, a 
+-- fundamental structure which is intrinsically deterministic?
+-- 
+-- Oh, and expressions like:  f1 . f2
+-- are equivalent to Lisp/Scheme's (lambda x (f1 (f2 x) ) )
+-- The Haskell "." is a notation for "function composition," and
+-- as far as I know, there is no such thing in Lisp/Scheme.  This
+-- made the above formulation of that (<|) operator confusing
+-- to me.  The following (<+) operator has a somewhat clearer
+-- definition, but I ended up defining (<|) the same way.
+--
+starter = \x->x
+
+(<+) :: ([a] -> c) -> a -> ([a] -> c)
+oFunc <+ x = 
+  \z -> oFunc ((\y->x:y) z)
+
+{-
+
+Therefore, ((<+) ((<+) starter 1) 2) [3]
+means something like:
+   ((<+) ((<+) starter 1                                    ) 2) [3]
+== ((<+)    ( \z -> (\x->x) ((\y->1:y) z)                   ) 2) [3]
+== ( \z1 -> ( \z -> (\x->x) ((\y->1:y) z) ) ((\y->2:y)  z1) ) [3]
+== ( \z -> (\x->x) ((\y->1:y) z) )          ((\y->2:y) [3])
+== ( \z -> (\x->x) ((\y->1:y) z) ) (2:[3])
+== (\x->x) ((\y->1:y) (2:[3]))
+== (\x->x) (1:(2:[3]))
+== (1:(2:[3]))
+== [1,2,3]
+
+So the idea, similarly to PROLOG difference-list representations,
+is to create a data structure with a "hole" in it.  This means 
+that the hole, in this case, is the argument which must be provided?
+
+This means that the list we are building is actually a function which,
+when invoked/evaluated/called returns a list.  So, this provides a
+reasonable way to construct a list by adding to the "end" instead of
+the beginning.
+
+Now that I've had my mind bent and twisted into this shape, might it
+be possible to build fifo queues in a related fashion?  The act of
+adding to the back of the queue would be a matter of returning a 
+structure in which we have generated a new cons cell (and I'm
+obviously thinking imperatively!)
+
+The problem is that removing something from the head of the list/queue
+will cost you a linear time operation to "materialize" the list by
+invoking the "function-which-is-a-list" representation of the
+list, just to get what's at the head of the list.  Then, I suppose
+one would need another linear time call to "reconstitute" the list
+into the "list-as-function" version which has the "car" removed...
+
+-}
+
+-- proto_list :: [a] -> [a] -> [a]
+-- proto_list list = (list:)
+proto_map :: a -> a
+proto_map a = a
+
+{-
+Calculate the first two "words" in a string.
+-}
+
+skipChar :: [ Char ] -> [ Char ] -> [ Char ]
+skipChar  x acc | null x        = acc
+                | head x /= ' ' = skipChar  (tail x) (head x : acc)
+                | otherwise     = skipSpace (tail x) (' ' : acc)
+
+skipSpace :: [ Char ] -> [ Char ] -> [ Char ]
+skipSpace x acc | null x        = acc
+                | head x == ' ' = skipSpace (tail x) acc
+                | otherwise     = skipChar  x acc
+
+--
+-- Attempt at Haskell version of a bounded linear search.
+-- pF is supposed to be a function which tests a list element
+-- and when it returns True, the searching stops.
+--
+fLinSearch :: ( Char -> Bool ) -> [ Char ] -> [ Char ] -> [ Char ]
+fLinSearch pF lst acc =
+  if      null lst then acc
+  else if pF (head lst) then acc
+  else fLinSearch pF (tail lst) ((head lst):acc)
+
+-- fLinSearch2 :: (a -> Bool) -> [a] -> ([a] -> c) -> c
+fLinSearch2 pF lst acc
+  | null lst      = ( acc [] ) : [ [] ]
+  | pF (head lst) = ( acc [] ) : [ (tail lst) ]
+  | otherwise     = fLinSearch2 pF (tail lst) (acc <| (head lst))
+
+
+{-
+fLinSearchOuter pF lst =
+  if   null lst                                  then []           : [[]]
+  else if null (tail lst) && not (pF (head lst)) then [(head lst)] : [(tail lst)]
+  else if pF (head lst)                          then []           : [lst]
+  else let acci = (empty <| (head lst))
+       in fLinSearch2 pF (tail lst) acci
+-}
+fLinSearchOuter pF lst 
+  | null lst               = []           : [[]]
+  |    null (tail lst)
+    && not (pF (head lst)) = [(head lst)] : [(tail lst)]
+  | pF (head lst)          = []           : [(tail lst)] -- This is consistent with fLinSearch2
+  | otherwise              = fLinSearch2 pF (tail lst) (empty <| (head lst))
+
+{-
+The above makes it possible to do things like:
+  let pF = (\x->x==' '); lst = "first second third" in fLinSearchOuter pF lst
+which returns:
+  ["first","second third"]
+
+And yet the use of the <| operator allows us to construct a
+data structure in which the extracted text from the string
+is retrieved without the need for a call to the reverse
+function to reverse the retrieved list.  And that in O(n)
+time so that we don't have to pay for a reverse call at the
+end, or a series of append calls which cost linear time for
+each invocation...
+
+Which puts us on the way to a function which could return the first two words from 
+a string?
+-}
+
+{-
+I just don't understand Haskell well enough to even express very
+basic thoughts, yet.  So, still have lots to reconsider, rethink,
+before we can devise a doubly-linked list, or even a singly-linked
+list, in such a context, right?
+
+makeCell pred data succ = [pred,data,succ]
+
+lstInsertAtEnd [firstItem,data,lastItem] newData =
+  -- have to re-derive the lastItem's "fields," eh?
+-}
+
+deriveListInner len acc
+  | len == 0  = acc []
+  | otherwise = deriveListInner (len-1) (acc <+ len)
+
+-- Contrive/derive a list of items, given the list's length:
+deriveList len =
+  deriveListInner (len-1) ((\x->x) <+ len) 
+
+{-
+Not such a fan of Haskell's weird syntax, having come from the world of Lisp/Scheme.
+But it is a powerful language and system and probably has the best high-level support
+of any of the powerful notations out there.
+-}
+
+{-
+deriveCBT h acc =
+  | h == 0    =
+      [ (h+1) ]
+  | otherwise =
+      let lhs = deriveCBT (h-1) acc
+-}
+
+data List a = 
+  Empty | Cons a (List a) deriving (Show, Read, Eq, Ord)
+
+data CBT a = 
+    EmptyCBT
+  | CBTNode { keyPart :: a, nodeLeft :: (CBT a), nodeRight :: (CBT a) }
