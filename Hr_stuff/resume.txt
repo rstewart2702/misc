@@ -1,0 +1,290 @@
+RICHARD S. STEWART
+4977 Meadow Brook Rd.
+Birmingham, AL  35242
+C: 205-602-2711; H: 205-995-5787
+E-mail: richard.stewart@mckesson.com (work)
+        rstewart2702@gmail.com (home)
+
+OBJECTIVE
+
+  To apply good software engineering practices and formal methods to the
+  design of software applications in order to meet business objectives. I
+  am particularly interested in application of principles such as "Design
+  by Contract," and making sensible use of formal reasoning about programs
+  to improve software quality and reduce time-to-market.
+
+EMPLOYMENT
+Programmer
+McKesson Pharmacy Systems and Automation
+November, 2008 to present
+
+EnterpriseRx Conversion Development: EnterpriseRx is one of McKesson's
+pharmacy management systems; it uses Oracle as its storage.  Developed
+new conversion software in PL/SQL (for the Oracle back-end) and Java
+(for the driving batch server software) to add features to the
+existing data conversion software which loads data extracted from
+other vendors' software into McKesson's EnterpriseRx Oracle tables.
+Changes included development of most of the new data loading software
+for the new Accounts Receivable features of EnterpriseRx, and some of
+the new Long Term Care features as well.
+
+Redesigned the divestiture software (used to retrieve a pharmacy's
+data from the EnterpriseRx system back into the extract file format)
+to provide an order of magnitude improvement in performance over the
+previous implementation.
+
+Set up new Subversion repositories to branch off the
+conversion-specific portions of MPS&A's software.  This helped
+logically separate the conversion-specific software from the rest of
+the EnterpriseRx source tree and simplify the task of building out the
+conversion-specific software which had a slightly different life cycle
+from the rest of EnterpriseRx.  Also allowed the branching off of
+different versions of the converson software to accomodate different
+feature set, and facilitate the merging of common fixes from the main
+branch of development into the alternate feature set branches.
+
+Experience with Java-based web-development for a pharmacy customer:
+developed web front end code using the following Java-based technologies:
+the myBatis-Spring toolkit (including the myBatis generator), the Stripes
+framework, and the Apache Tomcat application server.  Developed back-end
+Oracle database server code in PL/SQL (some batch-oriented, some reporting-
+oriented) to provide users with tools for reporting on pharmacy database
+doctor updates from data provided by external vendors.
+
+Implementing continuous integration processes for the PharmacyRx product
+using Subversion and the Jenkins continuous integration server running
+on both Linux and IBM's AIX.
+  
+
+Staff Analyst
+Bellsouth Telecommunications, Inc., and AT&T, Birmingham, AL 1998 to
+2008
+
+(December, 1998, to April, 2000)
+PMAP (Performance Measurements Application Platform) Data warehouse
+project: PMAP is a data warehouse built to respond to regulatory
+demands for performance measurements reporting as a condition for
+Bellsouth's entry into the long distance market.  I worked as an
+extract and transformation developer, using Ascential DataStage with
+Oracle 8. Worked with source data from Bellsouth legacy systems SOCS,
+WFA, LMOS, TAFI, ROS, RNS, NIW, CRIS, CABS.
+
+
+(May, 2000, to August, 2001)
+PARIS (Parity Analysis and Remedies Information System) project: PARIS
+queries PMAP for performance measurements data and performs
+wholesale-to-retail comparisons in order to perform statistical
+comparisons between Bellsouth's performance for the retail side of its
+business and Bellsouth's performance on work performed for its
+wholesale customers (Competitive Local Exchange Carriers, CLEC's.) I
+worked as extract and transformation developer using Ascential
+DataStage with Oracle 8 to feed data for manually supplied measurement
+data into the PARIS system from various sources, including the PMAP
+v2.6 data warehouse. Led team of contract developers in design and
+implementation of PARIS 1 enhancements for GA Order implementation in
+2001. The first version of PARIS used DataStage to extract data from
+the PMAP warehouse and populate input tables.
+
+(September, 2001, to April, 2006)
+PARIS 2.0 project : Filled the Application Architect and Development
+Lead Roles enhancing the PARIS system and designing new feeds from the
+PMAP v4 data warehouse. This involved working extensively with Oracle
+8i and 9i, including Oracle query tuning and performance optimization
+(via the "explain plan" command and tracing statement execution using
+sqlplus, the SQL trace facility, and the tkprof utility), stored
+procedure development in both PL/SQL and Java, database design and
+data modeling, application design, and documentation. Learned the
+SPlus statistical programming language, used in PARIS to perform
+statistical analysis of parity in the treatment of wholesale
+customers. Designed and developed solutions to transition from
+Microsoft SQL Server based implementation to Oracle-based
+implementation. Designed Oracle-based solution to replace
+DataStage-based solution for invoice transmission to a voucher system
+via FTP. Maintained reference data, or lookup table data, for the
+PARIS system. (The lookup table data determined and defined many
+pivotal aspects of PARIS's operation.)  Designed solutions for and
+directed developer work to implement changes to comply with state
+regulatory orders by mandated deadlines.
+
+Duties have included: interaction with user communities to do
+requirements analysis; designing requirements and design specification
+documents to direct programmers' work; coordination and planning work
+with project managers; holding code and design reviews; working with
+formal system test teams; giving end-user training; product roll-out;
+mentoring and coaching other developers in the proper use of Oracle
+PL/SQL and SQL.
+
+(May, 2006, to October, 2007)
+PMAP Website Web Development Team : Responsible for the maintenance of
+the PMAP reporting websites. The PMAP website is based on ASP.NET
+technologies, and uses Visual Basic and C# programs. Learned Visual
+Basic .NET and C# programming languages included in Microsoft Visual
+Studio 2003.
+
+Designed new ASP.NET applications using Microsoft ASP.NET 1.1 and
+Microsoft .NET Framework 1.1 to meet departmental business
+objectives. This included the Customer Information Tool (CIT), an
+application used to manage PMAP warehouse reference or dimension
+tables which contain CLEC customer information. Used Visual Source
+Safe to manage source code versions, and ODP.NET libraries as the
+interface to Oracle. CIT also made use of Oracle stored procedures and
+triggers.
+
+Technical Architect
+AT&T IT Operations, Problem Management, Complex Problem Resolution
+(November, 2007, to November, 2008)
+Duties included: interaction with system owners and users to resolve
+complex, multi-faceted problems; creation of case documentation to
+build corporate memory around chronic system problem.
+
+Included diagnosis of complex problems involving enterprise-class
+storage and SAP-based applications running on Oracle databases.
+
+Served as Business Continuity Coordinator for the Problem Management
+organization: this encompassed creation of an accredited business
+continuity plan, the communication of its contents to the
+organization, and conducting plan exercises.
+
+
+Computer Systems Administrator
+French Mortuary, Inc., Albuquerque, NM 1992-1998
+
+Responsible for all computer and information systems used in French
+Mortuary, Sunset Memorial Park Cemetery, Albuquerque Monument
+Company, and The Heritage Plan funeral prearrangements department.
+
+Systems administrator for the company's UNIX system and accounting
+office TCP/IP LAN. Duties include administration of the cemetery and
+mortuary software systems, which are vertical market applications
+written in AcuCorp's AcuCOBOL-85 hosted on an SCO OpenServer UNIX
+system.
+
+Creation and maintenance of COBOL programs, shell scripts, and Perl
+scripts to provide new reports and customer statements, extract data
+for use in relational databases, and perform other data
+administration tasks.
+
+Database administration and application development for the Heritage
+Plan funeral prearrangements department.
+
+SOFTWARE AND PROGRAMMING LANGUAGES
+
+Experience with the following technologies:
+  Eclipse
+  Java
+  JDBC
+  Subversion revision control
+  Jenkins Continuous Integration Server
+  Linux (especially running under a VirtualBox virtual machine)
+  VirtualBox
+  Emacs
+  Apache Web Server
+  Apache Tomcat
+  myBatis and myBatis-Spring
+  Stripes Java web development framework
+  Apache Ant
+  Microsoft .NET 1.1
+  Microsoft ASP.NET 1.1 (utilizing both Visual Basic and C#)
+  Microsoft Visual Studio .NET
+  Microsoft Visual Source Safe
+  Oracle Data Provider for .NET
+  Javascript
+  HTML (including DHTML and xHTML)
+  Oracle PL/SQL (under both Windows and Solaris UNIX)
+  Oracle server-side programming in Java (Java stored procedures)
+  Oracle SQLJ
+  Oracle SQL*Plus
+  Quest Software's TOAD and SQL Navigator
+  SPlus 6.2 and 7
+  SQL (Oracle 8i, 9i, 10g, 11 SQL; Microsoft Access/JET SQL, Microsoft SQL
+    Server Transact-SQL)
+  ER/win
+  Ascential DataStage 3.5 and 4.0
+  Ascential's Universe BASIC
+  Visual Basic for Applications (in Microsoft office)
+  ANSI C (including Lex and YACC)
+  Perl
+  Tcl and Expect
+  UNIX: Bourne and Korn shell programming
+  ANSI COBOL-85 in a UNIX environment (AcuCOBOL 85 on SCO OpenServer
+    UNIX)
+  Scheme
+  Prolog
+  FORTRAN 77
+
+Experience using the following Oracle features:
+  External tables and SQL Loader
+  Pipelined table functions
+  PL/SQL Package design
+  PL/SQL stored procedures and functions
+  Views
+  Instead-of triggers
+  Statement-level and row-level triggers
+  SQL*Plus autotrace
+  SQL trace and tkprof
+  Partitioned tables
+  Parallel query and DML (PMAP had fact tables on the order of 9
+    million rows; PARIS had tables which contain as many as 900 million
+    rows.)
+  Distributed queries
+  Outer joins
+  Analytic functions
+  Correlated subqueries
+  Inline views
+  Materialized views
+  Native Dynamic SQL
+  Java stored procedures
+
+EDUCATION
+
+  BS, Computer Science (minor in Mathematics), University of New Mexico, College
+  of Engineering, Albuquerque, NM, GPA: 3.4
+
+  Vendor training in the following technologies:
+    Ascential DataStage 3.5 and 4.0, and Universe BASIC
+    Oracle PL/SQL and Oracle SQL Tuning
+    SPlus 6.2
+
+  Fundamentals of Project Management (Bellsouth training course MT031)
+
+LONG-TERM INTERESTS
+
+I am currently fascinated with the role formal programming language
+semantics might play in dramatically improving software quality, and
+in bringing enormous improvements to the productivity of individual
+programmers and programmer teams.
+
+Some of the ideas around such efforts have been called "formal
+methods," where the word "formal" means "uses some form of
+mathematics, such as logic or algebra, in software specification,
+design, and construction."
+
+I am currently interested in applying the principles taught by people
+like:
+
+  David Gries, who wrote the wonderful book The Science of
+  Programming, ISBN 0-387-96480-0
+
+  Sir C. A. R. Hoare (currently at Microsoft Research)
+
+  Edsger Dijkstra, author of A Discipline of Programming, ISBN
+  0-13-215871-X
+
+  Bertrand Meyer, who has done a wonderful job of showing how ideas
+  like axiomatic semantics apply to object-oriented programming via
+  the principle of Design by Contract in his book Object Oriented
+  Software Construction, ISBN 0-13-0629155-4
+
+  Mitchell Wand and Daniel Friedman, authors of Essentials of
+  Programming Languages, ISBN 97802-6206279-4, a book I am still
+  working my way through.
+
+My personal experience in implementing Oracle solutions, in the
+context of the PARIS application, has been that rigorous definitions
+(in formal, mathematical terms, even employing predicate logic in some
+restricted way) result in software that is easier to get correct, at a
+much earlier point in the development process, where the cost to fix
+an error is much smaller. Even limited use of predicate logic and
+mathematical reasoning tends to result in solutions and software which
+are cheaper to maintain, change, and construct. The end result is that
+the customer succeeds when formal approaches are used properly.
