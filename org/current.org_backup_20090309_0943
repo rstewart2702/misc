@@ -1,0 +1,1108 @@
+
+* LTC DEVELOPMENT
+** TODO [#A] LTC Development :dev_work:
+   :CLOCK:
+   CLOCK: <2009-02-dd Day hh:mm>--<2009-02-dd Day hh:mm>
+   CLOCK: <2009-02-dd Day hh:mm>--<2009-02-dd Day hh:mm>
+   CLOCK: <2009-02-dd Day hh:mm>--<2009-02-dd Day hh:mm>
+   CLOCK: <2009-02-dd Day hh:mm>--<2009-02-dd Day hh:mm>
+   CLOCK: <2009-02-dd Day hh:mm>--<2009-02-dd Day hh:mm>
+   CLOCK: <2009-02-dd Day hh:mm>--<2009-02-dd Day hh:mm>
+   CLOCK: <2009-02-dd Day hh:mm>--<2009-02-dd Day hh:mm>
+   :END:
+   This is the general "project" I set up as an attempt to track those
+   work intervals which were strictly LTC testing work.
+** TODO [#A] LTC Testing :testing_work:
+   This is the general "project" I set up as an attempt to track those
+   work intervals which were primarily LTC testing work.
+* Work Tasks
+  For things that don't fit into a more specific bucket.
+** TODO [#A] Changes for dataloader_patient_body.sql?
+   [2009-02-25 Wed 09:21] What about the changes made (last week?) to that file of
+   pl/sql code? Shouldn't they be checked into the repository eventually?
+** TODO WORKDAY
+   :CLOCK:
+   CLOCK: [2009-03-02 Mon 08:30]--[2009-03-02 Mon 08:30] =>  0:01
+   :END:
+   Used to track start, end of workday...
+   <2009-03-02 Mon 08:15> arrived in office?
+   <2009-03-02 Mon 10:50> Left office to "babysit" CRS at home so
+   Angelia could go to her office for a little while.
+   <2009-03-02 Mon 10:51>--<2009-03-02 Mon 11:14> drove home
+   <2009-03-02 Mon 11:15> logged back in from home (spent lunchtime at home)
+   <2009-03-02 Mon 13:24>--<2009-03-02 Mon 13:45> drove back to office.
+   <2009-03-02 Mon 13:46> worked from home from 11:19 to about 13:23 (thus I was
+   out of the office for about two hours, but worked from home, ate my lunch,
+   just like I would have at the office...)
+   <2009-03-02 Mon 18:48> LEAVING THE OFFICE
+   <2009-03-03 Tue 07:50> ARRIVED IN THE OFFICE
+   <2009-03-03 Tue 11:05> LEFT OFFICE TO MEET AN ELECTRICIAN AT THE HOUSE
+   <2009-03-03 Tue 12:59>  RETURNED TO THE OFFICE
+   <2009-03-04 Wed 08:15> ARRIVED IN OFFICE
+** TODO "CALIBRATION" :hr_admin:
+   SCHEDULED: <2009-03-09 Mon 16:00>
+   :CLOCK:
+   :END:
+*** Note from CG on [2009-03-09 Mon]
+    Sent to: Mabry, Andy  # Birmingham; 'Richardson, Keith'; Wilson, Warren; Selle, Bron; Stewart, Richard
+    Subject: FW: Calibration
+    Message:
+    All:
+
+    The first step of our performance management process is due March 13th.  It
+    includes Employees complete self-appraisals:
+
+    Reviewing Action: Self-Assessment Employees can record their self-assessment
+    including comments and ratings for objectives, competencies, and ICARE, in
+    their performance document. Provide examples to support your ratings and
+    comments and illustrate what you achieved and how you did it.
+
+    Let's get started on this ASAP.
+
+    Thanks,
+
+    Calvin
+
+*** THOUGHTS ON SOME OF THIS:
+    Ah, and so it begins, right? I shall need to figure out how to toot my own
+    horn here, and I shall need to figure out how to insert myself into things
+    as forcefully-and-yet-diplomatically as possible, right?
+
+    This is withering, exhausting: I shall have to read the mcnut shtuff
+    EVERY WRETCHED DAY IN ORDER TO GET A HEAD'S UP ON STUFF. SIGH. CG CERTAINLY
+    ISN'T GOING TO DO THAT.
+
+    OTOH, it's hard to be a manager of developers, because (I think) it's tough
+    to insert yourself into the working efforts of programmers without fouling
+    it all up, right? So how else are you supposed to figure out what people
+    are doing on their jobs, without asking them to toot their own horn?
+
+    The other fundamental difficulty is that it's difficult to manage technology
+    workers when you don't intimately understand the work they're doing, because
+    you don't do precisely their kind of work yourself. This is really the
+    canonical, perennial problem, isn't it? Unfortunately, it leaves room for
+    plenty of baloney and embellishment, especially if the organization is large
+    enough. Maybe there will be less of that here, right?
+    
+
+** TODO [#A] look into local "development/sandbox environment"? :general: [0%]
+   SCHEDULED: <2009-02-27 Fri 22:00>  YOU NEED TO PUT IN ABOUT TWO HOURS ON THIS. 
+   :CLOCK:
+   CLOCK: [2009-03-09 Mon 08:42]--[2009-03-09 Mon 08:47] =>  0:05
+   CLOCK: [2009-03-09 Mon 08:30]--[2009-03-09 Mon 08:41] =>  0:11
+   CLOCK: [2009-03-06 Fri 15:37]--[2009-03-06 Fri 16:40] =>  1:03
+   CLOCK: [2009-03-06 Fri 08:11]--[2009-03-06 Fri 13:03] =>  4:52
+   CLOCK: [2009-03-05 Thu 08:15]--[2009-03-05 Thu 12:15] =>  3:47
+   CLOCK: [2009-03-05 Thu 08:05]--[2009-03-05 Thu 08:14] =>  0:09
+   CLOCK: [2009-03-04 Wed 12:57]--[2009-03-04 Wed 17:05] =>  4:08
+   CLOCK: [2009-03-04 Wed 11:00]--[2009-03-04 Wed 12:30] =>  1:30
+   CLOCK: [2009-03-04 Wed 09:00]--[2009-03-04 Wed 10:00] =>  1:00
+   CLOCK: [2009-02-25 Wed 23:53]--[2009-02-26 Thu 01:03] =>  1:10
+   CLOCK: [2009-02-25 Wed 13:00]--[2009-02-25 Wed 17:33] =>  4:33
+   CLOCK: [2009-02-25 Wed 11:11]--[2009-02-25 Wed 11:27] =>  0:16
+   CLOCK: [2009-02-25 Wed 09:51]--[2009-02-25 Wed 11:11] =>  1:20
+   :END:
+*** Time reporting node
+#+BEGIN: clocktable :scope tree2 :tstart "[2009-02-25 Wed 00:00]" :tend "[2009-02-25 Wed 20:00]"
+Clock summary at [2009-02-27 Fri 13:49].
+
+| L | Headline     | Time   |
+|---+--------------+--------|
+|   | *Total time* | *6:09* |
+|---+--------------+--------|
+#+END:
+#+BEGIN: clocktable :scope tree2 :tstart "[2009-02-26 Wed 00:00]" :tend "[2009-02-26 Wed 20:00]"
+Clock summary at [2009-02-28 Sat 23:07].
+
+| L | Headline     | Time   |
+|---+--------------+--------|
+|   | *Total time* | *5:03* |
+|---+--------------+--------|
+#+END:
+
+#+BEGIN: clocktable :scope tree2 :tstart "[2009-03-04 Wed 00:00]" :tend "[2009-03-04 Wed 23:59]"
+Clock summary at [2009-03-04 Wed 16:24].
+
+| L | Headline     | Time   |
+|---+--------------+--------|
+|   | *Total time* | *5:54* |
+|---+--------------+--------|
+#+END:
+
+*** Regarding the environment needs:
+    - [ ] NEED to get a comprehensive understanding of what is in that environment:
+	  [2009-02-25 Wed 10:10] Sent Venki Sreeram an email about it; need to
+          understand whether or not I can get onto that box, and I can't attach to
+          the database instance he mentioned in his 2009-01-07 email.
+	  [2009-02-25 Wed 10:55] Finally got logged into that rascal, under user
+          txconv. Even have access to the sys-level accounts within Oracle, so it'll
+          be possible to fix Oracle settings properly! Nice!
+    - [ ] Will it be possible to build it out as a reproduction of an existing OLTP
+          environment?
+	  [2009-02-25 Wed 10:58] It MIGHT be possible; but loading of a
+          representative dataset might get really interesting, since there may be
+          profound disk space limits. But development of an alternative approach to
+          RX processing might be possible there, too... It's too early to tell how
+          useful it might be.
+	  [2009-02-25 Wed 13:05] Created a public database link to the Brookshire
+          staging environment from the COND database to see if it might be possible
+          to load some or all of what would be needed into that environment in order
+          to explore possibilities with declarative methods of RX conversion.
+*** Explore possibility of building new RX conversion proof-of-concept [1/3]
+    - [X] Is the RX processing dependent on the correct processing of other domains,
+          in their entirety, first? I think so, now that I think about it. I think
+          that the doggone PATIENTS get processed in their entirety BEFORE the other
+          domains which depend on it get handled. So, I don't think that we have to
+          worry about the PATIENT's being done only piecemeal as the RX process is
+          kicked off.
+    - [-] What will it take to build out enough of the conversion and OLTP schemata
+          to allow us to some development of other alternative, declarative
+          approaches to the problem of RX conversions?
+	  - [X] Understanding of the source tables The following are loaded into
+                in-RAM tables by the sub-sub-procedure
+                dataloader.migrate_rx_block.gather_data:
+		+ stage_rx
+		+ stage_fill
+		+ stage_rx_transfer
+		+ stage_fill_dur
+		+ stage_claim
+		+ stage_rx_note
+	  - [X] We will need a completed load of PATIENT data, correct?
+		[2009-02-25 Wed 16:02] YES: I have been studying the code, and it's
+                pretty clear that their current implementation assumes that the
+                PRESCRIBER data have been loaded properly, as well as the PATIENT
+                data. ALSO: there is APPALLING inefficiency in the sub-sub-procedure
+                dataloader.migrate_rx_block.migrate_rx, because: this procedure is
+                called once for each stage_rx row in the dataset, and it contains a
+                loop which scans over the data that were loaded into an in-RAM table
+                of all of the stage_claim rows for the dataset currently in
+                process. So, depending on how many stage_claim rows there are for
+                each stage_rx row, this could end up being VERY EXPENSIVE indeed.
+	  - [ ] Understanding of the target tables: this should include those tables
+                which are DEPENDENT on the main RX table, right?
+    - [ ] What do the RX data depend on? Which tables must have existing rows before
+          the RX data load will succeed, so that the integrity constraints won't be
+          violated? Fill in a list here:
+	  - PATIENT
+	  - PRESCRIBER
+*** Implementation Possibilities
+    + [2009-02-25 Wed 16:59] It may be possible to derive a set of "proposed RX
+      records" that would be inserted into an intermediate database table. This would
+      represent all of the RX processing that would be done up to, but not including,
+      the portion of sub-sub-procedure dataloader.migrate_rx_block.migrate_rx which
+      starts checking against the RX_XREF table and which proceeds to see if
+      "merging" or "updating" or "inserting" of the RX record is necessary.
+
+      TO ELABORATE ON THIS POINT A BIT FURTHER: this "intermediate table" also makes
+      it possible to audit, keep track of conversion activities (long enough to
+      diagnose, troubleshoot, if necessary,) and it will contain enough information
+      to make it possible to perform the next stage of the RX conversion processing.
+      During development, If I keep the source keys in that working table as well, I
+      will be able to store error information in there, so that it will be possible
+      to use a follow-up query of that structure to generate all of the error logging
+      and "metrics-about-what-failed-and-why" that everybody is so obsessed over.
+      
+    + [2009-02-25 Wed 17:05] The next idea is that it may very well be the case that
+      we may have to create a multi-table insert statement, or some kind of
+      multi-table update, to handle the next phase of processing. This is because the
+      "second half" of the dataloader.migrate_rx_block.migrate_rx sub-sub-procedure
+      seems to be about using what was derived into that single rx record (stored in
+      the rx_rec) to drive work done by a bunch of subsidiary routines to populate or
+      alter the contents of a pile of DEPENDENT TABLES. As I study the second half of
+      the dataloader.migrate_rx_block.migrate_rx sub-sub-procedure tomorrow, I think
+      I will be able to confidently list those DEPENDENT TABLES as well.
+
+      POTENTIAL OBJECTIONS TO THIS POINT: This is not really the problem everybody
+      will claim it is because it will allow us to populate a few other intermediate
+      structures as well, right? I.e., there are other tables which have to be
+      populated AFTER the RX_BASE (the "main RX table") because they have foreign key
+      relationships with that table. And that is just fine with my approach, for they
+      don't have to be populated until AFTER the processing for the RX records is
+      done, en masse...
+
+    + [2009-02-26 Thu 01:04] Just spent some more time looking into that "second
+      half" of code and thus far have not seen much that does not deserve to be
+      implemented as a join instead of an attempt to "load stuff into RAM and iterate
+      through it." But I'm certainly not finished looking into it.
+      
+    + [2009-03-04 Wed 13:23] Spending some more time working through the subsequent
+      steps of the dataloader.migrate_rx_block.migrate_rx sub-sub-procedure.
+      
+    + [2009-03-04 Wed 14:30] Okay, so about the first 163 lines of the
+      dataloader.migrate_rx_block.migrate_rx sub-sub-procedure are spent trying to,
+      essentially, join the stage_rx up with the stage_claim information?
+      And the wretched thing spends lotsa time (probably) scanning an array of claim
+      records (stage_claim_table, loaded by a query of the stage_claim table that
+      loads the records in record_num order...) in order to try and determine whether
+      or not the corresponding stage_claim rows have "third-party codes" which
+      DO NOT exist within the OLTP schema's TP_PLAN table.
+      
+    + [2009-03-04 Wed 15:08] it's becoming clear to me that part of the monstrous
+      NON-scalability may be due to the foolish refusal to use the efficient search
+      structures provided to PL/SQL developers, as well as the pig-headed insistence
+      on doing EVERYTHING procedurally. Dear Gussy, how very expensive their
+      decisions turned out to be...
+    + [2009-03-04 Wed 15:41] I think it should be possible to create a query that
+      would be used to derive an "intermediate set" (perhaps to be inserted into an
+      temporary table, or a "permanent" table, depending on what they want) that
+      would perform most of the lookups that they're doing procedurally right now.
+      There appears to be an interest in finding out whether or not a lookup/join
+      failed to retrieve a "corresponding" entry: we could detect this by looking
+      at whether or not the field from the non-preserved side of the join was set
+      to null when Oracle performed the outer-join operation. (Sigh.) Here is what
+      should be joined together:
+      - stage_rx
+      - patient_xref
+      - patient
+      - outer-join again to patient
+	This has to do with the merged_to_patient_num, and the fact that
+	multiple patient's might've been "merged" together or something. I think
+	hierarchical query features may be useful in this kind of situation?
+      - 
+      - THERE'S NOTHING IN THIS ITEM YET, RIGHT?
+	this is item text that further elaborates on things.
+    + [2009-03-05 Thu 08:43] I was looking into the dataloader.delete_rx_fill subroutine,
+      which is invoked from dataloader.migrate_rx_block.migrate_rx. It appears that the
+      delete_rx_fill routine does a commit when it's finished! Good grief! This subverts
+      everything the surrounding infrastructure is doing, doesn't it?
+      
+      Then again, maybe not: if the whole point of all that work done in dataloader is
+      to "buffer" everything that's being changed, then maybe these commit's don't
+      matter? But if there is uncommitted work (say, updates to the target tables, which
+      the package code *does* do) then such "naked commit's" could possibly cause
+      problems, right? Not everything is "buffered" into in-memory collections/arrays,
+      only the "insert's," right? *This makes understanding the semantics of the
+      dataloader package VERY DIFFICULT.* It just is not clear how things're supposed
+      to work out.
+    + [2009-03-06 Fri 08:39] I want to try and create a query which captures
+      what their dataloader.migrate_rx_block.create_rx_rec sub-sub-routine
+      does. This routine takes a single stage_rx row, and performs a huge pile
+      of lookups against other tables in order to derive what will become a row
+      in the OLTP schema's RX_BASE table.
+
+      I am also trying to get the rest of the routines used by the main
+      dataloader.migrate_rx_block.migrate_rx body dumped-out/rearranged so that
+      it's possible to replace them, as far as possible, with a declarative
+      solution.
+
+      Maybe there's an insight here: one of the fundamental difficulties with
+      the way things're done in dataloader presently is that there is not any
+      clear, definite, *separation of concerns*. For example, the concern of
+      deriving a new row that will be inserted into a target table in the OLTP
+      schema is *not* separated from the concern of "logging and tracking
+      problems with source data files." This failure to separate those two
+      concerns hobbles clean further development: refusing to "do it the right
+      way to begin with" has some extremely unfortunate consequences later; a
+      cautionary tale for all of us. Fortunately, God is merciful, and there are
+      ways to crawl out from under a messy situation.
+
+      The heck of it is this: I have to get this thing to do most all of what the
+      existing infrastructure does, or they won't take it seriously, I'm afraid.
+      
+    + [2009-03-06 Fri 10:36] It's pretty clear that I need to also work on an understanding
+      of the semantics of DUR (Drug Utilization Review...)
+    + [2009-03-06 Fri 11:54] Okay, at this point, I just need to pause the efforts
+      to try and tease out the codes which lie underneath the dataloader.migrate_rx_block.
+      
+
+
+** TODO [#B] Renlar conversion support activities :conversion:renlar:
+   :CLOCK:
+   CLOCK: [2009-03-09 Mon 08:47]
+   CLOCK: [2009-03-06 Fri 13:32]--[2009-03-06 Fri 15:34] =>  2:02
+   CLOCK: [2009-03-06 Fri 13:05]--[2009-03-06 Fri 13:32] =>  0:27
+   :END:
+*** Renlar/Jeff Hurley
+    SCHEDULED: <2009-03-09 Mon 09:00>
+    Perhaps check in with Jeff Hurley?
+*** Notes
+**** [2009-03-06 Fri 13:04] Tried to call Jeff Hurley (404-728-2058):
+     Talked with him for about 30 minutes; he will have more questions on
+     Monday(?)  He has forwarded me the spreadsheets he has been working from, and
+     filled me in on the background of Renlar:
+     1) It is one of the products acquired by MCK
+     2) It was written in Oregon Pascal, which included the source code for some
+        ISAM file-handling libraries (which apparently result in disk structures
+        which are fragile and cause users headaches; it sounded like ISAM file
+        rebuild's are a common activity.)
+     3) It dates back to the mid-80's, and there's a project underway to convert
+        it over to the GNU Pascal compiler (there are all kinds of annoying
+        internal data structure limitations to the Oregon Pascal compiler that
+        they are tired of hitting.)
+     4) Tyrone Garside (in Pittsburgh) had built Java software (I think) that
+        tries to read the ISAM files directly, in order to import Renlar data
+        into EnterpriseRx, and every time Renlar changes something, his software
+        fails (no graceful handling of changes to record layouts, based on what
+        Jeff said to me.)
+
+**** [2009-03-06 Fri 13:04] Further notes from the [2009-03-06 Fri] conversation:
+     [2009-03-06 Fri 13:04] Jeff continued that he has been working on a
+     "consolidated document" of all the Renlar data he's been asked to convert.
+     Only a subset of that is mentioned in the "Renlar side" (left-hand set of
+     columns) in [[file:C:\Documents%20and%20Settings\Richard.Stewart\My%20Documents\McKesson\Renlar_conversion_to_ERX\Renlar2Enterprise_via_Harley_20090306.xls][this spreadsheet]]. He was at work on fleshing that set of columns
+     out, and trying to figure out which are the corresponding entries in the
+     [[file:C:\Documents%20and%20Settings\Richard.Stewart\My%20Documents\McKesson\AR_and_LTC_work\Enterprise%20Fields_from_kr_as_20090205_annotated.xls]["Enterprise Fields" spreadsheet]]. He hoped to have a draft version of that
+     document done by early next week (I think? By [2009-03-09 Mon] or
+     [2009-03-19 Tue]?)
+
+     He did have a question which I shall have to try and answer for him: The
+     [[file:C:\Documents and Settings\Richard.Stewart\My
+      Documents\McKesson\Renlar_conversion_to_ERX\Renlar2Enterprise_via_Harley_20090306.xls]["Renlar-to-Enterprise" spreadsheet]] mentions a ERX-side column/field, calls
+     it SEQUENCES-NEXTRXNUMBER, in a type of record named "FACILITYCON."  He could
+     not find a corresponding ERX field for it in the [[file:C:\Documents%20and%20Settings\Richard.Stewart\My%20Documents\McKesson\AR_and_LTC_work\Enterprise%20Fields_from_kr_as_20090205_annotated.xls]["Enterprise Fields" spreadsheet]],
+     and so he will eventually need an answer about that. I told him I would try
+     to answer the question for him.
+
+     OTHER THAN THAT ONE QUESTION, he said that he has not had questions thus
+     far, and given that he's supposed to have something coded by next Friday
+     [2009-03-13 Fri], he didn't seem optimistic that he would actually hit that
+     deadline! Nonetheless, he said that he may have some more questions for me
+     next week (so I certainly did not reach out to him too soon... I should
+     have called him [2009-03-04 Wed], eh?)
+
+     [2009-03-06 Fri 15:32] I found the latest version of the Enterprise Fields
+     (Stored it in my local storage [[file:C:\Documents and Settings\Richard.Stewart\My Documents\McKesson\Conversion_documentation\EnterpriseFields_from_team_wiki_20090206.xls][here]].) I sent it to Jeff Hurley (to get that
+     stuff off of my TODO-list for now, eh?)
+
+**** [2009-03-09 Mon 08:47] More stuff from this morning:
+     There's going to be a 3pm meeting on "Renlar," with this Raymond Redd, "Just
+     to see where we are, blah-blah-blah." Please help me, Lord God, to get my head
+     into this stuff. Even though it's silly, etc. (Feel like I'm being handed the
+     scut stuff again. Wearisome, hate it. Please help me, Lord God; how do I get
+     them to see my strengths?)
+
+**** GETTING "ESTIMATE"/"ASSESSMENT" OF "RESUMING ENTERPRISE CONVERSIONS" FOR KINNEY
+     I must admit that I don't quite understand what Orange means when he says
+     "resume Enterprise conversions if Kinney has to take an upgrade of Renlar."
+     I shall assume that it means:
+     that Kinney is in the process of upgrading some
+     or all of their operations over the EnterpriseRx, and that they are converting
+     FROM the Renlar system. Before those EnterpriseRx conversions are completed,
+     they are also going to have to upgrade their existing Renlar installations to
+     a later revision. And further, I assume that this has caused some concerns
+     on the data-conversion end of things because of the fact that Renlar data
+     structures are changing, and the existing software (written by TyG, right?)
+     will probably not work properly with it (I'm guessing that it is Java code which
+     reads the Renlar indexed data files directly, and then tries to convert that
+     stuff straight into 
+     
+**** [2009-03-09 Mon 08:51] Text of email/meeting-invite from Raymond Redd, sent [2009-03-09 Mon 08:28]
+       Let's get together for a few moments and review where we are and how we move forward.
+       888 557-8511 / 4309361
+
+       thanks
+       Raymond
+
+     Attached was a copy of the email sent by Orange to Bham staff, and Redd, and
+     Warren Hastings (but not me, thank goodness, not yet...):
+       Just a reminder.  Please make sure we have this completed in time to deliver to Kinney on Wendesday.
+
+       Thanks,
+       John 
+       ________________________________________
+       From: Orange, John # Atlanta 
+       Sent: Tuesday, March 03, 2009 3:04 PM
+       To: Selle, Bron; Richardson, Keith; Redd, Raymond # Atlanta; Hastings, Warren # Atlanta
+       Cc: Gaddis, Calvin; Pouncey, Terry
+       Subject: Kinney Conversions
+
+       We need to do an assessment of when we think we would be ready to resume
+       Enterprise conversions if Kinney has to take an upgrade of Renlar.  I
+       promised Kinney we would provide them with a rough ball park estimate by
+       Wednesday the 11th.  This gives us one week.  We need to look at the
+       extraction and Q/A on the Renlar side as well as the import on the
+       Enterprise side.  We should allow some amount of time for rework and we
+       should also try to estimate the amount of Q/A Kinney will be doing once
+       we get it where we think it should be.  What I would be looking for would
+       be a general date such as an example of "Middle of May" or "First week in
+       June".  I am not looking for a specific date like "May 23rd" For the
+       benefit of the Birmingham team we are currently planning to have
+       development of the extraction process completed by March 13th and will
+       need about 1 week to Q/A.  So Birmingham, you may want to start working
+       on your assessment based on getting the final extraction test data on
+       about the 23rd.
+
+       Let me know if there is any problem in getting this assessment completed
+       by next Wednesday.  There again, I am not looking for an absolute date,
+       just a ball park estimate.
+
+       Thank You,
+       John Orange
+       McKesson Pharmacy Systems
+       404-728-2495
+     
+
+** TODO [#A] looking into UW UAT :dl_tuning:
+   :CLOCK:
+   CLOCK: [2009-03-03 Tue 09:37]--[2009-03-03 Tue 11:00] =>  1:23
+   CLOCK: [2009-03-03 Tue 07:59]--[2009-03-03 Tue 08:57] =>  0:58
+   CLOCK: [2009-03-02 Mon 13:46]--[2009-03-02 Mon 18:30] =>  4:44
+   CLOCK: [2009-03-02 Mon 11:19]--[2009-03-02 Mon 13:23] =>  2:04
+   CLOCK: [2009-03-02 Mon 08:30]--[2009-03-02 Mon 10:48] =>  2:18
+   CLOCK: [2009-02-28 Sat 15:40]--[2009-02-28 Sat 17:00] =>  1:20
+   CLOCK: [2009-02-28 Sat 14:44]--[2009-02-28 Sat 15:30] =>  0:46
+   CLOCK: [2009-02-28 Sat 01:07]--[2009-02-28 Sat 01:46] =>  0:39
+   CLOCK: [2009-02-27 Fri 16:40]--[2009-02-27 Fri 17:00] =>  0:20
+   CLOCK: [2009-02-27 Fri 14:47]--[2009-02-27 Fri 15:32] =>  0:45
+   CLOCK: [2009-02-26 Thu 22:01]--[2009-02-26 Thu 23:47] =>  1:46
+   CLOCK: [2009-02-26 Thu 15:29]--[2009-02-26 Thu 17:59] =>  2:30
+   :END:
+   N.B this is in connection with the same query behind the following JIRA issue:
+   http://jira.techrx.com/browse/ERX-21127
+*** Initial investigation
+    [[file:c:/Documents%20and%20Settings/Richard.Stewart/My%20Documents/McKesson/Conversion_issues/uw_uat_20090226/slow_query.sql::begin][Current SQL statements used for this investigation are in this file.]]
+    [2009-02-26 Thu 18:00] Okay, after 2.5 hours of looking into it, I:
+    + Do NOT see quite the same execution plan for the statement in the Brookshire
+      UAT environment, where I try to find the store with the largest number of RX's
+      and it still runs VERY fast.
+    + I am wondering if there is an inordinate amount of waiting on latches going on
+      in the UW UAT environment, just because I'm seeing "waits" piling up for those
+      in the UW UAT environment, and not in the Brookshire UAT environment.
+    [2009-02-26 Thu 22:01] My speculation is that, after having looked at what is set
+    up in different environments, there are subtle differences in the way the various
+    objects referenced by the query are resolved which result in execution plans
+    which are just horrific. The other contributing factor could be that the
+    particular database instance in question may be VERY BADLY TUNED. But I would
+    need to dig a little deeper to verify that, right?
+    [2009-02-26 Thu 23:59] What seems to be different about the UW UAT environment
+    is that the synonym to access the RX "table" is different there than than it is
+    in other places where the query runs REALLY FAST, like in Dierbergs production.
+    So, more on this tomorrow.
+    [2009-02-27 Fri 14:50] I need to understand what the heck is going on here with
+    the SQL being run.
+    | Environment                | Object_name | Target_object          | Object_type |
+    |----------------------------+-------------+------------------------+-------------|
+    | TXUWIU01 (UW UAT)          | FACILITY    | TREXONE_PROXY.FACILITY | View        |
+    |                            | RX          | TREXONE_PROXY.RX       | View        |
+    | TXBRKU01 (Brookshire UAT)  | FACILITY    | TREXONE_DATA.FACILITY  | Table       |
+    |                            | RX          | TREXONE_DATA.RX        | View        |
+    | TXBRKP01 (Brookshire PROD) |             |                        |             |
+    |                            |             |                        |             |
+    [2009-02-27 Fri 16:53] Hah! looking at the ISMC06-UAT environment: it's configured
+    about like TRBRKU01 above, but it doesn't appear to have the high RX data volumes.
+    Same goes for ISMC06-PROD environment (TXDHMP06...)
+    So I don't yet know what to do...
+    [2009-02-28 Sat 15:30] It's pretty clear, after another 45 minutes of investigation,
+    that if we can get Oracle to use hash joins, then the query will run within a few
+    seconds! Why is Oracle picking such a poor plan, or, why is the plan running SO
+    POORLY in some environments and not others.
+    [2009-02-28 Sat 16:29] Okay, here's the other thing about the query: it performs
+    unnecessary outer joins as well. But changing it to a regular join doesn't seem to
+    make a difference in the execution plan or the join ordering. I also fail to
+    understand the reason for the multiple joins to the RX table when they only use
+    data from the first RX?
+    [2009-03-02 Mon 10:23] I think that one of the problems here may be a matter of
+    sheer data volume (this would explain why the performance is so bad) causing the
+    plan Oracle picks to execute so very poorly. When I give hints to make it choose
+    hash joins (instead of nested loop joins) it comes back in under a minute!
+    [2009-03-02 Mon 10:38] Here is some information about the data volumes across the
+    various UAT environments:
+    | Environment               | Row Count for table RX_BASE | Bad Perf? | Data Hiding? |
+    |---------------------------+-----------------------------+-----------+--------------|
+    | ISMC-02 UAT (TXDHMU02)    |                       97633 |           |              |
+    | ISMC-03 UAT (TXDHMU03)    |                      189541 | No        | Yes          |
+    | ISMC-06 UAT (TXDHMU06)    |                        1641 |           | Yes          |
+    | DIERBERGS PROD (TXDRBP01) |                     1409082 | No        | No           |
+    | (TXUWIU01)                |                      219901 | Yes       | Yes          |
+
+    [2009-03-02 Mon 13:11] THERE DOES APPEAR TO BE A DIFFERENCE IN THE EXECUTION PLANS
+    BETWEEN THE TXDHMU03 AND TXUWIU01 ENVIRONMENTS. I don't yet understand why it should
+    impact performance, but it might make a difference. In the TXDHMU03 environment,
+    there is are extra FILTER steps which aren't present in the plan for the TXUWIU01
+    environment. I don't understand why that should make a difference in execution time
+    yet. Also, there appear to be differently-named indices on the RX_BASE, but I don't
+    yet know if those are differences in name only.
+    [2009-03-02 Mon 13:24] The same index on rx_number is present in both environments, but
+    it's only being used in the TXDHMU03 environment. I wonder if the CBO statisics are
+    out of date for TXUWIU01?
+    [2009-03-02 Mon 14:36] Well, I don't have much better idea about why the sql on
+    the TXUWIU01 environment is worse than the same query on the other environments.
+    Oracle chooses to use the index on rx_number, only, in those environments for which
+    the performance seems to be much better. On the other hand, when I fiddle with the
+    optimizer_index_cost_adj parameter (which apparently is set to 5 on txuwiu01) to
+    about 300, then txuwiu01 picks a much faster execution plan. This is really irritating.
+    [2009-03-02 Mon 16:00] Bron said that Dierbergs production was suffering from some
+    of the same problems, with the same query. But now Oracle's choosing the same i_rx_1
+    index (that index on rx_number-only) as I see it choose in environments like TXDHMU03.
+    [2009-03-02 Mon 18:30] Ah! I understood the point of the query and also was able
+    to rewrite it. So, if they're amenable to using the rewritten version of the query,
+    which is GUARANTEED to perform more consistently across all environments, then THAT
+    is what we should go with! PRAISE BE TO THE LORD JESUS WHO ENABLES ME TO DO THIS.
+    Oh, Lord God, please show me how I should teach these principles to my colleagues.
+    [2009-03-03 Tue 08:00] Working on JIRA documentation: my plan is to get the new,
+    simplified version of the query worked out properly (after the "breakthrough" of
+    last night, I want to give it another once-over.)
+    [2009-03-03 Tue 09:38] Had to stop for about 30 min to deal with electricity problem
+    at the house (called AHS, etc...) Now working on this stuff again.
+    [2009-03-03 Tue 10:05] Tested the finalized version of things against the DIERBERGS
+    staging database; first testing the original version of the query that performs
+    so poorly in TXDRBS01 environment, where the original JIRA ticket says that
+    performance was pretty poor.
+    [2009-03-03 Tue 10:11] Stopped the query after about 6 minutes; it's clear that it
+    will grind on and on in that environment.
+    [2009-03-03 Tue 10:23] Ran comparison testing in both the Dierbergs staging (TSDRBS01)
+    and the UWI UAT (TXUWIU01) environments, where there had been performance problems.
+    My rewritten query returns the same results as the original query, without having
+    to impose hints.
+    [2009-03-03 Tue 11:00] Finished initial documentation, findings, for the JIRA ticket,
+    and attached this file: [[file:c:/Documents%20and%20Settings/Richard.Stewart/My%20Documents/McKesson/Conversion_issues/uw_uat_20090226/rx_numbering_gap_query.sql::select][rx_numbering_gap_query.sql]]
+
+*** Time reporting node
+**** Time spent on this on Thursday during the day:
+#+BEGIN: clocktable :scope tree2 :tstart "<2009-02-26 Thu 08:00>" :tend "<2009-02-26 Thu 18:00>"
+Clock summary at [2009-02-27 Fri 13:51].
+
+| L | Headline     | Time   |
+|---+--------------+--------|
+|   | *Total time* | *2:30* |
+|---+--------------+--------|
+#+END:
+**** Time spent on this on Thursday night:
+#+BEGIN: clocktable :scope tree2 :tstart "[2009-02-26 Thu 18:01]" :tend "[2009-02-26 Thu 23:59]"
+Clock summary at [2009-02-27 Fri 13:51].
+
+| L | Headline     | Time   |
+|---+--------------+--------|
+|   | *Total time* | *1:46* |
+|---+--------------+--------|
+#+END:
+**** other times
+#+BEGIN: clocktable :scope tree2 :tstart "[2009-02-26 Thu 00:00]" :tend "[2009-03-03 Tue 23:59]" :step day
+
+Daily report: <2009-02-26 Thu>
+| L | Headline     | Time   |
+|---+--------------+--------|
+|   | *Total time* | *4:16* |
+|---+--------------+--------|
+
+Daily report: <2009-02-27 Fri>
+| L | Headline     | Time   |
+|---+--------------+--------|
+|   | *Total time* | *1:05* |
+|---+--------------+--------|
+
+Daily report: <2009-02-28 Sat>
+| L | Headline     | Time   |
+|---+--------------+--------|
+|   | *Total time* | *2:45* |
+|---+--------------+--------|
+
+Daily report: <2009-03-01 Sun>
+| L | Headline     | Time   |
+|---+--------------+--------|
+|   | *Total time* | *0:00* |
+|---+--------------+--------|
+
+Daily report: <2009-03-02 Mon>
+| L | Headline     | Time   |
+|---+--------------+--------|
+|   | *Total time* | *9:06* |
+|---+--------------+--------|
+
+Daily report: <2009-03-03 Tue>
+| L | Headline     | Time   |
+|---+--------------+--------|
+|   | *Total time* | *2:21* |
+|---+--------------+--------|
+#+END:
+** TODO learn as much as possible about RX handling within DATALOADER :dl_improvement:
+   The goal here is to try and figure out how to get a declarative flavor of the
+   code created.
+** TODO [#C] inquire again about the Skillport Books online thingie
+   SCHEDULED: <2009-03-06 Fri 09:00>
+   oldDEADLINE: <2009-02-27 Fri 09:00>
+   [2009-03-02 Mon 09:29] Sent them another email asking about why I hadn't
+   heard anything since Jan 16...
+** TODO [#C] learn about Ant :general:
+** TODO [#C] install Emacs Remember Mode, learn more about Org Mode
+   :CLOCK:
+   CLOCK: <2009-02-25 Wed 08:24>--<2009-02-25 Wed 09:18> =>  0:54
+   :END:
+   This will dovetail nicely with org-mode, right?
+   This is going to take some more doing to really customize well, isn't it?
+   Remember Mode requires some templates to be set up, etc.  I did NOT execute the
+   .emacs entries to "insinuate" Remember Mode into Org Mode, yet.
+   [2009-02-25 Wed 08:45] I shall probably have to re-organize some things after I
+   have read up a little more on what is involved in trying to get things
+   organized. One of the things I would like to do is get my "projects" set up in
+   such a way that it will be possible to detect "stuck" projects. To that end, I
+   will need to get a set of "todo item states" set up so that I can transition
+   things from one "state" to another, and possibly log those state transitions (what
+   some of the other users of this stuff call a "workflow.")
+   [2009-02-25 Wed 09:18] Adjourning my work with that stuff for now; I need to
+   better understand how to make more effective use of that stuff at a later time. I
+   shall continue to use what I already know to try and keep track of things,
+   remember things.
+   [2009-02-25 Wed 17:40] I WOULD REALLY LIKE TO REWORK THIS STUFF SO THAT I MIGHT
+   ALSO BE ABLE TO GENERATE REPORTS, GET A FEEL FOR, HOW OFTEN I RESCHEDULE THINGS,
+   CHANGE THE DEADLINES I HAD ORIGINALLY ASSIGNED. 
+** TODO [#C] voluntary self-identification thingie
+   SCHEDULED: <2009-03-23 Mon 15:00>
+   [2009-02-25 Wed] See the email from today with subject line:
+   "**ACTION REQUESTED** -- Veteran Status and Race/Ethnicity Reporting Changes"
+   
+** DONE PL/SQL line numbers in errors				    :conversion:
+   CLOSED: [2009-03-06 Fri 08:57]
+   - CLOSING NOTE [2009-03-06 Fri 09:01] \\
+     Marking this done: I sent an email to BSelle yesterday afternoon, also
+     discussed it with him. There's definitely not a way to get to the actual
+     line number itself that threw the error, without installing/using that
+     DBMS_TRACE package. The best one can do, apart from that, is to set
+     "location variables," so that at least one could: ADD AN EXCEPTION HANDLER
+     TO A "SUBSIDIARY ROUTINE" THAT SETS A LOCATION VARIABLE AND WHICH
+     THEN USES THAT LOCATION VARIABLE INFORMATION TO LOG THE ERROR, AND THEN
+     THE ERROR NEEDS TO BE RE-RAISED SO THAT THE EXCEPTION-HANDLING CAN PROCEED
+     LIKE IT DOES IN THE ORIGINAL PROGRAM. *That* kind of thing might help
+     track down the precise location of errors within the labyrinthine
+     complexity of the dataloader package as it exists today...
+   :CLOCK:
+   CLOCK: [2009-03-05 Thu 15:08]--[2009-03-05 Thu 17:23] =>  2:15
+   CLOCK: [2009-03-05 Thu 13:38]--[2009-03-05 Thu 15:00] =>  1:22
+   CLOCK: [2009-03-05 Thu 13:15]--[2009-03-05 Thu 13:37] =>  0:22
+   :END:
+   [2009-03-05 Thu 13:38] This is really regarding the matter of getting PL/SQL to
+   return errored-line-numbers when a handled exception is thrown.
+   [2009-03-05 Thu 14:42] One thing Bron & Co. might want to consider is the
+   addition of location variables in the "instrumented" version of the dataloader
+   package so that the exception handlers could add that location information to
+   the dataloader logs. This is just a thought, and might not be an acceptable
+   way for them, but I shall mention it to him. (This after reading through the
+   Oracle-supplied PL/SQL guide...)
+   [2009-03-05 Thu 17:23] Turns out that I was thinking back to PL/SQL code which
+   parses the strings returned by DBMS_UTILITY.format_call_stack and
+   DBMS_UTILITY.format_error_stack, and presents cute little correlations between
+   the two within, or the like. But those two functions are only defined within
+   an exception handler, apparently. You can't call them from within the "regular
+   code" and expect to get anything back (which would've been nice: would've let
+   you save the present stack and line number into a variable so that you could
+   dump it out upon handling an exception, kinda like a sophisticated version of
+   the "store a location note into a variable that is read later by the exception
+   handler...") Sigh.
+** DONE [#B] Talked with team about conversion issues
+   CLOCK: [2009-03-04 Wed 10:30]--[2009-03-04 Wed 11:00] =>  0:30
+   [2009-03-04 Wed 10:30]--[2009-03-04 Wed 11:00]
+   CLOSED: [2009-03-04 Wed 11:00]
+   - CLOSING NOTE [2009-03-04 Wed 11:05] \\
+     Calvin G talked with us for a moment about conversion issues as well:
+     Safeway will be keenly interested in scalability, right? (he-he)
+     
+     Plus other talk about "purging scripts":
+     There are scripts to purge based on ERX-client-id, and to purge
+     RX-and-related-claims for a particular facility.
+     
+     I THINK BRON POINTED OUT THAT: The only way kind of
+     purging-on-a-facility-level that makes sense is purging on the
+     RX-and-related-claims data. Everything else is shared across facilities.
+** DONE [#B] Meeting on IBM Server (for Quickbuild setup)
+   CLOCK: [2009-03-04 Wed 10:00]--[2009-03-04 Wed 10:30]
+   [2009-03-04 Wed 10:00]--[2009-03-04 Wed 10:29]
+   CLOSED: [2009-03-04 Wed 10:57]
+   - CLOSING NOTE [2009-03-04 Wed 10:57] \\
+     Attended the meeting: apparently, it's a about setting up IBMAPP1 (10.3.61.120).
+     They (Todd Strope, etc) wanted to get BSelle to set up Quickbuild onto that
+     machine. It's an IBM box, running 64-bit Suse Linux (just like Spartan, A&P like
+     to do.)
+     
+     The intent is to provide a place to test "stuff configured like Spartan and A&P
+     are configured in their own shops."
+** DONE [#B] Renlar Support Issues Call
+   CLOCK: [2009-03-03 Tue 13:00]--[2009-03-03 Tue 13:59]
+   <2009-03-03 Tue 13:00>--<2009-03-03 Tue 13:59> CLOSED: [2009-03-03 Tue 15:49]
+   - CLOSING NOTE [2009-03-03 Tue 16:01] \\
+     Jeff Rorick, Lisa Weir, Debra Barber: all Kinney folks
+     Zach Greenaway, Rhonda Fargo: McKesson folks
+     
+     John Orange, Terry Pouncey of McKesson were there as well.
+     
+     What interesting: Orange remarked that somebody at McKesson was at work on
+     development of a Renlar extraction program/software; that it should be done by
+     mid-March(?), and that after that, there'll have to be some more vetting by
+     ERX folks (or something like that...)
+     
+     The Kinney folk were very interested in an estimate/feel for how much time
+     they expect to lose on their conversion schedule as a result of the newly
+     developed Renlar extraction processes? And Orange said that he would have
+     an answer to them by [2009-03-11 Wed]?
+     
+     Also, there's apparently been back-and-forth with Kinney folks about the
+     conversion of their data anyway. Apparently, they want to put something in
+     and then a workaround to do it is discovered, and then in a later meeting
+     that workaround approach is abandoned...
+     
+     There were concerns regarding E1 transactions (and state of NY, and also
+     Medicaid transactions?) One or the other is used within more of the Kinney
+     locations than folks at Kinney previously thought...
+     
+     There was also talk of incrementally upgrading stores to the latest rev of
+     Renlar; the concern there is whether or not the "back-end" servers will be
+     compatible with older and newer versions of Renlar.
+     
+     Jeff Harley is the developer working on the new Renlar extraction? I think
+     this is the Renlar-to-ELF-file extraction process.
+     
+     Other names (all McKesson folks):
+     Kenny Middlebrooks (support-of-all-legacy-systems manager in Atlanta)
+     Janina Arritola (some other "legacy" support person?)
+   
+** DONE [#A] Get times for Feb entered				       :general:
+   CLOSED: [2009-02-28 Sat 20:20]
+   - CLOSING NOTE [2009-02-28 Sat 20:20] \\
+     I really finished this on Friday...
+   :CLOCK:
+   CLOCK: [2009-02-27 Fri 08:36]--[2009-02-27 Fri 14:30] =>  5:54
+   CLOCK: [2009-02-27 Fri 08:21]--[2009-02-27 Fri 08:25] =>  0:04
+   CLOCK: [2009-02-27 Fri 08:11]--[2009-02-27 Fri 08:12] =>  0:01
+   CLOCK: [2009-02-26 Thu 08:30]--[2009-02-26 Thu 09:45] =>  1:15
+   :END:
+   Must get data from February, 2009, entered into the doggone Star Time Reporter.
+*** Thoughts about all this
+    [2009-02-26 Thu 09:45] worked on this some this morning.
+    [2009-02-26 Thu 13:52] There was an email from CG about this:
+    apparently, there have been some buckets created for our use
+    now. Sigh. So now I must get the doggone stuff teased outta the
+    February diary entries to get that stuff entered.  Oh, how I wish
+    I had started using Org mode a lot sooner! It would have made
+    things like this trivial...
+    [2009-02-27 Fri 14:32] FINALLY concluded the entry of timesheet junk
+    for February. The power went out for about 2 hours total today, which
+    put a real cramp in things. Plus, I'm still getting up to speed on
+    using the Star Time Reporter, and I need to be more diligent and
+    explicit in my time tracking from here on out. The use of this as a
+    general tool will help a lot.
+** DONE Get some kind of "unindexed foreign keys" thingie put together for BSelle
+   DEADLINE: <2009-02-24 Tue 12:15> CLOSED: [2009-02-24 Tue 13:39]
+   - CLOSING NOTE [2009-02-24 Tue 13:40] \\
+     Sent email of query and results from Brookshire (txconv@txbrkp01_59) production
+     database, and QA-MAIL (txconv@txndcq05) database.  [[file:c:/Documents%20and%20Settings/Richard.Stewart/My%20Documents/McKesson/Conversion_issues/Unindexed_foreign_keys/unindexed_foreign_keys.sql::1][File with query is here.]]
+   CLOCK: [2009-02-24 Tue 12:49]--[2009-02-24 Tue 13:34] =>  0:45
+** DONE [#A] Set up Auto-deposit of paycheck
+   DEADLINE: <2009-02-24 Tue 15:30> CLOSED: [2009-02-24 Tue 15:29]
+   - CLOSING NOTE [2009-02-24 Tue 15:29] \\
+     FINALLY did this, but it may not be reflected in the next paycheck!
+   CLOCK: [2009-02-24 Tue 15:24]--[2009-02-24 Tue 15:28] =>  0:04
+
+* PERIODIC TASKS
+** TODO [#B] Administrative Work
+   :CLOCK:
+   CLOCK: [2009-03-03 Tue 15:00]--[2009-03-03 Tue 17:00]
+   (Need to better understand what I was doing during that time period;
+   I think I was doing some more organization of my notes, etc, for this
+   ongoing effort to use Org mode to capture *everything*.)
+   CLOCK: [2009-03-04 Wed 08:15]--[2009-03-04 Wed 09:00] =>  0:45
+   PICKING HEALTHCARE STUFF(?)
+   :END:
+** TODO [#B] Weekly Kinney Call
+   <2009-03-10 Tue 14:00 +1w>
+   :CLOCK:
+   CLOCK: [2009-03-03 Tue 14:00]--[2009-03-03 Tue 15:00] =>  1:00
+   :END:
+   - State "DONE"       [2009-03-03 Tue 17:18]
+
+* Personal Tasks
+** TODO [#A] Call Meeks :personal:
+   DEADLINE: <2009-03-04 Fri 09:00>
+   ReSCHEDUDULED: [2009-03-05 Thu 08:16] from <2009-03-04 Wed>
+   To ask them: when was the last time the septic tank was serviced?
+** TODO [#A] Bills [0/3] 					      :personal:
+   DEADLINE: <2009-03-05 Thu 11:30>
+   Deadline changed on [2009-03-05 Thu 08:18]
+   Deadline changed on [2009-02-28 Sat 20:15]
+   - [ ] American Family Care
+   - [ ] Cahaba Family Medicine
+   - [ ] OWM (online payments)
+   - [ ] What else?
+** TODO [#A] 1040X - get it out the door :personal:
+   DEADLINE: <2009-03-05 Thu 11:45>
+   Deadline changed on [2009-03-05 Thu 08:19]
+   Deadline changed on [2009-03-03 Tue 17:35]
+   Deadline changed on [2009-02-28 Sat 20:17]
+** TODO [#A] set up Fidelity stuff :personal:
+   SCHEDULED: <2009-03-09 Mon 12:45>
+   HEY YOU NEED TO UNDERSTAND WHAT IS NECESSARY TO GET THE BALL ROLLING ON THIS:
+   HOW TO GET VESTED, DEADLINES, ETC.   
+** TODO [#A] Set up W-4 stuff!!! :personal:
+   DEADLINE: <2009-02-27 Fri 12:30>
+   (13 was the number, I think? You had written it down during one of the little
+   conversations with the AT&T folks...)
+   [2009-02-25 Wed 09:30] I had to move this out another day.
+** TODO [#B] 1040 for 2008 year :personal:
+   SCHEDULED: <2009-03-07 Sat 07:00>
+   ReSCHEDULED: [2009-03-05 Thu 08:20]
+** TODO [#B] Note to TW :personal:
+   Within the personal email account, saved draft.
+** TODO [#B] Reference for Eric Fuller :personal:
+   Online, in that LinkedIn thingie...
+** TODO [#A] House issues [0%] :personal:
+   DEADLINE: <2009-02-28 Sat 16:30>
+   [2009-02-25 Wed 17:39] Moved out from today at 18:00...
+   1. [ ] check on different rates?
+   2. [ ] what might Wells Fargo be willing to do?
+   3. [ ] what about a different house? [0%]
+	  1. [ ] different location, still in MB
+	  2. [ ]  what kinds of prices are we talking about?
+** TODO [#B] Inquire on TV options 				      :personal:
+   SCHEDULED: <2009-03-07 Sat 10:30>
+   ReSCHEDULED: [2009-03-05 Thu 08:20]
+   Inquire about DISH network, versus DirecTV, versus Uverse.
+** DONE [#A] set up insurance stuff				      :personal:
+   DEADLINE: [2009-02-25 Wed 14:30] CLOSED: [2009-03-04 Wed 13:09]
+   - CLOSING NOTE [2009-03-04 Wed 13:17] \\
+     Had one HECK of a scare! They said that I had to have it all picked
+     out by 2009-03-04, but apparently that means "2009-03-03 at 11:59PM!"
+     I logged in at about 12:30, and they already had me set for
+     "no coverage!!!" ARRGGHHH! Sheesh! I had to call them and get
+     everything picked out over the phone, and it made me SO MAD!
+     
+     NEXT TIME, GENIUS: GET IT ALL SETTLED, FIXED INTO STONE, 
+     *AT LEAST ONE WEEK THAT WRETCHED DUE DATE!!!* That way, you don't
+     ever risk falling into the "off-by-one-day/hour/minute" hellhole!
+     
+     HAH! I think the other rule is to think about it conservatively:
+     Which interpretation of their deadline language gives me the
+     least amount of time to work on it, make my choices, etc?
+     
+     I thank you, Mighty King Jesus, for providing mercy and grace as I
+     got registered. The lady I spoke to was very gracious and helpful.
+     You knew this would happen, and you allowed me to go through it,
+     to learn my lesson, for sure. Perhaps you even prepared me for it
+     by helping me fix into my mind the choices I already had made (even
+     though what ultimately got picked was a little extra over my
+     initial set of choices...)
+     
+     Your hand, Oh Lord, is in, on, my life, in spite of my frailty,
+     my short-sightedness, my laziness...
+   SCHEDULED: <2009-03-02 Mon 21:00>
+   :CLOCK:
+   CLOCK: [2009-02-24 Tue 16:29]--[2009-02-24 Tue 16:49] =>  0:20
+   CLOCK: [2009-02-24 Tue 15:55]--[2009-02-24 Tue 16:26] =>  0:31
+   :END:
+   (What about life insurance? Is that an option?)
+   Okay, life insurance is an option, but what is currently confusing me is the
+   plethora of options and it's hard to tell the difference between them: I THINK the
+   Definity plan is much like what AT&T offered, and maybe the BCBS stuff is pretty
+   close to it as well, in terms of structure and how they do things? It's just tough
+   to tell right now.
+   [2009-02-25 Wed 09:30] Angelia wants to talk about this stuff on [2009-03-02 Mon]
+** DONE [#A] Electricity issue at home				      :personal:
+   DEADLINE: <2009-03-03 Tue 10:30> CLOSED: [2009-03-04 Wed 11:12]
+   - CLOSING NOTE [2009-03-04 Wed 11:13] \\
+     There was nothing definitive found; however, there may be issues
+     with the downstairs heater, and somebody's coming out to look at it
+     this coming Thursday, between 12pm and 3pm...
+   :CLOCK:
+   CLOCK: [2009-03-03 Tue 11:01]--[2009-03-03 Tue 12:59]
+   :END:
+   CALL TRI-SERVICE ELECTRIC (205-223-4852) BACK IF YOU HAVEN'T HEARD FROM THEM YET...
+   [2009-03-03 Tue 09:27] We have electrical issues at home:
+   - foyer lights
+   - front hall closet lights
+   - downstairs heating/cooling out
+   - Kitchen wall: where the TV, phone, coffee-maker are plugged in
+   - Master bath shower room lights
+   - master vanity above-mirror lights
+   - master vanity left side
+   - powder room
+   - Savannah's room upstairs
+   - playroom wall where keyboard's plugged in
+   - HVAC downstairs not working
+   [2009-03-03 Tue 09:35] Angelia called again: it's all come back on, which is weird...
+   Fortunately, all electrical covered by AHS (work order #146339262 has been created,
+   dispatched to Tri-Service Electric, 205-223-4852, whom I have already called...)
+   [2009-03-03 Tue 11:04] Meeting Mike of Tri-Service electric at the house at 11:30am.
+   [2009-03-03 Tue 13:04] Back from the house...
+** DONE [#B] Check on status of things with Terminix		      :personal:
+   SCHEDULED: <2009-03-03 Tue 11:00> CLOSED: [2009-03-03 Tue 16:49]
+   - CLOSING NOTE [2009-03-03 Tue 16:49] \\
+     I checked into it online; looks like we're current/up-to-date...
+** DONE [#A] Email to L'scape Add'tns				      :personal:
+   DEADLINE: <2009-03-01 Sun 06:00> CLOSED: [2009-03-02 Mon 18:55]
+   - CLOSING NOTE [2009-03-02 Mon 18:56] \\
+     Finally sent off that email!!! Asked him to go ahead w/crape myrtle
+     pruning and pine straw for "front and back areas."
+   Deadline changed on [2009-02-28 Sat 20:18]
+   Ask 'em to go ahead w/the pinestraw & myrtle trimmming.
+** DONE [#A] USAA call (get Odyssey "off the books")		      :personal:
+   DEADLINE: <2009-02-27 Fri 10:30> CLOSED: [2009-02-27 Fri 16:37]
+   - CLOSING NOTE [2009-02-27 Fri 16:38] \\
+     FINALLY did it! Paid the Feb-09 payment too, conf#183004614 
+** DONE [#A] Call Sandy S!!!					      :personal:
+   DEADLINE: <2009-02-27 Fri 08:00> CLOSED: [2009-02-27 Fri 08:10]
+   - CLOSING NOTE [2009-02-27 Fri 08:10] \\
+     Called her: she said that she might be about 5 minutes
+     late getting there, but that having the piano lessons at
+     4pm was fine with her.
+   Call her about getting the girls to her early.
+** DONE [#A] Emails to teachers [3/3]				      :personal:
+   DEADLINE: <2009-02-26 Thu 11:40> CLOSED: [2009-02-26 Thu 13:33]
+   - CLOSING NOTE [2009-02-26 Thu 13:33] \\
+     Finally got notes sent out to the teachers.
+   [2009-02-26 Thu] Savannah was home from school today, sick. Need to send email to
+   each of the following three teachers since she had tests today in each of their
+   classes and will need to schedule a time to make up. This time will probably have
+   to be on or after [2009-03-04 Wed] because she's already coming in early to make
+   up tests in English/Reading and Spanish on [2009-03-02 Mon] and [2009-03-03 Tue].
+   - [X] Billy Hight (Science): BHight@Shelbyed.k12.al.us
+   - [X] Carla Higginbotham (Social Studies/History?): CHigginbotham@Shelbyed.k12.al.us
+   - [X] Pat Romano (Math): PRomano@Shelbyed.k12.al.us
+** DONE [#A] deposit latest paycheck :personal: <2009-02-24 Tue 14:00>
+   CLOSED: [2009-02-24 Tue 14:46]
+   - CLOSING NOTE [2009-02-24 Tue 14:46] \\
+     Thought it'd be a short errand to the bank!
+   CLOCK: [2009-02-24 Tue 14:20]--[2009-02-24 Tue 14:46] =>  0:26
+
+* Journal
+** TODO [#A] What's going on? :general:conversion:
+   [2009-03-06 Fri 11:52] CG, BSelle, deep in conversation in lunchroom for about the
+   past half hour? And they seem to wait for me to leave when I step in to fetch my
+   sandwich out of the microwave, and get coffee later. (Nuts...) What's going on?
+   Lord God, what do you want me to do?
+* Quick home items
+** TODO [#A] get checks written for latest stuff!!!!
+   SCHEDULED: <2009-03-03 Wed 18:15>
+** DONE [#A] Check on account balances				      :personal:
+   SCHEDULED: <2009-03-03 Tue 18:10> CLOSED: [2009-03-04 Wed 10:51]
+   - CLOSING NOTE [2009-03-04 Wed 10:51] \\
+     Actually did this one last night...
+
+* Clock tables
+#+BEGIN: clocktable :maxlevel 2 :scope file 
+Clock summary at [2009-02-27 Fri 12:58].
+
+| L | Headline                                                                       |    Time |       |
+|---+--------------------------------------------------------------------------------+---------+-------|
+|   | *Total time*                                                                   | *14:45* |       |
+|---+--------------------------------------------------------------------------------+---------+-------|
+| 1 | Work Tasks                                                                     |   13:28 |       |
+| 2 | TODO [#A] Get times for Feb entered                                            |         |  1:20 |
+| 2 | TODO [#B] look into local "development/sandbox environment"? :general: [0%]    |         | 11:19 |
+| 2 | DONE Get some kind of "unindexed foreign keys" thingie put together for BSelle |         |  0:45 |
+| 2 | DONE [#A] Set up Auto-deposit of paycheck                                      |         |  0:04 |
+|---+--------------------------------------------------------------------------------+---------+-------|
+| 1 | Personal Tasks                                                                 |    1:17 |       |
+| 2 | TODO [#A] set up insurance stuff                                               |         |  0:51 |
+| 2 | DONE [#A] deposit latest paycheck :personal: <2009-02-24 Tue 14:00>            |         |  0:26 |
+#+END:
+   
+#+BEGIN: clocktable :tstart "[2009-02-25 Wed 00:00]" :tend "[2009-02-26 Thu 23:59]" :scope file :step day
+
+Daily report: <2009-02-25 Wed>
+| L | Headline                                                                    | Time   |      |
+|---+-----------------------------------------------------------------------------+--------+------|
+|   | *Total time*                                                                | *6:16* |      |
+|---+-----------------------------------------------------------------------------+--------+------|
+| 1 | Work Tasks                                                                  | 6:16   |      |
+| 2 | TODO [#B] look into local "development/sandbox environment"? :general: [0%] |        | 6:16 |
+
+Daily report: <2009-02-26 Thu>
+| L | Headline                                                                    | Time    |      |
+|---+-----------------------------------------------------------------------------+---------+------|
+|   | *Total time*                                                                | *10:34* |      |
+|---+-----------------------------------------------------------------------------+---------+------|
+| 1 | Work Tasks                                                                  | 10:34   |      |
+| 2 | TODO [#A] Get times for Feb entered                                         |         | 1:15 |
+| 2 | TODO [#B] look into local "development/sandbox environment"? :general: [0%] |         | 5:03 |
+| 2 | TODO [#A] looking into UW UAT                                               |         | 4:16 |
+#+END:
+
+
+#+BEGIN: clocktable :tstart "[2009-02-27 Fri 00:00]" :tend "[2009-02-27 Fri 23:59]" :scope file :step day 
+
+Daily report: <2009-02-27 Fri>
+| L | Headline                            | Time   |      |
+|---+-------------------------------------+--------+------|
+|   | *Total time*                        | *7:04* |      |
+|---+-------------------------------------+--------+------|
+| 1 | Work Tasks                          | 7:04   |      |
+| 2 | TODO [#A] looking into UW UAT       |        | 1:05 |
+| 2 | DONE [#A] Get times for Feb entered |        | 5:59 |
+#+END:
+
+This "clocktable" feature is worth its weight in gold!
+It makes it possible for me to administer my work without
+so much hassle and guesswork. The only other thing I should
+probably add to this may be the use of other tags within
+items so that they can be tied to particular time-reporting
+buckets as they are used in the Star Time Reporter system.
+
+
+#+BEGIN: clocktable :tstart "<2009-03-02 Mon 00:00>" :tend "<2009-03-06 Fri 23:59>" :scope file :step day :link
+
+Daily report: <2009-03-02 Mon>
+| L | Headline                      | Time   |      |
+|---+-------------------------------+--------+------|
+|   | *Total time*                  | *9:06* |      |
+|---+-------------------------------+--------+------|
+| 1 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::Work%20Tasks][Work Tasks]]                    | 9:06   |      |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::TODO%20A%20looking%20into%20UW%20UAT][TODO {#A} looking into UW UAT]] |        | 9:06 |
+
+Daily report: <2009-03-03 Tue>
+| L | Headline                             |   Time |      |
+|---+--------------------------------------+--------+------|
+|   | *Total time*                         | *8:18* |      |
+|---+--------------------------------------+--------+------|
+| 1 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::Work%20Tasks][Work Tasks]]                           |   3:20 |      |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::TODO%20A%20looking%20into%20UW%20UAT][TODO {#A} looking into UW UAT]]        |        | 2:21 |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::DONE%20B%20Renlar%20Support%20Issues%20Call][DONE {#B} Renlar Support Issues Call]] |        | 0:59 |
+|---+--------------------------------------+--------+------|
+| 1 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::PERIODIC%20TASKS][PERIODIC TASKS]]                       |   3:00 |      |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::TODO%20B%20Administrative%20Work][TODO {#B} Administrative Work]]        |        | 2:00 |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::TODO%20B%20Weekly%20Kinney%20Call][TODO {#B} Weekly Kinney Call]]         |        | 1:00 |
+|---+--------------------------------------+--------+------|
+| 1 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::Personal%20Tasks][Personal Tasks]]                       |   1:58 |      |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::DONE%20A%20Electricity%20issue%20at%20home][DONE {#A} Electricity issue at home]]  |        | 1:58 |
+
+Daily report: <2009-03-04 Wed>
+| L | Headline                                                                    |   Time |      |
+|---+-----------------------------------------------------------------------------+--------+------|
+|   | *Total time*                                                                | *8:23* |      |
+|---+-----------------------------------------------------------------------------+--------+------|
+| 1 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::Work%20Tasks][Work Tasks]]                                                                  |   7:38 |      |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::TODO%20A%20look%20into%20local%20development%20sandbox%20environment%20general%200][TODO {#A} look into local "development/sandbox environment"? :general: {0%}]] |        | 6:38 |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::DONE%20B%20Talked%20with%20team%20about%20conversion%20issues][DONE {#B} Talked with team about conversion issues]]                          |        | 0:30 |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::DONE%20B%20Meeting%20on%20IBM%20Server%20for%20Quickbuild%20setup][DONE {#B} Meeting on IBM Server (for Quickbuild setup)]]                      |        | 0:30 |
+|---+-----------------------------------------------------------------------------+--------+------|
+| 1 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::PERIODIC%20TASKS][PERIODIC TASKS]]                                                              |   0:45 |      |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::TODO%20B%20Administrative%20Work][TODO {#B} Administrative Work]]                                               |        | 0:45 |
+
+Daily report: <2009-03-05 Thu>
+| L | Headline                                                                    | Time   |      |
+|---+-----------------------------------------------------------------------------+--------+------|
+|   | *Total time*                                                                | *8:08* |      |
+|---+-----------------------------------------------------------------------------+--------+------|
+| 1 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::Work%20Tasks][Work Tasks]]                                                                  | 8:08   |      |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::TODO%20A%20look%20into%20local%20development%20sandbox%20environment%20general%200][TODO {#A} look into local "development/sandbox environment"? :general: {0%}]] |        | 4:09 |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::DONE%20PL%20SQL%20line%20numbers%20in%20errors][DONE PL/SQL line numbers in errors]]                                          |        | 3:59 |
+
+Daily report: <2009-03-06 Fri>
+| L | Headline                                                                    | Time   |      |
+|---+-----------------------------------------------------------------------------+--------+------|
+|   | *Total time*                                                                | *8:24* |      |
+|---+-----------------------------------------------------------------------------+--------+------|
+| 1 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::Work%20Tasks][Work Tasks]]                                                                  | 8:24   |      |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::TODO%20A%20look%20into%20local%20development%20sandbox%20environment%20general%200][TODO {#A} look into local "development/sandbox environment"? :general: {0%}]] |        | 5:55 |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::TODO%20B%20Renlar%20conversion%20support%20activities][TODO {#B} Renlar conversion support activities]]                              |        | 2:29 |
+#+END:
+
+#+BEGIN: clocktable :tstart "<2009-03-02 Mon 00:00>" :tend "<2009-03-06 Fri 23:59>" :scope file :link
+Clock summary at [2009-03-06 Fri 16:41].
+
+| L | Headline                                                                    |    Time |       |
+|---+-----------------------------------------------------------------------------+---------+-------|
+|   | *Total time*                                                                | *42:19* |       |
+|---+-----------------------------------------------------------------------------+---------+-------|
+| 1 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::Work%20Tasks][Work Tasks]]                                                                  |   36:36 |       |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::TODO%20A%20look%20into%20local%20development%20sandbox%20environment%20general%200][TODO {#A} look into local "development/sandbox environment"? :general: {0%}]] |         | 16:42 |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::TODO%20B%20Renlar%20conversion%20support%20activities][TODO {#B} Renlar conversion support activities]]                              |         |  2:29 |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::TODO%20A%20looking%20into%20UW%20UAT][TODO {#A} looking into UW UAT]]                                               |         | 11:27 |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::DONE%20PL%20SQL%20line%20numbers%20in%20errors][DONE PL/SQL line numbers in errors]]                                          |         |  3:59 |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::DONE%20B%20Talked%20with%20team%20about%20conversion%20issues][DONE {#B} Talked with team about conversion issues]]                          |         |  0:30 |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::DONE%20B%20Meeting%20on%20IBM%20Server%20for%20Quickbuild%20setup][DONE {#B} Meeting on IBM Server (for Quickbuild setup)]]                      |         |  0:30 |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::DONE%20B%20Renlar%20Support%20Issues%20Call][DONE {#B} Renlar Support Issues Call]]                                        |         |  0:59 |
+|---+-----------------------------------------------------------------------------+---------+-------|
+| 1 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::PERIODIC%20TASKS][PERIODIC TASKS]]                                                              |    3:45 |       |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::TODO%20B%20Administrative%20Work][TODO {#B} Administrative Work]]                                               |         |  2:45 |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::TODO%20B%20Weekly%20Kinney%20Call][TODO {#B} Weekly Kinney Call]]                                                |         |  1:00 |
+|---+-----------------------------------------------------------------------------+---------+-------|
+| 1 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::Personal%20Tasks][Personal Tasks]]                                                              |    1:58 |       |
+| 2 | [[file:c:/Documents%20and%20Settings/Richard.Stewart/Application%20Data/org/current.org::DONE%20A%20Electricity%20issue%20at%20home][DONE {#A} Electricity issue at home]]                                         |         |  1:58 |
+#+END:
