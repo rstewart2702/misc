@@ -1,0 +1,172 @@
+# from Tkinter import *
+# from Tix import *
+import ttk
+from ttk import *
+from Tkinter import *
+
+import FSDigests
+import Queue
+
+class Application(ttk.Frame):
+    """
+    This is written as an "old-style" class
+    """
+    def __init__(self, master=None):
+        # We have to use old-style super-class method invocation because
+        # of the antiquated way in which the Tkinter GUI code was built.
+        ttk.Frame.__init__(self, master)
+        # super(Application,self).__init__(master)
+        self.grid(column=0,row=0,sticky=(N,W,E,S)
+        # self.pack()
+        self.createWidgets()
+        self.bkComparer=None
+        #
+        self.resultsQueue=None
+
+    def createWidgets(self):
+        self.upperFrame=ttk.Frame(self)
+        # self.upperFrame.pack({"side":"top","fill":"x"})
+        self.upperFrame.pack(
+            side=TOP,
+            expand=YES,
+            fill=BOTH
+            )
+        self.upperFrame["relief"]=FLAT
+        self.upperFrame["borderwidth"]=3
+        self.upperFrame["background"]="red"
+        
+        self.QUIT = Button(self.upperFrame)
+        self.QUIT["text"] = "QUIT"
+        self.QUIT["fg"]   = "red"
+        self.QUIT["command"] =  self.quit
+
+        # self.QUIT.pack({"side": "left","fill":"both","anchor":"nw"})
+        self.QUIT.pack(
+            side=LEFT,
+            fill=BOTH,
+            anchor=NW,
+            expand=YES
+            )
+
+        # self.hi_there = Button(self.upperFrame)
+        # self.hi_there["text"] = "Hello",
+        # self.hi_there["command"] = self.say_hi
+        
+        self.go_button = Button(self.upperFrame)
+        self.go_button["text"] = "Start Compare"
+        self.go_button["command"] = self.startCompare
+
+        self.fileName=StringVar()
+
+        self.fileNameEntry = Entry(self.upperFrame,textvariable=self.fileName)
+        
+        
+
+        # self.hi_there.pack({"side": "right","fill":"both","anchor":"ne"})
+#         self.hi_there.pack(
+#             side=RIGHT,
+#             fill=BOTH,
+#             anchor=NE,
+#             expand=YES
+#             )
+
+        self.meter = Meter(self,{"value":"0"})
+        self.meter.pack({"side":"bottom"})
+        self.meter["value"]=unicode(1.0)
+
+    def say_hi(self):
+        print "hi there, everyone!"
+        print self.meter["value"]
+        self.meter["value"]=unicode(float(self.meter["value"])-0.1)
+
+    def startCompare(self):
+        self.resultsQueue=Queue.Queue(512)
+        self.bkComparer = \
+          FSDigests.BkCompareThread(
+            fileName="",
+            dirName="",
+            # This gives the background thread access to
+            # the update() method herein, which permits a
+            # general mechanism to insert deferred gui calls
+            # into a fifo queue...
+            CompareWrapper(self)
+          )
+
+    def compareUpdate(self):
+        """General mechanism to update the GUI, as it is an observer.
+Indended to be called by a background process."""
+        if self.bkComparer.stateDict['stateName']=='compareStarted':
+            # Must create a local copy of the thread's state, as it will
+            # be passed on to the foreground GUI's processing:
+            locFname=self.bkComparer.stateDict['fileName']
+            
+            # Define some sort of closure which will invoke
+            # the GUI mutator method?
+            def locGUICompareStart():
+                # This copies what is stored in the background object's
+                # stateDict (a dictionary) into items needed to update
+                # the GUI:
+                self.fNameTextBox['text']=locFname
+                # The following will not work properly, right?
+                #   self.fNameTextBox['text']=self.bkComparer.stateDict['fileName']
+                # It will not work because it will set the text to whatever
+                #   self.bkComparer.stateDict['fileName']
+                # is at the time the GUI gets around to invoking the
+                # locGUIChange closure, and that is not necessarily the same thing
+                # as what the background thread had stored into that part of the
+                # state dictionary at the time the enclosing procedure, compareUpdate,
+                # is invoked by the background thread.  Oh!  Complicated!
+
+            # The above "closure" must be placed into the queue, so that
+            # the foreground GUI code may retrieve it and execute it later.
+            # This call is designed to block the current thread of control
+            # (assumed to be the background) until another thread frees up
+            # some of the queue by consuming some of the data therein:
+            self.resultsQueue.put(locGUIChange,True,None)
+        elif self.bkComparer.stateDict['stateName']=='compareEnded':
+            locFname=self.bkComparer.stateDict['fileName']
+            locStoredDigest = self.bkComparer.stateDict['storedDigest']
+            locCompDigest = self.bkComparer.stateDict['computedDigest']
+            #
+            def locGUICompareEnd():
+                # Must do something with locFname, locStoredDigest, locCompDigest
+                # which updates the user interface
+                pass
+            #
+            self.resultsQueue.put(locGUICompareEnd,True,None)
+        elif self.bkComparer.stateDict['stateName']=='compareError':
+            # This is an error-condition which we'll handle, for now, by spitting
+            # out an error message to the console:
+            
+            
+
+        
+    
+        
+class CompareWrapper(class):
+    """Simple wrapper around a Frame so that a uniform interface is presented to the
+background thread."""
+    def __init__(self,frameObj):
+        self.frameObj=frameObj
+    def update(self):
+        self.frameObj.compareUpdate()
+    
+
+
+def testApplication():
+    root = Tk()
+    app = Application(master=root)
+    # Got the idea for the next three calls directly from the
+    # source code for Tkinter._test() procedure, the test procedure
+    # of the Tkinter module.  It's a quick-and-dirty way to guarantee
+    # that the new window shows up on top of all others.
+    root.iconify()  # Shrink down to an icon?
+    root.update()   # Go ahead and get Tk to execute the "iconfication" event?
+    root.deiconify() # Tell Tk, really, to schedule a "deiconification" event?
+    # 
+    app.mainloop()   # Now that the mainloop is started, the "deiconification"
+                     # will be executed eventually.
+    #
+    # Now the mainloop is finished and the "root" window may be destroyed:
+    root.destroy()
+
