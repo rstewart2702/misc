@@ -1,0 +1,3 @@
+"date1","amt1","desc1withcomma,otherstuff","misc1"
+"date2","amt2","desc2withoutcomma other2","misc2"
+"date3","amt3","desc3 other3","misc3"
